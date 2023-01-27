@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+                      <Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+                       xmlns:x="urn:schemas-microsoft-com:office:excel"
+                       xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+                       xmlns:html="http://www.w3.org/TR/REC-html40">
+                      <Styles>
+                        <Style ss:ID="s17">
+                          <NumberFormat ss:Format="m/d/yy"/>
+                          <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s18">
+                          <NumberFormat ss:Format="m/d/yy"/>
+                          <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s19">
+                          <NumberFormat ss:Format="m/yy"/>
+                          <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s20">
+                          <NumberFormat ss:Format="m/yy"/>
+                          <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s21">
+                          <NumberFormat ss:Format="m/d/yy h:mm AM/PM"/>
+                          <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s22">
+                          <NumberFormat ss:Format="m/d/yy h:mm AM/PM"/>
+                          <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s23">
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s24">
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s25">
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s26">
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s27">
+                         <NumberFormat ss:Format="0"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s28">
+                         <NumberFormat ss:Format="0"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s29">
+                         <NumberFormat ss:Format="_(&quot;$&quot;* #,##0.00_);_(&quot;$&quot;* (#,##0.00);_(&quot;$&quot;* &quot;-&quot;??_);_(@_)"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s30">
+                         <NumberFormat ss:Format="_(&quot;$&quot;* #,##0.00_);_(&quot;$&quot;* (#,##0.00);_(&quot;$&quot;* &quot;-&quot;??_);_(@_)"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s31">
+                         <NumberFormat ss:Format="Percent"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s32">
+                         <NumberFormat ss:Format="Percent"/>
+                         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s33">
+                         <NumberFormat ss:Format="YYYY-mm-dd"/>
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+                        </Style>
+                        <Style ss:ID="s34">
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana" ss:Bold="1"/>
+                        </Style>
+                        <Style ss:ID="s35">
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                        <Style ss:ID="s36">
+                         <Alignment ss:Horizontal="Left" ss:Vertical="Top" ss:WrapText="1"/>
+                         <Font ss:FontName="Verdana"/>
+                        </Style>
+                      </Styles>
+<Worksheet ss:Name="Sheet1">
+<Table>
+<Column ss:Index="1" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="2" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="4" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="5" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="6" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="7" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="8" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="9" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="10" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="11" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="13" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="14" ss:AutoFitWidth="0" ss:Width="150"/>
+<Column ss:Index="15" ss:AutoFitWidth="0" ss:Width="150"/>
+<Row>
+<Cell ss:StyleID="s24"><Data ss:Type="String">id</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">created_time</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">ad_id</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">ad_name</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">adset_id</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">adset_name</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">campaign_id</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">campaign_name</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">form_id</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">form_name</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">is_organic</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">platform</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">nome_completo</Data></Cell>
+<Cell ss:StyleID="s24"><Data ss:Type="String">telefone</Data></Cell>
+<Cell ss:StyleID="s26"><Data ss:Type="String">email</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1357732761638092</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-21T21:52:13.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">fb</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Marcelo Nunes Pereira</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511962872207</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">marcelonp1987@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">2051367565068415</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-20T23:55:57.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">fb</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Tadeu Velez</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511947793475</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">tadeu@vipdespachante.com.br</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1020967135962754</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-20T15:19:11.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Paulo Souza</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511934228609</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">pauloricardosouza108@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1584181795353306</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-17T15:45:14.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Dalila Bonfim</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511966914611</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">dalilabonfim43@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">540613557960295</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-10T08:50:33.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Jaciele Aires</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511966539350</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">jaciaires8@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">8575585875815593</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-04T18:09:01.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Patricia Costa</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">973423283</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">patriciasobrinhodare@bol.com.br</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1831334843931931</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-03T13:42:06.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Rafael Bastos</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511941798775</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">kenedyli@hotmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">987633822627227</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-12-03T11:13:13.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Maurício Rodrigues</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511987310790</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">msobralr@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">680018490353987</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-11-29T22:34:11.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Lídia Costa</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511971916988</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">lidiacostafelix@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">489030459927181</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-11-03T19:09:12.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">fb</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Marcio Batista da Silva</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511968762959</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Max-eumesmo@hotmail.com.br</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">802471247671674</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-27T22:37:31.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Alan Caldeira</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511987061342</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">alancn_21@hotmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">3332789833669400</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-27T18:09:14.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Amanda Vieira.</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511972557859</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">amanda_emi@yahoo.com.br</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">856930888644887</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-27T11:07:43.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">fb</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Patricia Palmieri</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511947138265</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">paaty.palmieri@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">485562493519268</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-27T08:37:27.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Vanusa Almeida</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511981726834</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">vanusa.vitoria@outlook.com.br</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1848375342173081</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-26T23:12:59.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Julianna S Sousa</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511962216392</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">julianna-sp@hotmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s25"><Data ss:Type="String">1129536174342565</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-26T19:27:29.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Adriana Farias</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511968954461</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">adrianananb.ribeiro@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">635819724670172</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-26T19:13:39.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">ig</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Naiara Silva</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511993662112</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">naiaragms387@gmail.com</Data></Cell>
+</Row>
+
+<Row>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">665843358475481</Data></Cell>
+<Cell ss:StyleID="s17"><Data ss:Type="DateTime">2022-10-26T09:12:42.000</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851901486100653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">CONV 15K - CASA - RESTRIÇÃO 4</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851860772490653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">35/55 HM - CASA 15k</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">23851859623930653</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">[Imóveis - 10/15/20K + - JLA + 10KM] new</Data></Cell>
+<Cell ss:StyleID="s27"><Data ss:Type="Number">656921358991097</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Imóvel - 15k+</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">false</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">fb</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">Alexandra Nogueira</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">+5511989473783</Data></Cell>
+<Cell ss:StyleID="s25"><Data ss:Type="String">alexandraholandanogueiralira@gmail.com</Data></Cell>
+</Row>
+</Table>
+</Worksheet>
+</Workbook>
