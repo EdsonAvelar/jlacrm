@@ -35,7 +35,7 @@ return new class extends Migration {
 
 
             # proprietário do negócio
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();

@@ -9,6 +9,7 @@ use App\Models\Negocio;
 use App\Models\EtapaFunil;
 use App\Models\User;
 use App\Models\Equipe;
+use App\Models\MotivoPerda;
 
 use \App\Models\NegocioComentario;
 use Auth;
@@ -81,6 +82,14 @@ class CrmController extends Controller
                 ['user_id', '=', $proprietario_id],
             ];
         }
+
+        $status = $request->query('status');
+        
+        if ( $status ){
+
+            $status_arr = ['status', '=', strtoupper( $status)];
+            array_push($query, $status_arr);
+        }
         
         $negocios = Negocio::where($query)->get();
 
@@ -97,19 +106,23 @@ class CrmController extends Controller
             $proprietarios = User::where('equipe_id', $equipe->id)->pluck('name', 'id');
         }
 
+        $motivos = MotivoPerda::all();
+
+
+
         if ($view == 'list') {
 
             if ( !$negocios->first()){
-                return view('negocios/list', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios'));
+                return view('negocios/list', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','motivos'));
             }  
     
-            return view('negocios/list', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios'));
+            return view('negocios/list', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','motivos'));
         }else {
 
             if ( !$negocios->first()){
-                return view('negocios/pipeline', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios'));
+                return view('negocios/pipeline', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','motivos'));
             }  
-            return view('negocios/pipeline', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios'));
+            return view('negocios/pipeline', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','motivos'));
         }
         
     }
@@ -242,20 +255,21 @@ class CrmController extends Controller
         
         if ($input['modo'] == "atribuir"){
 
-
-
             $negocios = $input['negocios'];
             $novo_proprietario_id = $input['novo_proprietario_id'];
 
             $negocios = Negocio::whereIn('id', $negocios)->get();
 
+            $novo_proprietario = NULL;
 
-            
-            $proprietario = User::find($novo_proprietario_id);
+            if ($novo_proprietario_id != "-1"){
+                $proprietario = User::find($novo_proprietario_id);
+                $novo_proprietario = $proprietario->id;
+            }
 
             $count = 0;
             foreach ($negocios as $negocio) {
-                $negocio->user_id = $proprietario->id;
+                $negocio->user_id = $novo_proprietario;
                 $negocio->etapa_funil_id = $etapa_funils[1];
                 $negocio->save();
                 $count = $count + 1;
@@ -288,6 +302,8 @@ class CrmController extends Controller
                 }
             }
             return back()->with('status', "Distribuidos ".$negocio_count." negócios para ".$user_count." usuários.");
+        }else {
+            return back()->withErrors("modo de distribuição invalido: ".$input['modo']);
         }
     }
 }

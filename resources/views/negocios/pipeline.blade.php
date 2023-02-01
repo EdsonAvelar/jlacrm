@@ -33,18 +33,20 @@
             <div class="page-title-box">
 
                 <div class="page-title-right">
-                    <ul class="list-unstyled topbar-menu float-end mb-0">
+
+                
+                <ul class="list-unstyled topbar-menu float-end mb-0">
                     <li class="dropdown notification-list d-none d-sm-inline-block">
 
-                        @if (app('request')->view_card == "compact")
+                            @if (app('request')->view_card == "compact")
                             <a class="nav-link dropdown-toggle arrow-none"
-                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario) )}}" role="button">
-                                <i class="dripicons-view-apps noti-icon"></i>
+                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario,'status'=> app('request')->status) )}}" role="button">
+                                <i class="dripicons-expand noti-icon"></i>
                             </a>
                             @else 
                             <a class="nav-link dropdown-toggle arrow-none"
-                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => 'compact' ) )}}" role="button">
-                                <i class="dripicons-view-apps noti-icon"></i>
+                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => 'compact','status'=> app('request')->status ) )}}" role="button">
+                                <i class="dripicons-contract noti-icon"></i>
                             </a>
 
                             @endif
@@ -53,7 +55,7 @@
                         <li class="dropdown notification-list d-none d-sm-inline-block">
                             <a class="nav-link dropdown-toggle arrow-none"
                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view' => 'list' ) )}}" role="button">
-                                <i class="dripicons-menu"></i>
+                                <i class="dripicons-menu noti-icon"></i>
                             </a>
                            
                         </li>
@@ -89,7 +91,73 @@
                         </li>
 
                     </ul>
+
+                    <ul class="list-unstyled topbar-menu float-end mb-0">
+                        <li class="dropdown notification-list">
+                            <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#"
+                                role="button" aria-haspopup="false" aria-expanded="false">
+                                <i class="dripicons-experiment noti-icon"></i>
+                               
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end dropdown-menu-animated dropdown-lg">
+
+                                <!-- item-->
+                                <div class="dropdown-item noti-title">
+                                    <h5 class="m-0">
+                                        <span class="float-end">
+                                        </span>Filtros
+                                    </h5>
+                                </div>
+
+                                <div style="max-height: 200px;" data-simplebar="">
+                                    <!-- item-->
+                                    <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card,'status'=> 'ativo' ) )}}" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-primary">
+                                            <!--i class="dripicons-thumbs-up noti-icon"></i-->
+                                        </div>
+                                        <p class="notify-details">Negócios Ativos
+                                        </p>
+                                    </a>
+
+                                    <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card,'status'=> 'vendido' ) )}}" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-primary">
+                                            <!--i class="dripicons-thumbs-up noti-icon"></i-->
+                                        </div>
+                                        <p class="notify-details">Negócios Vendidos
+                                        </p>
+                                    </a>
+
+                                    <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card,'status'=> 'perdido'  ) )}}" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-primary">
+                                            <!--i class="dripicons-thumbs-up noti-icon"></i-->
+                                        </div>
+                                        <p class="notify-details">Negócios Peridos
+                                        </p>
+                                    </a>
+
+                                    <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card ) )}}" class="dropdown-item notify-item">
+                                        <div class="notify-icon bg-primary">
+                                            <!--i class="dripicons-thumbs-up noti-icon"></i-->
+                                        </div>
+                                        <p class="notify-details">Todos Negócios
+                                        </p>
+                                    </a>
+
+                                </div>
+
+                                <!-- All-->
+                                <a href="javascript:void(0);"
+                                    class="dropdown-item text-center text-primary notify-item notify-all">
+                                    + Filtros
+                                </a>
+
+                            </div>
+                        </li>
+                    </ul>
+
                 </div>
+
+
 
 
                 <h4 class="page-title">Negócios
@@ -289,140 +357,43 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade task-modal-content" id="negocio-ganho" tabindex="-1" role="dialog"
+
+<div class="modal fade task-modal-content" id="negocio-perdeu" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 id="NewTaskModalLabel">Fechar Venda: </h5>
-                <h2 class="modal-title" class="center" id="venda_titulo">Titulo Venda</h2>
+           
+                <h2 class="modal-title" class="center" id="venda_titulo">Perdeu o Cliente</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-2" action="{{route('nova_venda')}}" method="POST">
+                <form class="p-2" action="{{route('vendas.perdida')}}" method="POST">
                     @csrf
                     <div class="row">
                         <!-- Painel Esquedo -->
-                        <div class="col-md-6">
-
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Nome Completo do Cliente</label>
-                                        <input type="text" class="form-control form-control-light" id="nome_cliente"
-                                            name="cliente_nome" placeholder="Digite o nome completo do cliente" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Tipo de Crédito</label>
-                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
-                                            <option>IMOVEL</option>
-                                            <option>CARRO</option>
-                                            <option>MOTO</option>
-                                            <option>CAMINHAO</option>
-                                            <option>TERRENO</option>
-                                            <option>SERVICO</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light" id="valor_credito_md"
-                                            placeholder="Valor do Crédito" name="valor" required> 
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-priority" class="form-label">Data do Fechamento</label>
-                                        <input type="text" class="form-control form-control-light pfechamento"
-                                            data-single-date-picker="true" name="data_fechamento" value="<?php echo date("d/m/Y"); ?>" required>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Painel Esquedo -->
-                        <div class="col-md-6" style="border-left: 1px solid rgb(228 230 233);">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Vendedor Principal<span
-                                                class="text-danger"></label>
-                                        <select class="form-select form-control-light" id="task-priority"
-                                            name="vendedor_principal">
-                                            @foreach ($users as $user)
-                                                @if ($user->id == \Auth::user()->id)
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                @else
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    
-                                </div>
-
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-12">
-                                        <label for="task-title" class="form-label">Vendedor Sedundario<span
-                                                class="text-danger"></label>
-                                        <select class="form-select form-control-light" id="task-priority"
-                                            name="vendedor_secundario">
-                                            <option selected="true" value="null">Selecione um vendedor</option>
-                                            @foreach ($users as $user)
-                                                @if ($user->id == \Auth::user()->id)
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                @else
-                                                <option value="{{$user->id}}">{{$user->name}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="mb-12">
-                                        <label for="task-title" class="form-label">Quantidade de Parcelas Embutidas<span
-                                                class="text-danger"></label>
-                                        <select class="form-select form-control-light" id="task-priority"
-                                            name="parcelas_embutidas">
-                                            <option value="0" selected="true">Parcelas Embutidas</option>
-                                            <option value="1">1 Parcela</option>
-                                            <option value="2">2 Parcelas</option>
-                                            <option value="3">3 Parcelas</option>
-                                            <option value="4">4 Parcelas</option>
-                                        </select>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <label for="task-priority" class="form-label">Data da Primeira Assembleia</label>
-                                    <input type="text" class="form-control form-control-light pfechamento"
-                                            data-single-date-picker="true" name="data_primeira_assembleia" value="<?php echo date("d/m/Y"); ?>" required>
-                                </div>                    
-                            </div>
+                        <div class="col-md-12">
+                       
+                            <label for="task-title" class="form-label">Motivo da Perda</label>
+                            <select class="form-select form-control-light" name="motivo_perda">
+                                @foreach ($motivos => $motivo)
+                                <option value="{{$motivo->id}}">{{$motivo->motivo}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
+                    <br>
                     <div class="text-end">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-success">Ganhar</button>
+                        <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
-
-                    <input name="negocio_id" id="negocio_id" hidden value="">
-                    <input name="cliente_id"  id="cliente_id"  hidden value="">
+                    <input name="negocio_id" id="negocio_id_perdido" hidden value="">
+             
                 </form>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal"></div>
 
 @endsection
 
@@ -499,6 +470,25 @@
                 console.log("Negocio Updated Sucessfully")
             }
         });
+    });
+
+    $('.perdeu_button').on('click', function () {
+        var id = $(this).data('id'); 
+
+        $.ajax({
+        url: "{{url('negocios/get?id=')}}"+id,
+        type: "GET",
+        dataType: "json",
+        success:function(response) {
+   
+            document.getElementById("negocio_id_perdido").value 	= response[0]['id'];
+
+            $('#negocio-perdeu').modal('show');
+
+        }
+        
+    })
+
     });
 
     $('.ganhou_button').on('click', function () {

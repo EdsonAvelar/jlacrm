@@ -31,6 +31,7 @@
 
 .scroll { border:1px solid #ccc; width:200px; height: 200px; overflow-y: scroll;}
 
+
 </style>
 
 
@@ -83,10 +84,10 @@
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-task-modal"
                                     class="btn btn-success btn-sm ms-3">+ Add</a>
 
-                                <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive" id="atribuir_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Atribuir</a>
 
-                                <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive" data-bs-toggle="modal" data-bs-target="#distribuirModal">
+                                <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive"  id="distribuir_btn" data-bs-toggle="modal" data-bs-target="#distribuirModal">
                                 Distribuir</a>
 
                             </h4>
@@ -162,10 +163,9 @@
                     </select>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer ">
                 <input type="text" name="id" hidden value="{{app('request')->id}}">
-                <input type="text" name="modo" classe="modo" hidden value="">
-                <input type="submit" class="btn btn-success mt-2" value="Enviar">
+                <input type="submit" class="btn btn-success mt-2" id="atribuir_enviar" value="Enviar">
                 <input type="button" class="btn btn-danger mt-2 atribuir" data-bs-dismiss="modal" value="Cancelar">
                 </div>
             </div>
@@ -187,9 +187,9 @@
 
                 <div class="row">
                     <div class="col-4">
-                    <blockquote class="blockquote text-center">
-                        <h3></h3>
-                    </blockquote>
+                    
+                        <h3 id="selected_qnt" class="child"></h3>
+                    
                     </div>
                     <div class="col-4">
                         <img src="{{url('')}}/images/distribuicao.png" width="200px">
@@ -202,15 +202,16 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" id="distribuir-div">
                 <input type="text" name="id" hidden value="{{app('request')->id}}">
-                <input type="text" name="modo" classe="modo" hidden value="">
                 <input type="submit" class="btn btn-success mt-2" value="Enviar">
                 <input type="button" class="btn btn-danger mt-2 distribuir" data-bs-dismiss="modal" value="Cancelar">
             </div>
         </div>
     </div>
 </div>
+
+<input type="text" name="modo"  id="modo" hidden value="">
 </form>
 
 
@@ -366,16 +367,18 @@
 <script>
 
     $(document).ready(function () {
-        $('.atribuir').on('submit',function()
-        {
-            $('.')
-        });
+
         
+        $("#atribuir_btn").on("click",function(){
+            document.getElementById('modo').value = 'atribuir';
+        });
 
+        $("#distribuir_btn").on("click",function(){
+            document.getElementById('modo').value = 'distribuir';
+        });
+          
         $('.checkbox_sensitive').hide();
-
-        let example = $('#example').DataTable({
-            
+            let example = $('#example').DataTable({
         });
 
         let selectall = false;
@@ -396,74 +399,22 @@
                 numberNotChecked = numberNotChecked -1;
                 selectall = false;
             }
+
             if (numberNotChecked < 1){
                 $("#info_label").text("");
-                
                 $('.checkbox_sensitive').hide();
 
             }else if(numberNotChecked < 2){
                 $('.checkbox_sensitive').show();
                 $("#info_label").text(numberNotChecked + " Negócio Selecionado");
+                $('#selected_qnt').html(numberNotChecked + " <br>Negócio Selecionado");
+
             }else {
                 $("#info_label").text(numberNotChecked + " Negócios Selecionados");
+                $('#selected_qnt').html(numberNotChecked + " <br>Negócio Selecionados")
                 $('.checkbox_sensitive').show();
             }
         });
-
-
-   
-
-      /*  var table = $('#example').DataTable({
-            'columnDefs': [
-                {
-                    'targets': 0,
-                    'checkboxes': {
-                    'selectRow': true
-                    }
-                }
-            ],
-            'select': {
-                'style': 'multi'
-            },
-            'order': [[1, 'asc']]
-        });
-
-        table.on("click", "th.select-checkbox", function() {
-            if ($("th.select-checkbox").hasClass("selected")) {
-                example.rows().deselect();
-                $("th.select-checkbox").removeClass("selected");
-            } else {
-                example.rows().select();
-                $("th.select-checkbox").addClass("selected");
-            }
-        }).on("select deselect", function() {
-            ("Some selection or deselection going on")
-            if (example.rows({
-                    selected: true
-                }).count() !== example.rows().count()) {
-                $("th.select-checkbox").removeClass("selected");
-            } else {
-                $("th.select-checkbox").addClass("selected");
-            }
-        });
-        */
-        
-/**
-        $('#example').DataTable({
-            scrollResize: true,
-            scrollX: true,
-            
-        });
-
-        $("#selectAll").on( "click", function(e) {
-            if ($(this).is( ":checked" )) {
-                DT1.rows(  ).select();        
-            } else {
-                DT1.rows(  ).deselect(); 
-            }
-        });
-
- */
 
         $('#valor_credito').mask('R$ 000.000.000.000.000,00', { reverse: true });
         $('.telefone').mask('(00) 00000-0000');

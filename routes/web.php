@@ -42,6 +42,8 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::post('/nova', [VendaController::class, 'nova_venda'])->name('nova_venda');
             Route::get('/index', [VendaController::class, 'index'])->name('vendas.lista');
+            Route::post('/perdida', [VendaController::class, 'venda_perdida'])->name('vendas.perdida');
+
         }
     );
 

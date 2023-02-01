@@ -15,7 +15,11 @@ final class NegocioStatus extends Enum
     const INATIVO = 'INATIVO';
     const REATIVADO = 'REATIVADO';
 
+    const VENDIDO = 'VENDIDO';
+    const PERDIDO = 'PERDIDO';
+
+
     public static function all(){
-        return ['ATIVO', 'INATIVO', 'REATIVADO'];
+        return ['ATIVO', 'INATIVO', 'REATIVADO','VENDIDO','PERDIDO'];
     }
 }

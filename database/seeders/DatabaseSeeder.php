@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\MotivoPerda;
 use App\Models\Negocio;
 use Illuminate\Support\Facades\Hash;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,6 +23,8 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 
+		$this->motivo_Perdas();
+
 		$this->createEquipe();
 
 		$this->createCargoTable();
@@ -40,6 +43,20 @@ class DatabaseSeeder extends Seeder
 
 	}
 
+	private function motivo_Perdas(){
+
+		$motivos = [
+			'Cliente não quer comprar agora',
+			'Cliente não gostou da proposta',
+			'Cliente não atendeu 3 tentativas'
+		];
+
+		foreach ($motivos as $motivo) {
+			$perdas = new MotivoPerda();
+			$perdas->motivo = $motivo;
+			$perdas->save();	
+		}
+	}
 	private function createEquipe()
 	{
 		

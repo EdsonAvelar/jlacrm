@@ -8,7 +8,7 @@ use App\Models\Lead;
 use App\Models\Negocio;
 use App\Models\Venda;
 use App\Enums\VendaStatus;
-
+use App\Enums\NegocioStatus;
 class VendaController extends Controller
 {
     public function index(Request $request)
@@ -47,7 +47,11 @@ class VendaController extends Controller
         Lead::where('id',$cliente_id)->update(['nome'=>$cliente_nome]);
     
         # Atualizar tipo de negociacao
-        Negocio::where('id',$negocio_id)->update(['valor'=>$valor,'tipo'=>$tipo_credito]);
+
+        Negocio::where('id',$negocio_id)->update([
+                'valor'=>$valor,
+                'tipo'=>$tipo_credito,
+                'status'=> NegocioStatus::VENDIDO]);
 
         $venda = new Venda();
         $venda->data_fechamento = $data_fechamento;
@@ -64,5 +68,16 @@ class VendaController extends Controller
        
         $venda->save();
         return back()->with('status', "Venda Cadastrada com sucesso");
+    }
+
+    
+
+    public function venda_perdida(Request $request)
+    {
+        $input = $request->all();
+        $negocio_id = $input['negocio_id'];
+        Negocio::where('id',$negocio_id)->update(['status'=> NegocioStatus::PERDIDO]);
+
+        return back()->with('status', "Negócio Perdido :(");
     }
 }
