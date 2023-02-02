@@ -16,7 +16,13 @@
         user-select: none;
         /* Standard syntax */
     }
-
+    .container{
+    background-color: lightGreen;
+    
+    height: 20vw;
+    overflow:hidden;
+  
+}
     
 </style>
 @endsection
@@ -28,7 +34,7 @@
 <div class="container-fluid">
 
     <!-- start page title -->
-    <div class="row">
+    <div class="row ">
         <div class="col-12">
             <div class="page-title-box">
 
@@ -197,11 +203,16 @@
                 <?php
                     $count=1;
                     $task_list = array(1=>"one",2=>"two",3=>"three",4=>"four",5=>"five",6=>"six",7=>"seven",8=>"eight",9=>"nine",10=>"ten");
+
                 ?>
                 @foreach ($etapa_funils as $key => $value)
-
+                <?php $valor_vendido_total = 0;
+                foreach ($negocios->where('etapa_funil_id',$key) as $negocio){
+                    $valor_vendido_total = $valor_vendido_total + (float)( $negocio->valor );
+                }
+                ?>
                 <div class="tasks">
-                    <h5 class="mt-0 task-header">{{$value}}</h5>
+                    <h5 class="mt-0 task-header">{{$value}}<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
                     <div id="<?php echo $task_list[$count];?>" class="task-list-items" data={{$key}}>
 
                         @if(isset($negocios))
