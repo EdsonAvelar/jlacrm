@@ -496,9 +496,13 @@
                             </div>
                         </div>
                     </div>
+                    <br>
+                    <br>
                     <div class="text-end">
-                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">Consolidar</button>
+
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                       
                         <input type="text" id="cliente_id" name="cliente_id" hidden>
                         <input type="text" id="negocio_id" name="negocio_id" hidden>
                     </div>
@@ -533,6 +537,7 @@
                         </div>
                     </div>
                     <br>
+                   
                     <div class="text-end">
                         <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
@@ -652,17 +657,14 @@
         dataType: "json",
         success:function(response) {
          
-            console.log( response[1]['nome']  );
-            console.log( response[0]['id']  );
-            console.log( response[0]['valor']  );
-            console.log( response[1]['id']  );
-
-
             document.getElementById("cliente_id").value 	= response[1]['id'];
             document.getElementById("negocio_id").value 	= response[0]['id'];
 
             document.getElementById("cliente_nome").value 	= response[1]['nome'];
             document.getElementById("venda_titulo").textContent 	= response[0]['titulo'];
+            //document.getElementById("valor_credito_md").value 	= response[0]['valor'];
+            
+
 
 
             var x = document.getElementById("tipo_credito").getElementsByTagName('option');
@@ -690,12 +692,9 @@
         defaultDate: +7
     });
 
+
     $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
     $('#valor_credito').mask('000.000.000.000.000,00', { reverse: true });
-
-
-  
-
 
 </script>
 

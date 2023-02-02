@@ -23,11 +23,17 @@ if (app('request')->view_card == "compact"){
                 <a href="{{route('negocio_edit', array('id' => $negocio_id ) )}}" class="dropdown-item"><i
                         class="mdi mdi-pencil me-1"></i>Editar</a>
                 <!-- item-->
-                <a href="#" class="dropdown-item ganhou_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-up"></i><span
+                @if ( $negocio->status == "ATIVO" )
+                    <a href="#" class="dropdown-item ganhou_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-up"></i><span
                         class="text-success"> Ganhou</span></a>
-                <!-- item-->
-                <a href="javascript:void(0);" class="dropdown-item perdeu_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-down"></i><span
+
+                   <!-- item-->
+                   <a href="javascript:void(0);" class="dropdown-item perdeu_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-down"></i><span
                         class="text-danger"> Perdeu</span></a>
+                @endif
+                
+                
+             
             </div>
         </div>
 
