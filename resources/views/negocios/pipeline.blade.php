@@ -64,7 +64,15 @@
                             
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
-                                {{\App\Models\User::find( app('request')->proprietario)->name}}
+
+                                @if( !is_null( $proprietario))
+                                    {{$proprietario->name}}
+                                @elseif ( app('request')->proprietario == -2)
+                                    Todos
+                                @else
+                                    Não Atribuidos
+                                @endif
+
                             </button>
 
                             @if (isset($proprietarios))
@@ -72,8 +80,21 @@
            
                                 @foreach ($proprietarios as $proprietario_id => $value)
                                 <a class="dropdown-item" target="_self"
-                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id ) )}}">{{$value}}</a>
+                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id,'view_card' => app('request')->view_card ) )}}">{{$value}}</a>
                                 @endforeach
+
+                                @if (Auth::user()->hasAnyRole( ['admin']) )
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" target="_self"
+                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1','view_card' => app('request')->view_card ) )}}">Não Atribuido</a>
+                                @endif
+                            
+                                @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" target="_self"
+                                        href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view_card' => app('request')->view_card ) )}}">Todos</a>
+                                @endif
+
                             </div>
                             @endif
                         </li>
@@ -120,7 +141,7 @@
                                     </a>
 
                                     <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card,'status'=> 'vendido' ) )}}" class="dropdown-item notify-item">
-                                        <div class="notify-icon bg-primary">
+                                        <div class="notify-icon bg-success">
                                             <!--i class="dripicons-thumbs-up noti-icon"></i-->
                                         </div>
                                         <p class="notify-details">Negócios Vendidos
@@ -128,7 +149,7 @@
                                     </a>
 
                                     <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card,'status'=> 'perdido'  ) )}}" class="dropdown-item notify-item">
-                                        <div class="notify-icon bg-primary">
+                                        <div class="notify-icon bg-danger">
                                             <!--i class="dripicons-thumbs-up noti-icon"></i-->
                                         </div>
                                         <p class="notify-details">Negócios Peridos
@@ -136,7 +157,7 @@
                                     </a>
 
                                     <a href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => app('request')->view_card ) )}}" class="dropdown-item notify-item">
-                                        <div class="notify-icon bg-primary">
+                                        <div class="notify-icon bg-secondary">
                                             <!--i class="dripicons-thumbs-up noti-icon"></i-->
                                         </div>
                                         <p class="notify-details">Todos Negócios
@@ -235,11 +256,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Título<span class="text-danger">
-                                                *</label>
-                                        <input type="text" class="form-control form-control-light" id="task-title"
-                                            name="titulo" placeholder="Digite o titulo do negócio" required
-                                            value="Casa Pirituba 100k" maxlength="30">
+                                        <label for="task-title" class="form-label">Nome do Cliente<span class="text-danger">
+                                                </label>
+                                        <input type="text" class="form-control form-control-light" id="nome_cliente"
+                                            name="titulo" placeholder="Digite o nome completo do cliente" required
+                                            value="" maxlength="30">
                                     </div>
                                 </div>
 
@@ -358,6 +379,85 @@
 </div><!-- /.modal -->
 
 
+
+<div class="modal fade task-modal-content" id="negocio-ganho" tabindex="-1" role="dialog"
+    aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="NewTaskModalLabel">Consolidar Venda</h4>
+                <h2 id="venda_titulo"></h2>
+              
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-2" action="{{url('negocios/add')}}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <!-- Painel Esquedo -->
+                        <div class="col-md-6">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Título<span class="text-danger">
+                                                *</label>
+                                        <input type="text" class="form-control form-control-light" id="task-title"
+                                            name="titulo" placeholder="Digite o titulo do negócio" required
+                                            value=maxlength="30">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Tipo de Crédito</label>
+                                        <select class="form-select form-control-light" id="tipo_credito">
+                                            <option selected>IMOVEL</option>
+                                            <option>CARRO</option>
+                                            <option>MOTO</option>
+                                            <option>CAMINHAO</option>
+                                            <option>TERRENO</option>
+                                            <option>SERVICO</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Valor Crédito</label>
+                                        <input type="text" class="form-control form-control-light" id=""
+                                            placeholder="Valor do Crédito" name="valor">
+                                    </div>
+                                </div>
+
+                     
+                            </div>
+                        </div>
+                        <!-- Painel Esquedo -->
+                        <div class="col-md-6" style="border-left: 1px solid rgb(228 230 233);">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Nome Contato<span
+                                                class="text-danger"> *</label>
+                                        <input type="text" class="form-control form-control-light" id="task-title"
+                                            placeholder="Digite nome" required value="Adriano Teste" name="nome_lead">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">Consolidar</button>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 <div class="modal fade task-modal-content" id="negocio-perdeu" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -376,7 +476,7 @@
                        
                             <label for="task-title" class="form-label">Motivo da Perda</label>
                             <select class="form-select form-control-light" name="motivo_perda">
-                                @foreach ($motivos => $motivo)
+                                @foreach ($motivos as $motivo)
                                 <option value="{{$motivo->id}}">{{$motivo->motivo}}</option>
                                 @endforeach
                             </select>
@@ -387,6 +487,7 @@
                         <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
                     <input name="negocio_id" id="negocio_id_perdido" hidden value="">
+                    
              
                 </form>
             </div>
@@ -502,7 +603,10 @@
         success:function(response) {
          
             console.log( response[1]['nome']  );
+            console.log( response[0]['id']  );
             console.log( response[0]['valor']  );
+            console.log( response[1]['id']  );
+
 
             document.getElementById("cliente_id").value 	= response[1]['id'];
             document.getElementById("negocio_id").value 	= response[0]['id'];

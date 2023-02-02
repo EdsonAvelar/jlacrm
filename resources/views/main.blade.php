@@ -114,7 +114,6 @@
                                             $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
                                             $data_fim = "20/".Carbon\Carbon::now()->format('m/Y');
                                         ?>
-
                                         <a href="{{route('vendas.lista', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Vendas Realizadas</a>
                                     </li> 
                                 @endif

@@ -42,12 +42,28 @@ class CrmController extends Controller
     public function pipeline_index(Request $request )
     {
 
-        $curr_funil_id= intval( $request->query('id')) ;
+        $curr_funil_id = intval( $request->query('id')) ;
         $proprietario_id = intval( $request->query('proprietario'));
 
-        $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
-        $equipe_proprietario = User::find($proprietario_id)->equipe()->first();
 
+        $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+        $proprietario = User::find($proprietario_id);
+        $equipe_proprietario = NULL;
+
+        $equipe_exists = 1;
+        if ( !empty($proprietario)){
+            $equipe_proprietario = $proprietario->equipe()->first();
+        }else{
+            $proprietario = NULL;
+
+            if ( $proprietario_id == -2){
+                $equipe_exists = -1;
+                $equipe_proprietario = -1;
+            }
+            
+        }
+        
         $auth_user_id = Auth::user()->id;
         /**
          * Valida se é um usuário autorizado a ter essa visao
@@ -59,9 +75,11 @@ class CrmController extends Controller
                     return abort(401);
                 } else if (!Auth::user()->hasRole('gerenciar_equipe')) {
                     return abort(401);
-                } else if ($equipe->id != $equipe_proprietario->id) {
+                } else if ($equipe_exists > 0 and $equipe->id != $equipe_proprietario->id) {
                     return abort(401);
                 }
+            }else{
+                $equipe_exists = 1;
             }
         }
 
@@ -71,12 +89,39 @@ class CrmController extends Controller
         $funils = Funil::all()->pluck('nome', 'id');
 
         $query = array();
+        $ids = null;
         if ($proprietario_id == null){
             $query = [
                 ['funil_id', '=', $curr_funil_id],
                 ['user_id', '=', \Auth::user()->id],
             ];
-        }else {
+        }elseif($proprietario_id == -1){
+           
+                
+                $query = [
+                    ['user_id', '=', NULL]
+                ];
+            
+            
+        }elseif($proprietario_id == -2){
+
+             // Coordenador de equipe querendo ver todos os leads dos seus vendedores
+            
+            if ($equipe_exists == -1) {
+                $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+                $query = [
+                    ['funil_id', '=', $curr_funil_id],
+                   
+                ];
+            }else {
+                // Admin querendo ver todos os leads dos seus vendedores
+                $query = [
+                    ['id', '>', 0]
+                ];
+            }
+        
+        } else {
             $query = [
                 ['funil_id', '=', $curr_funil_id],
                 ['user_id', '=', $proprietario_id],
@@ -91,7 +136,12 @@ class CrmController extends Controller
             array_push($query, $status_arr);
         }
         
-        $negocios = Negocio::where($query)->get();
+        if ($proprietario_id == -2 and $equipe_exists == -1){
+            $negocios = Negocio::whereIn('user_id', $ids)->get();
+        }else {
+            $negocios = Negocio::where($query)->get();
+        }
+        
 
         $etapa_funils = $pipeline->first()->etapa_funils()->pluck('nome', 'ordem')->toArray();
         ksort($etapa_funils);
@@ -113,16 +163,16 @@ class CrmController extends Controller
         if ($view == 'list') {
 
             if ( !$negocios->first()){
-                return view('negocios/list', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','motivos'));
+                return view('negocios/list', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','proprietario','motivos'));
             }  
     
-            return view('negocios/list', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','motivos'));
+            return view('negocios/list', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','proprietario','motivos'));
         }else {
 
             if ( !$negocios->first()){
-                return view('negocios/pipeline', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','motivos'));
+                return view('negocios/pipeline', compact('funils', 'etapa_funils','curr_funil_id','users','proprietarios','proprietario','motivos'));
             }  
-            return view('negocios/pipeline', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','motivos'));
+            return view('negocios/pipeline', compact('funils', 'etapa_funils', 'negocios','curr_funil_id','users','proprietarios','proprietario','motivos'));
         }
         
     }
@@ -262,9 +312,11 @@ class CrmController extends Controller
 
             $novo_proprietario = NULL;
 
+            $nome_destino = "Não Atribuido";
             if ($novo_proprietario_id != "-1"){
                 $proprietario = User::find($novo_proprietario_id);
                 $novo_proprietario = $proprietario->id;
+                $nome_destino = $proprietario->name;
             }
 
             $count = 0;
@@ -275,7 +327,7 @@ class CrmController extends Controller
                 $count = $count + 1;
             }
 
-            return back()->with('status', "Enviados ".$count." negócios transferidos para ".$proprietario->name);
+            return back()->with('status', "Enviados ".$count." negócios transferidos para ".$nome_destino);
 
         }elseif($input['modo'] == "distribuir"){
 

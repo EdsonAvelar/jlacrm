@@ -56,7 +56,15 @@
                                     <li class="dropdown notification-list d-none d-sm-inline-block">
                                     <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
                                         aria-haspopup="true" aria-expanded="false">
-                                        {{\App\Models\User::find( app('request')->proprietario)->name}}
+                                        
+                                        @if( !is_null( $proprietario))
+                                            {{$proprietario->name}}
+                                        @elseif ( app('request')->proprietario == -2)
+                                            Todos
+                                        @else
+                                            Não Atribuidos
+                                        @endif
+
                                     </button>
 
                                     @if (isset($proprietarios))
@@ -65,8 +73,26 @@
                                         <a class="dropdown-item" target="_self"
                                             href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id, 'view' => 'list' ) )}}">{{$value}}</a>
                                         @endforeach
+
+                                        
+
+                                            @if (Auth::user()->hasAnyRole( ['admin']) )
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1', 'view' => 'list' ) )}}">Não Atribuido</a>
+                                            @endif
+                                        
+                                            @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item" target="_self"
+                                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2', 'view' => 'list' ) )}}">Todos</a>
+                                            @endif
+                                        
                                     </div>
                                     @endif
+                                    
+                               
+
                                     </li>
                                     <button type="button" class="btn btn-light dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -130,7 +156,14 @@
                                     <td>{{ $negocio->valor }}</td>
                                     <td>{{ $negocio->etapa_funil->nome }}</td>
                                     <td>{{ $negocio->fechamento }}</td>
-                                    <td>{{ $negocio->user->name }}</td>
+                                    <td>
+                                        @if (is_null($negocio->user))
+                                            Não Atribuido
+                                        @else 
+                                            {{ $negocio->user->name }}
+                                        @endif
+                                    
+                                    </td>
                                 </tr>
                                 @endforeach
                             @endif

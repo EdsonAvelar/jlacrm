@@ -78,7 +78,13 @@ if (app('request')->view_card == "compact"){
        
         @if($compact != true)
         <p class="{{$mb}}">
-            <img src="{{url('')}}/images/users/user_{{$negocio->user->id}}/{{$negocio->user ->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
+            
+            @if (!is_null($negocio->user))
+            <img src="{{url('')}}/images/users/user_{{$negocio->user->id}}/{{$negocio->user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
+            @else
+            <img src="{{url('')}}/images/users/avatars/user-padrao.png" alt="user-img" class="avatar-xs rounded-circle me-1">
+            @endif
+            
             <span class="align-middle">{{ $leadname }}</span>
         </p>
         @endif

@@ -120,10 +120,7 @@ i.icon-danger {
 
                             @endforeach
                         @endif
-
                         </tbody>
-
-                        
                     </table>
                     <h3 class="text-success">Total Vendidos: R$ {{number_format($valor_vendido_total,2)}}</h3>
                 </div>
