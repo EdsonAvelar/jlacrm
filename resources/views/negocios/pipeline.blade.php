@@ -256,9 +256,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Nome do Cliente<span class="text-danger">
+                                        <label for="task-title" class="form-label">Titulo<span class="text-danger">
                                                 </label>
-                                        <input type="text" class="form-control form-control-light" id="nome_cliente"
+                                        <input type="text" class="form-control form-control-light" 
                                             name="titulo" placeholder="Digite o nome completo do cliente" required
                                             value="" maxlength="30">
                                     </div>
@@ -385,13 +385,13 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="NewTaskModalLabel">Consolidar Venda</h4>
-                <h2 id="venda_titulo"></h2>
+                <h5 class="modal-title" id="NewTaskModalLabel">Venda: </h5>
+                <h3 id="venda_titulo"></h3>
               
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-2" action="{{url('negocios/add')}}" method="POST">
+                <form class="p-2" action="{{url('vendas/nova')}}" method="POST">
                     @csrf
                     <div class="row">
                         <!-- Painel Esquedo -->
@@ -400,18 +400,19 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Título<span class="text-danger">
+                                        <label for="task-title" class="form-label">Nome Cliente<span class="text-danger">
                                                 *</label>
-                                        <input type="text" class="form-control form-control-light" id="task-title"
-                                            name="titulo" placeholder="Digite o titulo do negócio" required
-                                            value=maxlength="30">
+                                        <input type="text" class="form-control form-control-light" id="cliente_nome"
+                                            name="cliente_nome" placeholder="Digite o titulo do negócio" required
+                                            value="" maxlength="30">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Tipo de Crédito</label>
-                                        <select class="form-select form-control-light" id="tipo_credito">
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            
                                             <option selected>IMOVEL</option>
                                             <option>CARRO</option>
                                             <option>MOTO</option>
@@ -425,8 +426,16 @@
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light" id=""
+                                        <input type="text" class="form-control form-control-light" id="valor_credito_md"
                                             placeholder="Valor do Crédito" name="valor">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-priority" class="form-label">Data do Fechamento</label>
+                                        <input type="text" class="form-control form-control-light pfechamento"
+                                            data-single-date-picker="true" name="data_fechamento" value="<?php echo date("d/m/Y"); ?>">
                                     </div>
                                 </div>
 
@@ -436,21 +445,62 @@
                         <!-- Painel Esquedo -->
                         <div class="col-md-6" style="border-left: 1px solid rgb(228 230 233);">
                             <div class="row">
-                                <div class="col-md-12">
+                             
+                            <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Nome Contato<span
-                                                class="text-danger"> *</label>
-                                        <input type="text" class="form-control form-control-light" id="task-title"
-                                            placeholder="Digite nome" required value="Adriano Teste" name="nome_lead">
+                                        <label for="task-title" class="form-label">Primeiro Vendedor</label>
+                                        <select class="form-select form-control-light" id="vendedor_principal" name="vendedor_principal">
+                                            <option selected value="{{Auth::user()->id}}">{{ Auth::user()->name}}</option>
+                                            @foreach (\Auth::user()->get() as $user)
+                                            @if ($user->id != Auth::user()->id)
+                                                <option value="{{$user->id}}">{{ $user->name}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Segundo Vendedor</label>
+                                        <select class="form-select form-control-light" id="vendedor_secundario" name="vendedor_secundario">
+                                            <option selected value="null">Selecione</option>
+                                            @foreach (\Auth::user()->get() as $user)
+                                            @if ($user->id != Auth::user()->id)
+                                                <option value="{{$user->id}}">{{ $user->name}}</option>
+                                            @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Parcelas Embutidas</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="parcelas_embutidas">
+                                            
+                                            <option selected  value="0">Nenhuma</option>
+                                            <option value="1">1 Parcela</option>
+                                            <option value="2">2 Parcelas</option>
+                                            <option value="3">3 Parcelas</option>
+                                            <option value="4">4 Parcelas</option>
+                                        </select>
                                     </div>
                                 </div>
 
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-priority" class="form-label">Data da Primeira Assembleia</label>
+                                        <input type="text" class="form-control form-control-light pfechamento"
+                                            data-single-date-picker="true" name="data_primeira_assembleia" value="<?php echo date("d/m/Y"); ?>">
+                                    </div>
+                                </div>
+                                
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-success">Consolidar</button>
+                        <input type="text" id="cliente_id" name="cliente_id" hidden>
+                        <input type="text" id="negocio_id" name="negocio_id" hidden>
                     </div>
                 </form>
             </div>
@@ -611,7 +661,7 @@
             document.getElementById("cliente_id").value 	= response[1]['id'];
             document.getElementById("negocio_id").value 	= response[0]['id'];
 
-            document.getElementById("nome_cliente").value 	= response[1]['nome'];
+            document.getElementById("cliente_nome").value 	= response[1]['nome'];
             document.getElementById("venda_titulo").textContent 	= response[0]['titulo'];
 
 
