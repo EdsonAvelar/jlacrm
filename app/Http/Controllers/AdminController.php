@@ -32,11 +32,7 @@ class AdminController extends Controller
         return view('login');
     }
 
-    public function dashboard(){
-
-        return view('dashboard');
-    }
-
+ 
     public function logout(){
         Session::flush();
         Auth::logout();

@@ -3,11 +3,11 @@
 
 @section('headers')
 
-<!-- plugin js -->
-<script src="assets/js/vendor/dropzone.min.js"></script>
-<!-- init js -->
-<script src="assets/js/ui/component.fileupload.js"></script>
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
+<!-- Include Date Range Picker -->
+
+<link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('main_content')
@@ -22,8 +22,11 @@
             <div class="page-title-box">
                 <div class="page-title-right">
                     <form class="d-flex">
-                        <div class="input-group">
-                            <input type="text" class="form-control form-control-light" id="dash-daterange">
+
+                    
+                        <div class="input-group"> 
+                            <input class="form-control btn btn-primary" type="text" name="daterange" id="datapicker_dash" value="{{app('request')->input('data_inicio')}} - {{app('request')->input('data_fim')}}" />
+
                             <span class="input-group-text bg-primary border-primary text-white">
                                 <i class="mdi mdi-calendar-range font-13"></i>
                             </span>
@@ -50,8 +53,8 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Campaign Sent</h5>
-                            <h3 class="my-2 py-1">9,184</h3>
+                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Campaign Sent">Negócios Ativos</h5>
+                            <h3 class="my-2 py-1">{{$stats['leads_ativos']}}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 3.27%</span>
                             </p>
@@ -141,5 +144,23 @@
 
 
 
+<script>
+
+$(document).ready(function () {
+
+    $('#datapicker_dash').daterangepicker(
+        {
+            locale: {
+            format: 'DD-MM-YYYY'
+            }
+        }, 
+        function(start, end, label) {
+            //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            window.location.href = "{{url('home?')}}"+"data_inicio="+start.format('DD/MM/YYYY')+"&"+"data_fim="+end.format('DD/MM/YYYY');
+
+    });
+});
+
+</script>
 
 @endsection

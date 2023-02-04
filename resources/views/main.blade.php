@@ -26,7 +26,7 @@
 </head>
 
 <body class="loading"
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":true, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
 
 
@@ -60,11 +60,17 @@
                 <!--- Sidemenu -->
                 <ul class="side-nav">
                     <li class="side-nav-item">
-                        <a href="{{route('home')}}" class="side-nav-link">
+                   
+                        <?php 
+                            $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
+                            $data_fim = "20/".Carbon\Carbon::now()->format('m/Y');
+                        ?>
+                        <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}" class="side-nav-link">
                             <i class="uil-home-alt"></i>
                             <span> Dashboard</span>
                         </a>
                     </li>
+
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#crm" aria-expanded="false"
                             aria-controls="crm" class="side-nav-link">

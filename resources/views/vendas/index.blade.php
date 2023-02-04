@@ -5,10 +5,6 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
-<!-- Include Date Range Picker -->
-<script type="text/javascript" src="cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-
 <link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 
 <style>

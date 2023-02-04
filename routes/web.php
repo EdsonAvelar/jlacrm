@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\NegocioController;
 use App\Http\Controllers\FuncionarioController;
@@ -25,7 +26,7 @@ Route::post('/login', [AdminController::class, 'login']);
 
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/home', [AdminController::class, 'dashboard'])->name('home');
+    Route::get('/home', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/logout', [AdminController::class, 'logout']);
 
     Route::group(
