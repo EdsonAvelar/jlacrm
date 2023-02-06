@@ -354,10 +354,9 @@
     <script src="{{url('')}}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
     <!-- third party js ends -->
 
-    <!-- demo app -->
-    <script src="{{url('')}}/js/pages/demo.dashboard.js"></script>
+ 
     <!-- end demo js-->
-
+    
 
     <script type="text/javascript">
 			window.setTimeout(function() {

@@ -151,7 +151,6 @@ class NegocioController extends Controller
             Negocio::create($deal_input);
         }
 
-
         if (sizeof($import_data) > 0) {
             try {
                 DB::table('negocios')->insert($import_data);
@@ -163,6 +162,4 @@ class NegocioController extends Controller
 
         return back()->with('status',  "Negocios atribuidos com sucesso");
     }
-
-
 }

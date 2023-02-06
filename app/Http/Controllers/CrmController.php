@@ -185,7 +185,7 @@ class CrmController extends Controller
 
         $deal_input = array();
         $deal_input['titulo'] = $input['titulo'];
-        $deal_input['valor'] = trim($input['valor'], ".");
+        $deal_input['valor'] = $valor = str_replace('.','',$input['valor'] ) ; //trim($input['valor'], ".");
         $deal_input['fechamento'] = $input['fechamento'];
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
@@ -200,8 +200,8 @@ class CrmController extends Controller
         $rules = [
             'nome' => 'required',
             'telefone' => 'required',
-
         ];
+        
         $error_msg = [
             'nome.required' => 'Nome do Contato é obrigatório',
             'telefone.required' => 'Telefone do Contato é obrigatório',

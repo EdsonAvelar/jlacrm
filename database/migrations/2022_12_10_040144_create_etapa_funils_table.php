@@ -15,13 +15,10 @@ return new class extends Migration {
         Schema::create('etapa_funils', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
-
+            $table->enum('is_agendamento',['true','false']);
             $table->integer('ordem');
-
             $table->integer('funil_id')->unsigned();
             $table->foreign('funil_id')->references('id')->on('funils');
-
-
             $table->timestamps();
         });
     }

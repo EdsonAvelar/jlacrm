@@ -9,6 +9,7 @@ use App\Http\Controllers\NegocioController;
 use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\EquipeController;
+use App\Http\Controllers\AgendamentoController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -105,6 +106,17 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
             Route::post('/drag_update', [EquipeController::class, 'drag_update']);
             Route::post('/excluir', [EquipeController::class, 'excluir']);           
             Route::post('/create', [EquipeController::class, 'create']);           
+
+        }
+    );
+});
+
+Route::group(['middleware' => ['auth', 'role:vendedor']], function () {
+    Route::group(
+        ['prefix' => 'agendamento'],
+        function () {
+            Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
+            Route::post('/add', [AgendamentoController::class, 'drag_update'])->name('agendamento.add');         
 
         }
     );

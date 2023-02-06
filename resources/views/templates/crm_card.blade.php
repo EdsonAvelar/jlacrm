@@ -37,7 +37,7 @@ if (app('request')->view_card == "compact"){
             </div>
         </div>
 
-    <small class="float-end text-muted">{{$created_at}}</small>
+    <a class="float-end text-muted" href="tel:{{$telefone}}">{{$telefone}}</a>
 
         <?php 
         
@@ -98,4 +98,3 @@ if (app('request')->view_card == "compact"){
     </div> <!-- end card-body -->
 </div>
 <!-- Task Item End -->
-

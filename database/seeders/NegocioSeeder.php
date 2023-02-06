@@ -36,8 +36,8 @@ class NegocioSeeder extends Seeder
              */
             $lead = new Lead();
             $lead->nome = $faker->name;
-            $lead->telefone = "11123123121";
-            $lead->whatsapp = "12321312321";
+            $lead->telefone = $faker->cellphonenumber;
+            $lead->whatsapp = $faker->cellphonenumber;
             $lead->email = $faker->email;
 
             $lead->endereco = $faker->address;

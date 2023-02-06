@@ -23,7 +23,14 @@
     overflow:hidden;
   
 }
-    
+
+.tasks.tasks:not(:last-child) {
+    margin-right: 0rem;
+}
+
+.task {
+    width: 1rem;
+}
 </style>
 @endsection
 
@@ -177,16 +184,10 @@
                                     class="dropdown-item text-center text-primary notify-item notify-all">
                                     + Filtros
                                 </a>
-
                             </div>
                         </li>
                     </ul>
-
                 </div>
-
-
-
-
                 <h4 class="page-title">Negócios
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model"
                         class="btn btn-success btn-sm ms-3">+ Add</a>
@@ -195,7 +196,7 @@
         </div>
 
     </div>
-    <!-- end page title -->
+    <!-- end page title -->/9*6
 
     <div class="row">
         <div class="col-12">
@@ -203,7 +204,6 @@
                 <?php
                     $count=1;
                     $task_list = array(1=>"one",2=>"two",3=>"three",4=>"four",5=>"five",6=>"six",7=>"seven",8=>"eight",9=>"nine",10=>"ten");
-
                 ?>
                 @foreach ($etapa_funils as $key => $value)
                 <?php $valor_vendido_total = 0;
@@ -227,7 +227,7 @@
                             'tipo' => $negocio->tipo,
                             'leadname' => $negocio->lead->nome,
                             'last_update' => $last_update,
-                            'created_at' => $negocio->created_at
+                            'telefone' => $negocio->lead->telefone
                             ])
                             @endforeach
                         @endif
@@ -292,7 +292,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light" id="valor_credito"
+                                        <input type="text" class="form-control form-control-light money" id="valor_credito"
                                             placeholder="Valor do Crédito" name="valor">
                                     </div>
                                 </div>
@@ -322,7 +322,6 @@
                                             @foreach ($etapa_funils as $key => $value)
                                                 @if ($key == 1)
                                                 <option value="{{$key}}" selected="true">{{$value}}</option>
-
                                                 @else
                                                 <option value="{{$key}}">{{$value}}</option>
                                                 @endif
@@ -437,11 +436,10 @@
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light" id="valor_credito_md"
+                                        <input type="text" class="form-control form-control-light" data-mask="000.000.000.000.000,00" id="valor_credito_md"
                                             placeholder="Valor do Crédito" name="valor">
                                     </div>
                                 </div>
-
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-priority" class="form-label">Data do Fechamento</label>
@@ -449,8 +447,6 @@
                                             data-single-date-picker="true" name="data_fechamento" value="<?php echo date("d/m/Y"); ?>">
                                     </div>
                                 </div>
-
-                     
                             </div>
                         </div>
                         <!-- Painel Esquedo -->
@@ -561,6 +557,40 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade task-modal-content" id="agendamento-add" tabindex="-1" role="dialog"
+    aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+           
+                <h2 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-2" action="{{route('agendamento.add')}}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <!-- Painel Esquedo -->
+                        <div class="col-md-12">
+                       
+                            <div class="mb-12">
+                                <label for="task-priority" class="form-label">Data Agendamento</label>
+                                <input type="text" class="form-control form-control-light agendamento"
+                                    data-single-date-picker="true" name="data_agendado" value="<?php echo date("d/m/Y"); ?>">
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                   
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success">Confirmar</button>
+                    </div>
+                    <input name="negocio_id" id="negocio_id_perdido" hidden value="">
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 @endsection
 
@@ -570,11 +600,9 @@
 <!-- demo js -->
 <script src="{{url('')}}/js/ui/component.dragula.js"></script>
 
-
 <script src="{{url('')}}/js/jquery.mask.js"></script>
 
 <script>
-
 
     document.addEventListener('touchmove', function () { e.preventDefault(); }, { passive: false });
 
@@ -612,8 +640,6 @@
         scrollable = true;
     });
 
-
-
     dragek.on('drop', function (el, target, source, sibling) {
         scrollable = true;
         $.ajaxSetup({
@@ -622,79 +648,27 @@
             }
         });
 
+        
+       
         info = [];
         info[0] = el.getAttribute('id');
         info[1] = source.getAttribute('data');
         info[2] = target.getAttribute('data');
         
-       
+        console.log ( target );
+
+
         $.ajax({
             url: "{{url('negocios/drag_update')}}",
             type: 'post',
             data: { info: info },
             Type: 'json',
             success: function (res) {
-                console.log("Negocio Updated Sucessfully")
+
+                //$('agendamento-add').modal('show');
             }
         });
     });
-
-    $('.perdeu_button').on('click', function () {
-        var id = $(this).data('id'); 
-
-        $.ajax({
-        url: "{{url('negocios/get?id=')}}"+id,
-        type: "GET",
-        dataType: "json",
-        success:function(response) {
-   
-            document.getElementById("negocio_id_perdido").value 	= response[0]['id'];
-
-            $('#negocio-perdeu').modal('show');
-
-        }
-        
-    })
-
-    });
-
-    $('.ganhou_button').on('click', function () {
-        var id = $(this).data('id'); 
-
- 
-        $.ajax({
-        url: "{{url('negocios/get?id=')}}"+id,
-        type: "GET",
-        dataType: "json",
-        success:function(response) {
-         
-            document.getElementById("cliente_id").value 	= response[1]['id'];
-            document.getElementById("negocio_id").value 	= response[0]['id'];
-
-            document.getElementById("cliente_nome").value 	= response[1]['nome'];
-            document.getElementById("venda_titulo").textContent 	= response[0]['titulo'];
-            //document.getElementById("valor_credito_md").value 	= response[0]['valor'];
-            
-
-
-
-            var x = document.getElementById("tipo_credito").getElementsByTagName('option');
-            var i;
-            for (i = 0; i < x.length; i++) {
-                console.log(response[0]['tipo']+'-'+x[i].value)
-
-                if (x[i].value ==  response[0]['tipo']){
-                    x[i].selected = 'selected';
-                    break;
-                }
-            }
-
-            $('#negocio-ganho').modal('show');
-        }
-    });
-
-    });
-
 
     $('.pfechamento').datepicker({
         orientation: 'top',
@@ -704,8 +678,73 @@
     });
 
 
-    $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
-    $('#valor_credito').mask('000.000.000.000.000,00', { reverse: true });
+    $('.agendamento').datepicker({
+        orientation: 'top',
+        todayHighlight: true,
+        format: "dd/mm/yyyy HH:MM",
+        defaultDate: +1
+    });
+
+    
+    $('.perdeu_button').on('click', function () {
+        var id = $(this).data('id'); 
+
+        $.ajax({
+            url: "{{url('negocios/get?id=')}}"+id,
+            type: "GET",
+            dataType: "json",
+            success:function(response) {
+    
+                document.getElementById("negocio_id_perdido").value 	= response[0]['id'];
+
+                $('#negocio-perdeu').modal('show');
+
+            }
+        });
+    });
+
+    $('.ganhou_button').on('click', function () {
+        var id = $(this).data('id'); 
+
+        $.ajax({
+            url: "{{url('negocios/get?id=')}}"+id,
+            type: "GET",
+            dataType: "json",
+            success:function(response) {
+            
+                document.getElementById("cliente_id").value 	= response[1]['id'];
+                document.getElementById("negocio_id").value 	= response[0]['id'];
+
+                document.getElementById("cliente_nome").value 	= response[1]['nome'];
+                document.getElementById("cliente_nome").value 	= response[1]['nome'];
+                document.getElementById("valor_credito_md").value 	= response[0]['valor'];
+
+                $("#valor_credito_md").unmask().mask("000.000.000.000.000,00");
+                $("#valor_credito_md").val(response[0]['valor']).trigger("input");
+
+    
+                var x = document.getElementById("tipo_credito").getElementsByTagName('option');
+                var i;
+                for (i = 0; i < x.length; i++) {
+                   
+
+                    if (x[i].value ==  response[0]['tipo']){
+                        x[i].selected = 'selected';
+                        break;
+                    }
+                }
+
+                $('#negocio-ganho').modal('show');
+            }
+        });
+    });
+
+
+    $(document).ready(function(){
+        $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
+        $('#valor_credito').mask('000.000.000.000.000,00', { reverse: true });
+        $('.telefone').mask('(00) 00000-0000');
+    });
 
 </script>
 
