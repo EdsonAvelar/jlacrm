@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Agendamento;
 use Auth;
 use Illuminate\Http\Request;
 use App\Enums\NegocioStatus;
 use Carbon\Carbon;
 use App\Models\Negocio;
 use App\Models\Venda;
+use App\Models\User;
+use App\Models\Cargo;
 
 class DashboardController extends Controller
 {
@@ -26,19 +29,39 @@ class DashboardController extends Controller
 
             $stats = [];
 
-          
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
 
             $stats['total_vendido'] = Venda::whereBetween('data_fechamento', [$from, $to])->sum('valor');
-
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
-
             $stats['potencial_venda'] = Negocio::where('status',NegocioStatus::ATIVO)->sum('valor');
 
+           
 
+            //Agendamento::where($query)
+            $cargo = Cargo::where('nome','Vendedor')->first();
+            $users = User::where('cargo_id',$cargo->id)->get();
 
-            return view('dashboard', compact('stats'));
+            $vendedores = array();
+            $agendamentos = array();
+
+            foreach ($users as $vendedor){
+                $query = [
+                    ['data_agendado', '>=', $data_inicio],
+                    ['user_id', '=', $vendedor->id]
+                ];
+                
+                $count = Agendamento::where($query)->count();
+
+                $vendedor_agendamento[$vendedor->name] = $count;
+                array_push($vendedores, $vendedor->name);
+                array_push($agendamentos, $count);
+            }
+
+            return view('dashboards.admin', compact('stats','vendedores','agendamentos'));
+        }else {
+
+            return view('dashboards.coordenador');
         }
         
     }

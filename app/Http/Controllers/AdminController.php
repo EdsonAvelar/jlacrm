@@ -11,6 +11,11 @@ use Validator;
 
 class AdminController extends Controller
 {
+    public function index(){
+
+        return view('index');
+    }
+
     public function login(Request  $req){
 
         $submit = $req['submit'];

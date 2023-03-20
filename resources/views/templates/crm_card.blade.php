@@ -50,7 +50,7 @@ if (app('request')->view_card == "compact"){
                 echo "<span class=\"badge bg-danger float-begin\">URGENTE</span>";
             }
         }elseif ($negocio->status == "PERDIDO"){
-            echo "<span class=\"badge bg-danger float-begin\">PERDIDO</span>";
+            echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
         }elseif ($negocio->status == "VENDIDO"){
             echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
         }else {
@@ -80,15 +80,14 @@ if (app('request')->view_card == "compact"){
                 <b>R$ {{ number_format( (float)$valor,2)}}</b>
             </span>
         </p>
-
        
         @if($compact != true)
         <p class="{{$mb}}">
             
             @if (!is_null($negocio->user))
-            <img src="{{url('')}}/images/users/user_{{$negocio->user->id}}/{{$negocio->user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                <img src="{{url('')}}/images/users/user_{{$negocio->user->id}}/{{$negocio->user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
             @else
-            <img src="{{url('')}}/images/users/avatars/user-padrao.png" alt="user-img" class="avatar-xs rounded-circle me-1">
+                <img src="{{url('')}}/images/users/avatars/user-padrao.png" alt="user-img" class="avatar-xs rounded-circle me-1">
             @endif
             
             <span class="align-middle">{{ $leadname }}</span>

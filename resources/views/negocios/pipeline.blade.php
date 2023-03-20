@@ -1,31 +1,19 @@
 @extends('main')
-
-
+<?php  use App\Models\EtapaFunil; ?>
 @section('headers')
 
-
-
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<link href="{{url('')}}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
-    .task-list-items {
-        -webkit-user-select: none;
-        /* Safari */
-        -ms-user-select: none;
-        /* IE 10 and IE 11 */
-        user-select: none;
-        /* Standard syntax */
-    }
-    .container{
-    background-color: lightGreen;
+ 
     
-    height: 20vw;
-    overflow:hidden;
-  
-}
 
 .tasks.tasks:not(:last-child) {
     margin-right: 0rem;
+}
+
+.ui-timepicker-wrapper .ui-timepicker-list li {
+    width: 100px; 
 }
 
 .task {
@@ -42,6 +30,7 @@
 
     <!-- start page title -->
     <div class="row ">
+    
         <div class="col-12">
             <div class="page-title-box">
 
@@ -196,24 +185,28 @@
         </div>
 
     </div>
-    <!-- end page title -->/9*6
-
-    <div class="row">
+    <!-- end page title -->
+ 
+    <div class="row container-drag" id="container"  data-containers='["<?php echo implode('","', $etapa_funils) ?>"]' >
         <div class="col-12">
             <div class="board">
-                <?php
-                    $count=1;
-                    $task_list = array(1=>"one",2=>"two",3=>"three",4=>"four",5=>"five",6=>"six",7=>"seven",8=>"eight",9=>"nine",10=>"ten");
-                ?>
+            
                 @foreach ($etapa_funils as $key => $value)
-                <?php $valor_vendido_total = 0;
-                foreach ($negocios->where('etapa_funil_id',$key) as $negocio){
-                    $valor_vendido_total = $valor_vendido_total + (float)( $negocio->valor );
-                }
+
+                @if(isset($negocios))
+
+                    <?php $valor_vendido_total = 0;
+                    foreach ($negocios->where('etapa_funil_id',$key) as $negocio){
+                        $valor_vendido_total = $valor_vendido_total + (float)( $negocio->valor );
+                    }
                 ?>
+                 @endif
                 <div class="tasks">
+
+                @if(isset($negocios))
                     <h5 class="mt-0 task-header">{{$value}}<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
-                    <div id="<?php echo $task_list[$count];?>" class="task-list-items" data={{$key}}>
+                    @endif 
+                    <div id="{{$value}}"  class="task-list-items" data="{{$key}}" agendamento="{{EtapaFunil::where('id',$key)->first()->is_agendamento}}">
 
                         @if(isset($negocios))
                             @foreach ($negocios->where('etapa_funil_id',$key) as $negocio)
@@ -235,7 +228,6 @@
                     </div>
                 </div>
 
-                <?php $count = $count + 1;?>
                 @endforeach
 
             </div> <!-- end .board-->
@@ -559,24 +551,33 @@
 
 <div class="modal fade task-modal-content" id="agendamento-add" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
            
-                <h2 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h2>
+                <h5 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h5>
+                <h2 id="negocio_nome">Cliente</h2>
+             
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-2" action="{{route('agendamento.add')}}" method="POST">
+                <form class="p-2" action="{{route('agendamento.add')}}" method="POST" id="agendamento_para">
                     @csrf
                     <div class="row">
                         <!-- Painel Esquedo -->
                         <div class="col-md-12">
                        
                             <div class="mb-12">
-                                <label for="task-priority" class="form-label">Data Agendamento</label>
-                                <input type="text" class="form-control form-control-light agendamento"
-                                    data-single-date-picker="true" name="data_agendado" value="<?php echo date("d/m/Y"); ?>">
+                                <label for="task-priority" class="form-label">Agendado para:</label>
+                                <input type="text" class="form-control form-control-light agendamento"agendamento"
+                                    data-single-date-picker="true" name="data_agendado" value="{{date("d/m/Y")}}">
+                            </div>
+
+                  
+
+                            <div class="mb-12">
+                                <label for="task-priority" class="form-label">Hora:</label>
+                                <input type="text" name="hora_agendado" class="form-control form-control-light timedatapicker" >
                             </div>
                         </div>
                     </div>
@@ -585,7 +586,9 @@
                     <div class="text-end">
                         <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
-                    <input name="negocio_id" id="negocio_id_perdido" hidden value="">
+                    <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{app('request')->proprietario}}">
+                    <input name="negocio_id" id="negocio_id_agen" hidden value="">
+                    <input name="data_agendamento" id="data_agendamento" hidden value="{{date("d/m/Y")}}">
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -602,10 +605,14 @@
 
 <script src="{{url('')}}/js/jquery.mask.js"></script>
 
+<script src="{{url('')}}/js/jquery.timepicker.min.js"></script>
+
+
 <script>
 
     document.addEventListener('touchmove', function () { e.preventDefault(); }, { passive: false });
 
+    /*
     var dragek = dragula([
         document.querySelector('#one'),
         document.querySelector('#two'),
@@ -619,7 +626,16 @@
         document.querySelector('#ten')],
         { direction: 'horizontal' }
 
-    );
+    );*/
+
+    var cont = [];
+    var arr = Array( $('.container-drag').data('containers'))[0];
+    arr.forEach(function(n){
+        cont.push(document.querySelector('#'+n))
+    });
+
+    var dragek = dragula( cont );
+    
 
 
     var scrollable = true;
@@ -654,9 +670,6 @@
         info[0] = el.getAttribute('id');
         info[1] = source.getAttribute('data');
         info[2] = target.getAttribute('data');
-        
-        console.log ( target );
-
 
         $.ajax({
             url: "{{url('negocios/drag_update')}}",
@@ -665,7 +678,13 @@
             Type: 'json',
             success: function (res) {
 
-                //$('agendamento-add').modal('show');
+                if (target.getAttribute('agendamento') == 'yes'){
+                    
+                    $('#negocio_id_agen').val(info[0]);
+                    $('#negocio_nome').html(res);
+
+                    $('#agendamento-add').modal('show');
+                }
             }
         });
     });
@@ -681,7 +700,8 @@
     $('.agendamento').datepicker({
         orientation: 'top',
         todayHighlight: true,
-        format: "dd/mm/yyyy HH:MM",
+        format: "dd/mm/yyyy",
+        timeFormat: "HH:mm:ss",
         defaultDate: +1
     });
 
@@ -744,6 +764,14 @@
         $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
         $('#valor_credito').mask('000.000.000.000.000,00', { reverse: true });
         $('.telefone').mask('(00) 00000-0000');
+
+        $(document).ready(function(){
+            $('input.timepicker').timepicker({});
+        });
+
+        $('.timedatapicker').timepicker({ 'timeFormat': 'H:i' });
+        $('.timedatapicker').timepicker('setTime', new Date());
+
     });
 
 </script>

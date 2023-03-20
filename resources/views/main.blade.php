@@ -124,7 +124,7 @@
                                     </li> 
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
+                                @if (Auth::user()->hasAnyRole( ['gerenciar_funcionarios']) )
                                     <li>
                                         <a href="{{route('equipes.index')}}">Equipes</a>
                                     </li>
@@ -364,6 +364,11 @@
 				$(this).remove(); 
 			});
 		}, 4000);
+
+
+        $("form").submit(function() {
+            $(":submit", this).attr("disabled", "disabled");
+        });
 	</script>
     
     @yield('specific_scripts')

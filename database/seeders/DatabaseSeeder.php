@@ -131,6 +131,7 @@ class DatabaseSeeder extends Seeder
 		$role_employee = new Role();
 		$role_employee->name = 'gerenciar_vendas';
 		$role_employee->save();
+
 	}
 
 

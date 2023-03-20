@@ -10,7 +10,8 @@ use App\Models\Negocio;
 use App\Models\User;
 use App\Models\Lead;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Proposta;
+use Carbon\Carbon;
 class NegocioController extends Controller
 {
     public function importar_index()
@@ -102,7 +103,7 @@ class NegocioController extends Controller
         $negocio = Negocio::find($id);
         
 
-         return view('negocios.edit', compact('negocio') );
+        return view('negocios.edit', compact('negocio') );
     }
 
     public function negocio_get(Request $request) {
@@ -161,5 +162,80 @@ class NegocioController extends Controller
         }
 
         return back()->with('status',  "Negocios atribuidos com sucesso");
+    }
+
+    public function simulacao(Request $request){
+       
+        $negocio_id = $request->query('negocio_id');
+        $negocio = Negocio::where('id',$negocio_id)->first();
+
+
+        return view('negocios.simulacao',compact('negocio'));
+    }
+
+    public function criar_proposta(Request $request){
+
+    
+        $input = $request->all();
+        $tipo = $input["tipo"];
+        $con_parcelas =  $input['con-parcelas'];
+
+        if ($request->has('reduzido')){
+
+            $subs = array("R","$",".");
+            $valor_reduzido = floatval( str_replace($subs,"",$input['con-parcelas']))*70/100;
+            
+            $con_parcelas = "R$ ".number_format($valor_reduzido,2);
+            $input['reduzido'] = 's';
+        }else{
+            $input['reduzido'] = 'n';
+        }
+
+        $con_entrada = $input['con-entrada'];
+        $embutidas = intval( $input['parcelas_embutidas']);
+        if ( $embutidas > 0 ){
+            
+            
+            $subs = array("R","$",".");
+            $valor_entrada = floatval( str_replace($subs,"",$input['con-entrada']));
+
+            $valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas;
+
+            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2);
+        
+        }
+
+        
+        $proposta = new Proposta();
+        $proposta['tipo'] = $input['tipo'];
+        $proposta['banco'] = $input['banco'];
+        $proposta['credito'] = $input['credito'];
+        $proposta['fin-entrada'] = $input['fin-entrada'];
+        $proposta['fin-parcelas'] = $input['fin-parcelas'];
+        $proposta['fin-prazo'] = $input['fin-prazo'];
+        $proposta['fin-rendaexigida'] = $input['fin-rendaexigida'];
+        $proposta['cartorio'] = $input['cartorio'];
+        $proposta['fin-juros-pagos'] = $input['fin-juros-pagos'];
+        $proposta['val-pago-total'] = $input['val-pago-total'];
+        $proposta['con-entrada'] = $input['con-entrada'];
+        $proposta['con-parcelas'] = $input['con-parcelas'];
+        $proposta['con-prazo'] = $input['con-prazo'];
+        $proposta['con-rendaexigida'] = $input['con-rendaexigida'];
+        $proposta['con-valor-pago'] = $input['con-valor-pago'];
+        $proposta['reduzido'] = $input['reduzido'];
+        $proposta['parcelas_embutidas'] = $input['parcelas_embutidas'];
+        $proposta['data_proposta'] = Carbon::now()->format('Y-m-d H:i:s');
+
+
+        $proposta['user_id'] = \Auth::user()->id;
+        $proposta['negocio_id'] = $input['negocio_id'];
+
+        $proposta->save();
+
+
+
+        
+        
+        return view('negocios.proposta', compact('tipo','con_parcelas','con_entrada'));
     }
 }

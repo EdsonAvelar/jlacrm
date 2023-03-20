@@ -259,6 +259,10 @@ class CrmController extends Controller
         $negocio->etapa_funil_id = $etapa_id;
 
         $negocio->save();
+
+        $name = $negocio->lead->nome;
+
+        return [$name];
     }
 
     public function inserir_comentario(Request $request)

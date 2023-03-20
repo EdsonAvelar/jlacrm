@@ -4,7 +4,7 @@
 @section('headers')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
-
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <!-- Include Date Range Picker -->
 
 <link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -15,6 +15,7 @@
 
 <!-- Start Content-->
 <div class="container-fluid">
+ 
 
     @include('layouts.alert-msg')
     <div class="row">
@@ -126,6 +127,26 @@
                 </div> <!-- end card-body -->
             </div> <!-- end card -->
         </div> <!-- end col -->
+
+        <div class="col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Agendamentos</h5>
+                        <div class="col-12">
+                            <div class="text-end">
+                                
+                                <div id="chart">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div> <!-- end row-->
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+
     </div>
 
    
@@ -140,6 +161,30 @@
 <script>
 
 $(document).ready(function () {
+
+    var options = {
+        chart: {
+            type: 'bar'
+        },
+        series: [{
+            name: 'agendamento',
+            data: <?php echo json_encode($agendamentos) ?> ,
+            
+        }],
+        xaxis: {
+            categories: <?php echo json_encode($vendedores) ?>
+        },
+        plotOptions: {
+            bar: {
+            distributed: true
+            }
+        }  
+    }
+
+    var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+    chart.render();
+
 
     $('#datapicker_dash').daterangepicker(
         {

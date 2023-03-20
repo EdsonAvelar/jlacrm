@@ -21,11 +21,15 @@ use App\Http\Controllers\AgendamentoController;
 |
 */
 
+Route::get('/', [AdminController::class, 'index']);
+
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);
 
 
 Route::group(['middleware' => 'auth'], function () {
+
+
 
     Route::get('/home', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/logout', [AdminController::class, 'logout']);
@@ -35,6 +39,15 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/add-lead', [CrmController::class, 'add_lead']);
             Route::post('/add-lead', [CrmController::class, 'add_lead']);
+        }
+    );
+
+    Route::group(
+        ['prefix' => 'agendamento'],
+        function () {
+            Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
+            Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');         
+
         }
     );
 
@@ -70,6 +83,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
+
+            Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
+            Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
         }
     );
 
@@ -111,13 +127,3 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
     );
 });
 
-Route::group(['middleware' => ['auth', 'role:vendedor']], function () {
-    Route::group(
-        ['prefix' => 'agendamento'],
-        function () {
-            Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
-            Route::post('/add', [AgendamentoController::class, 'drag_update'])->name('agendamento.add');         
-
-        }
-    );
-});

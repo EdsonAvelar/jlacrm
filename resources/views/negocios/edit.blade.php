@@ -38,26 +38,15 @@
                         <div class="col-sm-6">
                             <div class="text-center mt-sm-0 mt-3 text-sm-end">
                                 <div class="btn-group mt-sm-0 mt-3 text-sm-end">
-                                    <button type="button" class="btn btn-primary dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
                                         <i class="mdi mdi-face">{{$negocio->user->email}}</i><span></span>
                                     </button>
-                                    <div class="dropdown-menu">
-
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
-                                    </div>
+                                   
                                 </div>
-
-
                                 <button type="button" class="btn btn-success"><i class="mdi mdi-thumb-up"></i>
                                     <span>Ganhou</span> </button>
                                 <button type="button" class="btn btn-danger"><i class="mdi mdi-thumb-down"></i>
                                     <span>Perdeu</span> </button>
-
 
                                 <div class="btn-group mt-sm-0 mt-3 text-sm-end">
                                     <button type="button" class="btn btn-primary dropdown-toggle"
@@ -65,15 +54,10 @@
                                         <i class="mdi mdi-apps"></i><span></span>
                                     </button>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="#">Separated link</a>
+ 
+                                        <a class="dropdown-item" href="{{route('negocios.simulacao', array('negocio_id' => $negocio->id) )}}">Simulacao</a>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div> <!-- end col-->
                     </div> <!-- end row -->
@@ -87,8 +71,6 @@
         <div class="col-xl-4 col-lg-5">
             <div class="card text-center">
                 <div class="card-body">
-
-
                     <div class="text-start mt-3">
                         <h4 class="page-title text-uppercase">Pessoa</h4>
                         <p class="text-muted font-13 mb-3">
@@ -186,13 +168,13 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#administrativo" data-bs-toggle="tab" aria-expanded="false"
+                            <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false"
                                 class="nav-link rounded-0">
                                 Adminstrativo
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#administrativo" data-bs-toggle="tab" aria-expanded="false"
+                            <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false"
                                 class="nav-link rounded-0">
                                 Pós-venda
                             </a>
@@ -205,46 +187,29 @@
                                 Ultimas Atividades</h5>
 
                             <div class="timeline-alt pb-0">
+
+                            @foreach($negocio->propostas as $proposta) 
                                 <div class="timeline-item">
                                     <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                     <div class="timeline-item-info">
-                                        <h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-                                        <p class="font-14">websitename.com <span class="ms-2 font-12">Year: 2015 -
-                                                18</span></p>
-                                        <p class="text-muted mt-2 mb-0 pb-3">Everyone realizes why a new common language
-                                            would be desirable: one could refuse to pay expensive translators.
-                                            To achieve this, it would be necessary to have uniform grammar,
-                                            pronunciation and more common words.</p>
+                                        <h5 class="mt-0 mb-1">Proposta: {{$proposta->tipo}} - {{$proposta->credito}}</h5>
+                                        <p class="font-14">{{$proposta->user->name}} <span class="ms-2 font-12"> em {{$proposta->data_proposta}}</span></p>
+                                        <p class="text-muted mt-2 mb-0 pb-3">Foi simulador uma Entrada de <strong>{{$proposta['con-entrada']}}</strong>  
+                                        com parcelas de <strong>{{$proposta['con-parcelas']}} 
+                                        @if ($proposta['reduzido'] =='s')
+                                            com redução
+                                        @else
+                                            sem redução
+                                        @endif
+                                        </strong>
+                                        e com <strong>{{$proposta['parcelas_embutidas']}}</strong> parcela(s) embutida(s)
+
+                                        
+                                    </p>
                                     </div>
                                 </div>
 
-                                <div class="timeline-item">
-                                    <i class="mdi mdi-circle bg-primary-lighten text-primary timeline-icon"></i>
-                                    <div class="timeline-item-info">
-                                        <h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-                                        <p class="font-14">Software Inc. <span class="ms-2 font-12">Year: 2012 -
-                                                15</span></p>
-                                        <p class="text-muted mt-2 mb-0 pb-3">If several languages coalesce, the grammar
-                                            of the resulting language is more simple and regular than that of
-                                            the individual languages. The new common language will be more
-                                            simple and regular than the existing European languages.</p>
-
-                                    </div>
-                                </div>
-
-                                <div class="timeline-item">
-                                    <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-                                    <div class="timeline-item-info">
-                                        <h5 class="mt-0 mb-1">Graphic Designer</h5>
-                                        <p class="font-14">Coderthemes Design LLP <span class="ms-2 font-12">Year: 2010
-                                                - 12</span></p>
-                                        <p class="text-muted mt-2 mb-0 pb-2">The European languages are members of
-                                            the same family. Their separate existence is a myth. For science
-                                            music sport etc, Europe uses the same vocabulary. The languages
-                                            only differ in their grammar their pronunciation.</p>
-                                    </div>
-                                </div>
-
+                            @endforeach
                             </div>
                             <!-- end timeline -->
 

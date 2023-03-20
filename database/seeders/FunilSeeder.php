@@ -43,6 +43,7 @@ class FunilSeeder extends Seeder
         $etapa = new EtapaFunil();
         $etapa->nome = "REUNIAO_AGENDADA";
         $etapa->funil_id = $funil->id;
+        $etapa->is_agendamento = "yes";
         $etapa->ordem = 3;
         $etapa->save();
 

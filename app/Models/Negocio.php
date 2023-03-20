@@ -23,6 +23,11 @@ class Negocio extends Model
         return $this->belongsTo("App\Models\Funil");
     }
 
+    public function propostas()
+    {
+        return $this->hasMany("App\Models\Proposta");
+    }
+
     public function etapa_funil()
     {
         return $this->belongsTo("App\Models\EtapaFunil");
