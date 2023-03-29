@@ -282,7 +282,6 @@ drake.on('drop', function (el, target, source, sibling) {
     info[1] = source.getAttribute('data');
     info[2] = target.getAttribute('data');
     
-    console.log(info);
 
     $.ajax({
         url: "{{url('equipes/drag_update')}}",

@@ -86,6 +86,12 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
+
+            Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);
+            Route::post('/add_aprovacao', [NegocioController::class, 'add_aprovacao']);
+            Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);
+
+            
         }
     );
 

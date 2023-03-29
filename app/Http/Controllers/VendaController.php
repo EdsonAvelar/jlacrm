@@ -70,8 +70,6 @@ class VendaController extends Controller
         return back()->with('status', "Venda Cadastrada com sucesso");
     }
 
-    
-
     public function venda_perdida(Request $request)
     {
         $input = $request->all();

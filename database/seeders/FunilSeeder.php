@@ -48,8 +48,9 @@ class FunilSeeder extends Seeder
         $etapa->save();
 
         $etapa = new EtapaFunil();
-        $etapa->nome = "ACOMPANHAMENTO";
+        $etapa->nome = "REUNIAO";
         $etapa->funil_id = $funil->id;
+        $etapa->is_agendamento = "yes";
         $etapa->ordem = 4;
         $etapa->save();
 
@@ -60,11 +61,16 @@ class FunilSeeder extends Seeder
         $etapa->save();
 
         $etapa = new EtapaFunil();
-        $etapa->nome = "FECHAMENTO";
+        $etapa->nome = "ACOMPANHAMENTO";
         $etapa->funil_id = $funil->id;
-        $etapa->ordem = 6;
+        $etapa->ordem =6;
         $etapa->save();
 
+        $etapa = new EtapaFunil();
+        $etapa->nome = "FECHAMENTO";
+        $etapa->funil_id = $funil->id;
+        $etapa->ordem = 7;
+        $etapa->save();
 
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EtapaFunil;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -11,6 +12,10 @@ use App\Models\User;
 use App\Models\Lead;
 use Illuminate\Support\Facades\DB;
 use App\Models\Proposta;
+use App\Models\Reuniao;
+use App\Models\Agendamento;
+use App\Models\Aprovacao;
+
 use Carbon\Carbon;
 class NegocioController extends Controller
 {
@@ -20,9 +25,7 @@ class NegocioController extends Controller
 
         $users = User::all();
 
-        return view('negocios/importar', compact('negocios_importados','users'));
-
-       
+        return view('negocios/importar', compact('negocios_importados','users'));       
     }
 
     public function importar_upload(Request $request)
@@ -168,15 +171,23 @@ class NegocioController extends Controller
        
         $negocio_id = $request->query('negocio_id');
         $negocio = Negocio::where('id',$negocio_id)->first();
+        
+        $etapa = EtapaFunil::find($negocio->etapa_funil_id)->nome;
 
+        //$negocio->etapa_funil_id'
 
-        return view('negocios.simulacao',compact('negocio'));
+        if ($etapa == "REUNIAO"){
+            return view('negocios.simulacao',compact('negocio'));
+        }else {
+            return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
+        }
+        
     }
 
     public function criar_proposta(Request $request){
 
-    
         $input = $request->all();
+        
         $tipo = $input["tipo"];
         $con_parcelas =  $input['con-parcelas'];
 
@@ -231,11 +242,75 @@ class NegocioController extends Controller
         $proposta['negocio_id'] = $input['negocio_id'];
 
         $proposta->save();
-
-
-
-        
         
         return view('negocios.proposta', compact('tipo','con_parcelas','con_entrada'));
+    }
+
+    
+    public function drag_update(Request $res)
+    {
+
+        $input = $res->input();
+        $id_negocio = $input['info'][0];
+        $id_origem = $input['info'][1];
+        $id_destino = $input['info'][2];
+
+        $negocio = Negocio::find($id_negocio);
+
+        if ($id_destino > 0){
+            $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+        }else {
+            $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+        }
+
+    }
+
+    public function add_reuniao(Request $res)
+    {
+        $input = $res->input();
+        $id_negocio = $input['info'][0];
+        $id_destino = $input['info'][2];
+        
+        $agendamento = Agendamento::where('negocio_id',$id_negocio)->first();
+        
+        if ( $agendamento){
+            $reuniao = new Reuniao();
+            $reuniao->agendamento_id = $agendamento->id;
+            $reuniao->user_id = \Auth::user()->id 
+            $reuniao->data_reuniao = Carbon::now()->format('Y-m-d H:i:s');
+            $reuniao->save(); 
+
+            $negocio = Negocio::find($id_negocio);
+            if ($id_destino > 0){
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+            }else {
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+            }
+
+        }
+        
+    }
+
+    public function add_aprovacao(Request $res){
+        $input = $res->input();
+        $id_negocio = $input['info'][0];
+        $id_destino = $input['info'][2];
+        
+        $negocio = Negocio::find($id_negocio);
+
+        if ( $negocio ){
+            $aprovacao = new Aprovacao();
+            $aprovacao->data_aprovacao = Carbon::now()->format('Y-m-d H:i:s');
+            $aprovacao->negocio_id =  $negocio->id;
+            $aprovacao->user_id = \Auth::user()->id 
+
+            $aprovacao->save();
+
+            if ($id_destino > 0){
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+            }else {
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+            }
+        }
     }
 }

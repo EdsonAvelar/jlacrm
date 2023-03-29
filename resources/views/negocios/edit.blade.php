@@ -4,8 +4,6 @@
 @section('main_content')
 
 <div class="container-fluid">
-
-    @include('layouts.alert-msg')
     <div class="row">
         <div class="col-sm-12">
             <!-- Profile -->
@@ -54,7 +52,6 @@
                                         <i class="mdi mdi-apps"></i><span></span>
                                     </button>
                                     <div class="dropdown-menu">
- 
                                         <a class="dropdown-item" href="{{route('negocios.simulacao', array('negocio_id' => $negocio->id) )}}">Simulacao</a>
                                     </div>
                                 </div>

@@ -6,7 +6,34 @@
 <link href="{{url('')}}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
  
-    
+ #spinner-div {
+  position: fixed;
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
+}   
+
+.text-primary {
+    color: #13a2e3!important;
+}
+.spinner-border2 {
+    display: inline-block;
+    width: 10rem;
+    height: 10rem;
+    vertical-align: 100%;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: .75s linear infinite spinner-border;
+    animation: .75s linear infinite spinner-border;
+    text-align: center;
+    margin: 20%;
+}
 
 .tasks.tasks:not(:last-child) {
     margin-right: 0rem;
@@ -24,7 +51,7 @@
 
 @section('main_content')
 
-
+<div id="alert"></div>
 <!-- Start Content-->
 <div class="container-fluid">
 
@@ -206,7 +233,7 @@
                 @if(isset($negocios))
                     <h5 class="mt-0 task-header">{{$value}}<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
                     @endif 
-                    <div id="{{$value}}"  class="task-list-items" data="{{$key}}" agendamento="{{EtapaFunil::where('id',$key)->first()->is_agendamento}}">
+                    <div id="{{$value}}"  class="task-list-items" data="{{$key}}" data-etapa="{{$value}}" agendamento="{{EtapaFunil::where('id',$key)->first()->is_agendamento}}">
 
                         @if(isset($negocios))
                             @foreach ($negocios->where('etapa_funil_id',$key) as $negocio)
@@ -549,16 +576,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade task-modal-content" id="agendamento-add" tabindex="-1" role="dialog"
+<div class="modal fade task-modal-content" id="agendamento-add" 
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
            
                 <h5 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h5>
-                <h2 id="negocio_nome">Cliente</h2>
-             
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form class="p-2" action="{{route('agendamento.add')}}" method="POST" id="agendamento_para">
@@ -569,12 +593,9 @@
                        
                             <div class="mb-12">
                                 <label for="task-priority" class="form-label">Agendado para:</label>
-                                <input type="text" class="form-control form-control-light agendamento"agendamento"
-                                    data-single-date-picker="true" name="data_agendado" value="{{date("d/m/Y")}}">
+                                <input type="text" class="form-control form-control-light agendamento"
+                                    data-single-date-picker="true" name="data_agendado" value="{{date('d/m/Y')}}">
                             </div>
-
-                  
-
                             <div class="mb-12">
                                 <label for="task-priority" class="form-label">Hora:</label>
                                 <input type="text" name="hora_agendado" class="form-control form-control-light timedatapicker" >
@@ -584,8 +605,47 @@
                     <br>
                    
                     <div class="text-end">
-                        <button type="submit" class="btn btn-success">Confirmar</button>
+                        <button type="submit" id="confirmar_agendamento" class="btn btn-success">Confirmar</button>
                     </div>
+                    <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{app('request')->proprietario}}">
+                    <input name="negocio_id" id="negocio_id_agen" hidden value="">
+                    <input name="data_agendamento" id="data_agendamento" hidden value="{{date('d/m/Y')}}">
+                    <div id="database" data-el="" data-source="" data-target=""></div>
+
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<div class="modal fade task-modal-content" id="agendamento-confirmar" tabindex="-1" role="dialog"
+    aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+           
+                <h5 class="modal-title" class="center" id="venda_titulo">Confirmar Reunião</h5>
+                <h2 id="agendamento_confirmar_nome">Cliente</h2>
+             
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="p-2" action="{{route('agendamento.add')}}" method="POST" id="agendamento_para">
+                    @csrf
+                    <div class="row">
+                        <!-- Painel Esquedo -->
+                            <div class="col-md-6">
+                                <label>Reunião Confirmado para o Agendamento</label>
+                                <h4 id="agendamento_confirmar_reuniao"></h4>
+                            </div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success">Confirmar</button>
+                            </div>
+                        
+                    </div>
+                    <hr>
+
                     <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{app('request')->proprietario}}">
                     <input name="negocio_id" id="negocio_id_agen" hidden value="">
                     <input name="data_agendamento" id="data_agendamento" hidden value="{{date("d/m/Y")}}">
@@ -595,6 +655,13 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div id="spinner-div" class="pt-5">
+  <div class="spinner-border2 text-primary" role="status">
+  </div>
+</div>
+
+
+
 @endsection
 
 @section('specific_scripts')
@@ -602,31 +669,28 @@
 <script src="{{url('')}}/js/vendor/dragula.min.js"></script>
 <!-- demo js -->
 <script src="{{url('')}}/js/ui/component.dragula.js"></script>
-
 <script src="{{url('')}}/js/jquery.mask.js"></script>
-
 <script src="{{url('')}}/js/jquery.timepicker.min.js"></script>
+
 
 
 <script>
 
+    function showAlert(obj){
+        var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
+            '   <strong>' + obj.message + '</strong>'+
+            '   </div>';
+
+        $('#alert').append(html);
+        window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function(){
+				$(this).remove(); 
+			});
+		}, 4000);
+    }
+
+
     document.addEventListener('touchmove', function () { e.preventDefault(); }, { passive: false });
-
-    /*
-    var dragek = dragula([
-        document.querySelector('#one'),
-        document.querySelector('#two'),
-        document.querySelector('#three'),
-        document.querySelector('#four'),
-        document.querySelector('#five'),
-        document.querySelector('#six'),
-        document.querySelector('#seven'),
-        document.querySelector('#eight'),
-        document.querySelector('#nine'),
-        document.querySelector('#ten')],
-        { direction: 'horizontal' }
-
-    );*/
 
     var cont = [];
     var arr = Array( $('.container-drag').data('containers'))[0];
@@ -634,10 +698,10 @@
         cont.push(document.querySelector('#'+n))
     });
 
-    var dragek = dragula( cont );
+    var dragek = dragula( cont , {
+        revertOnSpill: true
+    });
     
-
-
     var scrollable = true;
 
     var listener = function (e) {
@@ -656,7 +720,40 @@
         scrollable = true;
     });
 
+
+    $('#confirmar_agendamento').on('hide', function (e) {
+        console.log(e);
+        });
+
+
+    $('#confirmar_agendamento').on('click',function(){
+        
+     
+
+        info = [];
+        info[0] = $('#database').data('el');
+        info[1] = $('#database').data('source');
+        info[2] = $('#database').data('target');
+
+        $("#spinner-div").show();
+            $.ajax({
+                url: "{{url('negocios/drag_update')}}",
+                type: 'post',
+                data: { info: info },
+                Type: 'json',
+                success: function (res) {
+                } ,
+                complete: function () {
+                    $("#spinner-div").hide(); //Request is complete so hide spinner
+                }
+            });
+
+    });
+
+ 
+
     dragek.on('drop', function (el, target, source, sibling) {
+
         scrollable = true;
         $.ajaxSetup({
             headers: {
@@ -664,30 +761,93 @@
             }
         });
 
-        
+        $("#spinner-div").on('')
+
        
+
         info = [];
         info[0] = el.getAttribute('id');
         info[1] = source.getAttribute('data');
         info[2] = target.getAttribute('data');
+     
 
-        $.ajax({
-            url: "{{url('negocios/drag_update')}}",
-            type: 'post',
-            data: { info: info },
-            Type: 'json',
-            success: function (res) {
+        if (target.getAttribute('data-etapa') == "REUNIAO_AGENDADA"){
 
-                if (target.getAttribute('agendamento') == 'yes'){
-                    
-                    $('#negocio_id_agen').val(info[0]);
-                    $('#negocio_nome').html(res);
+            $('#negocio_id_agen').val(info[0]);
+            $('#agendamento-add').modal('show');
 
-                    $('#agendamento-add').modal('show');
-                }
+            $('#database').attr('data-el',   info[0]    );
+            $('#database').attr('data-source', info[1] );
+            $('#database').attr('data-target',  info[2]);
+
+        }else if(target.getAttribute('data-etapa') == "REUNIAO"){
+
+            if ( source.getAttribute('data-etapa') == "REUNIAO_AGENDADA"){
+                $("#spinner-div").show();
+                $.ajax({
+                    url: "{{url('negocios/add_reuniao')}}",
+                    type: 'post',
+                    data: { info: info },
+                    Type: 'json',
+                    success: function (res) {
+                        console.log(res);
+                        
+                    },
+                    complete: function () {
+                        $("#spinner-div").hide(); //Request is complete so hide spinner
+                    }
+                });
+            }else {
+                showAlert({message: 'O negócio precisa estar em REUNIAO_AGENDADA antes de REUNIAO', class:"danger"});
+                dragek.cancel(true);
+               
             }
-        });
-    });
+        
+        } else if(target.getAttribute('data-etapa') == "APROVACAO"){
+
+            if ( source.getAttribute('data-etapa') == "REUNIAO"){
+                $("#spinner-div").show();
+                $.ajax({
+                    url: "{{url('negocios/add_aprovacao')}}",
+                    type: 'post',
+                    data: { info: info },
+                    Type: 'json',
+                    success: function (res) {
+                        console.log(res);
+                    
+                    },
+                    complete: function () {
+                        $("#spinner-div").hide(); //Request is complete so hide spinner
+                    }
+                });
+            }else {
+                showAlert({message: 'O negócio precisa estar em REUNIÃO antes de APROVACAO', class:"danger"});
+                dragek.cancel(true);
+            
+            }
+
+
+
+
+            }else {
+            
+            $.ajax({
+                url: "{{url('negocios/drag_update')}}",
+                type: 'post',
+                data: { info: info },
+                Type: 'json',
+                success: function (res) {
+                } ,
+                complete: function () {
+                   
+                }
+            });
+        }       
+        
+
+
+    
+});
 
     $('.pfechamento').datepicker({
         orientation: 'top',
