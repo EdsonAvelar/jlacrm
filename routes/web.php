@@ -21,17 +21,16 @@ use App\Http\Controllers\AgendamentoController;
 |
 */
 
-Route::get('/', [AdminController::class, 'index']);
+Route::get('/', [AdminController::class, 'index'])->name('landingpage');
 
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);
 
 
+Route::get('/cadastro', [PageController::class, 'login']);
+
 Route::group(['middleware' => 'auth'], function () {
-
-
-
-    Route::get('/home', [DashboardController::class, 'dashboard'])->name('home');
+    Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/logout', [AdminController::class, 'logout']);
 
     Route::group(

@@ -28,7 +28,7 @@ class AdminController extends Controller
             ]);
 
             if(Auth::attempt($req->only('email','password'))){
-                return redirect('/home');
+                return redirect('/crm');
             }else{
                 return redirect('/login')->withError('Email ou senha incorreto');
             }
