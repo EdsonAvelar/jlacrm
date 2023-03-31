@@ -148,6 +148,8 @@ class DatabaseSeeder extends Seeder
 		$importar_leads = Role::where('name', 'importar_leads')->first();
 		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
+
+		$cargo_gerente = Cargo::where('nome', 'Gerente Geral')->first();
 		
 		$role_gerente = Role::where('name', 'admin')->first();
 		$user = new User();
