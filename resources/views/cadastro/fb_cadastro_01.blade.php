@@ -81,9 +81,14 @@
 
               <input name="funil_id" value="{{\App\Models\Funil::where('nome','VENDAS')->first()->id}}" hidden>
               <input name="etapa_funil_id" value="{{\App\Models\EtapaFunil::where('nome','OPORTUNIDADE')->first()->id}}" hidden>
+              <input name="campanha" value="{{app('request')->campanha}}" hidden>
+              <input name="fonte" value="{{app('request')->fonte}}" hidden>
+
               <div class="form-btn">
                 <button class="submit-btn">Solicitar Simulação</button>
               </div>
+
+
             </form>
           </div>
         </div>

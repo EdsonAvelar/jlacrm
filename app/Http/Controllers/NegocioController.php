@@ -16,6 +16,9 @@ use App\Models\Reuniao;
 use App\Models\Agendamento;
 use App\Models\Aprovacao;
 
+use App\Models\Atividade;
+
+
 use Carbon\Carbon;
 class NegocioController extends Controller
 {
@@ -104,7 +107,6 @@ class NegocioController extends Controller
     public function negocio_edit(Request $request) {
         $id = $request->query('id');
         $negocio = Negocio::find($id);
-        
 
         return view('negocios.edit', compact('negocio') );
     }
@@ -139,7 +141,7 @@ class NegocioController extends Controller
             $lead->fonte = $neg->fonte;
             $lead->campanha = $neg->campanha;
             $lead->data_conversao = $neg->data_conversao;
-             $lead->save();
+            $lead->save();
 
             $deal_input = array();
             $deal_input['titulo'] = "Negócio com ".$neg->nome;
@@ -174,7 +176,10 @@ class NegocioController extends Controller
 
         //$negocio->etapa_funil_id'
 
+        
+
         if ($etapa == "REUNIAO"){
+
             return view('negocios.simulacao',compact('negocio'));
         }else {
             return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
@@ -239,7 +244,11 @@ class NegocioController extends Controller
         $proposta['user_id'] = \Auth::user()->id;
         $proposta['negocio_id'] = $input['negocio_id'];
 
+        
+
         $proposta->save();
+
+        Atividade::add_atividade(\Auth::user()->id, "Nova proposta criada id: ".$proposta->id, $input['negocio_id'] );
         
         return view('negocios.proposta', compact('tipo','con_parcelas','con_entrada'));
     }
@@ -253,7 +262,7 @@ class NegocioController extends Controller
         $id_origem = $input['info'][1];
         $id_destino = $input['info'][2];
 
-        $negocio = Negocio::find($id_negocio);
+        Atividade::add_atividade(\Auth::user()->id, "Cliente movido para ".EtapaFunil::find($id_destino)->nome, $id_negocio);
 
         if ($id_destino > 0){
             $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
@@ -276,8 +285,10 @@ class NegocioController extends Controller
             $reuniao = new Reuniao();
             $reuniao->agendamento_id = $agendamento->id;
             $reuniao->user_id = \Auth::user()->id;
-            $reuniao->data_reuniao = Carbon::now()->format('Y-m-d H:i:s');
+            $reuniao->data_reuniao = Carbon::now()->format('Y-m-d');
             $reuniao->save(); 
+
+            Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
 
             $negocio = Negocio::find($id_negocio);
             if ($id_destino > 0){
@@ -299,11 +310,13 @@ class NegocioController extends Controller
 
         if ( $negocio ){
             $aprovacao = new Aprovacao();
-            $aprovacao->data_aprovacao = Carbon::now()->format('Y-m-d H:i:s');
+            $aprovacao->data_aprovacao = Carbon::now()->format('Y-m-d');
             $aprovacao->negocio_id =  $negocio->id;
             $aprovacao->user_id = \Auth::user()->id;
 
             $aprovacao->save();
+
+            Atividade::add_atividade(\Auth::user()->id, "Cliente Aprovado", $id_negocio);
 
             if ($id_destino > 0){
                 $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
@@ -312,4 +325,42 @@ class NegocioController extends Controller
             }
         }
     }
+
+    public function negocio_update(Request $res)
+    {
+        $input = $res->input();
+        
+        $id_negocio = $input['id_negocio'];
+        $neg = Negocio::find($id_negocio);
+
+       
+
+        $neg_fields = array();
+        $neg_fields['valor'] = $input['valor'];
+        $neg_fields['titulo'] = $input['titulo'];
+        $neg_fields['grupo'] = $input['grupo'];
+        $neg_fields['cota'] = $input['cota'];
+        $neg_fields['data_assembleia'] = $input['data_assembleia'];
+        $neg_fields['contrato'] = $input['contrato'];
+
+        Negocio::where('id',$id_negocio)->update($neg_fields);
+
+        $lead_fields = array();
+        $lead_fields['nome'] = $input['nome'];
+        $lead_fields['email'] = $input['email'];
+        $lead_fields['telefone'] = $input['telefone'];
+        $lead_fields['whatsapp'] = $input['whatsapp'];
+        $lead_fields['endereco'] = $input['endereco'];
+        $lead_fields['complemento'] = $input['complemento'];
+        $lead_fields['cep'] = $input['cep'];
+
+        Lead::where( 'id', $neg->lead->id)->update($lead_fields);
+
+        Atividade::add_atividade(\Auth::user()->id, "Atualização de campos", $id_negocio );
+
+
+        return back()->with('status','Negócio atualizado com sucesso!');
+    }
+
+    
 }

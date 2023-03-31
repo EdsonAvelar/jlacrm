@@ -15,6 +15,8 @@ use \App\Models\NegocioComentario;
 use Auth;
 use Validator;
 
+use App\Models\Atividade;
+
 class CrmController extends Controller
 {
     public function add_lead(Request $request)
@@ -248,17 +250,22 @@ class CrmController extends Controller
         return back()->with('status', "Negócio " . $deal_input['titulo'] . " Criado com Sucesso");
     }
 
+    
+
     public function drag_update(Request $request)
     {
         $negocio_id = $request['info'][0];
         $target_etapa_id = $request['info'][2];
 
-        $etapa_id = EtapaFunil::find($target_etapa_id)->id;
+        $etapa = EtapaFunil::find($target_etapa_id);
+        $etapa_id = $etapa->id;
 
         $negocio = Negocio::find($negocio_id);
         $negocio->etapa_funil_id = $etapa_id;
 
         $negocio->save();
+
+        Atividade::add_atividade(\Auth::user()->id, "Negócio foi motivo para ".$etapa->nome, $negocio_id );
 
         $name = $negocio->lead->nome;
 
@@ -309,6 +316,8 @@ class CrmController extends Controller
         
         if ($input['modo'] == "atribuir"){
 
+            
+
             $negocios = $input['negocios'];
             $novo_proprietario_id = $input['novo_proprietario_id'];
 
@@ -329,7 +338,17 @@ class CrmController extends Controller
                 $negocio->etapa_funil_id = $etapa_funils[1];
                 $negocio->save();
                 $count = $count + 1;
+                
+                if ($novo_proprietario){
+                    
+                    Atividade::add_atividade(\Auth::user()->id, "Cliente Atribuido a ".User::find($novo_proprietario)->name, $negocio->id);
+                }else {
+                    Atividade::add_atividade(\Auth::user()->id, "Cliente colocado como não atribuido", $negocio->id);
+                }
+                
             }
+
+            
 
             return back()->with('status', "Enviados ".$count." negócios transferidos para ".$nome_destino);
 
@@ -349,6 +368,8 @@ class CrmController extends Controller
                 $negocio->user_id = $usuarios[$user_count_dist];
                 $negocio->etapa_funil_id = $etapa_funils[1];
                 $negocio->save();
+
+                Atividade::add_atividade(\Auth::user()->id, "Cliente Distribuido para ".User::find($negocio->user_id)->name, $negocio->id);
 
                 //$negocio->save();
                 if ($user_count_dist + 1 == $user_count){

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('whatsapp', 32)->nullable();
             $table->string('email', 254)->nullable();
             
+            # campanhas
             $table->string('data_conversao', 254)->nullable();
             $table->string('fonte', 254)->nullable();
             $table->string('campanha', 254)->nullable();

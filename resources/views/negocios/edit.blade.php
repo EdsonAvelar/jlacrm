@@ -138,13 +138,12 @@
                             Se ja é cliente
                         </p>
 
-                        <p class="text-muted mb-2 font-13"><strong>Grupo:</strong> <span class="ms-2"> 1231</span></p>
-                        <p class="text-muted mb-2 font-13"><strong>Cotas :</strong><span class="ms-2">1234/4034</span>
+                        <p class="text-muted mb-2 font-13"><strong>Grupo:</strong> <span class="ms-2"> {{$negocio->grupo}}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Cotas :</strong><span class="ms-2">{{$negocio->cotas}}</span>
                         </p>
-                        <p class="text-muted mb-2 font-13"><strong>Assembleia:</strong><span class="ms-2">
-                                11/11/11</span></p>
-                        <p class="text-muted mb-2 font-13"><strong>Crédito :</strong><span class="ms-2">120 k</span></p>
-                        <p class="text-muted mb-2 font-13"><strong>Contrato :</strong><span class="ms-2">12434</span>
+                        <p class="text-muted mb-2 font-13"><strong>Assembleia:</strong><span class="ms-2">{{$negocio->assembleia}}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Crédito :</strong><span class="ms-2">{{$negocio->valor}}</span></p>
+                        <p class="text-muted mb-2 font-13"><strong>Contrato :</strong><span class="ms-2">{{$negocio->contrato}}</span>
                         </p>
 
                     </div>
@@ -159,67 +158,50 @@
                 <div class="card-body">
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                         <li class="nav-item">
-                            <a href="#atividades" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                            <a href="#atividades" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
                                 Atividades
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#observacoes" data-bs-toggle="tab" aria-expanded="true"
-                                class="nav-link rounded-0 active">
+                            <a href="#observacoes" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 ">
                                 Observações
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false"
-                                class="nav-link rounded-0">
+                            <a href="#administrativo" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
                                 Adminstrativo
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false"
-                                class="nav-link rounded-0">
+                            <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false" class="nav-link rounded-0">
                                 Pós-venda
                             </a>
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane" id="atividades">
-
-                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                Ultimas Atividades</h5>
-
+                        <div class="tab-pane show active" id="atividades">
+                        
+                            @if(isset($negocio->atividades))
                             <div class="timeline-alt pb-0">
-
-                            @foreach($negocio->propostas as $proposta) 
-                                <div class="timeline-item">
-                                    <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
-                                    <div class="timeline-item-info">
-                                        <h5 class="mt-0 mb-1">Proposta: {{$proposta->tipo}} - {{$proposta->credito}}</h5>
-                                        <p class="font-14">{{$proposta->user->name}} <span class="ms-2 font-12"> em {{$proposta->data_proposta}}</span></p>
-                                        <p class="text-muted mt-2 mb-0 pb-3">Foi simulador uma Entrada de <strong>{{$proposta['con-entrada']}}</strong>  
-                                        com parcelas de <strong>{{$proposta['con-parcelas']}} 
-                                        @if ($proposta['reduzido'] =='s')
-                                            com redução
-                                        @else
-                                            sem redução
-                                        @endif
-                                        </strong>
-                                        e com <strong>{{$proposta['parcelas_embutidas']}}</strong> parcela(s) embutida(s)
-
-                                        
-                                    </p>
+                                @foreach($negocio->atividades->sortByDesc('id')  as $atividade) 
+                                    <div class="timeline-item">
+                                        <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                        <div class="timeline-item-info">
+                                            <h5 class="mt-0 mb-0">author: {{$atividade->user->name}}</h5>
+                                            <p class="font-14">{{$atividade->descricao}} <br><span class="ms-0 font-12">{{$atividade->data_atividade}}</span> </p>
+                                           
+                                        </div>
                                     </div>
-                                </div>
-
-                            @endforeach
+                                @endforeach
                             </div>
+                            @else 
+                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>Nenhuma Atividade</h5>
+                            @endif
                             <!-- end timeline -->
-
-
                         </div> <!-- end tab-pane -->
                         <!-- end about me section content -->
 
-                        <div class="tab-pane show active" id="observacoes">
+                        <div class="tab-pane" id="observacoes">
 
                             <!-- comment box -->
                             <div class="border rounded mt-2 mb-3">
@@ -268,150 +250,130 @@
                         <!-- end timeline content-->
 
                         <div class="tab-pane" id="administrativo">
-                            <form>
-                                <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Personal
-                                    Info</h5>
+                            <form method="POST" action="{{route('negocio_update') }}">
+                                @csrf
+                                <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações Pessoais</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="firstname" class="form-label">First Name</label>
-                                            <input type="text" class="form-control" id="firstname"
-                                                placeholder="Enter first name">
+                                            <label for="firstname" class="form-label">Nome</label>
+                                            <input type="text" class="form-control" id="firstname" value="{{$negocio->lead->nome}}" name="nome">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="lastname" class="form-label">Last Name</label>
-                                            <input type="text" class="form-control" id="lastname"
-                                                placeholder="Enter last name">
+                                            <label for="email" class="form-label">E-mail</label>
+                                            <input type="text" class="form-control" id="email" name="email" value="{{$negocio->lead->email}}">
+                                        </div>
+                                    </div> <!-- end col -->
+                                </div> <!-- end row -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="useremail" class="form-label">Telefone</label>
+                                            <input class="form-control" id="useremail" value="{{$negocio->lead->telefone}}" name="telefone">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label fclass="form-label">WhatsApp</label>
+                                            <input class="form-control" id="userpassword" value="{{$negocio->lead->whatsapp}}" name="whatsapp">
+                                            
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
 
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="userbio" class="form-label">Bio</label>
-                                            <textarea class="form-control" id="userbio" rows="4"
-                                                placeholder="Write something..."></textarea>
+                                            <label for="useremail" class="form-label">Endereço</label>
+                                            <input class="form-control" id="useremail" value="{{$negocio->lead->endereco}}" name="endereco">
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label fclass="form-label">Complemento</label>
+                                            <input class="form-control" id="userpassword" value="{{$negocio->lead->complemento}}" name="complemento">
+                                            
+                                        </div>
+                                    </div> <!-- end col -->
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label fclass="form-label">CEP</label>
+                                            <input class="form-control" id="userpassword" value="{{$negocio->lead->cep}}" name="cep">
+                                            
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email Address</label>
-                                            <input type="email" class="form-control" id="useremail"
-                                                placeholder="Enter email">
-                                            <span class="form-text text-muted"><small>If you want to change email please
-                                                    <a href="javascript: void(0);">click</a> here.</small></span>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="userpassword" class="form-label">Password</label>
-                                            <input type="password" class="form-control" id="userpassword"
-                                                placeholder="Enter password">
-                                            <span class="form-text text-muted"><small>If you want to change password
-                                                    please <a href="javascript: void(0);">click</a> here.</small></span>
-                                        </div>
-                                    </div> <!-- end col -->
-                                </div> <!-- end row -->
+                              
 
                                 <h5 class="mb-3 text-uppercase bg-light p-2"><i
-                                        class="mdi mdi-office-building me-1"></i> Company Info</h5>
+                                        class="mdi mdi-office-building me-1"></i> Negócio</h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="companyname" class="form-label">Company Name</label>
-                                            <input type="text" class="form-control" id="companyname"
-                                                placeholder="Enter company name">
+                                            <label for="companyname" class="form-label">Titulo</label>
+                                            <input type="text" class="form-control" id="companyname" value="{{$negocio->titulo}}" name="titulo">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="cwebsite" class="form-label">Website</label>
-                                            <input type="text" class="form-control" id="cwebsite"
-                                                placeholder="Enter website url">
+                                            <label for="cwebsite" class="form-label">Valor do Crédito</label>
+                                            <input type="text" class="form-control" id="cwebsite" value="{{$negocio->valor}}" name="valor" data-mask-reverse="true" data-mask="000.000.000.000.000,00" >
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
 
-                                <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-earth me-1"></i> Social
+
+                              
+                                <h5 class="mb-3 text-uppercase bg-light p-2"><i class="mdi mdi-earth me-1"></i> Cliente
                                 </h5>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="social-fb" class="form-label">Facebook</label>
+                                            <label for="social-fb" class="form-label">Grupo</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-facebook"></i></span>
-                                                <input type="text" class="form-control" id="social-fb"
-                                                    placeholder="Url">
+                                                <input type="text" class="form-control" value="{{$negocio->grupo}}" name="grupo">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="social-tw" class="form-label">Twitter</label>
+                                            <label for="social-tw" class="form-label">Cota(s)</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-twitter"></i></span>
-                                                <input type="text" class="form-control" id="social-tw"
-                                                    placeholder="Username">
+                                               
+                                                <input type="text" class="form-control" value="{{$negocio->cota}}" name="cota">
                                             </div>
                                         </div>
                                     </div> <!-- end col -->
-                                </div> <!-- end row -->
-
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="social-insta" class="form-label">Instagram</label>
+                                            <label for="social-fb" class="form-label">Data Assembleia</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-instagram"></i></span>
-                                                <input type="text" class="form-control" id="social-insta"
-                                                    placeholder="Url">
+                                               
+                                                <input type="text" class="form-control" value="{{$negocio->data_assembleia}}" name="data_assembleia">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label for="social-lin" class="form-label">Linkedin</label>
+                                            <label for="social-tw" class="form-label">Contrato(s)</label>
                                             <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-linkedin"></i></span>
-                                                <input type="text" class="form-control" id="social-lin"
-                                                    placeholder="Url">
+                                                
+                                                <input type="text" class="form-control" value="{{$negocio->contrato}}" name="contrato">
                                             </div>
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="social-sky" class="form-label">Skype</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-skype"></i></span>
-                                                <input type="text" class="form-control" id="social-sky"
-                                                    placeholder="@username">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label for="social-gh" class="form-label">Github</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text"><i class="mdi mdi-github"></i></span>
-                                                <input type="text" class="form-control" id="social-gh"
-                                                    placeholder="Username">
-                                            </div>
-                                        </div>
-                                    </div> <!-- end col -->
-                                </div> <!-- end row -->
-
+                                <input name="id_negocio" value="{{app('request')->id}}" hidden >
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-success mt-2"><i
-                                            class="mdi mdi-content-save"></i> Save</button>
+                                            class="mdi mdi-content-save"></i> Salvar</button>
                                 </div>
                             </form>
                         </div>

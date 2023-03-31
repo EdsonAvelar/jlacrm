@@ -267,11 +267,6 @@ $(document).ready(function () {
     chart3.render();
 
 
-
-
-
-
-
     $('#datapicker_dash').daterangepicker(
         {
             locale: {

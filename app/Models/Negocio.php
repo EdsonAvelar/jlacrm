@@ -13,7 +13,6 @@ class Negocio extends Model
         "titulo",
         "funil_id",
         "lead_id",
-        "valor",
         "user_id",
         "etapa_funil_id"
     ];
@@ -21,6 +20,11 @@ class Negocio extends Model
     public function funil()
     {
         return $this->belongsTo("App\Models\Funil");
+    }
+
+    public function atividades()
+    {
+        return $this->hasMany("App\Models\Atividade");
     }
 
 

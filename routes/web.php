@@ -80,6 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/edit', [NegocioController::class, 'negocio_edit'])->name('negocio_edit');
             Route::post('/importar/atribuir', [NegocioController::class, 'import_atribuir']);
+            Route::post('/negocio_update', [NegocioController::class, 'negocio_update'])->name('negocio_update');
  
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');

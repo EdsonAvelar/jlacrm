@@ -9,6 +9,9 @@ use App\Models\Negocio;
 use App\Models\Venda;
 use App\Enums\VendaStatus;
 use App\Enums\NegocioStatus;
+use App\Models\Atividade;
+
+
 class VendaController extends Controller
 {
     public function index(Request $request)
@@ -67,6 +70,9 @@ class VendaController extends Controller
         }
        
         $venda->save();
+
+        Atividade::add_atividade(\Auth::user()->id, "Cliente GANHO", $negocio_id);
+
         return back()->with('status', "Venda Cadastrada com sucesso");
     }
 
@@ -76,6 +82,8 @@ class VendaController extends Controller
         $negocio_id = $input['negocio_id'];
         Negocio::where('id',$negocio_id)->update(['status'=> NegocioStatus::PERDIDO]);
 
-        return back()->with('status', "Negócio Perdido :(");
+        Atividade::add_atividade(\Auth::user()->id, "Negócio PERDIDO", $negocio_id);
+
+        return back()->with('status', "Negócio Perdido :( ");
     }
 }

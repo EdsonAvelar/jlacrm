@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 
 use App\Models\Agendamento;
+use App\Models\Atividade;
 
 class AgendamentoController extends Controller
 {
@@ -36,6 +37,8 @@ class AgendamentoController extends Controller
         $agendamento->user_id = $proprietario_id;
         $agendamento->save();
 
+
+        Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para ".$agendamento->data_agendamento, $negocio_id );
 
 
         return back()->with('status', 'Agendamento de realizado com sucesso');

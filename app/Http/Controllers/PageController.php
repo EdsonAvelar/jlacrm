@@ -9,7 +9,7 @@ use App\Models\Negocio;
 use App\Models\Lead;
 use App\Models\User;
 use Validator;
-
+use Carbon\Carbon;
 class PageController extends Controller
 {
     public function cadastro(Request $request)
@@ -31,7 +31,8 @@ class PageController extends Controller
         $deal_input['valor'] = 0; #$valor = str_replace('.','',$input['valor'] ) ;
         #$deal_input['entrada'] = $valor = str_replace('.','',$input['valor'] ) ;
         
-        
+       
+
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
 
@@ -65,6 +66,12 @@ class PageController extends Controller
         $lead->nome = $lead_input['nome'];
         $lead->telefone = $lead_input['telefone'];
 
+        $lead->campanha = $input['campanha'];
+        $lead->fonte = $input['fonte'];
+        $lead->data_conversao = Carbon::now()->format('d/m/Y');;
+
+
+
         $lead->save();
 
         // associando lead ao negócio
@@ -78,7 +85,9 @@ class PageController extends Controller
         $neg_com->negocio_id = $negocio->id;
         $neg_com->user_id = User::find(1)->id;
         $neg_com->save();
+        
 
+        Atividade::add_atividade(User::find(1)->id, "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." Fonte:".$input['fonte']  , $negocio->id);
 
         $consultor = "123";
         return view('cadastro.concluido_01', compact('consultor'));

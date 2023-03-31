@@ -20,8 +20,13 @@ return new class extends Migration {
             $table->string('fechamento')->nullable();
 
             $table->string('titulo');
-            $table->string('valor', 20);
-            $table->string('entrada', 20);
+            $table->string('valor', 20)->nullable();
+            $table->string('entrada', 20)->nullable();
+
+            $table->string('grupo')->nullable();
+            $table->string('cota')->nullable();
+            $table->string('contrato')->nullable();
+            $table->string('data_assembleia')->nullable();
             
             
             $table->enum('tipo', NegocioTipo::all());
