@@ -120,8 +120,6 @@ class NegocioController extends Controller
         return [$negocio[0], $lead[0]];
     }
 
-    
-
 
     public function import_atribuir(Request $request)
     {
@@ -274,9 +272,10 @@ class NegocioController extends Controller
         $agendamento = Agendamento::where('negocio_id',$id_negocio)->first();
         
         if ( $agendamento){
+
             $reuniao = new Reuniao();
             $reuniao->agendamento_id = $agendamento->id;
-            $reuniao->user_id = \Auth::user()->id 
+            $reuniao->user_id = \Auth::user()->id;
             $reuniao->data_reuniao = Carbon::now()->format('Y-m-d H:i:s');
             $reuniao->save(); 
 
@@ -302,7 +301,7 @@ class NegocioController extends Controller
             $aprovacao = new Aprovacao();
             $aprovacao->data_aprovacao = Carbon::now()->format('Y-m-d H:i:s');
             $aprovacao->negocio_id =  $negocio->id;
-            $aprovacao->user_id = \Auth::user()->id 
+            $aprovacao->user_id = \Auth::user()->id;
 
             $aprovacao->save();
 

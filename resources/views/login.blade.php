@@ -13,7 +13,6 @@
         <!-- App css -->
         <link href="{{url('')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{url('')}}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
-        <link href="{{url('')}}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style" />
 
     </head>
 

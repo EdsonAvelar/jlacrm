@@ -37,14 +37,19 @@
                             <div class="text-center mt-sm-0 mt-3 text-sm-end">
                                 <div class="btn-group mt-sm-0 mt-3 text-sm-end">
                                     <button type="button" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
+                                        @if ($negocio->user)
                                         <i class="mdi mdi-face">{{$negocio->user->email}}</i><span></span>
+                                        @else 
+                                        <i class="mdi mdi-face">Não Atribuido</i><span></span>
+                                        @endif
                                     </button>
                                    
                                 </div>
-                                <button type="button" class="btn btn-success"><i class="mdi mdi-thumb-up"></i>
+
+                                <!--button type="button" class="btn btn-success"><i class="mdi mdi-thumb-up"></i>
                                     <span>Ganhou</span> </button>
                                 <button type="button" class="btn btn-danger"><i class="mdi mdi-thumb-down"></i>
-                                    <span>Perdeu</span> </button>
+                                    <span>Perdeu</span> </button-->
 
                                 <div class="btn-group mt-sm-0 mt-3 text-sm-end">
                                     <button type="button" class="btn btn-primary dropdown-toggle"

@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('reuniaos', function (Blueprint $table) {
             $table->increments('id');
 
+    
             $table->integer('agendamento_id')->unsigned();
             $table->foreign('agendamento_id')->references('id')->on('agendamentos');
 

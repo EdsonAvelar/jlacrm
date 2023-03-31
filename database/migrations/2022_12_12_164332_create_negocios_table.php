@@ -21,6 +21,8 @@ return new class extends Migration {
 
             $table->string('titulo');
             $table->string('valor', 20);
+            $table->string('entrada', 20);
+            
             
             $table->enum('tipo', NegocioTipo::all());
             $table->enum('status', NegocioStatus::all());

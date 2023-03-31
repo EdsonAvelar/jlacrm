@@ -10,6 +10,8 @@ use App\Models\Negocio;
 use App\Models\Venda;
 use App\Models\User;
 use App\Models\Cargo;
+use App\Models\Reuniao;
+use App\Models\Aprovacao;
 
 class DashboardController extends Controller
 {
@@ -20,8 +22,8 @@ class DashboardController extends Controller
         $data_fim = $request->query('data_fim');
 
         if ( is_null($data_inicio) and is_null($data_fim) ){
-            $data_inicio = "20/".(Carbon::now()->subMonth()->format('m/Y'));
-            $data_fim = "20/".(Carbon::now()->format('m/Y'));
+            $data_inicio = "20/".(Carbon::now()->subMonth(1)->format('m/Y'));
+            $data_fim = Carbon::now()->format('d/m/Y');
             return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
         }
 
@@ -44,21 +46,45 @@ class DashboardController extends Controller
 
             $vendedores = array();
             $agendamentos = array();
+            $reunioes = array();
+            $aprovacoes = array();
 
             foreach ($users as $vendedor){
                 $query = [
-                    ['data_agendado', '>=', $data_inicio],
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
                     ['user_id', '=', $vendedor->id]
                 ];
                 
                 $count = Agendamento::where($query)->count();
-
-                $vendedor_agendamento[$vendedor->name] = $count;
                 array_push($vendedores, $vendedor->name);
                 array_push($agendamentos, $count);
+
+
+                $query = [
+                    ['data_reuniao', '>=', $from ],
+                    ['data_reuniao', '<=', $to],
+                    ['user_id', '=', $vendedor->id]
+                ];
+                
+                $count = Reuniao::where($query)->count();
+                array_push($reunioes, $count);
+
+                
+                $query = [
+                    ['data_aprovacao', '>=', $from ],
+                    ['data_aprovacao', '<=', $to],
+                    ['user_id', '=', $vendedor->id]
+                ];
+                
+                $count = Aprovacao::where($query)->count();
+                array_push($aprovacoes, $count);
             }
 
-            return view('dashboards.admin', compact('stats','vendedores','agendamentos'));
+
+                        
+            $lead_novos = Negocio::where('user_id',NULL)->count();
+            return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes'));
         }else {
 
             return view('dashboards.coordenador');

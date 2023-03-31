@@ -112,8 +112,10 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-6">
-                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Booked Revenue</h5>
-                            <h3 class="my-2 py-1">$253k</h3>
+                            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">
+                            <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1' ) )}}">Lead Novos</a> 
+                        </h5>
+                            <h3 class="my-2 py-1">{{$lead_novos}}</h3>
                             <p class="mb-0 text-muted">
                                 <span class="text-success me-2"><i class="mdi mdi-arrow-up-bold"></i> 11.7%</span>
                             </p>
@@ -128,7 +130,7 @@
             </div> <!-- end card -->
         </div> <!-- end col -->
 
-        <div class="col-lg-6 col-xl-6">
+        <div class="col-lg-4 col-xl-4">
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">
@@ -136,12 +138,58 @@
                         <div class="col-12">
                             <div class="text-end">
                                 
-                                <div id="chart">
+                                <div id="chart_agendamentos">
                                 </div>
 
                             </div>
                         </div>
+
+                      
                     </div> <!-- end row-->
+
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+        
+        <div class="col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Reuniões</h5>
+                        <div class="col-12">
+                            <div class="text-end">
+                                
+                                <div id="chart_reunioes">
+                                </div>
+
+                            </div>
+                        </div>
+
+                      
+                    </div> <!-- end row-->
+
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+        
+        <div class="col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Aprovacaoes</h5>
+                        <div class="col-12">
+                            <div class="text-end">
+                                
+                                <div id="chart_aprovacoes">
+                                </div>
+
+                            </div>
+                        </div>
+
+                      
+                    </div> <!-- end row-->
+
                 </div> <!-- end card-body -->
             </div> <!-- end card -->
         </div> <!-- end col -->
@@ -181,9 +229,47 @@ $(document).ready(function () {
         }  
     }
 
-    var chart = new ApexCharts(document.querySelector("#chart"), options);
+    var chart1 = new ApexCharts(document.querySelector("#chart_agendamentos"), options);
+    chart1.render();
 
-    chart.render();
+    var options = {
+        chart: { type: 'bar'        },
+        series: [{
+            name: 'reunioes',
+            data: <?php echo json_encode($reunioes) ?> ,
+        }],
+        xaxis: {categories: <?php echo json_encode($vendedores) ?>},
+        plotOptions: {
+            bar: {
+            distributed: true
+            }
+        }  
+    }
+
+    var chart2 = new ApexCharts(document.querySelector("#chart_reunioes"), options);
+    chart2.render();
+
+    var options = {
+        chart: { type: 'bar'        },
+        series: [{
+            name: 'aprovacoes',
+            data: <?php echo json_encode($aprovacoes) ?> ,
+        }],
+        xaxis: {categories: <?php echo json_encode($vendedores) ?>},
+        plotOptions: {
+            bar: {
+            distributed: true
+            }
+        }  
+    }
+
+    var chart3 = new ApexCharts(document.querySelector("#chart_aprovacoes"), options);
+    chart3.render();
+
+
+
+
+
 
 
     $('#datapicker_dash').daterangepicker(
@@ -194,7 +280,7 @@ $(document).ready(function () {
         }, 
         function(start, end, label) {
             //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-            window.location.href = "{{url('home?')}}"+"data_inicio="+start.format('DD/MM/YYYY')+"&"+"data_fim="+end.format('DD/MM/YYYY');
+            window.location.href = "{{url('crm?')}}"+"data_inicio="+start.format('DD/MM/YYYY')+"&"+"data_fim="+end.format('DD/MM/YYYY');
 
     });
 });

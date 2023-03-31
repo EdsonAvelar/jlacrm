@@ -5,7 +5,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Dashboard | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+    <title>JLA Soluções Financeiras</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
@@ -63,7 +63,7 @@
                    
                         <?php 
                             $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
-                            $data_fim = "20/".Carbon\Carbon::now()->format('m/Y');
+                            $data_fim = Carbon\Carbon::now()->format('d/m/Y');
                         ?>
                         <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}" class="side-nav-link">
                             <i class="uil-home-alt"></i>
@@ -118,7 +118,7 @@
                                     <li>
                                         <?php 
                                             $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
-                                            $data_fim = "20/".Carbon\Carbon::now()->format('m/Y');
+                                            $data_fim = Carbon\Carbon::now()->format('d/m/Y');
                                         ?>
                                         <a href="{{route('vendas.lista', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Vendas Realizadas</a>
                                     </li> 

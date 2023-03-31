@@ -10,6 +10,7 @@ use App\Http\Controllers\FuncionarioController;
 use App\Http\Controllers\VendaController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
+use App\Http\Controllers\PageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,8 +27,9 @@ Route::get('/', [AdminController::class, 'index'])->name('landingpage');
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);
 
+Route::get('/cadastro', [PageController::class, 'cadastro']);
+Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
 
-Route::get('/cadastro', [PageController::class, 'login']);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');

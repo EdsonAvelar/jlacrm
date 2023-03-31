@@ -28,7 +28,6 @@ class AgendamentoController extends Controller
         $proprietario_id = $input['proprietario_id'];
 
         
-
         $agendamento = new Agendamento();
         $agendamento->data_agendado = $data_agendado;
         $agendamento->data_agendamento = $data_agendamento;
