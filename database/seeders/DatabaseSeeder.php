@@ -25,20 +25,24 @@ class DatabaseSeeder extends Seeder
 
 		$this->motivo_Perdas();
 
-		$this->createEquipe();
+		#$this->createEquipe();
 
 		$this->createCargoTable();
 
 		$this->roleTable();
 		$this->command->info('Criados os papeis (gerente, administrativo, coordenador, vendedor,financeiro)');
 
-		$this->usersTable();
-		$this->command->info('usuario (Gerente,Administrador,Coordenador,Financeiro,Vendedor) criados com sucesso, senha padrão: 123');
+
+		adminTable();
+
+
+		#$this->usersTable();
+		#$this->command->info('usuario (Gerente,Administrador,Coordenador,Financeiro,Vendedor) criados com sucesso, senha padrão: 123');
 
 		$this->call([
 			FunilSeeder::class,
 				//LeadSeeder::class,
-			NegocioSeeder::class
+			//NegocioSeeder::class
 		]);
 
 	}
@@ -109,6 +113,8 @@ class DatabaseSeeder extends Seeder
 		$cargo->save();
 
 	}
+
+
 	private function roleTable()
 	{
 
@@ -135,20 +141,44 @@ class DatabaseSeeder extends Seeder
 	}
 
 
+	private function adminTable()
+	{	
+		$role_gerente = Role::where('name', 'admin')->first();
+		$gerenciar_funcionarios = Role::where('name', 'gerenciar_funcionarios')->first();
+		$importar_leads = Role::where('name', 'importar_leads')->first();
+		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
+		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
+		
+		$role_gerente = Role::where('name', 'admin')->first();
+		$user = new User();
+		$user->name = 'Gerente';
+		$user->email = 'gerente@jla.com';
+		$user->avatar = 'user-padrao.png';
+		$user->status = UserStatus::ativo;
+		$user->password = Hash::make('Jla#2021');
+		$user->cargo_id = $cargo_gerente->id;
+		$user->save();
+		$user->roles()->attach($role_gerente);
+		$user->roles()->attach($gerenciar_funcionarios);
+		$user->roles()->attach($importar_leads);
+		$user->roles()->attach($gerenciar_equipe);
+		$user->roles()->attach($gerenciar_vendas);
+
+	}
+
 	private function usersTable()
 	{
 		$role_gerente = Role::where('name', 'admin')->first();
-		$role_administrativo = Role::where('name', 'gerenciar_funcionarios')->first();
+		$gerenciar_funcionarios = Role::where('name', 'gerenciar_funcionarios')->first();
+		$importar_leads = Role::where('name', 'importar_leads')->first();
 		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
-
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
-
+		$role_administrativo = Role::where('name', 'gerenciar_funcionarios')->first();
+		
 	
 		$equipe1 = Equipe::where('nome', 'EquipeFera1')->first();
 		$equipe2 = Equipe::where('nome', 'EquipeFera2')->first();
 
-		$importar_leads = Role::where('name', 'importar_leads')->first();
-		$gerenciar_funcionarios = Role::where('name', 'gerenciar_funcionarios')->first();
 
 
 		$cargo_vendedor = Cargo::where('nome', 'Vendedor')->first();
