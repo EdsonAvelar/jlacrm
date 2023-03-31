@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 		$this->command->info('Criados os papeis (gerente, administrativo, coordenador, vendedor,financeiro)');
 
 
-		adminTable();
+		$this->adminTable();
 
 
 		#$this->usersTable();
