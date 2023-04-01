@@ -8,6 +8,7 @@ use App\Models\NegocioComentario;
 use App\Models\Negocio;
 use App\Models\Lead;
 use App\Models\User;
+use App\Models\Atividade;
 use Validator;
 use Carbon\Carbon;
 class PageController extends Controller
