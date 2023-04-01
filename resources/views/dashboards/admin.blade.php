@@ -113,7 +113,7 @@
                     <div class="row align-items-center">
                         <div class="col-6">
                             <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">
-                            <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1' ) )}}">Lead Novos</a> 
+                            <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1' ) )}}">Novos Leads</a> 
                         </h5>
                             <h3 class="my-2 py-1">{{$lead_novos}}</h3>
                             <p class="mb-0 text-muted">
@@ -182,6 +182,27 @@
                             <div class="text-end">
                                 
                                 <div id="chart_aprovacoes">
+                                </div>
+
+                            </div>
+                        </div>
+
+                      
+                    </div> <!-- end row-->
+
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+
+        <div class="col-lg-4 col-xl-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">Vendas</h5>
+                        <div class="col-12">
+                            <div class="text-end">
+                                
+                                <div id="chart_vendas">
                                 </div>
 
                             </div>
@@ -267,6 +288,24 @@ $(document).ready(function () {
     chart3.render();
 
 
+    var options = {
+        chart: { type: 'bar'        },
+        series: [{
+            name: 'vendas',
+            data: <?php echo json_encode($vendas) ?> ,
+        }],
+        xaxis: {categories: <?php echo json_encode($vendedores) ?>},
+        plotOptions: {
+            bar: {
+            distributed: true
+            }
+        }  
+    }
+
+    var chart4 = new ApexCharts(document.querySelector("#chart_vendas"), options);
+    chart4.render();
+
+
     $('#datapicker_dash').daterangepicker(
         {
             locale: {
@@ -278,6 +317,8 @@ $(document).ready(function () {
             window.location.href = "{{url('crm?')}}"+"data_inicio="+start.format('DD/MM/YYYY')+"&"+"data_fim="+end.format('DD/MM/YYYY');
 
     });
+
+    
 });
 
 </script>

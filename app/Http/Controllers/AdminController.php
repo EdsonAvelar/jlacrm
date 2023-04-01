@@ -8,7 +8,7 @@ use App\Models\Role;
 use Auth;
 use Illuminate\Support\Facades\Session;
 use Validator;
-
+use App\Enums\UserStatus;
 class AdminController extends Controller
 {
     public function index(){
@@ -28,7 +28,13 @@ class AdminController extends Controller
             ]);
 
             if(Auth::attempt($req->only('email','password'))){
-                return redirect('/crm');
+
+                if (Auth::User()->status == UserStatus::ativo){
+                    return redirect('/crm');
+                }else {
+                    return redirect('/login')->withError('Usuário está inativo');
+                }
+               
             }else{
                 return redirect('/login')->withError('Email ou senha incorreto');
             }

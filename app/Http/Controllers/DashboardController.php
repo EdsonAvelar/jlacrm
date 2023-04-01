@@ -41,13 +41,14 @@ class DashboardController extends Controller
            
 
             //Agendamento::where($query)
-            $cargo = Cargo::where('nome','Vendedor')->first();
+            $cargo = Cargo::where( 'nome','Vendedor')->orWhere('nome','Coordenador')->first();
             $users = User::where('cargo_id',$cargo->id)->get();
 
             $vendedores = array();
             $agendamentos = array();
             $reunioes = array();
             $aprovacoes = array();
+            $vendas = array();
 
             foreach ($users as $vendedor){
                 $query = [
@@ -59,7 +60,6 @@ class DashboardController extends Controller
                 $count = Agendamento::where($query)->count();
                 array_push($vendedores, $vendedor->name);
                 array_push($agendamentos, $count);
-
 
                 $query = [
                     ['data_reuniao', '>=', $from ],
@@ -79,12 +79,21 @@ class DashboardController extends Controller
                 
                 $count = Aprovacao::where($query)->count();
                 array_push($aprovacoes, $count);
+
+                $query = [
+                    ['data_fechamento', '>=', $from ],
+                    ['data_fechamento', '<=', $to],
+                    ['vendedor_principal_id', '=', $vendedor->id]
+                ];
+                
+                $vendas_totais = Venda::where($query)->sum('valor');
+                array_push($vendas, $vendas_totais);
             }
 
 
                         
             $lead_novos = Negocio::where('user_id',NULL)->count();
-            return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes'));
+            return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes','vendas'));
         }else {
 
             return view('dashboards.coordenador');

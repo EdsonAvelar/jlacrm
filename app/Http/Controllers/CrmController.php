@@ -10,7 +10,7 @@ use App\Models\EtapaFunil;
 use App\Models\User;
 use App\Models\Equipe;
 use App\Models\MotivoPerda;
-
+use App\Enums\UserStatus;
 use \App\Models\NegocioComentario;
 use Auth;
 use Validator;
@@ -41,8 +41,18 @@ class CrmController extends Controller
         return view('leads/add_lead');
     }
 
+    public function check_if_active(){
+
+        if ( \Auth::user()->status == UserStatus::inativo){
+
+            Auth::logout();
+            return route('login');
+        }
+    }
+
     public function pipeline_index(Request $request )
     {
+        $this->check_if_active();
 
         $curr_funil_id = intval( $request->query('id')) ;
         $proprietario_id = intval( $request->query('proprietario'));
@@ -244,8 +254,9 @@ class CrmController extends Controller
         $deal_input['user_id'] = \Auth::user()->id;
 
         //criando o negócio
-        Negocio::create($deal_input);
+        $negocio = Negocio::create($deal_input);
 
+        Atividade::add_atividade(\Auth::user()->id, "Cliente criado manualmente por ".\Auth::user()->name, $negocio->id);    
 
         return back()->with('status', "Negócio " . $deal_input['titulo'] . " Criado com Sucesso");
     }
@@ -302,6 +313,19 @@ class CrmController extends Controller
         return back()->with('status', "Comentário adicionado com successo");
     }
 
+    public function atribui_one(Request $request){
+
+        $input = $request->all();
+        $negocio_id = $input['negocio_id'];
+        $novo_proprietario = User::find( $input['novo_proprietario_id']);
+
+        Negocio::where('id', $negocio_id)->update([ 'user_id' => $novo_proprietario->id]);
+        Atividade::add_atividade(\Auth::user()->id, "Cliente Atribuido a ".$novo_proprietario->name, $negocio_id);    
+        
+        return back()->with('status', "Negócio transferidos para ".$novo_proprietario->name);
+    }
+
+
 
     public function massive_change(Request $request){
 
@@ -315,8 +339,6 @@ class CrmController extends Controller
         ksort($etapa_funils);
         
         if ($input['modo'] == "atribuir"){
-
-            
 
             $negocios = $input['negocios'];
             $novo_proprietario_id = $input['novo_proprietario_id'];

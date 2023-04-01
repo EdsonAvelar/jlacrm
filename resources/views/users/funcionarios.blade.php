@@ -1,3 +1,4 @@
+<?php use App\Enums\UserStatus; ?>
 @extends('main')
 
 @section('headers')
@@ -5,7 +6,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
-
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 <style>
     input[type=checkbox]
 {
@@ -61,7 +62,7 @@ i.icon-danger {
                     <table id="example" class="table w-100 nowrap" >
                         <thead>
                             <tr>
-                              
+                                <th>Status</th>
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Cargo</th>
@@ -70,12 +71,21 @@ i.icon-danger {
                                 <th>RG</th>
                                 <th>Endereço</th>
                                 <th>Data Contratacao</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
                         @if(isset($users))
                             @foreach ($users as $user)
                             <tr>
+                            <?php
+                                $ischecked = "";
+                                if ( $user->status == UserStatus::ativo ){
+                                    $ischecked = "checked";
+                                }
+
+                                ?>
+                                <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
                                 <td><a href="{{route('users_profile', array('id'=> $user->id) )}}"  >{{$user['name']}}</a></td>
                                 <td>{{$user['email']}}</td>
                                 <td>{{$user->cargo->nome}}</td>
@@ -92,6 +102,7 @@ i.icon-danger {
                                 <td>{{$user['rf']}}</td>
                                 <td>{{$user['endereco']}}</td>
                                 <td>{{$user['data_contratacao']}}</td>
+                               
                             </tr>
 
                             @endforeach
@@ -107,6 +118,8 @@ i.icon-danger {
         <!-- end col-->
     </div>
     <!-- end row -->
+
+    
 
 </div>
 <!--  Add new task modal -->
@@ -198,10 +211,18 @@ i.icon-danger {
 
 @section('specific_scripts')
 
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
 <script src="{{url('')}}/js/vendor/jquery.dataTables.min.js"></script>
 <script src="{{url('')}}/js/vendor/dataTables.bootstrap5.js"></script>
 <script>
+
+$.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
 
 $(document).ready(function () {
 
@@ -249,7 +270,30 @@ $(document).ready(function () {
     });
 
 
+   
+    $(function() {
+        $('.toggle-event').change(function($this) {
 
+            var user_id = $(this).data('user_id'); 
+          //console.log( $(this).prop('checked') + " user "+ user_id );
+
+            info = [];
+            info[0] = $(this).prop('checked');
+            info[1] = user_id;
+
+            $.ajax({
+                url: "{{url('funcionarios/ativar_desativar')}}",
+                type: 'post',
+                data: { info: info },
+                Type: 'json',
+                success: function (res) {
+                    console.log("Funcionario atualizada com sucesso")
+                }
+            });
+
+        })
+    });
+   
 });
 
 </script>

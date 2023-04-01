@@ -634,6 +634,8 @@
           <p>
             9:00 Am - 19.00 Pm
           </p>
+          <a href="{{route('home')}}">CRM</a> 
+
         </div>
       </div>
       <div class="footer-info">

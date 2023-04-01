@@ -10,7 +10,8 @@ class FuncionarioController extends Controller
 {
     public function index(Request $req)
     {
-        $users = User::where('status', 1)->get();
+        $users = User::all();
+        #$inative_users = User::where('status', UserStatus::inativo)->get();
 
         return view('users.funcionarios', compact('users'));
     }
@@ -25,5 +26,22 @@ class FuncionarioController extends Controller
         User::create($input);
 
         return back()->with("status","Funcionario adicionado com sucesso");
+    }
+
+    public function ativar_desativar(Request $request)
+    {
+
+        $input = $request->except('_token');
+
+        $status = $input['info'][0];
+        $user_id = $input['info'][1];
+        
+        $user = User::find($user_id);
+
+        if ($status == "false"){
+            $user->update(['status'=> UserStatus::inativo]);
+        }else {
+            $user->update(['status'=> UserStatus::ativo]);
+        }
     }
 }

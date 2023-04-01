@@ -1,5 +1,9 @@
 @extends('main')
+<?php 
 
+use App\Enums\UserStatus;
+use App\Models\User;
+?>
 
 @section('main_content')
 
@@ -36,14 +40,24 @@
                         <div class="col-sm-6">
                             <div class="text-center mt-sm-0 mt-3 text-sm-end">
                                 <div class="btn-group mt-sm-0 mt-3 text-sm-end">
-                                    <button type="button" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
+                                    <button type="button" class="btn btn-secondary" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         @if ($negocio->user)
-                                        <i class="mdi mdi-face">{{$negocio->user->email}}</i><span></span>
+                                        <i class="mdi mdi-face">{{$negocio->user->name}}</i><span></span>
                                         @else 
                                         <i class="mdi mdi-face">Não Atribuido</i><span></span>
                                         @endif
                                     </button>
-                                   
+
+                                    <div class="dropdown-menu">
+                                        @foreach (User::all() as $user)
+                                            @if ($user->status == UserStatus::ativo)
+                                                <a class="dropdown-item" href="{{route('atribui_one', array('negocio_id'=> $negocio->id,'novo_proprietario_id' => $user->id))}}">{{$user->name}}</a>
+                                            @endif
+
+                                        @endforeach
+
+                                    </div>
+
                                 </div>
 
                                 <!--button type="button" class="btn btn-success"><i class="mdi mdi-thumb-up"></i>
@@ -56,9 +70,14 @@
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="mdi mdi-apps"></i><span></span>
                                     </button>
+
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="{{route('negocios.simulacao', array('negocio_id' => $negocio->id) )}}">Simulacao</a>
+                                        <a class="dropdown-item" href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo') )}}">Pipeline</a>
                                     </div>
+
+
+                                    
                                 </div>
                             </div>
                         </div> <!-- end col-->
@@ -389,4 +408,16 @@
 </div>
 <!-- container -->
 
+
+
+@endsection
+
+
+@section('specific_scripts')
+
+<script>
+function atribuir($negocio_id, $user_id){
+    console.log("Atribuir " + $negocio_id +"para"+ $user_id);
+}
+</script>
 @endsection

@@ -17,7 +17,8 @@ use App\Models\Agendamento;
 use App\Models\Aprovacao;
 
 use App\Models\Atividade;
-
+use App\Models\Equipe;
+use App\Enums\UserStatus;
 
 use Carbon\Carbon;
 class NegocioController extends Controller
@@ -103,8 +104,66 @@ class NegocioController extends Controller
         return back()->with('status','upload realizado com sucesso');
     }
 
+    public function check_authorization($request){
+
+        $id = $request->query('id');
+        $negocio = Negocio::find($id);
+        $proprietario_id = $negocio->user_id;
+
+
+        $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+        $proprietario = User::find($proprietario_id);
+        $equipe_proprietario = NULL;
+
+        $equipe_exists = 1;
+        if ( !empty($proprietario)){
+            $equipe_proprietario = $proprietario->equipe()->first();
+        }else{
+            $proprietario = NULL;
+
+            if ( $proprietario_id == -2){
+                $equipe_exists = -1;
+                $equipe_proprietario = -1;
+            }
+            
+        }
+
+        $auth_user_id = \Auth::user()->id;
+        
+
+        if ($auth_user_id != $proprietario_id) {
+            if (!(\Auth::user()->hasRole('admin'))) {
+
+                if ($equipe_proprietario == NULL) {
+                    return abort(401);
+                } else if (!\Auth::user()->hasRole('gerenciar_equipe')) {
+                    return abort(401);
+                } else if ($equipe_exists > 0 and $equipe->id != $equipe_proprietario->id) {
+                    return abort(401);
+                }
+            }else{
+                $equipe_exists = 1;
+            }
+        }
+
+    }
+
+    public function check_if_active(){
+
+        if ( \Auth::user()->status == UserStatus::inativo){
+
+            Auth::logout();
+            return route('login');
+        }
+    }
 
     public function negocio_edit(Request $request) {
+
+
+        $this->check_if_active();      
+        $this->check_authorization($request);      
+
         $id = $request->query('id');
         $negocio = Negocio::find($id);
 
@@ -218,7 +277,6 @@ class NegocioController extends Controller
             $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2);
         
         }
-
         
         $proposta = new Proposta();
         $proposta['tipo'] = $input['tipo'];
