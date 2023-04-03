@@ -3,8 +3,9 @@
 
 <style type="text/css">
   
+	
     .pad {
-        margin-top: 60px;
+        margin-top: 15%;
     }
   	.mascote-img{
   		padding-right: 50px;

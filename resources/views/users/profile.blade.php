@@ -62,24 +62,25 @@
             <div class="card">
                 <div class="card-body">
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
+                    <li class="nav-item">
+                            <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+                                Editar Informações
+                            </a>
+                        </li>
                         <li class="nav-item">
-                            <a href="#aboutme" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+                            <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Sobre
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#timeline" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
+                            <a href="#settings" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0">
                                 Atividades
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#settings" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
-                                Editar Informações
-                            </a>
-                        </li>
+                        
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane show active" id="aboutme">
+                        <div class="tab-pane" id="aboutme">
 
                             <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                 Experience</h5>
@@ -303,7 +304,7 @@
                             </div>
                         </div>
 
-                        <div class="tab-pane" id="settings">
+                        <div class="tab-pane  show active" id="settings">
                             <form>
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações Profisionais</h5>
 
@@ -377,7 +378,12 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                    <label for="task-title" class="form-label">Permissões <a class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#permissaoModal" role="button"> + </a> </label>
+                                    <label for="task-title" class="form-label">Permissões 
+
+                                    @if (\Auth::user()->hasRole('admin'))
+                                        <a class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#permissaoModal" role="button"> + </a> 
+                                    @endif
+                                    </label>
                                     <br>
                                     @if ( $user->roles() )
                                         @foreach ($user->roles as $role)

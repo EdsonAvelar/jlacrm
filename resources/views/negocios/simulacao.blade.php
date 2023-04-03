@@ -99,7 +99,7 @@
       </div>
       
       <div class="form-group row">
-      <span class="text-danger"> *insegir parte do cpf do cliente traz mais credibilidade a simulação</span>
+      <span class="text-danger"> *inserir parte do cpf do cliente traz mais credibilidade a simulação</span>
         <label for="inputEmail3" class="col-sm-2 col-form-label">CPF</label>
         <div class="col-sm-3">
         
@@ -168,7 +168,7 @@
       <div class="form-group row financiamento">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Juros a.a.(SAC)</label>
         <div class="col-sm-3">
-          <input value="9,7%" data-mask="0,0%" type="text" name="fin-entrada" class="form-control money input-auto"
+          <input value="11,49%" data-mask="0,0%" type="text" name="fin-entrada" class="form-control money input-auto"
             id="finJuros" placeholder="Entrada" required>
         </div>
       </div>
@@ -218,16 +218,16 @@
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">*Juros</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Juros</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control" id="vFinJuros" placeholder="Valor" required>
+          <input readonly data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control" id="vFinJuros" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">*ValorFinal</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control" id="vFinTotal" placeholder="Valor" required>
+          <input readonly data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control" id="vFinTotal" placeholder="Valor" required>
         </div>
       </div>
 
@@ -264,10 +264,13 @@
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Parcela (Cheia)</label>
+      <span class="text-danger"> *inserir parcela cheia, marque aqui caso queira reduzir 30% na proposta final</span>
+        
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Parcela (Cheia)</label>
         <div class="col-sm-3">
+          
           <input data-mask='R$ #.##0,00' type="text" name="con-parcelas" class="form-control" id="vConParcela"
-            placeholder="Parcelas" required>
+            placeholder="Inserir Parcela Cheia (Sem Redução)" required>
         </div>
         <div class="col-sm-3">
         <div class="form-check">
@@ -296,16 +299,16 @@
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">*Taxas</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Taxas</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control" id="vConJuros" placeholder="Valor" required>
+          <input readonly data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control" id="vConJuros" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">*ValorFinal</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control" id="vConTotal" placeholder="Valor" required>
+          <input readonly data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control" id="vConTotal" placeholder="Valor" required>
         </div>
       </div>
 
