@@ -4,6 +4,31 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+  <style>
+    h2 {
+      color: white; 
+      text-align: center;
+      font-size: xx-large;
+    }  
+    .logo-img {
+      margin: 0px;
+      padding: 10px;
+   
+      align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 50%;
+    }
+
+    .banner-img {
+      
+      width: 20%;
+      width:-webkit-fill-available;
+    }
+
+</style>
+
 @endsection
 
 @section('main_content')
@@ -14,21 +39,34 @@
       <div class="row">
         <div class="col-md-7 col-md-push-5">
           <span>
-            <img style="width:150px" src="{{url('')}}/images/jlalogo.png" />
+            <img class="logo-img"  src="{{url('')}}/images/jlalogo.png" />
           </span>
           <div class="booking-cta center">
-            <h1>Cadastre-se Agora mesmo!</h1>
 
+          @if ( app('request')->headline == "")
+          <h2>Cadastre-se Agora mesmo!</h2>
+          @else 
+          <h2>{{app('request')->headline}}</h2>
+          @endif
+            
+          @if ( app('request')->subheadline == "")
             <p>e Conheça a forma de compra que mais cresce no brasil
             </p>
+          @else 
+            <p>{{app('request')->subheadline}}
+            </p>
+          @endif
           </div>
 
           <div>
+          @if ( app('request')->banner != "false")
             <span>
-              <img src="{{url('')}}/feane/images/about-img.png" style="width:-webkit-fill-available" />
+              <img class="banner-img" src="{{url('')}}/feane/images/about-img.png"  />
             </span>
+            @endif
           </div>
         </div>
+
         <div class="col-md-4 col-md-pull-7">
           <div class="booking-form">
             <form method="POST" action="{{route('cadastrar')}}">
