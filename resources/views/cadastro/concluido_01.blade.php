@@ -30,21 +30,18 @@
                     <h5>Fique atento ao telefone, entraremos em contato com você em horário comercial </h5>
                     <br>
                     <p>Ou caso, queira deixar uma mensagem em nosso whatsapp clique no botão abaixo</p>
-                    
-                  
-
-                      <img onclick="myFunction()" src="{{url('')}}/images/clique-para-falar-pelo-whatsapp.png" style="width:300px"/>
+                
+                    <a href = "https://api.whatsapp.com/send/?phone=55{{$consultor}}&text=Ol%C3%A1,%20fiz%20o%20cadastro%20no%20site,%20gostaria%20de%20Mais%20informa%C3%A7%C3%B5es&type=phone_number&app_absent=0">
+                   
+                        <img src="{{url('')}}/images/clique-para-falar-pelo-whatsapp.png" style="width:300px"/>
+                    </a>
+                      
 
                 </div>
             </div>
     </body>
 <script>
 
-function myFunction() {
-
- 
-    location.href = "https://api.whatsapp.com/send/?phone=55{{$consultor}}&text&type=phone_number&app_absent=0";
-}
 
 </script>
    

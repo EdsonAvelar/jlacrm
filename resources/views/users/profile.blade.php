@@ -33,13 +33,9 @@
 
                     <div class="text-start mt-3">
                         <p class="text-muted mb-2 font-13"><strong>Nome :</strong> <span class="ms-2">{{$user->name}}</span></p>
-
                         <p class="text-muted mb-2 font-13"><strong>Telefone :</strong><span class="ms-2">{{$user->telefone}}</span></p>
-
                         <p class="text-muted mb-2 font-13"><strong>WhatsApp :</strong><span class="ms-2">{{$user->telefone}}</span></p>
-
                         <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ms-2 ">{{$user->email}}</span></p>
-
                         <p class="text-muted mb-1 font-13"><strong>Endereço :</strong> <span class="ms-2">{{$user->endereço}}</span></p>
                     </div>
 

@@ -44,8 +44,6 @@ i.icon-danger {
 <!-- Start Content-->
 <div class="container-fluid">
 
-
-    
     <div class="row">
 
         <div class="col-12">

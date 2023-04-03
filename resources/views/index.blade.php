@@ -11,7 +11,7 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{url('')}}/feane/images/favicon.png" type="">
+  <link rel="shortcut icon" href="{{url('')}}/feane/images/favicon.ico" type="">
 
   <title> JLA Soluções Financeiras </title>
 
@@ -69,7 +69,7 @@
               </li>
             </ul>
             <div class="user_option">
-              <a href="" class="order_online">
+              <a href="{{route('cadastro')}}" class="order_online">
                 Simule Agora
               </a>
             </div>
@@ -94,7 +94,7 @@
                     A JLA atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
                     </p>
                     <div class="btn-box">
-                      <a href="" class="btn1">
+                      <a href="{{route('cadastro')}}" class="btn1">
                         Simule Agora
                       </a>
                     </div>
@@ -182,7 +182,7 @@
                 <h6>
                   <span>R$ 2.500</span> Parcela
                 </h6>
-                <a href="">
+                <a href="{{route('cadastro')}}">
                   Simule Agora
                 </a>
               </div>
@@ -200,7 +200,7 @@
                 <h6>
                 <span>R$ 1.200</span> Parcela
                 </h6>
-                <a href="">
+                <a href="{{route('cadastro')}}">
                   Simule Agora 
                 </a>
               </div>

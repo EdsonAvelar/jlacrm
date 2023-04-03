@@ -18,18 +18,24 @@ class PageController extends Controller
         return view('cadastro.fb_cadastro_01');
     }
 
+    public function get_consultor(){
+        $consultores = ['11993155854','11993620652','11993605637'];
+        
+        $consultor = $consultores[array_rand($consultores)];
+
+        return $consultor;
+    }
+
     public function cadastrar(Request $request){
 
-        $input = $request->all();
-
+        $consultor = $this->get_consultor();
+        $input = $request->all();     
 
         $deal_input = array();
         $primeiro_nome = explode(" ",  $input['nome'])[0];
 
         $deal_input['titulo'] = $primeiro_nome."-".$input['tipo_credito']."-".$input['valor_credito'];
-
         $deal_input['valor'] = 0;         
-       
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
 
@@ -37,8 +43,6 @@ class PageController extends Controller
         $lead_input['nome'] = $input['nome'];
         $lead_input['telefone'] = $input['telefone'];
      
-
-
         //Validando leads
         $rules = [
             'nome' => 'required',
@@ -57,7 +61,6 @@ class PageController extends Controller
                 ->withInput();
         }
 
-
         // Validado, hora de criar o lead para associar ao negocio
         $lead = new Lead();
         $lead->nome = $lead_input['nome'];
@@ -66,8 +69,6 @@ class PageController extends Controller
         $lead->campanha = $input['campanha'];
         $lead->fonte = $input['fonte'];
         $lead->data_conversao = Carbon::now()->format('d/m/Y');;
-
-
 
         $lead->save();
 
@@ -83,10 +84,14 @@ class PageController extends Controller
         $neg_com->user_id = User::find(1)->id;
         $neg_com->save();
         
+        Atividade::add_atividade(User::find(1)->id, "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." \nFonte:".$input['fonte'].'\WhatsApp: '.$consultor  , $negocio->id);
 
-        Atividade::add_atividade(User::find(1)->id, "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." Fonte:".$input['fonte']  , $negocio->id);
+        return view('cadastro.concluido_01', compact('consultor'));
+    }
 
-        $consultor = "123";
+    public function concluido(){
+
+        $consultor = $this->get_consultor();
         return view('cadastro.concluido_01', compact('consultor'));
     }
 }

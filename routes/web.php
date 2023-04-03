@@ -27,9 +27,9 @@ Route::get('/', [AdminController::class, 'index'])->name('landingpage');
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);
 
-Route::get('/cadastro', [PageController::class, 'cadastro']);
+Route::get('/cadastro', [PageController::class, 'cadastro'])->name('cadastro');
 Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
-
+Route::get('/concluido', [PageController::class, 'concluido'])->name('concluido');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
