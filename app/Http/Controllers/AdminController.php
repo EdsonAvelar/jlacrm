@@ -9,6 +9,9 @@ use Auth;
 use Illuminate\Support\Facades\Session;
 use Validator;
 use App\Enums\UserStatus;
+use Illuminate\Support\Facades\Hash;
+
+
 class AdminController extends Controller
 {
     public function index(){
@@ -43,6 +46,33 @@ class AdminController extends Controller
         return view('login');
     }
 
+    public function changePassword()
+    {
+    return view('users.change-password');
+    }
+
+    public function updatePassword(Request $request)
+{
+        # Validation
+        $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+
+        #Match The Old Password
+        if(!Hash::check($request->old_password, auth()->user()->password)){
+            return back()->with("error", "Login ou senha inválidas!");
+        }
+
+
+        #Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return back()->with("status", "Senha Atualizada com sucesso!");
+}
  
     public function logout(){
         Session::flush();

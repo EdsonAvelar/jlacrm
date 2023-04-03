@@ -35,6 +35,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/logout', [AdminController::class, 'logout']);
 
+    Route::get('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
+    Route::post('/change-password', [AdminController::class, 'updatePassword'])->name('update-password');
+
+
     Route::group(
         ['prefix' => 'leads'],
         function () {

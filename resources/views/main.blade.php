@@ -289,7 +289,11 @@
                                     <i class="mdi mdi-account-circle me-1"></i>
                                     <span>Minha Conta</span>
                                 </a>
-
+                                <a href="{{route('change-password')}}" class="dropdown-item notify-item">
+                                    <i class="mdi textbox-password me-1"></i>
+                                    <span>Mudar Senha</span>
+                                </a>
+                                <hr>
                           
                                 <!-- item-->
                                 <a href="{{url('/logout')}}" class="dropdown-item notify-item">

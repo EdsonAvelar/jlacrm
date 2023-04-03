@@ -54,7 +54,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <a href="pages-recoverpw-2.html" class="text-muted float-end"><small>Esqueceu sua senha?</small></a>
+                                <a href="{{route('change-password')}}" class="text-muted float-end"><small>Esqueceu sua senha?</small></a>
                                 <label for="password" class="form-label">Senha</label>
                                 <input class="form-control" type="password" required="" id="password" name="password" placeholder="Digite sua senha">
 
@@ -92,10 +92,7 @@
                         </form>
                         <!-- end form-->
 
-                        <!-- Footer-->
-                        <footer class="footer footer-alt">
-                            <p class="text-muted">Ainda não tem uma conta? <a href="pages-register-2.html" class="text-muted ms-1"><b>Cadastre-se</b></a></p>
-                        </footer>
+            
 
                     </div> <!-- end .card-body -->
                 </div> <!-- end .align-items-center.d-flex.h-100-->

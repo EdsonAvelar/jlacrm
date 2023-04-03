@@ -96,7 +96,7 @@ class DashboardController extends Controller
             return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes','vendas'));
         }else {
 
-            return view('dashboards.coordenador');
+            return redirect( route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo') ) );
         }
         
     }

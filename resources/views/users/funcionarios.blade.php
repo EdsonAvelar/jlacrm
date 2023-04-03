@@ -85,7 +85,13 @@ i.icon-danger {
                                 }
 
                                 ?>
-                                <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
+                                @if ($user->hasRole('admin'))
+                                    <td></td> 
+                                @else 
+                                    <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
+                               
+                                @endif 
+                                
                                 <td><a href="{{route('users_profile', array('id'=> $user->id) )}}"  >{{$user['name']}}</a></td>
                                 <td>{{$user['email']}}</td>
                                 <td>{{$user->cargo->nome}}</td>

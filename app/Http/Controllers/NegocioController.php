@@ -394,7 +394,7 @@ class NegocioController extends Controller
        
 
         $neg_fields = array();
-        $neg_fields['valor'] = $input['valor'];
+        $neg_fields['valor'] = str_replace('.','',$input['valor'] ) ;//$input['valor'];
         $neg_fields['titulo'] = $input['titulo'];
         $neg_fields['grupo'] = $input['grupo'];
         $neg_fields['cota'] = $input['cota'];

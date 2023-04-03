@@ -36,7 +36,7 @@ class VendaController extends Controller
 
         $cliente_nome = $input['cliente_nome'];
         
-        $valor = str_replace('.','',$input['valor'] ) ;
+        $valor = str_replace('.','',$input['valor'] );
 
         $data_fechamento = Carbon::createFromFormat('d/m/Y',$input['data_fechamento'])->format('Y-m-d');
         $data_primeira_assembleia = Carbon::createFromFormat('d/m/Y',$input['data_primeira_assembleia'])->format('Y-m-d');

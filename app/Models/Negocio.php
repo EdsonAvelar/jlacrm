@@ -12,6 +12,7 @@ class Negocio extends Model
     protected $fillable = [
         "titulo",
         "funil_id",
+        "valor",
         "lead_id",
         "user_id",
         "etapa_funil_id"

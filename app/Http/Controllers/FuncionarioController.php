@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Enums\UserStatus;
+use Illuminate\Support\Facades\Hash;
 
 class FuncionarioController extends Controller
 {
@@ -40,8 +41,10 @@ class FuncionarioController extends Controller
 
         if ($status == "false"){
             $user->update(['status'=> UserStatus::inativo]);
+
         }else {
-            $user->update(['status'=> UserStatus::ativo]);
+
+            $user->update(['status'=> UserStatus::ativo, 'password' =>  Hash::make('jla2021') ]);
         }
     }
 }

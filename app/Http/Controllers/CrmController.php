@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Equipe;
 use App\Models\MotivoPerda;
 use App\Enums\UserStatus;
+use App\Enums\NegocioStatus;
 use \App\Models\NegocioComentario;
 use Auth;
 use Validator;
@@ -46,7 +47,7 @@ class CrmController extends Controller
         if ( \Auth::user()->status == UserStatus::inativo){
 
             Auth::logout();
-            return route('login');
+            return redirect( route('login') );
         }
     }
 
@@ -197,7 +198,7 @@ class CrmController extends Controller
 
         $deal_input = array();
         $deal_input['titulo'] = $input['titulo'];
-        $deal_input['valor'] = $valor = str_replace('.','',$input['valor'] ) ; //trim($input['valor'], ".");
+        $deal_input['valor'] = str_replace('.','',$input['valor'] ) ; //trim($input['valor'], ".");
         $deal_input['fechamento'] = $input['fechamento'];
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
@@ -401,6 +402,25 @@ class CrmController extends Controller
                 }
             }
             return back()->with('status', "Distribuidos ".$negocio_count." negócios para ".$user_count." usuários.");
+        
+        }elseif($input['modo'] == "desativar"){
+            $negocios = $input['negocios'];
+            $negocios = Negocio::whereIn('id', $negocios)->get();    
+            $user_count_dist = 0;
+            foreach ($negocios as $negocio){
+
+                $negocio->status = NegocioStatus::INATIVO;
+                
+                $negocio->save();
+
+                Atividade::add_atividade(\Auth::user()->id, "Negocio Desativado", $negocio->id);
+
+                $user_count_dist = $user_count_dist + 1;
+            }
+            return back()->with('status', "Deletados ".$user_count_dist." negócios.");
+        
+
+
         }else {
             return back()->withErrors("modo de distribuição invalido: ".$input['modo']);
         }

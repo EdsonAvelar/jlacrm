@@ -28,12 +28,8 @@ class PageController extends Controller
 
         $deal_input['titulo'] = $primeiro_nome."-".$input['tipo_credito']."-".$input['valor_credito'];
 
-
-        $deal_input['valor'] = 0; #$valor = str_replace('.','',$input['valor'] ) ;
-        #$deal_input['entrada'] = $valor = str_replace('.','',$input['valor'] ) ;
-        
+        $deal_input['valor'] = 0;         
        
-
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
 

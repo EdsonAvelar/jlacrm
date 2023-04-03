@@ -115,6 +115,11 @@
 
                                 <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive"  id="distribuir_btn" data-bs-toggle="modal" data-bs-target="#distribuirModal">
                                 Distribuir</a>
+                                
+                                @if (Auth::user()->hasRole('admin'))
+                                <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive"  id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
+                                Desativar</a>
+                                @endif
 
                             </h4>
 
@@ -206,6 +211,33 @@
     </div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="desativarModal" tabindex="-1" aria-labelledby="desativarModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Desativar Negócios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <div class="row">
+                    
+                    <div class="col-4">
+                     <h3>Desativar Negócios?</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="distribuir-div">
+                <input type="text" name="id" hidden value="{{app('request')->id}}">
+                <input type="submit" class="btn btn-success mt-2" value="SIM">
+                <input type="button" class="btn btn-danger mt-2 distribuir" data-bs-dismiss="modal" value="Cancelar">
+            </div>
+        </div>
+    </div>
+</div>
 
 
 <!-- Modal -->
@@ -408,6 +440,10 @@
 
         $("#distribuir_btn").on("click",function(){
             document.getElementById('modo').value = 'distribuir';
+        });
+
+        $("#desativar_btn").on("click",function(){
+            document.getElementById('modo').value = 'desativar';
         });
           
         $('.checkbox_sensitive').hide();

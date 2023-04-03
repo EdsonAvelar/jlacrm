@@ -262,9 +262,16 @@
 
 var cont = [];
 var arr = Array( $('.container').data('containers'))[0];
+
 arr.forEach(function(n){
-    cont.push(document.querySelector('#'+n))
+    if (n != ""){
+        cont.push(document.querySelector('#'+n))
+    }
+    
 });
+
+
+console.log(cont);
 
 var drake = dragula( cont );
 
