@@ -25,6 +25,8 @@
 
   <title> JLA Soluções Financeiras </title>
 
+  <meta name="facebook-domain-verification" content="ysxreh32o7okqcrkv3ia3we32jx5gz" />
+  
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="{{url('')}}/feane/css/bootstrap.css" />
 
