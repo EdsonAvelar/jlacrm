@@ -44,9 +44,9 @@
           <div class="booking-cta center">
 
           @if ( app('request')->headline == "")
-          <h2>Cadastre-se Agora mesmo!</h2>
+          <h1>Cadastre-se Agora mesmo!</h1>
           @else 
-          <h2>{{app('request')->headline}}</h2>
+          <h1>{{app('request')->headline}}</h1>
           @endif
             
           @if ( app('request')->subheadline == "")

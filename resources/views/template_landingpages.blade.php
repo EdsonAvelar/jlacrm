@@ -156,7 +156,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         #booking {
             font-family: montserrat, sans-serif;
-            background-image: url(../img/background.jpg);
+            
             background-size: cover;
             background-position: center
         }
@@ -268,7 +268,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .booking-cta h1 {
-            font-size: 52px;
+            font-size: 2.0rem;
             text-transform: uppercase;
             color: #fff;
             font-weight: 700;
