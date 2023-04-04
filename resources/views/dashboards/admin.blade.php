@@ -113,7 +113,7 @@
                     <div class="row align-items-center">
                         <div class="col-6">
                             <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">
-                            <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1' ) )}}">Novos Leads</a> 
+                            <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1', 'status'=>'ativo' ) )}}">Novos Leads</a> 
                         </h5>
                             <h3 class="my-2 py-1">{{$lead_novos}}</h3>
                             <p class="mb-0 text-muted">

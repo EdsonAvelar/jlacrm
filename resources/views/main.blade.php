@@ -13,7 +13,7 @@
     })(window,document,'script','dataLayer','GTM-T8M2RFC');</script>
     <!-- End Google Tag Manager -->
 
-    
+
     <meta charset="utf-8">
     <title>JLA Soluções Financeiras</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,8 +77,8 @@
                     <li class="side-nav-item">
                    
                         <?php 
-                            $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
-                            $data_fim = Carbon\Carbon::now()->format('d/m/Y');
+                            $data_inicio = "20/".Carbon\Carbon::now('America/Sao_Paulo')->subMonth()->format('m/Y');
+                            $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                         ?>
                         <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}" class="side-nav-link">
                             <i class="uil-home-alt"></i>
@@ -132,8 +132,8 @@
                                 @if (Auth::user()->hasAnyRole( ['gerenciar_vendas']) )
                                     <li>
                                         <?php 
-                                            $data_inicio = "20/".Carbon\Carbon::now()->subMonth()->format('m/Y');
-                                            $data_fim = Carbon\Carbon::now()->format('d/m/Y');
+                                            $data_inicio = "20/".Carbon\Carbon::now('America/Sao_Paulo')->subMonth()->format('m/Y');
+                                            $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                                         ?>
                                         <a href="{{route('vendas.lista', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Vendas Realizadas</a>
                                     </li> 

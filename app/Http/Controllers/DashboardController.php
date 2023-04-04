@@ -22,8 +22,8 @@ class DashboardController extends Controller
         $data_fim = $request->query('data_fim');
 
         if ( is_null($data_inicio) and is_null($data_fim) ){
-            $data_inicio = "20/".(Carbon::now()->subMonth(1)->format('m/Y'));
-            $data_fim = Carbon::now()->format('d/m/Y');
+            $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+            $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
             return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
         }
 
@@ -89,10 +89,8 @@ class DashboardController extends Controller
                 $vendas_totais = Venda::where($query)->sum('valor');
                 array_push($vendas, $vendas_totais);
             }
-
-
                         
-            $lead_novos = Negocio::where('user_id',NULL)->count();
+            $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
             return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes','vendas'));
         }else {
 

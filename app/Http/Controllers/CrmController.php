@@ -109,13 +109,9 @@ class CrmController extends Controller
                 ['user_id', '=', \Auth::user()->id],
             ];
         }elseif($proprietario_id == -1){
-           
-                
                 $query = [
                     ['user_id', '=', NULL]
                 ];
-            
-            
         }elseif($proprietario_id == -2){
 
              // Coordenador de equipe querendo ver todos os leads dos seus vendedores
@@ -371,8 +367,6 @@ class CrmController extends Controller
                 
             }
 
-            
-
             return back()->with('status', "Enviados ".$count." negócios transferidos para ".$nome_destino);
 
         }elseif($input['modo'] == "distribuir"){
@@ -394,7 +388,6 @@ class CrmController extends Controller
 
                 Atividade::add_atividade(\Auth::user()->id, "Cliente Distribuido para ".User::find($negocio->user_id)->name, $negocio->id);
 
-                //$negocio->save();
                 if ($user_count_dist + 1 == $user_count){
                     $user_count_dist = 0;
                 }else{
@@ -408,17 +401,28 @@ class CrmController extends Controller
             $negocios = Negocio::whereIn('id', $negocios)->get();    
             $user_count_dist = 0;
             foreach ($negocios as $negocio){
-
                 $negocio->status = NegocioStatus::INATIVO;
-                
+                #$negocio->user_id = NULL;
                 $negocio->save();
 
                 Atividade::add_atividade(\Auth::user()->id, "Negocio Desativado", $negocio->id);
-
                 $user_count_dist = $user_count_dist + 1;
             }
             return back()->with('status', "Deletados ".$user_count_dist." negócios.");
-        
+
+        }elseif($input['modo'] == "ativar"){
+            $negocios = $input['negocios'];
+            $negocios = Negocio::whereIn('id', $negocios)->get();    
+            $user_count_dist = 0;
+            foreach ($negocios as $negocio){
+                $negocio->status = NegocioStatus::ATIVO;
+                #$negocio->user_id = NULL;
+                $negocio->save();
+
+                Atividade::add_atividade(\Auth::user()->id, "Negocio Ativado", $negocio->id);
+                $user_count_dist = $user_count_dist + 1;
+            }
+            return back()->with('status', "Ativados ".$user_count_dist." negócios.");    
 
 
         }else {

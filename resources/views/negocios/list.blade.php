@@ -59,6 +59,8 @@
                                         
                                         @if( !is_null( $proprietario))
                                             {{$proprietario->name}}
+                                        @elseif (app('request')->status == 'inativo')
+                                            Inativos
                                         @elseif ( app('request')->proprietario == -2)
                                             Todos
                                         @else
@@ -71,21 +73,22 @@
                                     <div class="dropdown-menu dropdown-menu-end">
                                         @foreach ($proprietarios as $proprietario_id => $value)
                                         <a class="dropdown-item" target="_self"
-                                            href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id, 'view' => 'list' ) )}}">{{$value}}</a>
+                                            href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id, 'view' => 'list','status' => 'ativo') )}}">{{$value}}</a>
                                         @endforeach
-
-                                        
 
                                             @if (Auth::user()->hasAnyRole( ['admin']) )
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" target="_self"
-                                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1', 'view' => 'list' ) )}}">Não Atribuido</a>
-                                            @endif
+                                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1', 'view' => 'list', 'status' => 'ativo'  ) )}}">Não Atribuido</a>
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view' => 'list', 'status' => 'inativo' ) )}}">Inativos</a>
+                                            
+                                                @endif
                                         
                                             @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item" target="_self"
-                                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2', 'view' => 'list' ) )}}">Todos</a>
+                                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2', 'view' => 'list', 'status' => 'ativo'  ) )}}">Todos</a>
                                             @endif
                                         
                                     </div>
@@ -107,8 +110,8 @@
                                 </div>
                             </div>
                             <h4 class="page-title">Negócios
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-task-modal"
-                                    class="btn btn-success btn-sm ms-3">+ Add</a>
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#add-new-task-modal" id="add_button"
+                                    class="btn btn-info btn-sm ms-3">+ Add</a>
 
                                 <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive" id="atribuir_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Atribuir</a>
@@ -119,6 +122,10 @@
                                 @if (Auth::user()->hasRole('admin'))
                                 <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive"  id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
                                 Desativar</a>
+                                
+                                <a type="button" class="btn btn-success btn-sm ms-3 checkbox_sensitive"  id="ativar_btn" data-bs-toggle="modal" data-bs-target="#ativarModal">
+                                Ativar</a>
+
                                 @endif
 
                             </h4>
@@ -225,8 +232,35 @@
 
                 <div class="row">
                     
-                    <div class="col-4">
-                     <h3>Desativar Negócios?</h3>
+                    <div class="col-12">
+                     <h3>Deseja mesmo <span class="bg-danger text-white">Desativar</span> os Negócios Selecionados?</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" id="distribuir-div">
+                <input type="text" name="id" hidden value="{{app('request')->id}}">
+                <input type="submit" class="btn btn-success mt-2" value="SIM">
+                <input type="button" class="btn btn-danger mt-2 distribuir" data-bs-dismiss="modal" value="Cancelar">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="ativarModal" tabindex="-1" aria-labelledby="ativarModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ativar Negócios</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            <div class="row">
+                    
+                    <div class="col-12">
+                     <h3>Deseja mesmo <span class="bg-success text-white">Ativar</span> os Negócios Selecionados?</h3>
                     </div>
                 </div>
             </div>
@@ -445,6 +479,10 @@
         $("#desativar_btn").on("click",function(){
             document.getElementById('modo').value = 'desativar';
         });
+
+        $("#ativar_btn").on("click",function(){
+            document.getElementById('modo').value = 'ativar';
+        });
           
         $('.checkbox_sensitive').hide();
             let example = $('#example').DataTable({
@@ -463,25 +501,40 @@
         })
 
         $("input:checkbox[class='select-checkbox']").on( "click", function() {
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const param_x = urlParams.get('status');
+            
+            
+
             numberNotChecked = $('input:checkbox:checked').length;
             if (selectall) {
                 numberNotChecked = numberNotChecked -1;
                 selectall = false;
             }
-
             if (numberNotChecked < 1){
                 $("#info_label").text("");
                 $('.checkbox_sensitive').hide();
 
-            }else if(numberNotChecked < 2){
-                $('.checkbox_sensitive').show();
+            }else if(numberNotChecked < 2){            
+                
                 $("#info_label").text(numberNotChecked + " Negócio Selecionado");
                 $('#selected_qnt').html(numberNotChecked + " <br>Negócio Selecionado");
-
+                $('.checkbox_sensitive').show();
             }else {
                 $("#info_label").text(numberNotChecked + " Negócios Selecionados");
                 $('#selected_qnt').html(numberNotChecked + " <br>Negócio Selecionados")
                 $('.checkbox_sensitive').show();
+            }
+
+            if (param_x == 'ativo'){
+                $('.checkbox_sensitive').show();
+                $('#ativar_btn').hide();
+
+            }else{ 
+                $('.checkbox_sensitive').hide();
+                $('#ativar_btn').show();
+                
             }
         });
 

@@ -68,7 +68,7 @@ class PageController extends Controller
 
         $lead->campanha = $input['campanha'];
         $lead->fonte = $input['fonte'];
-        $lead->data_conversao = Carbon::now()->format('d/m/Y');;
+        $lead->data_conversao = Carbon::now('America/Sao_Paulo')->format('d/m/Y');;
 
         $lead->save();
 

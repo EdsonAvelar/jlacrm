@@ -296,7 +296,7 @@ class NegocioController extends Controller
         $proposta['con-valor-pago'] = $input['con-valor-pago'];
         $proposta['reduzido'] = $input['reduzido'];
         $proposta['parcelas_embutidas'] = $input['parcelas_embutidas'];
-        $proposta['data_proposta'] = Carbon::now()->format('Y-m-d H:i:s');
+        $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i:s');
 
 
         $proposta['user_id'] = \Auth::user()->id;
@@ -343,7 +343,7 @@ class NegocioController extends Controller
             $reuniao = new Reuniao();
             $reuniao->agendamento_id = $agendamento->id;
             $reuniao->user_id = \Auth::user()->id;
-            $reuniao->data_reuniao = Carbon::now()->format('Y-m-d');
+            $reuniao->data_reuniao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $reuniao->save(); 
 
             Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
@@ -368,7 +368,7 @@ class NegocioController extends Controller
 
         if ( $negocio ){
             $aprovacao = new Aprovacao();
-            $aprovacao->data_aprovacao = Carbon::now()->format('Y-m-d');
+            $aprovacao->data_aprovacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $aprovacao->negocio_id =  $negocio->id;
             $aprovacao->user_id = \Auth::user()->id;
 

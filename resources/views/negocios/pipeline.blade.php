@@ -96,6 +96,8 @@
 
                                 @if( !is_null( $proprietario))
                                     {{$proprietario->name}}
+                                @elseif (app('request')->status == 'inativo')
+                                    Inativos
                                 @elseif ( app('request')->proprietario == -2)
                                     Todos
                                 @else
@@ -114,14 +116,18 @@
 
                                 @if (Auth::user()->hasAnyRole( ['admin']) )
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" target="_self"
+                                    <a class="dropdown-item" target="_self"
                                     href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1','view_card' => app('request')->view_card ) )}}">Não Atribuido</a>
+                                
+                                    <a class="dropdown-item" target="_self"
+                                    href="{{route('pipeline_index', array('id' => $curr_funil_id,'proprietario' =>  '-2', 'view_card' => app('request')->view_card, 'status' => 'inativo' ))}}">Inativos</a>
+
                                 @endif
                             
                                 @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" target="_self"
-                                        href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view_card' => app('request')->view_card ) )}}">Todos</a>
+                                        href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view_card' => app('request')->view_card,'status'=>'ativo'  ))}}">Todos</a>
                                 @endif
 
                             </div>
@@ -239,7 +245,7 @@
                             @foreach ($negocios->where('etapa_funil_id',$key) as $negocio)
 
                             <?php $date=\Carbon\Carbon::parse($negocio->updated_at);
-                                $last_update = $date->diffInDays(\Carbon\Carbon::now()) ?>
+                                $last_update = $date->diffInDays(\Carbon\Carbon::now('America/Sao_Paulo')) ?>
 
                             @include('templates.crm_card', ['titulo' => $negocio->titulo,
                             'negocio_id' => $negocio->id,

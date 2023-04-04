@@ -25,7 +25,7 @@ class Atividade extends Model
             $atv->user_id = NULL;
         }
         $atv->descricao  = $descricao;
-        $atv->data_atividade =  Carbon::now()->format('Y-m-d H:i:s');
+        $atv->data_atividade =  Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i:s');
         $atv->negocio_id = $negocio_id;
         $atv->save();
     }
