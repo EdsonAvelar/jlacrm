@@ -29,7 +29,7 @@ Route::post('/login', [AdminController::class, 'login']);
 
 Route::get('/cadastro', [PageController::class, 'cadastro'])->name('cadastro');
 Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
-Route::get('/concluido', [PageController::class, 'concluido'])->name('concluido');
+Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');

@@ -86,12 +86,15 @@ class PageController extends Controller
         
         Atividade::add_atividade(User::find(1)->id, "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." \nFonte:".$input['fonte'].'\WhatsApp: '.$consultor  , $negocio->id);
 
-        return view('cadastro.concluido_01', compact('consultor'));
+        return redirect( route('obrigado' , array('consultor' => $consultor )));
+        
+        //view('cadastro.concluido_01', compact('consultor'));
     }
 
-    public function concluido(){
+    public function obrigado(Request $request){
 
-        $consultor = $this->get_consultor();
+        $consultor = $request->query('consultor');
+        
         return view('cadastro.concluido_01', compact('consultor'));
     }
 }
