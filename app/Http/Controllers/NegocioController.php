@@ -153,7 +153,7 @@ class NegocioController extends Controller
 
         if ( \Auth::user()->status == UserStatus::inativo){
 
-            Auth::logout();
+            \Auth::logout();
             return route('login');
         }
     }
@@ -298,11 +298,8 @@ class NegocioController extends Controller
         $proposta['parcelas_embutidas'] = $input['parcelas_embutidas'];
         $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i:s');
 
-
         $proposta['user_id'] = \Auth::user()->id;
         $proposta['negocio_id'] = $input['negocio_id'];
-
-        
 
         $proposta->save();
 
@@ -327,7 +324,6 @@ class NegocioController extends Controller
         }else {
             Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
         }
-
     }
 
     public function add_reuniao(Request $res)
@@ -354,7 +350,7 @@ class NegocioController extends Controller
             }else {
                 Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
             }
-            return "Agendamento Realizado com sucesso";
+            return "Cliente participou da Reunião";
         }
 
         return "Agendamento não foi encontrado";
@@ -394,8 +390,6 @@ class NegocioController extends Controller
         $id_negocio = $input['id_negocio'];
         $neg = Negocio::find($id_negocio);
 
-       
-
         $neg_fields = array();
         $neg_fields['valor'] = str_replace('.','',$input['valor'] ) ;//$input['valor'];
         $neg_fields['titulo'] = $input['titulo'];
@@ -418,7 +412,6 @@ class NegocioController extends Controller
         Lead::where( 'id', $neg->lead->id)->update($lead_fields);
 
         Atividade::add_atividade(\Auth::user()->id, "Atualização de campos", $id_negocio );
-
 
         return back()->with('status','Negócio atualizado com sucesso!');
     }

@@ -727,14 +727,11 @@
     });
 
 
-    $('#confirmar_agendamento').on('hide', function (e) {
-        console.log(e);
-        });
-
-
-    $('#confirmar_agendamento').on('click',function(){
+    $('#confirmar_agendamento').on('click',function(event){ 
         
-     
+        //console.log("Botao confirmar clicado");
+
+        $('#agendamento-add').modal('hide');
 
         info = [];
         info[0] = $('#database').data('el');
@@ -748,8 +745,9 @@
                 data: { info: info },
                 Type: 'json',
                 success: function (res) {
-                } ,
-                complete: function () {
+                    //showAlert({message: 'Agendamento Realizado com sucesso', class:"success"});
+                },
+                complete: function (res) {
                     $("#spinner-div").hide(); //Request is complete so hide spinner
                 }
             });
@@ -769,8 +767,7 @@
 
         $("#spinner-div").on('')
 
-       
-
+    
         info = [];
         info[0] = el.getAttribute('id');
         info[1] = source.getAttribute('data');
@@ -785,6 +782,7 @@
             $('#database').attr('data-el',   info[0]    );
             $('#database').attr('data-source', info[1] );
             $('#database').attr('data-target',  info[2]);
+
 
         }else if(target.getAttribute('data-etapa') == "REUNIAO"){
 
@@ -813,29 +811,26 @@
         
         } else if(target.getAttribute('data-etapa') == "APROVACAO"){
 
-            if ( source.getAttribute('data-etapa') == "REUNIAO"){
-                $("#spinner-div").show();
-                $.ajax({
-                    url: "{{url('negocios/add_aprovacao')}}",
-                    type: 'post',
-                    data: { info: info },
-                    Type: 'json',
-                    success: function (res) {
-                        console.log(res);
-                    
-                    },
-                    complete: function () {
-                        $("#spinner-div").hide(); //Request is complete so hide spinner
-                    }
-                });
-            }else {
-                showAlert({message: 'O negócio precisa estar em REUNIÃO antes de APROVACAO', class:"danger"});
-                dragek.cancel(true);
-            
-            }
-
-
-
+                if ( source.getAttribute('data-etapa') == "REUNIAO"){
+                    $("#spinner-div").show();
+                    $.ajax({
+                        url: "{{url('negocios/add_aprovacao')}}",
+                        type: 'post',
+                        data: { info: info },
+                        Type: 'json',
+                        success: function (res) {
+                            console.log(res);
+                        
+                        },
+                        complete: function () {
+                            $("#spinner-div").hide(); //Request is complete so hide spinner
+                        }
+                    });
+                }else {
+                    showAlert({message: 'O negócio precisa estar em REUNIÃO antes de APROVACAO', class:"danger"});
+                    dragek.cancel(true);
+                
+                }
 
             }else {
             
@@ -852,9 +847,6 @@
             });
         }       
         
-
-
-    
 });
 
     $('.pfechamento').datepicker({

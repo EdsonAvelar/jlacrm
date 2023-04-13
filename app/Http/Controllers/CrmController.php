@@ -273,7 +273,7 @@ class CrmController extends Controller
 
         $negocio->save();
 
-        Atividade::add_atividade(\Auth::user()->id, "Negócio foi motivo para ".$etapa->nome, $negocio_id );
+        Atividade::add_atividade(Auth::user()->id, "Negócio foi motivo para ".$etapa->nome, $negocio_id );
 
         $name = $negocio->lead->nome;
 
