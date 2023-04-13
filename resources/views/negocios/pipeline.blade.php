@@ -783,6 +783,18 @@
             $('#database').attr('data-source', info[1] );
             $('#database').attr('data-target',  info[2]);
 
+            $.ajax({
+                url: "{{url('negocios/drag_update')}}",
+                type: 'post',
+                data: { info: info },
+                Type: 'json',
+                success: function (res) {
+                } ,
+                complete: function () {
+                   
+                }
+            });
+
 
         }else if(target.getAttribute('data-etapa') == "REUNIAO"){
 
