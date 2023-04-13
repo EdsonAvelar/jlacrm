@@ -81,6 +81,7 @@ class AdminController extends Controller
         return redirect('/login');
     }
 
+
     public function profile(Request $request){
 
         $id = $request->query('id');

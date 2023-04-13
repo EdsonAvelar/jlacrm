@@ -29,6 +29,16 @@ class FuncionarioController extends Controller
         return back()->with("status","Funcionario adicionado com sucesso");
     }
 
+    
+    public function user_edit(Request $request){
+        $input = $request->all();
+
+        $user = User::find($input['user_id'])->update(['cargo_id'=>$input['cargo_id']]);
+       
+
+        return back()->with("status", "Usuário Atualizado com sucesso!");
+    }
+    
     public function ativar_desativar(Request $request)
     {
 

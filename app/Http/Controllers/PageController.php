@@ -94,7 +94,6 @@ class PageController extends Controller
     public function obrigado(Request $request){
 
         $consultor = $request->query('consultor');
-        
         return view('cadastro.concluido_01', compact('consultor'));
     }
 }

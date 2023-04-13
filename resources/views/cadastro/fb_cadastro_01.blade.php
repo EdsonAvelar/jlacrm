@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
+  <meta property="og:title" content="JLA Soluções Financeiras" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="{{url('')}}/feane/images/hero-bg.jpg" />
+  <meta property="og:url" content="https://jlasolucoesfinanceiras.com/" />
+
   <style>
     h2 {
       color: white; 
@@ -126,8 +131,6 @@
               <div class="form-btn">
                 <button class="submit-btn">Solicitar Simulação</button>
               </div>
-
-
             </form>
           </div>
         </div>

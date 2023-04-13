@@ -504,14 +504,16 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const param_x = urlParams.get('status');
-            
-            
+    
 
             numberNotChecked = $('input:checkbox:checked').length;
             if (selectall) {
                 numberNotChecked = numberNotChecked -1;
                 selectall = false;
             }
+
+            
+            
             if (numberNotChecked < 1){
                 $("#info_label").text("");
                 $('.checkbox_sensitive').hide();
@@ -535,6 +537,11 @@
                 $('.checkbox_sensitive').hide();
                 $('#ativar_btn').show();
                 
+            }
+
+            if (numberNotChecked == 0){
+                $('#ativar_btn').hide();
+                $('.checkbox_sensitive').hide();
             }
         });
 

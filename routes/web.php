@@ -102,6 +102,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'users'],
         function () {
             Route::get('/profile', [AdminController::class, 'profile'])->name('users_profile');
+            
             Route::post('/edit/avatar', [AdminController::class, 'avatar_edit']);
             Route::post('/add/permissao', [AdminController::class, 'add_permissao'])->name('add_permissao');
             Route::post('/del/permissao', [AdminController::class, 'del_permissao'])->name('del_permissao');
@@ -115,6 +116,7 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function
         ['prefix' => 'funcionarios'],
         function () {
             Route::get('/lista', [FuncionarioController::class, 'index'])->name('users.funcionarios');
+            Route::post('/edit', [FuncionarioController::class, 'user_edit'])->name('user_edit');
             Route::post('/add', [FuncionarioController::class, 'store'])->name('funcionarios.store');
             Route::post('/ativar_desativar', [FuncionarioController::class, 'ativar_desativar'])->name('funcionarios.ativar_desativar');
 

@@ -28,7 +28,7 @@
                   
                     <p><a href="#" data-bs-toggle="modal" data-bs-target="#edit-profile-img" class="text-muted font-14" >Editar Imagem</a></p>
                     <h4 class="mb-0 mt-2">{{$user->name}}</h4>
-                    <p class="text-muted font-14">{{$user->cargo()->first()->name}}</p>
+                    <p class="text-muted font-14">{{$user->cargo->nome}}</p>
 
 
                     <div class="text-start mt-3">
@@ -301,16 +301,14 @@
                         </div>
 
                         <div class="tab-pane  show active" id="settings">
-                            <form>
+                            <form method="POST" action="{{route('user_edit')}}">
+                                @csrf
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações Profisionais</h5>
-
-
-
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Nome</label>
-                                            <input type="text" class="form-control" id="firstname" value="{{$user->name}}">
+                                            <input type="text" class="form-control" id="firstname" value="{{$user->name}}" name="nome">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -353,23 +351,13 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="task-title" class="form-label">Equipe</label>
-                                            @if (isset($equipes))
-                                            <select class="form-select form-control-light" name="cargo_id">
-                                            <option >Selecione uma equipe</option>
-                                                @foreach ($equipes as $equipe)
                                             
-                                                    @if ($user->equipe != null and $equipe->id == $user->equipe->id )
-                                                        <option value="{{$equipe->id}}" selected>{{$equipe->nome}}</option>
-                                                    @else
-                                                        <option value="{{$equipe->id}}">{{$equipe->nome}}</option>
-                                                    @endif
-                                                @endforeach
-                                            </select>
-                                            @else
-                                            <select class="form-select form-control-light" name="cargo_id">
-                                            <option  selected>Não há equipes criadas</option>
-                                            </select>
-                                            @endif
+                                            @if ($user->equipe)
+                                                <input type="text" class="form-control" id="lastname" name="email" value="{{$user->equipe->nome}}" disabled>
+                                            @else 
+                                            <input type="text" class="form-control" id="lastname" name="email" value="Sem Equipe" disabled>
+                                            @endif 
+                                            
                                         </div>
                                     </div>
 
@@ -389,9 +377,12 @@
                                     </div>
                                 </div>
                                 
+                                @if (\Auth::user()->hasRole('admin'))
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save</button>
                                 </div>
+                                @endif
+                                <input name="user_id" value="{{app('request')->id}}" hidden >
                             </form>
                         </div>
                         <!-- end settings content-->
