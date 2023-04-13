@@ -111,7 +111,7 @@
            
                                 @foreach ($proprietarios as $proprietario_id => $value)
                                 <a class="dropdown-item" target="_self"
-                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id,'view_card' => app('request')->view_card ) )}}">{{$value}}</a>
+                                    href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  $proprietario_id,'view_card' => app('request')->view_card, 'status' => 'ativo') )}}">{{$value}}</a>
                                 @endforeach
 
                                 @if (Auth::user()->hasAnyRole( ['admin']) )
