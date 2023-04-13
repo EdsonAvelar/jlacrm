@@ -5,6 +5,7 @@
 
 <head>
 
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -13,6 +14,7 @@
     })(window,document,'script','dataLayer','GTM-T8M2RFC');</script>
     <!-- End Google Tag Manager -->
 
+    
 
     <meta charset="utf-8">
     <title>JLA Soluções Financeiras</title>

@@ -5,6 +5,7 @@
 
 
 <style>
+    touch-action: none;
     /* Image Designing Propoerties */
     .thumb {
         height: 100px;
