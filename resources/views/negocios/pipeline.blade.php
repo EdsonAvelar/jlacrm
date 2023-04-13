@@ -796,8 +796,10 @@
                     data: { info: info },
                     Type: 'json',
                     success: function (res) {
-                        console.log(res);
+                        console.log("success: " +res);
                         
+                    },error: function(data) {
+                        console.log("falha: " +res);
                     },
                     complete: function () {
                         $("#spinner-div").hide(); //Request is complete so hide spinner

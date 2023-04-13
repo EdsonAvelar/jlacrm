@@ -323,9 +323,9 @@ class NegocioController extends Controller
         Atividade::add_atividade(\Auth::user()->id, "Cliente movido para ".EtapaFunil::find($id_destino)->nome, $id_negocio);
 
         if ($id_destino > 0){
-            $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+            Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
         }else {
-            $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+            Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
         }
 
     }
@@ -348,14 +348,17 @@ class NegocioController extends Controller
 
             Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
 
-            $negocio = Negocio::find($id_negocio);
+            
             if ($id_destino > 0){
-                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+                Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
             }else {
-                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+                Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
             }
-
+            return "Agendamento Realizado com sucesso";
         }
+
+        return "Agendamento não foi encontrado";
+        
         
     }
 
