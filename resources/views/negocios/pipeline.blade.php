@@ -696,7 +696,7 @@
     }
 
 
-    document.addEventListener('touchmove', function () { e.preventDefault(); }, { passive: false });
+    //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
 
     var cont = [];
     var arr = Array( $('.container-drag').data('containers'))[0];
