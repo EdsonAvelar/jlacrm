@@ -16,6 +16,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+debug/*
 *.log
 logs/debug.log
 /logs
