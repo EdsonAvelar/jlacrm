@@ -228,16 +228,19 @@
 
                 @if(isset($negocios))
 
-                    <?php $valor_vendido_total = 0;
+                    <?php 
+                    $valor_vendido_total = 0;
+                    $count = 0;
                     foreach ($negocios->where('etapa_funil_id',$key) as $negocio){
                         $valor_vendido_total = $valor_vendido_total + (float)( $negocio->valor );
+                        $count = $count + 1;
                     }
                 ?>
                  @endif
                 <div class="tasks">
 
                 @if(isset($negocios))
-                    <h5 class="mt-0 task-header">{{$value}}<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
+                    <h5 class="mt-0 task-header">{{$value}} ({{$count}})<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
                     @endif 
                     <div id="{{$value}}"  class="task-list-items" data="{{$key}}" data-etapa="{{$value}}" agendamento="{{EtapaFunil::where('id',$key)->first()->is_agendamento}}">
 
@@ -745,12 +748,19 @@
                 data: { info: info },
                 Type: 'json',
                 success: function (res) {
-                    //showAlert({message: 'Agendamento Realizado com sucesso', class:"success"});
+                    showAlert({message: 'Agendamento Realizado com sucesso', class:"success"});
                 },
                 complete: function (res) {
                     $("#spinner-div").hide(); //Request is complete so hide spinner
                 }
-            });
+        });
+
+
+
+        
+
+
+        
 
     });
 
