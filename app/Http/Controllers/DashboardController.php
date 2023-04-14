@@ -41,7 +41,7 @@ class DashboardController extends Controller
            
 
             //Agendamento::where($query)
-            $cargo = Cargo::where( 'nome','Vendedor')->orWhere('nome','Coordenador')->first();
+            $cargo = Cargo::where( 'nome','Vendedor')->first();
             $users = User::where('cargo_id',$cargo->id)->get();
 
             $vendedores = array();

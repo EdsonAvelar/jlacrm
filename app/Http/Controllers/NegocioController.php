@@ -335,27 +335,41 @@ class NegocioController extends Controller
         $agendamento = Agendamento::where('negocio_id',$id_negocio)->first();
         
         if ( $agendamento){
+             
+            $query = [
+                ['agendamento_id', '=', $agendamento->id ],
+            ];
 
-            $reuniao = new Reuniao();
-            $reuniao->agendamento_id = $agendamento->id;
-            $reuniao->user_id = \Auth::user()->id;
-            $reuniao->data_reuniao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-            $reuniao->save(); 
+            $reuniao = Reuniao::where($query)->first();
 
-            Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
+            if (!$reuniao){
+                $reuniao = new Reuniao();
+                $reuniao->agendamento_id = $agendamento->id;
+                $reuniao->user_id = \Auth::user()->id;
+                $reuniao->data_reuniao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+                $reuniao->save(); 
+                Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
 
-            
-            if ($id_destino > 0){
-                Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+                if ($id_destino > 0){
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+                }else {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+                }
+
+                return "Cliente participou da Reunião";
             }else {
-                Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
-            }
-            return "Cliente participou da Reunião";
+
+                if ($id_destino > 0){
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
+                }else {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+                }
+
+                return "Reunião já aconteceu anteriormente";
+            }      
         }
 
         return "Agendamento não foi encontrado";
-        
-        
     }
 
     public function add_aprovacao(Request $res){
@@ -366,15 +380,26 @@ class NegocioController extends Controller
         $negocio = Negocio::find($id_negocio);
 
         if ( $negocio ){
-            $aprovacao = new Aprovacao();
-            $aprovacao->data_aprovacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-            $aprovacao->negocio_id =  $negocio->id;
-            $aprovacao->user_id = \Auth::user()->id;
 
-            $aprovacao->save();
+            $query = [
+                ['negocio_id', '=', $negocio->id],
+                ['user_id', '=', \Auth::user()->id],
 
-            Atividade::add_atividade(\Auth::user()->id, "Cliente Aprovado", $id_negocio);
+            ];
 
+            $aprovacao = Aprovacao::where($query)->first();
+            if (!$aprovacao) {
+
+                $aprovacao = new Aprovacao();
+                $aprovacao->data_aprovacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+                $aprovacao->negocio_id =  $negocio->id;
+                $aprovacao->user_id = \Auth::user()->id;
+    
+                $aprovacao->save();
+    
+                Atividade::add_atividade(\Auth::user()->id, "Cliente Aprovado", $id_negocio);
+            }
+           
             if ($id_destino > 0){
                 $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
             }else {

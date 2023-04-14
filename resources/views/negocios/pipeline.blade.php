@@ -372,7 +372,7 @@
                                         <label for="task-title" class="form-label">Nome Contato<span
                                                 class="text-danger"> *</label>
                                         <input type="text" class="form-control form-control-light" id="task-title"
-                                            placeholder="Digite nome" required value="Adriano Teste" name="nome_lead">
+                                            placeholder="Digite nome" required value="" name="nome_lead">
                                     </div>
                                 </div>
 

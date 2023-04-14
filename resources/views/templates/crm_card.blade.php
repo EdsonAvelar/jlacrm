@@ -5,9 +5,10 @@
         text-decoration: none;
         color: black;
     }
+
 </style>
 <?php 
-    $styles="height: 11rem;";
+    $styles="";
     $compact=false;
     $mb="mt-2 mb-2";
     if (app('request')->view_card == "compact"){
