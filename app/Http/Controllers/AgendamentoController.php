@@ -57,7 +57,7 @@ class AgendamentoController extends Controller
 
             Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para ".$agendamento->data_agendamento, $negocio_id );
 
-            return back()->with('status', 'Agendamento de realizado com sucesso');
+            return "Agendamento de realizado com sucesso";
         }else {
 
             
@@ -68,7 +68,7 @@ class AgendamentoController extends Controller
             $agendamento->user_id = $proprietario_id;
             $agendamento->save();
 
-            return back()->with('status', 'Agendamento desse cliente já realizado');
+            return "Agendamento desse cliente já realizado";
         }
 
         /*

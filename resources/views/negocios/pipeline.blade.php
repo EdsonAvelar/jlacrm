@@ -616,8 +616,9 @@
                     <div class="text-end">
                         <button type="submit" id="confirmar_agendamento" class="btn btn-success">Confirmar</button>
                     </div>
-                    <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{app('request')->proprietario}}">
+                    <input name="proprietario_id" hidden value="{{app('request')->proprietario}}">
                     <input name="negocio_id" id="negocio_id_agen" hidden value="">
+                    <input id="agend_confirm" hidden value="false">
                     <input name="data_agendamento" id="data_agendamento" hidden value="{{date('d/m/Y')}}">
                     <div id="database" data-el="" data-source="" data-target=""></div>
 
@@ -640,7 +641,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="p-2" action="{{route('agendamento.add')}}" method="POST" id="agendamento_para">
+                <form class="p-2" action="{{route('agendamento.add')}}" method="POST" id="confirmar_reuniao">
                     @csrf
                     <div class="row">
                         <!-- Painel Esquedo -->
@@ -656,7 +657,7 @@
                     <hr>
 
                     <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{app('request')->proprietario}}">
-                    <input name="negocio_id" id="negocio_id_agen" hidden value="">
+                    <input name="negocio_id" id="negocio_id_reu" hidden value="">
                     <input name="data_agendamento" id="data_agendamento" hidden value="{{date("d/m/Y")}}">
                 </form>
             </div>
@@ -730,43 +731,46 @@
     });
 
 
-    $('#confirmar_agendamento').on('click',function(event){ 
+    $('#agendamento_para').submit(function(e){ 
         
         //console.log("Botao confirmar clicado");
-
+        $("#spinner-div").show();
         $('#agendamento-add').modal('hide');
 
-        info = [];
-        info[0] = $('#database').data('el');
-        info[1] = $('#database').data('source');
-        info[2] = $('#database').data('target');
+        e.preventDefault(); // avoid to execute the actual submit of the form.
 
-        $("#spinner-div").show();
+        var form = $(this);
+        var actionUrl = form.attr('action');
+
+
+        $.ajax({
+        type: "POST",
+        url: actionUrl,
+        data: form.serialize(), // serializes the form's elements.
+        success: function(data)
+        {
+            showAlert({message: data, class:"success"});
+
             $.ajax({
                 url: "{{url('negocios/drag_update')}}",
                 type: 'post',
                 data: { info: info },
                 Type: 'json',
                 success: function (res) {
-                    showAlert({message: 'Agendamento Realizado com sucesso', class:"success"});
+                    //showAlert({message: res, class:"success"});
                 },
                 complete: function (res) {
-                    $("#spinner-div").hide(); //Request is complete so hide spinner
+                    $("#spinner-div").hide(); 
                 }
+            });
+
+        }
         });
-
-
-
-        
-
-
-        
 
     });
 
- 
-
     dragek.on('drop', function (el, target, source, sibling) {
+
 
         scrollable = true;
         $.ajaxSetup({
@@ -793,7 +797,7 @@
             $('#database').attr('data-source', info[1] );
             $('#database').attr('data-target',  info[2]);
 
-            $.ajax({
+            /*$.ajax({
                 url: "{{url('negocios/drag_update')}}",
                 type: 'post',
                 data: { info: info },
@@ -803,7 +807,7 @@
                 complete: function () {
                    
                 }
-            });
+            });*/
 
 
         }else if(target.getAttribute('data-etapa') == "REUNIAO"){
