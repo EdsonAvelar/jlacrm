@@ -161,7 +161,7 @@
                             @if(isset($negocios))
                                 @foreach ($negocios as $negocio)
                                 <tr>
-                                    <td><input type="checkbox" name="negocios[]" value="{{$negocio->id}}" class="select-checkbox"></td>
+                                    <td><input type="checkbox" id="chkBSA" name="negocios[]" value="{{$negocio->id}}" class="select-checkbox"></td>
                                     <td><a href="{{ route('negocio_edit', array('id' => $negocio->id)) }}">{{
                                             $negocio->titulo }}</a></td>
                                     <td>{{"[".$negocio->id."]".$negocio->lead->nome }}</td>
@@ -413,7 +413,7 @@
                                         <label for="task-title" class="form-label">Nome Contato<span
                                                 class="text-danger"> *</span></label>
                                         <input type="text" class="form-control form-control-light" id="task-title"
-                                            placeholder="Digite nome" required value="" name="nome_lead">
+                                            placeholder="Digite nome" required value="Adriano Teste" name="nome_lead">
                                     </div>
                                 </div>
 
@@ -490,37 +490,16 @@
 
         let selectall = false;
 
-        $('#selectall').on("click", function() {
-            if ($("input:checkbox").prop("checked")) {
-			    $("input:checkbox[class='select-checkbox']").prop("checked", true);
-                selectall = true
-            } else {
-                $("input:checkbox[class='select-checkbox']").prop("checked", false);
-                selectall = false
-            }
-        })
-
-        $("input:checkbox[class='select-checkbox']").on( "click", function() {
-
+        function handleTableClick(){
             const urlParams = new URLSearchParams(window.location.search);
             const param_x = urlParams.get('status');
-
             
-    
-
             numberNotChecked = $('input:checkbox:checked').length;
-
-
             console.log("Checked:"+$('input:checkbox:checked').length);
-
-
             if (selectall) {
                 numberNotChecked = numberNotChecked -1;
                 selectall = false;
             }
-
-            
-            
             if (numberNotChecked < 1){
                 $("#info_label").text("");
                 $('.checkbox_sensitive').hide();
@@ -550,6 +529,33 @@
                 $('#ativar_btn').hide();
                 $('.checkbox_sensitive').hide();
             }
+        }
+
+        $(document).on("click", "#selectall", function() {
+            
+            if ($("input:checkbox").prop("checked")) {
+			    $("input:checkbox[class='select-checkbox']").prop("checked", true);
+                selectall = true
+                
+            } else {
+                $("input:checkbox[class='select-checkbox']").prop("checked", false);
+                selectall = false
+                
+            }
+
+            handleTableClick();
+        })
+
+
+        $(document).on("change", "#chkBSA", function() {
+            handleTableClick()
+        });
+
+
+
+        $("input:checkbox[class='select-checkbox']").on( "click", function() {
+
+           
         });
 
         $('#valor_credito').mask('R$ 000.000.000.000.000,00', { reverse: true });
