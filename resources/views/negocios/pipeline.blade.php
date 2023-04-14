@@ -622,7 +622,6 @@
                     <input name="proprietario_id" hidden value="{{app('request')->proprietario}}">
                     <input name="negocio_id" id="negocio_id_agen" hidden value="">
                     <input id="agend_confirm" hidden value="false">
-                    <input name="data_agendamento" id="data_agendamento" hidden value="{{date('d/m/Y')}}">
                     <div id="database" data-el="" data-source="" data-target=""></div>
 
                 </form>

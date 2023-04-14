@@ -52,8 +52,8 @@ class DashboardController extends Controller
 
             foreach ($users as $vendedor){
                 $query = [
-                    ['data_agendado', '>=', $from ],
-                    ['data_agendado', '<=', $to],
+                    ['data_agendamento', '>=', $from ],
+                    ['data_agendamento', '<=', $to],
                     ['user_id', '=', $vendedor->id]
                 ];
                 

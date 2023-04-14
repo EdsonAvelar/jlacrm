@@ -52,6 +52,9 @@
         <!-- ========== Left Sidebar Start ========== -->
         <div class="leftside-menu">
 
+        <a class="button-menu-mobile open-left">
+                            <i class="mdi mdi-menu"></i>
+    </a>
 
         <a class="logo text-center logo-light open-left">
                 <span class="logo-lg">
@@ -366,11 +369,13 @@
                     </ul>
 
                     
-
+                    <button class="button-menu-mobile open-left">
+                            <i class="mdi mdi-menu"></i>
+                        </button>
                 </div>
 
                
-
+                
                 <!-- end Topbar -->
                 @include('layouts.alert-msg')
                 @yield('main_content')

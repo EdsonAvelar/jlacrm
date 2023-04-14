@@ -21,7 +21,7 @@ class AgendamentoController extends Controller
         $input = $request->all();
 
         $data_agendado = Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('Y-m-d');
-        $data_agendamento = Carbon::createFromFormat('d/m/Y',$input['data_agendamento'])->format('Y-m-d');
+        $data_agendamento = Carbon::now()->format('Y-m-d');
         $hora = $input['hora_agendado'];
 
 
