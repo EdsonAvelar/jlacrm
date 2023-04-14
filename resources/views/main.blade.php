@@ -52,25 +52,26 @@
         <!-- ========== Left Sidebar Start ========== -->
         <div class="leftside-menu">
 
-            <!-- LOGO -->
-            <a href="index.html" class="logo text-center logo-light">
-                <span class="logo-lg">
-                    <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
-                </span>
-                <span class="logo-sm">
-                    <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
-                </span>
-            </a>
 
-            <!-- LOGO -->
-            <a href="index.html" class="logo text-center logo-dark">
+        <a class="logo text-center logo-light open-left">
                 <span class="logo-lg">
                     <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
                 </span>
                 <span class="logo-sm">
                     <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
                 </span>
-            </a>
+        </a>
+
+        <a class="logo text-center logo-dark open-left">
+                <span class="logo-lg">
+                    <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
+                </span>
+                <span class="logo-sm">
+                    <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
+                </span>
+        </a>
+
+
 
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
 
@@ -116,8 +117,8 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#funcionarios" aria-expanded="false"
                             aria-controls="funcionarios" class="side-nav-link">
-                            <i class="uil-store"></i>
-                            <span> Admininstrativo </span>
+                            <i class="uil-user-circle"></i>
+                            <span> Administrativo </span>
                             <span class="menu-arrow"></span>
                         </a>
                         
@@ -151,7 +152,48 @@
                       
 
                     </li>
-                    
+
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#perfil" aria-expanded="false"
+                            aria-controls="perfil" class="side-nav-link">
+                            <i class="uil-bright"></i>
+                            <span> Configurações </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        
+                        
+                        <div class="collapse" id="perfil">
+                            <ul class="side-nav-second-level">
+                                    <li>
+                                        <a href="{{route('users_profile', array('id'=> \Auth::user()->id) )}}">Minha Conta</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('change-password')}}">Mudar de Senha</a>
+                                    </li>
+                                    <hr>
+                                    <li>
+                                        <a href="{{url('/logout')}}">Logout</a>
+                                    </li>
+                                
+                                </ul>
+                        </div>
+                      
+
+                    </li>
+
+
+
+                    <li class="side-nav-item">
+                   
+                        <a class="side-nav-link" id="btnModoTV">
+                            <i class="uil-home-alt"></i>
+                            <span> Modo TV </span>
+                        </a>
+                    </li>
+
+
+                       
 
             </div>
             <!-- Sidebar -left -->
@@ -169,6 +211,7 @@
         <div class="content-page">
             <div class="content">
                 <!-- Topbar Start -->
+                
                 <div class="navbar-custom">
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list d-lg-none">
@@ -322,11 +365,12 @@
 
                     </ul>
 
-                    <button class="button-menu-mobile open-left">
-                            <i class="mdi mdi-menu"></i>
-                        </button>
                     
+
                 </div>
+
+               
+
                 <!-- end Topbar -->
                 @include('layouts.alert-msg')
                 @yield('main_content')
@@ -390,6 +434,68 @@
         $("form").submit(function() {
             $(":submit", this).attr("disabled", "disabled");
         });
+
+        $("#fullscreen")
+
+        function entrarFullScreen(){
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { 
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                } else if (document.documentElement.msRequestFullscreen) {
+                    document.documentElement.msRequestFullscreen();
+                } else if (document.documentElement.mozRequestFullScreen) {
+                    document.documentElement.mozRequestFullScreen();
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+                }
+            }
+        }
+            
+        function sairFullScreen(){
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            }
+        }
+
+        $( document ).ready(function() {
+	var modoTv = false;
+
+        $("#btnModoTV").click(function(){
+            if(modoTv == false){
+                $("#cabecalho").hide();
+                $("#menuEsquerda").hide();
+                $("#menuCentral").hide(); //esconde para remodular as classes
+                $("#menuCentral").removeClass("col-md-8 col-md-offset-1");
+                $("#menuCentral").addClass("col-md-12");
+                $("#menuCentral").fadeIn(1500); //reaparece com estilo ^_~
+                //$("#btnModoTV").html("Desativar Modo TV");
+                modoTv = true;
+                
+                entrarFullScreen();
+                
+            }else{
+                $("#cabecalho").show();
+                $("#menuEsquerda").show();
+                $("#menuCentral").hide();
+                $("#menuCentral").removeClass("col-md-12");
+                $("#menuCentral").addClass("col-md-8 col-md-offset-1");
+                $("#menuCentral").show();
+                //$("#btnModoTV").html("Ativar Modo TV");
+                modoTv = false;
+                
+                sairFullScreen();
+                
+            }
+        });
+    });
+
+        
 	</script>
     
     @yield('specific_scripts')

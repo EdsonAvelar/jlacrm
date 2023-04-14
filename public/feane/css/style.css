@@ -1,5 +1,24 @@
 @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap");
 
+@media screen and (max-width: 500px) {
+  #navbar-custom {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
+
+  .content-page {
+    margin-left: 260px;
+    overflow: hidden;
+    /* padding: 70px 12px 65px; */
+    min-height: 100vh;
+}
+
+}
+
 html {
   scroll-behavior: smooth;
 }

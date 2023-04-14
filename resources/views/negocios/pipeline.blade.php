@@ -210,9 +210,12 @@
                         </li>
                     </ul>
                 </div>
+                <a class="button-menu-mobile open-left"><span class="uil-scroll-h"></span>
+                    </a>
                 <h4 class="page-title">Negócios
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model"
                         class="btn btn-success btn-sm ms-3">+ Add</a>
+                        
                 </h4>
             </div>
         </div>

@@ -504,9 +504,16 @@
 
             const urlParams = new URLSearchParams(window.location.search);
             const param_x = urlParams.get('status');
+
+            
     
 
             numberNotChecked = $('input:checkbox:checked').length;
+
+
+            console.log("Checked:"+$('input:checkbox:checked').length);
+
+
             if (selectall) {
                 numberNotChecked = numberNotChecked -1;
                 selectall = false;
