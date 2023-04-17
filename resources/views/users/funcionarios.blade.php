@@ -1,4 +1,5 @@
-<?php use App\Enums\UserStatus; ?>
+<?php use App\Enums\UserStatus; 
+use Illuminate\Support\Facades\Hash;?>
 @extends('main')
 
 @section('headers')
@@ -65,9 +66,8 @@ i.icon-danger {
                                 <th>E-mail</th>
                                 <th>Cargo</th>
                                 <th>Permissioes</th>
-                                <th>CPF</th>
-                                <th>RG</th>
-                                <th>Endereço</th>
+                                <th>Telefone</th>
+                                <th>Resetada?</th>
                                 <th>Data Contratacao</th>
                                 
                             </tr>
@@ -87,24 +87,39 @@ i.icon-danger {
                                     <td></td> 
                                 @else 
                                     <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
-                               
                                 @endif 
                                 
-                                <td><a href="{{route('users_profile', array('id'=> $user->id) )}}"  >{{$user['name']}}</a></td>
+                                <td>
+                                    <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                                    <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>
                                 <td>{{$user['email']}}</td>
                                 <td>{{$user->cargo->nome}}</td>
                                 <td>
-
                                     @if ( $user->roles() )
+                                        <?php $perms = 1 ?>
                                         @foreach ($user->roles as $role)
                                         <span class="badge badge-info-lighten">{{$role->name}}</span>
+
+                                                @if ($perms > 2 )
+                                                    <br>
+                                                    <?php $perms = 0; ?>
+                                                @endif
+                                            <?php $perms = $perms + 1; ?>
                                         @endforeach
                                     @endif
+                                </td>
+                                <td>{{$user['telefone']}}</td>
+                                <td>
+                                
+                                
+                                @if ( Hash::check('jla2021', $user['password']))
+                                    <span class="badge badge-danger-lighten">Não Resetada</span>
+                                @else 
+                                <span class="badge badge-success-lighten">OK</span>
+                                @endif
+
 
                                 </td>
-                                <td>{{$user['cpf']}}</td>
-                                <td>{{$user['rf']}}</td>
-                                <td>{{$user['endereco']}}</td>
                                 <td>{{$user['data_contratacao']}}</td>
                                
                             </tr>
