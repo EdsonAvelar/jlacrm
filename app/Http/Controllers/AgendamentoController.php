@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-
 use App\Models\Agendamento;
 use App\Models\Atividade;
 
@@ -12,8 +11,12 @@ class AgendamentoController extends Controller
 {
     public function index(Request $request)
     {
+        return view('negocios.calendario');
+    }
 
-        return "Agendamento View";
+    public function calendario(Request $request)
+    {
+        return view('negocios.calendario');
     }
 
     public function add(Request $request)

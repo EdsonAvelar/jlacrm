@@ -306,7 +306,14 @@ $(document).ready(function () {
                 data: { info: info },
                 Type: 'json',
                 success: function (res) {
-                    console.log("Funcionario atualizada com sucesso")
+
+                    showAlert({message: res, class:"success"});
+
+                    console.log("Funcionario atualizada com sucesso"+res)
+                },
+                error: function(res){
+                    showAlert({message: res, class:"success"});
+                    console.log("Funcionario atualizada com sucesso:"+res)
                 }
             });
 

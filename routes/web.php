@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'agendamento'],
         function () {
             Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
+            Route::get('/calendario', [AgendamentoController::class, 'index'])->name('agendamento.calendario');
             Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');         
 
         }

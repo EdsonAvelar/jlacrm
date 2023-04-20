@@ -500,7 +500,20 @@
         });
     });
 
-        
+    function showAlert(obj){
+        var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
+            '   <strong>' + obj.message + '</strong>'+
+            '   </div>';
+
+        $('#alert').append(html);
+        window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function(){
+				$(this).remove(); 
+			});
+		}, 4000);
+    }
+
+    
 	</script>
     
     @yield('specific_scripts')

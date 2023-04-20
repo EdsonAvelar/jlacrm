@@ -50,11 +50,12 @@ class FuncionarioController extends Controller
         $user = User::find($user_id);
 
         if ($status == "false"){
-            $user->update(['status'=> UserStatus::inativo]);
-
+            $res = $user->update(['status'=> UserStatus::inativo]);
+            return "Status de ".$user->name." desativado com sucesso: id=".$res;
         }else {
 
-            $user->update(['status'=> UserStatus::ativo, 'password' =>  Hash::make('jla2021') ]);
+            $res = $user->update(['status'=> UserStatus::ativo, 'password' =>  Hash::make('jla2021') ]);
+            return "".$user->name." foi ativado com sucesso: id=".$res;
         }
     }
 }

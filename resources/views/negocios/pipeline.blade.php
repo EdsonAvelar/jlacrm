@@ -54,19 +54,13 @@
 <div id="alert"></div>
 <!-- Start Content-->
 <div class="container-fluid">
-
     <!-- start page title -->
     <div class="row ">
-    
         <div class="col-12">
             <div class="page-title-box">
-
-                <div class="page-title-right">
-
-                
+                <div class="page-title-right">                
                 <ul class="list-unstyled topbar-menu float-end mb-0">
                     <li class="dropdown notification-list d-none d-sm-inline-block">
-
                             @if (app('request')->view_card == "compact")
                             <a class="nav-link dropdown-toggle arrow-none"
                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario,'status'=> app('request')->status) )}}" role="button">
@@ -77,20 +71,15 @@
                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view_card' => 'compact','status'=> app('request')->status ) )}}" role="button">
                                 <i class="dripicons-contract noti-icon"></i>
                             </a>
-
                             @endif
-
                         </li>
                         <li class="dropdown notification-list d-none d-sm-inline-block">
                             <a class="nav-link dropdown-toggle arrow-none"
                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  app('request')->proprietario, 'view' => 'list' ) )}}" role="button">
                                 <i class="dripicons-menu noti-icon"></i>
                             </a>
-                           
                         </li>
-                        
                         <li class="dropdown notification-list d-none d-sm-inline-block">
-                            
                             <button type="button" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
 
@@ -688,18 +677,6 @@
 
 <script>
 
-    function showAlert(obj){
-        var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
-            '   <strong>' + obj.message + '</strong>'+
-            '   </div>';
-
-        $('#alert').append(html);
-        window.setTimeout(function() {
-			$(".alert").fadeTo(500, 0).slideUp(500, function(){
-				$(this).remove(); 
-			});
-		}, 4000);
-    }
 
 
     //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
