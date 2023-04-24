@@ -51,7 +51,7 @@
 
 @section('main_content')
 
-<div id="alert"></div>
+
 <!-- Start Content-->
 <div class="container-fluid">
     <!-- start page title -->
@@ -612,7 +612,6 @@
                     <input name="negocio_id" id="negocio_id_agen" hidden value="">
                     <input id="agend_confirm" hidden value="false">
                     <div id="database" data-el="" data-source="" data-target=""></div>
-
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -677,6 +676,17 @@
 
 <script>
 
+    function showAlert(obj){
+        var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
+            '   <strong>' + obj.message + '</strong>'+
+            '   </div>';
+        $('#alert').append(html);
+        window.setTimeout(function() {
+			$(".alert").fadeTo(500, 0).slideUp(500, function(){
+				$(this).remove(); 
+			});
+		}, 4000);
+    }
 
 
     //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
@@ -712,11 +722,12 @@
 
     $('#agendamento_para').submit(function(e){ 
         
-        //console.log("Botao confirmar clicado");
         $("#spinner-div").show();
         $('#agendamento-add').modal('hide');
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
+        $('#confirmar_agendamento').prop("disabled", false);
+   
 
         var form = $(this);
         var actionUrl = form.attr('action');
@@ -728,28 +739,35 @@
         data: form.serialize(), // serializes the form's elements.
         success: function(data)
         {
-            showAlert({message: data, class:"success"});
-
+            showAlert({message: "reunião de agendada com sucesso", class:"success"});
             $.ajax({
                 url: "{{url('negocios/drag_update')}}",
                 type: 'post',
                 data: { info: info },
                 Type: 'json',
                 success: function (res) {
-                    //showAlert({message: res, class:"success"});
+                    //showAlert({message: "reunião de "+res+" agendada com sucesso", class:"success"});
                 },
+                error : function (res) {
+                    //showAlert({message: "erro na atualização do negócio:"+res, class:"danger"});
+                    console.log("Erro ao agendar cliente");
+                    console.log(res);
+                },
+                
                 complete: function (res) {
                     $("#spinner-div").hide(); 
                 }
             });
+        }, 
+        error : function (res) {
+            showAlert({message: res+" Erro no agendamento", class:"danger"});
+        },
 
-        }
+
         });
-
     });
 
     dragek.on('drop', function (el, target, source, sibling) {
-
 
         scrollable = true;
         $.ajaxSetup({
@@ -758,9 +776,7 @@
             }
         });
 
-        $("#spinner-div").on('')
-
-    
+        $("#spinner-div").on('');
         info = [];
         info[0] = el.getAttribute('id');
         info[1] = source.getAttribute('data');
@@ -771,23 +787,9 @@
 
             $('#negocio_id_agen').val(info[0]);
             $('#agendamento-add').modal('show');
-
             $('#database').attr('data-el',   info[0]    );
             $('#database').attr('data-source', info[1] );
             $('#database').attr('data-target',  info[2]);
-
-            /*$.ajax({
-                url: "{{url('negocios/drag_update')}}",
-                type: 'post',
-                data: { info: info },
-                Type: 'json',
-                success: function (res) {
-                } ,
-                complete: function () {
-                   
-                }
-            });*/
-
 
         }else if(target.getAttribute('data-etapa') == "REUNIAO"){
 
@@ -799,10 +801,10 @@
                     data: { info: info },
                     Type: 'json',
                     success: function (res) {
-                        console.log("success: " +res);
-                        
-                    },error: function(data) {
-                        console.log("falha: " +res);
+                    showAlert({message: res, class:"success"});
+                    },
+                    error : function (res) {
+                        showAlert({message: "erro ao agendar reunião:"+res, class:"danger"});
                     },
                     complete: function () {
                         $("#spinner-div").hide(); //Request is complete so hide spinner
@@ -824,8 +826,10 @@
                         data: { info: info },
                         Type: 'json',
                         success: function (res) {
-                            console.log(res);
-                        
+                            showAlert({message: res+" aprovação realizada com sucesso", class:"success"});
+                        },
+                        error : function (res) {
+                            showAlert({message: "erro ao aprovar cliente:"+res, class:"danger"});
                         },
                         complete: function () {
                             $("#spinner-div").hide(); //Request is complete so hide spinner

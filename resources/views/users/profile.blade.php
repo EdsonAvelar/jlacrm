@@ -1,9 +1,42 @@
+<?php use App\Enums\UserStatus;?>
+
 @extends('main')
 
 
+
 @section('headers')
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 
+<style>
+    input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(1.3); /* IE */
+  -moz-transform: scale(1.3); /* FF */
+  -webkit-transform: scale(1.3); /* Safari and Chrome */
+  -o-transform: scale(1.3); /* Opera */
+  padding: 10px;
+}
 
+#info_label {
+    padding: 10px;
+    color: #000080;
+}
+
+.mdi-18px { font-size: 18px; }
+.mdi-24px { font-size: 24px; }
+.mdi-36px { font-size: 36px; }
+.mdi-48px { font-size: 48px; }
+
+i.icon-success {
+    color: green;
+}
+
+i.icon-danger {
+    color: red;
+}
+</style>
 <style>
     touch-action: none;
     /* Image Designing Propoerties */
@@ -306,18 +339,28 @@
                                 @csrf
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações Profisionais</h5>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Nome</label>
                                             <input type="text" class="form-control" id="firstname" value="{{$user->name}}" name="nome">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">E-mail</label>
                                             <input type="text" class="form-control" id="lastname" name="email" value="{{$user->email}}" disabled>
                                         </div>
                                     </div> <!-- end col -->
+
+                                    @if (\Auth::user()->hasRole('admin'))
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password" name="password" value="">
+                                        </div>
+                                    </div> <!-- end col -->
+                                    @endif
+
                                 </div> 
                                 <div class="row">
                                     <div class="col-md-6">
@@ -354,9 +397,9 @@
                                             <label for="task-title" class="form-label">Equipe</label>
                                             
                                             @if ($user->equipe)
-                                                <input type="text" class="form-control" id="lastname" name="email" value="{{$user->equipe->nome}}" disabled>
+                                                <input type="text" class="form-control" id="equipe" name="email" value="{{$user->equipe->nome}}" disabled>
                                             @else 
-                                            <input type="text" class="form-control" id="lastname" name="email" value="Sem Equipe" disabled>
+                                                <input type="text" class="form-control" id="equipe" name="email" value="Sem Equipe" disabled>
                                             @endif 
                                             
                                         </div>
@@ -379,9 +422,24 @@
                                 </div>
                                 
                                 @if (\Auth::user()->hasRole('admin'))
-                                <div class="text-end">
-                                    <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Save</button>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                    <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i> Atualizar</button>
+                                    </div>
+                                    <div class="col-6 text-end">
+                                    <?php
+                                        $ischecked = "";
+                                        if ( $user->status == UserStatus::ativo ){
+                                            $ischecked = "checked";
+                                        }
+
+                                        ?>
+
+                                        <input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger">
                                 </div>
+                                </div>
+                             
                                 @endif
                                 <input name="user_id" value="{{app('request')->id}}" hidden >
                             </form>
@@ -506,7 +564,47 @@
 @section('specific_scripts')
 
 
+
+
 <script type="text/javascript">
+
+    
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+ 
+
+
+    $('.toggle-event').change(function($this) {
+
+        var user_id = $(this).data('user_id'); 
+        console.log( $(this).prop('checked') + " user "+ user_id );
+
+        info = [];
+        info[0] = $(this).prop('checked');
+        info[1] = user_id;
+
+        $.ajax({
+            url: "{{url('funcionarios/ativar_desativar')}}",
+            type: 'post',
+            data: { info: info },
+            Type: 'json',
+            success: function (res) {
+                console.log("Funcionario atualizada com sucesso: " )
+                showAlert({message: res, class:"success"});
+            },
+            error: function (res) {
+                console.log(res);
+                showAlert({message: res, class:"danger"});
+            },
+        });
+
+    });
+
 
     $('body').on('click', '.confirm-delete', function (e){
         //MSK-000122		

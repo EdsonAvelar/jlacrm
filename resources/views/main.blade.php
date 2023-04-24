@@ -32,11 +32,9 @@
     <link href="{{url('')}}/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="{{url('')}}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
     <link href="{{url('')}}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
 
     @yield('headers')
-
-
-
 </head>
 
 <body class="loading"
@@ -48,34 +46,31 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
+    
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
         <div class="leftside-menu">
-
         <a class="button-menu-mobile open-left">
                             <i class="mdi mdi-menu"></i>
     </a>
 
         <a class="logo text-center logo-light open-left">
-                <span class="logo-lg">
-                    <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
-                </span>
-                <span class="logo-sm">
-                    <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
-                </span>
+            <span class="logo-lg">
+                <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
+            </span>
+            <span class="logo-sm">
+                <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
+            </span>
         </a>
 
         <a class="logo text-center logo-dark open-left">
-                <span class="logo-lg">
-                    <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
-                </span>
-                <span class="logo-sm">
-                    <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
-                </span>
+            <span class="logo-lg">
+                <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
+            </span>
+            <span class="logo-sm">
+                <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
+            </span>
         </a>
-
-
-
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
 
                 <!--- Sidemenu -->
@@ -107,11 +102,17 @@
                                 <li>
                                     <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','status'=> 'ativo' ) )}}">Lista</a>
                                 </li>
+                                
+                                <li>
+                                    <a href="{{route('agendamento.calendario', array('proprietario' =>  \Auth::user()->id ) )}}">Calendário</a>
+                                </li>
+
                                 @if (Auth::user()->hasAnyRole( ['importar_leads']) )
                                 <li>
                                     <a href="{{route('importar.negocios.index')}}">Importar</a>
                                 </li>
                                 @endif
+
                             </ul>
                         </div>
                     </li>
@@ -185,18 +186,13 @@
 
                     </li>
 
-
-
                     <li class="side-nav-item">
                    
                         <a class="side-nav-link" id="btnModoTV">
                             <i class="uil-home-alt"></i>
                             <span> Modo TV </span>
                         </a>
-                    </li>
-
-
-                       
+                    </li> 
 
             </div>
             <!-- Sidebar -left -->
@@ -378,6 +374,7 @@
                 
                 <!-- end Topbar -->
                 @include('layouts.alert-msg')
+                <div id="alert"></div>
                 @yield('main_content')
 
             </div>
@@ -424,7 +421,7 @@
     <script src="{{url('')}}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
     <!-- third party js ends -->
 
- 
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- end demo js-->
     
 
@@ -500,11 +497,11 @@
         });
     });
 
+
     function showAlert(obj){
         var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
             '   <strong>' + obj.message + '</strong>'+
             '   </div>';
-
         $('#alert').append(html);
         window.setTimeout(function() {
 			$(".alert").fadeTo(500, 0).slideUp(500, function(){
@@ -513,10 +510,15 @@
 		}, 4000);
     }
 
-    
+
 	</script>
+
+
+   
     
     @yield('specific_scripts')
+    
+ 
 
 </body>
 

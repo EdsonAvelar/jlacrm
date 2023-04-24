@@ -33,7 +33,24 @@ class FuncionarioController extends Controller
     public function user_edit(Request $request){
         $input = $request->all();
 
-        $user = User::find($input['user_id'])->update(['cargo_id'=>$input['cargo_id']]);
+        $nome = $input['nome'];
+        $password = $input['password'];
+        $data_contratacao = $input['data_contratacao'];
+
+        $user = User::find($input['user_id']);
+        if ($password != ""){
+            $user->password = Hash::make($password);
+        }
+
+        if ($nome  != ""){
+            $user->name = $nome;
+        }
+
+        if ($data_contratacao  != ""){
+            $user->data_contratacao = $data_contratacao;
+        }
+        
+        $user->save();
        
 
         return back()->with("status", "Usuário Atualizado com sucesso!");

@@ -151,9 +151,10 @@
                                     </th>
                                     <th>Titulo</th>
                                     <th>Pessoa de Contato</th>
+                                    <th>Telefone</th>
                                     <th>Valor</th>
                                     <th>Etapa</th>
-                                    <th>Fechamento</th>
+                                   
                                     <th>Proprietário</th>
                                 </tr>
                             </thead>
@@ -164,10 +165,11 @@
                                     <td><input type="checkbox" id="chkBSA" name="negocios[]" value="{{$negocio->id}}" class="select-checkbox"></td>
                                     <td><a href="{{ route('negocio_edit', array('id' => $negocio->id)) }}">{{
                                             $negocio->titulo }}</a></td>
-                                    <td>{{"[".$negocio->id."]".$negocio->lead->nome }}</td>
+                                    <td>{{$negocio->lead->nome }}</td>
+                                    <td><a href="tel:{{$negocio->lead->telefone}}">{{$negocio->lead->telefone }}</a> </td>
                                     <td>{{ $negocio->valor }}</td>
                                     <td>{{ $negocio->etapa_funil->nome }}</td>
-                                    <td>{{ $negocio->fechamento }}</td>
+                                   
                                     <td>
                                         @if (is_null($negocio->user))
                                             Não Atribuido
@@ -465,6 +467,8 @@
 
 <script>
 
+
+
     $(document).ready(function () {
 
         
@@ -485,6 +489,7 @@
         });
           
         $('.checkbox_sensitive').hide();
+        
             let example = $('#example').DataTable({
         });
 
