@@ -154,8 +154,8 @@
                                     <th>Telefone</th>
                                     <th>Valor</th>
                                     <th>Etapa</th>
-                                   
                                     <th>Proprietário</th>
+                                    <th>Criado em</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -178,6 +178,7 @@
                                         @endif
                                     
                                     </td>
+                                    <td>{{ $negocio->created_at }}</td>
                                 </tr>
                                 @endforeach
                             @endif

@@ -339,13 +339,19 @@ i.icon-danger {
                                 @csrf
                                 <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações Profisionais</h5>
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Nome</label>
                                             <input type="text" class="form-control" id="firstname" value="{{$user->name}}" name="nome">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="phone" class="form-label">Telefone (WhatsApp) <span class="text-muted">*DDD e números sem simbolos</span></label>
+                                            <input type="number" class="form-control" id="telefone" value="{{$user->telefone}}" name="telefone">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">E-mail</label>
                                             <input type="text" class="form-control" id="lastname" name="email" value="{{$user->email}}" disabled>
@@ -353,7 +359,7 @@ i.icon-danger {
                                     </div> <!-- end col -->
 
                                     @if (\Auth::user()->hasRole('admin'))
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="password" class="form-label">Password</label>
                                             <input type="password" class="form-control" id="password" name="password" value="">

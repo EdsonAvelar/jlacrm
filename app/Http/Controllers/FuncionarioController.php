@@ -36,6 +36,7 @@ class FuncionarioController extends Controller
         $nome = $input['nome'];
         $password = $input['password'];
         $data_contratacao = $input['data_contratacao'];
+        $telefone = $input['telefone'];
 
         $user = User::find($input['user_id']);
         if ($password != ""){
@@ -48,6 +49,10 @@ class FuncionarioController extends Controller
 
         if ($data_contratacao  != ""){
             $user->data_contratacao = $data_contratacao;
+        }
+
+        if ($telefone != ""){
+            $user->telefone = $telefone;
         }
         
         $user->save();

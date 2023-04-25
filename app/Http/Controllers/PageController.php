@@ -61,6 +61,7 @@ class PageController extends Controller
                 ->withInput();
         }
 
+        
         // Validado, hora de criar o lead para associar ao negocio
         $lead = new Lead();
         $lead->nome = $lead_input['nome'];
@@ -74,7 +75,20 @@ class PageController extends Controller
 
         // associando lead ao negócio
         $deal_input['lead_id'] = $lead->id;
-    
+        
+        $proprietario = $input['proprietario'];
+        $user = null;
+        if(!empty($proprietario))
+        {
+            $user = User::where('email',$proprietario)->first();
+
+            if (!empty($user)) {
+                $deal_input['user_id'] = $user->id;
+                $consultor = $user->telefone;
+            }
+            
+        }
+        
         //criando o negócio
         $negocio = Negocio::create($deal_input);
 
@@ -83,12 +97,16 @@ class PageController extends Controller
         $neg_com->negocio_id = $negocio->id;
         $neg_com->user_id = User::find(1)->id;
         $neg_com->save();
+
+        $texto = "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." \nFonte:".$input['fonte'].'\WhatsApp: '.$consultor;
+
+        if (!empty($user)){
+            $texto = $texto."\nProprietario: ".$user->email;
+        }
         
-        Atividade::add_atividade(User::find(1)->id, "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." \nFonte:".$input['fonte'].'\WhatsApp: '.$consultor  , $negocio->id);
+        Atividade::add_atividade(User::find(1)->id, $texto, $negocio->id);
 
         return redirect( route('obrigado' , array('consultor' => $consultor )));
-        
-        //view('cadastro.concluido_01', compact('consultor'));
     }
 
     public function obrigado(Request $request){
