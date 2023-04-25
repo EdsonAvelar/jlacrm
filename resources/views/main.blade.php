@@ -75,17 +75,37 @@
 
                 <!--- Sidemenu -->
                 <ul class="side-nav">
+                 
+
+
                     <li class="side-nav-item">
-                   
                         <?php 
                             $data_inicio = "20/".Carbon\Carbon::now('America/Sao_Paulo')->subMonth()->format('m/Y');
                             $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                         ?>
-                        <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}" class="side-nav-link">
-                            <i class="uil-home-alt"></i>
-                            <span> Dashboard</span>
+
+                        <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false"
+                            aria-controls="dashboard" class="side-nav-link">
+                            <i class="uil-store"></i>
+                            <span> Dashboards </span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <div class="collapse" id="dashboard">
+                            <ul class="side-nav-second-level">
+                                
+                                <li>
+                                    <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Geral</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Equipes</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
+
+
+
+                    
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#crm" aria-expanded="false"

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Agendamento;
+use App\Models\Proposta;
 use Auth;
 use Illuminate\Http\Request;
 use App\Enums\NegocioStatus;
@@ -29,6 +30,8 @@ class DashboardController extends Controller
 
         if ( Auth::user()->hasRole('admin')){
 
+            $output = array();
+
             $stats = [];
 
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
@@ -39,18 +42,26 @@ class DashboardController extends Controller
             $stats['potencial_venda'] = Negocio::where('status',NegocioStatus::ATIVO)->sum('valor');
 
            
+            $output['stats'] = $stats;
 
             //Agendamento::where($query)
             $cargo = Cargo::where( 'nome','Vendedor')->first();
             $users = User::where('cargo_id',$cargo->id)->get();
 
-            $vendedores = array();
-            $agendamentos = array();
-            $reunioes = array();
-            $aprovacoes = array();
-            $vendas = array();
+            
+            $output['vendedores'] = array();
+            $output['agendamentos'] = array();
+            $output['reunioes'] = array();
+            $output['aprovacoes'] = array();
+            $output['vendas'] = array();
+            $output['propostas'] = array();
 
             foreach ($users as $vendedor){
+
+                
+                array_push($output['vendedores'], $vendedor->name);
+
+
                 $query = [
                     ['data_agendamento', '>=', $from ],
                     ['data_agendamento', '<=', $to],
@@ -58,9 +69,9 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Agendamento::where($query)->count();
-                array_push($vendedores, $vendedor->name);
-                array_push($agendamentos, $count);
-
+       
+                array_push($output['agendamentos'], $count);
+                
                 $query = [
                     ['data_reuniao', '>=', $from ],
                     ['data_reuniao', '<=', $to],
@@ -68,7 +79,8 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Reuniao::where($query)->count();
-                array_push($reunioes, $count);
+            
+                array_push($output['reunioes'], $count);
 
                 
                 $query = [
@@ -78,7 +90,8 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Aprovacao::where($query)->count();
-                array_push($aprovacoes, $count);
+            
+                array_push($output['aprovacoes'], $count);
 
                 $query = [
                     ['data_fechamento', '>=', $from ],
@@ -87,11 +100,25 @@ class DashboardController extends Controller
                 ];
                 
                 $vendas_totais = Venda::where($query)->sum('valor');
-                array_push($vendas, $vendas_totais);
+             
+                array_push($output['vendas'], $vendas_totais);
+
+                $query = [
+                    ['data_proposta', '>=', $from ],
+                    ['data_proposta', '<=', $to],
+                    ['user_id', '=', $vendedor->id]
+                ];
+                
+                $__propostas = Proposta::where($query)->count();
+             
+                array_push($output['propostas'], $__propostas);
             }
                         
             $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
-            return view('dashboards.admin', compact('stats','vendedores','agendamentos','lead_novos','reunioes','aprovacoes','vendas'));
+
+            $output['lead_novos'] = $lead_novos;
+
+            return view('dashboards.geral', compact('stats','lead_novos','output'));
         }else {
 
             return redirect( route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo') ) );

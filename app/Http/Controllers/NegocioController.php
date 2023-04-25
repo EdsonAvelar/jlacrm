@@ -296,7 +296,7 @@ class NegocioController extends Controller
         $proposta['con-valor-pago'] = $input['con-valor-pago'];
         $proposta['reduzido'] = $input['reduzido'];
         $proposta['parcelas_embutidas'] = $input['parcelas_embutidas'];
-        $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i:s');
+        $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
         $proposta['user_id'] = \Auth::user()->id;
         $proposta['negocio_id'] = $input['negocio_id'];
