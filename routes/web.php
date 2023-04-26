@@ -76,6 +76,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/add', [CrmController::class, 'add_negocio']);
             Route::post('/comentario', [CrmController::class, 'inserir_comentario'])->name('inserir_comentario');
             Route::post('/changemassive', [CrmController::class, 'massive_change'])->name('massive_change');
+            Route::post('/reativar', [CrmController::class, 'reativar'])->name('reativar');
             Route::get('/atribuir/one', [CrmController::class, 'atribui_one'])->name('atribui_one');
             Route::get('/pipeline', [CrmController::class, 'pipeline_index'])->name('pipeline_index');
             Route::get('/list', [CrmController::class, 'list_index'])->name('list_index');

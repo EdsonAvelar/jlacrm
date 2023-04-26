@@ -323,6 +323,18 @@ class CrmController extends Controller
     }
 
 
+    public function reativar(Request $request){
+
+        $input = $request->all();
+
+        $negocio_id = $input['negocio_id'];
+
+        Negocio::where('id', $negocio_id)->update([ 'status' => NegocioStatus::ATIVO]);
+
+        Atividade::add_atividade(Auth::user()->id, "Negocio Reativado ", $negocio_id);
+
+        return back()->with('status', "Negócio ativado com sucesso ");
+    }
 
     public function massive_change(Request $request){
 

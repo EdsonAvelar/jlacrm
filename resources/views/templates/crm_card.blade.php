@@ -29,6 +29,12 @@
                 <a href="{{route('negocio_edit', array('id' => $negocio_id ) )}}" class="dropdown-item"><i
                         class="mdi mdi-pencil me-1"></i>Editar</a>
                 <!-- item-->
+
+                @if ( $negocio->status == "ATIVO" )
+                <a href="{{route('negocios.simulacao', array('negocio_id' => $negocio->id) )}}" class="dropdown-item"><i
+                        class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
+                @endif
+                <hr>
                 @if ( $negocio->status == "ATIVO" )
                     <a href="#" class="dropdown-item ganhou_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-up"></i><span
                         class="text-success"> Ganhou</span></a>
@@ -36,6 +42,18 @@
                    <!-- item-->
                    <a href="javascript:void(0);" class="dropdown-item perdeu_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-down"></i><span
                         class="text-danger"> Perdeu</span></a>
+                @endif
+                
+
+                @if ($negocio->status == "PERDIDO" )
+
+                <form id="negocio_reativar" action="{{url('negocios/reativar')}}" method="POST">
+                    @csrf
+                    <input type="text" name="negocio_id" hidden value="{{$negocio->id}}">
+                    <a href="#" onClick="document.getElementById('negocio_reativar').submit();" class="dropdown-item"><i class="dripicons-thumbs-up"></i>
+                    <span class="text-success"> Reativar</span></a>
+                </form>
+                    
                 @endif
                 
             </div>
