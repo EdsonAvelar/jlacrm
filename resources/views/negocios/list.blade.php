@@ -61,6 +61,8 @@
                                             {{$proprietario->name}}
                                         @elseif (app('request')->status == 'inativo')
                                             Inativos
+                                        @elseif (app('request')->status == 'perdido')
+                                            Perdidos
                                         @elseif ( app('request')->proprietario == -2)
                                             Todos
                                         @else
@@ -80,13 +82,22 @@
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" target="_self"
                                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-1', 'view' => 'list', 'status' => 'ativo'  ) )}}">Não Atribuido</a>
+                                     
                                             <a class="dropdown-item" target="_self"
                                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view' => 'list', 'status' => 'inativo' ) )}}">Inativos</a>
+
+
                                             
-                                                @endif
+                                            @endif
                                         
                                             @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
+
+                                            
                                                 <div class="dropdown-divider"></div>
+
+                                                <a class="dropdown-item" target="_self"
+                                                href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  -2,'view' => 'list', 'status' => 'perdido' ) )}}">Perdidos</a>
+
                                                 <a class="dropdown-item" target="_self"
                                                     href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2', 'view' => 'list', 'status' => 'ativo'  ) )}}">Todos</a>
                                             @endif
@@ -123,6 +134,9 @@
                                 <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive"  id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
                                 Desativar</a>
                                 
+                                @endif
+                                
+                                @if (Auth::user()->hasRole('gerenciar_equipe'))
                                 <a type="button" class="btn btn-success btn-sm ms-3 checkbox_sensitive"  id="ativar_btn" data-bs-toggle="modal" data-bs-target="#ativarModal">
                                 Ativar</a>
 
@@ -498,7 +512,7 @@
 
         function handleTableClick(){
             const urlParams = new URLSearchParams(window.location.search);
-            const param_x = urlParams.get('status');
+            const status = urlParams.get('status');
             
             numberNotChecked = $('input:checkbox:checked').length;
             console.log("Checked:"+$('input:checkbox:checked').length);
@@ -521,14 +535,13 @@
                 $('.checkbox_sensitive').show();
             }
 
-            if (param_x == 'ativo'){
+            if (status == 'ativo'){
                 $('.checkbox_sensitive').show();
                 $('#ativar_btn').hide();
 
-            }else{ 
+            } else{ 
                 $('.checkbox_sensitive').hide();
                 $('#ativar_btn').show();
-                
             }
 
             if (numberNotChecked == 0){

@@ -146,7 +146,9 @@ class CrmController extends Controller
         }
         
         if ($proprietario_id == -2 and $equipe_exists == -1){
-            $negocios = Negocio::whereIn('user_id', $ids)->get();
+
+            
+            $negocios = Negocio::whereIn('user_id', $ids)->where($query)->get();
         }else {
             $negocios = Negocio::where($query)->get();
         }
