@@ -356,6 +356,8 @@ class CrmController extends Controller
 
             $negocios = Negocio::whereIn('id', $negocios)->get();
 
+            
+
             $novo_proprietario = NULL;
 
             $nome_destino = "Não Atribuido";
@@ -369,8 +371,12 @@ class CrmController extends Controller
             foreach ($negocios as $negocio) {
                 $negocio->user_id = $novo_proprietario;
                 $negocio->etapa_funil_id = $etapa_funils[1];
+                
+                $negocio->status = NegocioStatus::ATIVO;
+
                 $negocio->save();
                 $count = $count + 1;
+
                 
                 if ($novo_proprietario){
                     

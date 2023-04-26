@@ -215,7 +215,12 @@
             </div>
             <div class="modal-body">
 
-                <h6 class="mt-2">Proprietário</h6>
+                <h5 class="mt-2">Proprietário</h5>   
+                @if (app('request')->status == "perdido")
+                <span class="text-danger">*ao atribuir um lead desativado ele é automaticamente reativado no destino</span>  
+                @endif
+                 
+
                 <div class="mb-1 nowrap w-100">
                     <select class="form-select form-control-light" id="task-priority" name="novo_proprietario_id">
                         <option value="-1" selected="true">SEM PROPRIETÁRIO</option>
@@ -542,6 +547,7 @@
             } else{ 
                 $('.checkbox_sensitive').hide();
                 $('#ativar_btn').show();
+                $('#atribuir_btn').show();
             }
 
             if (numberNotChecked == 0){
