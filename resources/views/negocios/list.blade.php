@@ -163,10 +163,12 @@
                                     <th>
                                     <input type="checkbox" id="selectall" class="select-checkbox">
                                     </th>
+                                    
                                     <th>Titulo</th>
                                     <th>Pessoa de Contato</th>
                                     <th>Telefone</th>
                                     <th>Valor</th>
+                                    <th>Status</th>
                                     <th>Etapa</th>
                                     <th>Proprietário</th>
                                     <th>Criado em</th>
@@ -182,6 +184,21 @@
                                     <td>{{$negocio->lead->nome }}</td>
                                     <td><a href="tel:{{$negocio->lead->telefone}}">{{$negocio->lead->telefone }}</a> </td>
                                     <td>{{ $negocio->valor }}</td>
+                                    <td>
+
+                                    
+                                    <?php
+                                        if ( $negocio->status == "ATIVO" ) {
+                                            echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
+                                        }elseif ($negocio->status == "PERDIDO"){
+                                            echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
+                                        }elseif ($negocio->status == "VENDIDO"){
+                                            echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
+                                        }else {
+                                            echo "<span class=\"badge bg-warning float-begin\">".$negocio->status."</span>";
+                                        }
+                                    ?>
+                                    </td>       
                                     <td>{{ $negocio->etapa_funil->nome }}</td>
                                    
                                     <td>
