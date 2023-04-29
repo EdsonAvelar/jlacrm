@@ -220,14 +220,14 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Juros</label>
         <div class="col-sm-3">
-          <input readonly data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control" id="vFinJuros" placeholder="Valor" required>
+          <input data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control" id="vFinJuros" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input readonly data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control" id="vFinTotal" placeholder="Valor" required>
+          <input data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control" id="vFinTotal" placeholder="Valor" required>
         </div>
       </div>
 
@@ -301,14 +301,14 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Taxas</label>
         <div class="col-sm-3">
-          <input readonly data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control" id="vConJuros" placeholder="Valor" required>
+          <input  data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control" id="vConJuros" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input readonly data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control" id="vConTotal" placeholder="Valor" required>
+          <input  data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control" id="vConTotal" placeholder="Valor" required>
         </div>
       </div>
 

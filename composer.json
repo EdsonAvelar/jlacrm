@@ -11,8 +11,7 @@
         "igorescobar/jquery-mask-plugin": "^1.14",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
-        "laravel/tinker": "^2.7",
-        "phpoffice/phpspreadsheet": "dev-NumberFormatMask-Helpers"
+        "laravel/tinker": "^2.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

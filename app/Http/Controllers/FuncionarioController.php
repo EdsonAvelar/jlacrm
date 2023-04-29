@@ -37,8 +37,16 @@ class FuncionarioController extends Controller
         $password = $input['password'];
         $data_contratacao = $input['data_contratacao'];
         $telefone = $input['telefone'];
+        $cargo_id = $input['cargo_id'];
 
         $user = User::find($input['user_id']);
+        if ($password != ""){
+            $user->password = Hash::make($password);
+        }
+        if ($cargo_id != ""){
+            $user->cargo_id = $cargo_id;
+        }
+
         if ($password != ""){
             $user->password = Hash::make($password);
         }
