@@ -40,7 +40,7 @@
 <?php 
 $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 $style = '';
-    if (strpos($url,'pipeline') !== false) {
+    if ((strpos($url,'pipeline') !== false) && (app('request')->view != 'list')) {
         $style = 'style="overflow-y: hidden;"';
     }
 ?>
@@ -221,6 +221,14 @@ $style = '';
                             <span> Modo TV </span>
                         </a>
                     </li> 
+
+
+                     <!-- Help Box -->
+                     <div class="help-box text-white text-center"  style="padding: 7px;">
+                        <img src="{{url('')}}/images/proibido.png" style="width:100%">
+                    </div>
+                    <!-- end Help Box -->
+                    <!-- End Sidebar -->
 
             </div>
             <!-- Sidebar -left -->

@@ -460,7 +460,7 @@
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light" data-mask="000.000.000.000.000,00" id="valor_credito_md"
+                                        <input type="text" class="form-control form-control-light" id="valor_credito_md"
                                             placeholder="Valor do Crédito" name="valor">
                                     </div>
                                 </div>
@@ -530,7 +530,7 @@
                     <br>
                     <br>
                     <div class="text-end">
-                        <button type="submit" class="btn btn-success">Consolidar</button>
+                        <button type="submit" class="btn btn-success">É VENDA!</button>
 
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                        
@@ -952,8 +952,9 @@
                 document.getElementById("cliente_nome").value 	= response[1]['nome'];
                 document.getElementById("valor_credito_md").value 	= response[0]['valor'];
 
-                $("#valor_credito_md").unmask().mask("000.000.000.000.000,00");
+                //$("#valor_credito_md").unmask().mask("000.000.000.000.000,00");
                 $("#valor_credito_md").val(response[0]['valor']).trigger("input");
+                $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
 
     
                 var x = document.getElementById("tipo_credito").getElementsByTagName('option');
