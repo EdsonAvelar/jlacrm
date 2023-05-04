@@ -37,7 +37,15 @@
     @yield('headers')
 </head>
 
-<body class="loading" style="overflow-y: hidden;"
+<?php 
+$url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+$style = '';
+    if (strpos($url,'pipeline') !== false) {
+        $style = 'style="overflow-y: hidden;"';
+    }
+?>
+<body class="loading" <?php echo $style;?>
+    
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <!-- Google Tag Manager (noscript) -->

@@ -5,6 +5,10 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{url('')}}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
+
+.body {
+    style="overflow-y: hidden;"
+}
  
  #spinner-div {
   position: fixed;
