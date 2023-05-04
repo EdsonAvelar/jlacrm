@@ -676,6 +676,7 @@
 
 <script>
 
+
     function showAlert(obj){
         var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
             '   <strong>' + obj.message + '</strong>'+
@@ -697,10 +698,45 @@
         cont.push(document.querySelector('#'+n))
     });
 
+    function set_columns_height(){
+        var max_height = 0
+        $('.task-list-items').each(function(){
+            if ($(this).height()>  max_height){
+                max_height = $(this).height();
+            } 
+        });
+
+        $('.task-list-items').each(function(){
+            $(this).css({'min-height':max_height});
+        });
+    }
+
+    /** Quando a página for carregada, ajusta o tamanho máximo da div principal para aparecer o scroll */
+    document.addEventListener("DOMContentLoaded", function(){
+        var height__ = parseInt( document.documentElement.clientHeight) - 210;
+       
+        $('.board').css({"max-height": height__})
+
+        set_columns_height();
+        
+    });
+
+    /** Quando o tamanho da página é reajustado, muda o tamanho máximo da div para aparecer o scroll */
+    window.addEventListener('resize', function(event) {
+        var height__ = parseInt( document.documentElement.clientHeight) - 210;
+        console.log('height screen: '+height__)
+        $('.board').css({"max-height": height__})
+        set_columns_height();
+    }, true);
+
+
+
     var dragek = dragula( cont , {
         revertOnSpill: true
     });
-    
+
+
+
     var scrollable = true;
 
     var listener = function (e) {
@@ -749,9 +785,9 @@
                     //showAlert({message: "reunião de "+res+" agendada com sucesso", class:"success"});
                 },
                 error : function (res) {
-                    //showAlert({message: "erro na atualização do negócio:"+res, class:"danger"});
-                    console.log("Erro ao agendar cliente");
+                    showAlert({message: "erro ao salvar card em agendamento: "+res, class:"danger"});
                     console.log(res);
+                    $("#spinner-div").hide();
                 },
                 
                 complete: function (res) {
@@ -760,7 +796,9 @@
             });
         }, 
         error : function (res) {
-            showAlert({message: res+" Erro no agendamento", class:"danger"});
+            showAlert({message: " Erro no agendamento", class:"danger"});
+
+            $("#spinner-div").hide(); 
         },
 
 
@@ -855,6 +893,8 @@
                 }
             });
         }       
+
+        set_columns_height();
         
 });
 

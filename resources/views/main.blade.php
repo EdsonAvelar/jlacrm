@@ -37,7 +37,7 @@
     @yield('headers')
 </head>
 
-<body class="loading"
+<body class="loading" style="overflow-y: hidden;"
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <!-- Google Tag Manager (noscript) -->
