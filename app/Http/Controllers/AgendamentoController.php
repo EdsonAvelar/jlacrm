@@ -9,7 +9,7 @@ use App\Models\Atividade;
 use App\Models\User;
 use App\Models\Equipe;
 use Auth;
-
+use App\Enums\UserStatus;
 class AgendamentoController extends Controller
 {
     public function index(Request $request)
@@ -84,7 +84,14 @@ class AgendamentoController extends Controller
                 $cal['title'] = "[".$agendamento->negocio->user->name."]".$start;
             }
 
-            $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            //$end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+
+            try {
+                $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            }catch(Exception $e){
+                $end = $cal['start'];
+            }
+
             //$cal['url'] = $agendamento['data_agendamento']."T".$end;
             $cal['end'] = $agendamento['data_agendamento']."T".$end;
             $cal['className'] = "bg-success";
@@ -94,9 +101,9 @@ class AgendamentoController extends Controller
 
         $proprietarios = NULL;
         if ( Auth::user()->hasRole('admin')){
-            $proprietarios = User::all()->pluck('name', 'id');
+            $proprietarios = User::where('status',UserStatus::ativo)->pluck('name', 'id');
         }else if (Auth::user()->hasRole('gerenciar_equipe')){
-            $proprietarios = User::where('equipe_id', $equipe->id)->pluck('name', 'id');
+            $proprietarios = User::where(['equipe_id'=> $equipe->id, 'status'=>UserStatus::ativo])->pluck('name', 'id');
         }
 
 
@@ -141,7 +148,12 @@ class AgendamentoController extends Controller
             $cal['title'] = "Reunião com ".$agendamento->negocio->lead->nome.' ('.$agendamento->negocio->titulo.')';
             $cal['start'] = $agendamento['data_agendamento']."T".$agendamento['hora'].":00";
 
-            $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            try {
+                $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            }catch(Exception $e){
+                $end = $cal['start'];
+            }
+
             //$cal['url'] = $agendamento['data_agendamento']."T".$end;
             $cal['end'] = $agendamento['data_agendamento']."T".$end;
             $cal['className'] = "bg-success";
