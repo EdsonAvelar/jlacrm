@@ -60,8 +60,8 @@
 <div class="container-fluid">
     <!-- start page title -->
     <div class="row ">
-        <div class="col-12" style="margin-top: -40px;">
-            <div class="page-title-box" >
+        <div class="col-12" >
+            <div class="page-title-box" style="margin-top: -40px;">
                 <div class="page-title-right">                
                 <ul class="list-unstyled topbar-menu float-end mb-0">
                     <li class="dropdown notification-list d-none d-sm-inline-block">
@@ -722,7 +722,7 @@
        
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         if (isMobile) {
-            $('.board').css({"max-height": height__+130})
+            $('.board').css({"max-height": height__+100})
         }else {
             $('.board').css({"max-height": height__})
         }
@@ -738,7 +738,7 @@
 
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         if (isMobile) {
-            $('.board').css({"max-height": height__+110})
+            $('.board').css({"max-height": height__+100})
         }else {
             $('.board').css({"max-height": height__})
         }
