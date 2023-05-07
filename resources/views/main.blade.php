@@ -125,7 +125,7 @@ $style = '';
                         <div class="collapse" id="crm">
                             <ul class="side-nav-second-level">
                                 <li>
-                                    <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo') )}}">Pipeline</a>
+                                    <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo',view_card=>compact) )}}">Pipeline</a>
                                 </li>
                                 <li>
                                     <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','status'=> 'ativo' ) )}}">Lista</a>
