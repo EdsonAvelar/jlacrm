@@ -278,7 +278,7 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="NewTaskModalLabel">Adicionar Negócio</h4>
+                <h4 class="modal-title" id="NewTaskModalLabel" >Adicionar Negócio</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -325,7 +325,7 @@
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Funil</label>
                                         <select class="form-select form-control-light" id="task-priority"
-                                            name="funil_id">
+                                            name="funil_id" onchange="this.value = 'VENDAS'">
                                             @foreach ($funils as $key => $value)
                                                 @if ($key == 1)
                                                 <option value="{{$key}}" selected="true">{{$value}}</option>
@@ -338,11 +338,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <!--div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Etapa Funil</label>
                                         <select class="form-select form-control-light" id="task-priority"
-                                            name="etapa_funil_id">
+                                            name="etapa_funil_id" onchange="this.value = 'OPORTUNIDADE'">
                                             @foreach ($etapa_funils as $key => $value)
                                                 @if ($key == 1)
                                                 <option value="{{$key}}" selected="true">{{$value}}</option>
@@ -352,7 +352,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div-->
+                                <input name="etapa_funil_id" value="1" hidden>
 
                                 <div class="col-md-12">
                                     <div class="mb-12">
@@ -719,7 +720,12 @@
     document.addEventListener("DOMContentLoaded", function(){
         var height__ = parseInt( document.documentElement.clientHeight) - 210;
        
-        $('.board').css({"max-height": height__})
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            $('.board').css({"max-height": height__+100})
+        }else {
+            $('.board').css({"max-height": height__})
+        }
 
         set_columns_height();
         
@@ -728,21 +734,25 @@
     /** Quando o tamanho da página é reajustado, muda o tamanho máximo da div para aparecer o scroll */
     window.addEventListener('resize', function(event) {
         var height__ = parseInt( document.documentElement.clientHeight) - 210;
-        console.log('height screen: '+height__)
-        $('.board').css({"max-height": height__})
+        //console.log('height screen: '+height__)
+
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            $('.board').css({"max-height": height__+100})
+        }else {
+            $('.board').css({"max-height": height__})
+        }
+
+
+        
         set_columns_height();
     }, true);
-
-
 
     var dragek = dragula( cont , {
         revertOnSpill: true
     });
 
-
-
     var scrollable = true;
-
     var listener = function (e) {
         if (!scrollable) {
             e.preventDefault();

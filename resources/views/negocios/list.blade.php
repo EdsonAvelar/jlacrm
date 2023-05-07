@@ -86,15 +86,11 @@
                                             <a class="dropdown-item" target="_self"
                                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  '-2','view' => 'list', 'status' => 'inativo' ) )}}">Inativos</a>
 
-
-                                            
                                             @endif
                                         
                                             @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )
 
-                                            
                                                 <div class="dropdown-divider"></div>
-
                                                 <a class="dropdown-item" target="_self"
                                                 href="{{route('pipeline_index', array('id' => $curr_funil_id, 'proprietario' =>  -2,'view' => 'list', 'status' => 'perdido' ) )}}">Perdidos</a>
 
@@ -143,12 +139,8 @@
                                 @endif
 
                             </h4>
-
-
                         </div>
                     </div>
-                 
-
                 </div>
                 <!-- end page title -->
 
@@ -163,7 +155,6 @@
                                     <th>
                                     <input type="checkbox" id="selectall" class="select-checkbox">
                                     </th>
-                                    
                                     <th>Titulo</th>
                                     <th>Pessoa de Contato</th>
                                     <th>Telefone</th>
@@ -298,10 +289,10 @@
 
             <div class="row">
                     
-                    <div class="col-12">
-                     <h3>Deseja mesmo <span class="bg-success text-white">Ativar</span> os Negócios Selecionados?</h3>
-                    </div>
+                <div class="col-12">
+                    <h3>Deseja mesmo <span class="bg-success text-white">Ativar</span> os Negócios Selecionados?</h3>
                 </div>
+            </div>
             </div>
             <div class="modal-footer" id="distribuir-div">
                 <input type="text" name="id" hidden value="{{app('request')->id}}">
@@ -405,7 +396,7 @@
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Funil</label>
                                         <select class="form-select form-control-light" id="task-priority"
-                                            name="funil_id">
+                                            name="funil_id" onchange="this.value = 'VENDAS'">
                                             @foreach ($funils as $key => $value)
                                             @if ($key == 1)
                                             <option value="{{$key}}" selected="true">{{$value}}</option>
@@ -418,11 +409,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
+                                <!--div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Etapa Funil</label>
+                                        <label for="task-title" class="form-label" readonly>Etapa Funil</label>
                                         <select class="form-select form-control-light" id="task-priority"
-                                            name="etapa_funil_id">
+                                            name="etapa_funil_id" onchange="this.value = 'OPORTUNIDADE'">
                                             @foreach ($etapa_funils as $key => $value)
                                             @if ($key == 1)
                                             <option value="{{$key}}" selected="true">{{$value}}</option>
@@ -433,8 +424,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-
+                                </div-->
+                                <input name="etapa_funil_id" value="1" hidden>
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-priority" class="form-label">Previsão de Fechamento</label>

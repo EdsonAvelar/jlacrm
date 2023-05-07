@@ -146,6 +146,7 @@
       }),
       (l.CalendarApp = new e()),
       (l.CalendarApp.Constructor = e);
+      
   })(window.jQuery),
     (function () {
       "use strict";

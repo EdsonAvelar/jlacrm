@@ -28,7 +28,6 @@ return new class extends Migration {
             $table->string('contrato')->nullable();
             $table->string('data_assembleia')->nullable();
             
-            
             $table->enum('tipo', NegocioTipo::all());
             $table->enum('status', NegocioStatus::all());
 
@@ -39,7 +38,6 @@ return new class extends Migration {
             $table->foreign('funil_id')->references('id')->on('funils');
             $table->integer('etapa_funil_id')->unsigned();
             $table->foreign('etapa_funil_id')->references('id')->on('etapa_funils');
-
 
             # proprietário do negócio
             $table->integer('user_id')->unsigned()->nullable();

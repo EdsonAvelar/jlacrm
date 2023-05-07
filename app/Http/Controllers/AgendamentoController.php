@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Agendamento;
 use App\Models\Atividade;
+use App\Models\User;
+use App\Models\Equipe;
+use Auth;
 
 class AgendamentoController extends Controller
 {
@@ -16,7 +19,138 @@ class AgendamentoController extends Controller
 
     public function calendario(Request $request)
     {
-        return view('negocios.calendario');
+
+
+        $curr_funil_id = intval( $request->query('id')) ;
+        $proprietario_id = intval( $request->query('proprietario'));
+
+
+        $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+        $proprietario = User::find($proprietario_id);
+        $equipe_proprietario = NULL;
+
+        $equipe_exists = 1;
+        if ( !empty($proprietario)){
+            $equipe_proprietario = $proprietario->equipe()->first();
+        }else{
+            $proprietario = NULL;
+
+            if ( $proprietario_id == -2){
+                $equipe_exists = -1;
+                $equipe_proprietario = -1;
+            }
+            
+        }
+        
+        $auth_user_id = Auth::user()->id;
+        /**
+         * Valida se é um usuário autorizado a ter essa visao
+         */
+        if ($auth_user_id != $proprietario_id) {
+            if (!(Auth::user()->hasRole('admin'))) {
+
+                if ($equipe_proprietario == NULL) {
+                    return abort(401);
+                } else if (!Auth::user()->hasRole('gerenciar_equipe')) {
+                    return abort(401);
+                } else if ($equipe_exists > 0 and $equipe->id != $equipe_proprietario->id) {
+                    return abort(401);
+                }
+            }else{
+                $equipe_exists = 1;
+            }
+        }
+
+        if ( $proprietario_id == -2 and $equipe_exists == 1 ){
+            $agendamentos = Agendamento::all();
+        }else if ($proprietario_id == -2 and $equipe_exists == -1){
+            $ids = $equipe->integrantes()->pluck('id')->toArray();
+            $agendamentos = Agendamento::whereIn('user_id', $ids)->get();
+        }else {
+            $agendamentos = Agendamento::where('user_id',$proprietario_id)->get();
+        }
+        
+        $calendario = array();
+        foreach ($agendamentos as $agendamento) {
+            
+            $cal = array();
+            $cal['title'] = "Reunião com ".$agendamento->negocio->lead->nome.' ('.$agendamento->negocio->titulo.')';
+            $cal['start'] = $agendamento['data_agendamento']."T".$agendamento['hora'].":00";
+            
+            if ( $proprietario_id == -2 ){
+                $start = $cal['title'];
+
+                $cal['title'] = "[".$agendamento->negocio->user->name."]".$start;
+            }
+
+            $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            //$cal['url'] = $agendamento['data_agendamento']."T".$end;
+            $cal['end'] = $agendamento['data_agendamento']."T".$end;
+            $cal['className'] = "bg-success";
+
+            array_push( $calendario, $cal );
+        }
+
+        $proprietarios = NULL;
+        if ( Auth::user()->hasRole('admin')){
+            $proprietarios = User::all()->pluck('name', 'id');
+        }else if (Auth::user()->hasRole('gerenciar_equipe')){
+            $proprietarios = User::where('equipe_id', $equipe->id)->pluck('name', 'id');
+        }
+
+
+        return view('negocios.calendario', compact('calendario','proprietarios','proprietario'));
+    }
+
+    public function calendario2(Request $request)
+    {
+        $proprietario_id = $request->query('proprietario');
+        $proprietario = User::find($proprietario_id);
+
+       
+        $calendario = array();
+
+        $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+        $proprietarios = NULL;
+        if ( Auth::user()->hasRole('admin')){
+            $proprietarios = User::all()->pluck('name', 'id');
+        }else if (Auth::user()->hasRole('gerenciar_equipe')){
+            $proprietarios = User::where('equipe_id', $equipe->id)->pluck('name', 'id');
+        }else {
+            $proprietarios = User::where('id',$proprietario_id)->pluck('name', 'id');
+        }
+
+        if ($proprietario_id == -2){
+
+           
+            $agen_prop = User::all()->pluck('name','id');
+           
+           
+        }else {
+            $agen_prop = User::where('id',$proprietario_id)->pluck('name', 'id');
+        }
+        
+        $props = array_keys($agen_prop->toArray());
+        $agendamentos = Agendamento::whereIn('user_id',$props)->get();
+        
+        foreach ($agendamentos as $agendamento) {
+            
+            $cal = array();
+            $cal['title'] = "Reunião com ".$agendamento->negocio->lead->nome.' ('.$agendamento->negocio->titulo.')';
+            $cal['start'] = $agendamento['data_agendamento']."T".$agendamento['hora'].":00";
+
+            $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
+            //$cal['url'] = $agendamento['data_agendamento']."T".$end;
+            $cal['end'] = $agendamento['data_agendamento']."T".$end;
+            $cal['className'] = "bg-success";
+
+            array_push( $calendario, $cal );
+        }
+
+
+        return view('negocios.calendario', compact('calendario','proprietarios','proprietario'));
     }
 
     public function add(Request $request)
