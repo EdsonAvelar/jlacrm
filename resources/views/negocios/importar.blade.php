@@ -39,25 +39,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title m-t-0">Dropzone File Upload</h4>
+                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( separador= ';' )</h4>
                     <p class="text-muted font-14">
-                        DropzoneJS is an open source library that provides dragrop file uploads with image
-                        previews.
+                        <strong>Passo 1: </strong>Coloque os leads no formado da planilha do link: <a href="https://docs.google.com/spreadsheets/d/1xOgu3MoZhYFgwy3Zd0n_DPe1Hbc731ceNL5dY6DBzf0/edit?usp=sharing" target="_blank">Template Planilha</a>. 
+                        <br><strong>Passo 2: </strong>Depois insira no campo de arquivo e faça o upload.
+                        <br><strong>Passo 3: </strong>Distribui os leads que aparecerão na <a href="#importados">Tabela de Negócios Importados</a>
                     </p>
-
-                    <ul class="nav nav-tabs nav-bordered mb-3">
-                        <li class="nav-item">
-                            <a href="#file-upload-preview" data-bs-toggle="tab" aria-expanded="false"
-                                class="nav-link active">
-                                Preview
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#file-upload-code" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
-                                Code
-                            </a>
-                        </li>
-                    </ul> <!-- end nav-->
+                    <br>            
                     <div class="tab-content">
                         <div class="tab-pane show active" id="file-upload-preview">
 
@@ -112,7 +100,7 @@
         <div class="page-title-right"></div>
             <div class="card">
                 <div class="card-body left">
-                    <h4 class="header-title m-t-0">Negócios Importados</h4>
+                    <h4 class="header-title m-t-0" id="importados">Negócios Importados</h4>
                         <div class="mb-3">
                                     <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Atribuir</a>
                                 </div>
