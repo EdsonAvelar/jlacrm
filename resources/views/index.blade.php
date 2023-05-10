@@ -60,7 +60,7 @@
     <header class="header_section">
       <div class="container">
         <nav class="navbar navbar-expand-lg custom_nav-container ">
-          <a class="navbar-brand" href="{{route('landingpage')}}">
+          <a class="navbar-brand" href="{{route('landingpages')}}">
             <span>
             <img src="{{url('')}}/images/jlalogo.png" />
             </span>
@@ -72,7 +72,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav  mx-auto ">
               <li class="nav-item active">
-                <a class="nav-link" href="{{route('landingpage')}}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#sobre">Sobre</a>
@@ -86,7 +86,7 @@
               </li>
             </ul>
             <div class="user_option">
-              <a href="{{route('cadastro')}}" class="order_online">
+              <a href="{{route('landingpages', array('page'=>'fb_cadastro_01') ) }}" class="order_online">
                 Simule Agora
               </a>
             </div>
@@ -111,7 +111,7 @@
                     A JLA atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
                     </p>
                     <div class="btn-box">
-                      <a href="{{route('cadastro')}}" class="btn1">
+                      <a href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}" class="btn1">
                         Simule Agora
                       </a>
                     </div>
@@ -199,7 +199,7 @@
                 <h6>
                   <span>R$ 2.500</span> Parcela
                 </h6>
-                <a href="{{route('cadastro')}}">
+                <a href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}">
                   Simule Agora
                 </a>
               </div>
@@ -217,7 +217,7 @@
                 <h6>
                 <span>R$ 1.200</span> Parcela
                 </h6>
-                <a href="{{route('cadastro')}}">
+                <a href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}">
                   Simule Agora 
                 </a>
               </div>
