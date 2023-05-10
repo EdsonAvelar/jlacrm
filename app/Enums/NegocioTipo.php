@@ -17,4 +17,5 @@ final class NegocioTipo extends Enum
     public static function all(){
         return ['IMOVEL', 'CARRO','MOTO', 'CAMINHAO','TERRENO', 'MAQUINARIO', 'SERVICO'] ;
     }
+    
 }

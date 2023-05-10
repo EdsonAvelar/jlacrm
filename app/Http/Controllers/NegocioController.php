@@ -19,6 +19,7 @@ use App\Models\Aprovacao;
 use App\Models\Atividade;
 use App\Models\Equipe;
 use App\Enums\UserStatus;
+use App\Enums\NegocioTipo;
 
 use Carbon\Carbon;
 class NegocioController extends Controller
@@ -70,13 +71,13 @@ class NegocioController extends Controller
         $totalRows = $worksheetinfo[0]['totalRows'];
 
         $import_data = array();
-        for ($row = 1; $row <= $totalRows; $row++) {
-            $nome = $sheet->getCell("M{$row}")->getValue();
-            $telefone = $sheet->getCell("N{$row}")->getValue();
-            $email = $sheet->getCell("O{$row}")->getValue();
-            $campanha = $sheet->getCell("H{$row}")->getValue();
-            $fonte = $sheet->getCell("L{$row}")->getValue();
-            $create_time = $sheet->getCell("B{$row}")->getValue();
+        for ($row = 2; $row <= $totalRows; $row++) {
+            $nome = $sheet->getCell("A{$row}")->getValue();
+            $telefone = $sheet->getCell("B{$row}")->getValue();
+            $email = $sheet->getCell("C{$row}")->getValue();
+            $campanha = $sheet->getCell("D{$row}")->getValue();
+            $fonte = $sheet->getCell("E{$row}")->getValue();
+            $create_time = Carbon::now()->format('Y-m-d');
 
             //pula o cabeçalho
             if ($row > 1) {
@@ -186,8 +187,6 @@ class NegocioController extends Controller
     {
 
         $input = request()->all();
-
-        
         $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
 
         $import_data = array();
@@ -198,7 +197,7 @@ class NegocioController extends Controller
             $lead->telefone = $neg->telefone;
             $lead->email = $neg->email;
             $lead->fonte = $neg->fonte;
-            $lead->campanha = $neg->campanha;
+            
             $lead->data_conversao = $neg->data_conversao;
             $lead->save();
 
@@ -207,11 +206,15 @@ class NegocioController extends Controller
             $deal_input['valor'] = 0;
             $deal_input['funil_id'] = $input['funil_id'];
             $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
-
+            $deal_input['tipo'] = $neg->campanha;
             $deal_input['lead_id'] = $lead->id;
             $deal_input['user_id'] = $input['novo_proprietario_id'];
 
-            Negocio::create($deal_input);
+            $negocio = Negocio::create($deal_input);
+
+            NegocioImportado::where('id',$neg->id)->delete();
+
+            Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
         }
 
         if (sizeof($import_data) > 0) {

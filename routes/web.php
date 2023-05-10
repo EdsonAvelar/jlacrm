@@ -27,7 +27,7 @@ Route::get('/', [AdminController::class, 'index'])->name('landingpage');
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);
 
-Route::get('/cadastro', [PageController::class, 'cadastro'])->name('cadastro');
+Route::get('/landingpages', [PageController::class, 'landingpages'])->name('landingpages');
 Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
 Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 

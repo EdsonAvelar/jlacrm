@@ -13,9 +13,19 @@ use Validator;
 use Carbon\Carbon;
 class PageController extends Controller
 {
-    public function cadastro(Request $request)
+    public function landingpages(Request $request)
     {
-        return view('cadastro.fb_cadastro_01');
+        $input = $request->all();
+
+        $pagina = $input['page'];
+
+        if ($pagina == null){
+            return abort(404);
+        }else {
+            return view('cadastro.'.$pagina);
+
+        }
+
     }
 
     public function get_consultor(){
@@ -38,7 +48,7 @@ class PageController extends Controller
         $deal_input['valor'] = 0;         
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
-
+        $deal_input['tipo'] = $input['tipo_credito'];
         $lead_input = array();
         $lead_input['nome'] = $input['nome'];
         $lead_input['telefone'] = $input['telefone'];

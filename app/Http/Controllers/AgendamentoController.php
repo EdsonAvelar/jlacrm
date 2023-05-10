@@ -80,20 +80,9 @@ class AgendamentoController extends Controller
             
             if ( $proprietario_id == -2 ){
                 $start = $cal['title'];
-
                 $cal['title'] = "[".$agendamento->negocio->user->name."]".$start;
             }
 
-            //$end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
-
-            #try {
-            #    $end = Carbon::createFromFormat('H:i', $agendamento['hora'])->addMinutes(45)->format('H:i:s');
-            #}catch(Exception $e){
-            #    $end = $cal['start'];
-            #}
-
-            //$cal['url'] = $agendamento['data_agendamento']."T".$end;
-            #$cal['end'] = $agendamento['data_agendamento']."T".$end;
             $cal['className'] = "bg-success";
 
             array_push( $calendario, $cal );

@@ -11,15 +11,25 @@
   <meta property="og:url" content="https://jlasolucoesfinanceiras.com/" />
 
   <style>
+    #booking::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            background: rgb(255 85 0) !important;
+        }
+        
     h2 {
       color: white; 
       text-align: center;
       font-size: xx-large;
-    }  
+    }
+
     .logo-img {
       margin: 0px;
       padding: 10px;
-   
       align: center;
       display: block;
       margin-left: auto;
@@ -28,7 +38,6 @@
     }
 
     .banner-img {
-      
       width: 20%;
       width:-webkit-fill-available;
     }
@@ -47,30 +56,29 @@
           <span>
             <img class="logo-img"  src="{{url('')}}/images/jlalogo.png" />
           </span>
-          <div class="booking-cta center">
-
-          @if ( app('request')->headline == "")
-          <h1>Cadastre-se Agora mesmo!</h1>
-          @else 
-          <h1>{{app('request')->headline}}</h1>
-          @endif
-            
-          @if ( app('request')->subheadline == "")
-            <p>e Conheça a forma de compra que mais cresce no brasil
-            </p>
-          @else 
-            <p>{{app('request')->subheadline}}
-            </p>
-          @endif
-          </div>
 
           <div>
-          @if ( app('request')->banner != "false")
-            <span>
-              <img class="banner-img" src="{{url('')}}/feane/images/about-img.png"  />
-            </span>
-            @endif
+           
+           <span>
+             <img class="banner-img" src="{{url('')}}/feane/images/mega_feirao.png"  />
+           </span>
+          
+         </div>
+
+          <div class="booking-cta center">
+       
+            <h1>
+              Últimos Dias:
+              <?php use Carbon\Carbon;
+                $hoje = Carbon::now()->addDays(2)->format('d/m');
+                echo '<br> Até '.$hoje;
+              ?>
+          
+            </h1>
+            <h2>Até 50% de Desconto na Entrada</h2>
           </div>
+
+       
         </div>
 
         <div class="col-md-4 col-md-pull-7">
@@ -82,25 +90,14 @@
                 <input class="form-control" type="text" placeholder="Como quer que chamemos você" name="nome" required>
               </div>
               <div class="form-group">
-                <span class="form-label">*Qual o seu melhor telefone? </span>
+                <span class="form-label">*Número do Celular? </span>
                 <input class="form-control" type="text" placeholder="(xx) xxxx-xxxx" name="telefone" required>
               </div>
+              
+               <input text="text" name="tipo_credito" value="IMOVEL" hidden>
+              
               <div class="form-group">
-                <span class="form-label">*Você vai usar o valor para comprar?</span>
-                <select class="form-control" id="tipo_credito" name="tipo_credito" required>
-                  <option selected>Selecione</option>
-                  <?php 
-                      use App\Enums\NegocioTipo;
-
-                      $tipos = NegocioTipo::all();
-                      foreach ($tipos as $tipo) {
-                        echo "<option>$tipo</option>";
-                      }
-                  ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <span class="form-label">Qual o valor do bem que você busca?</span>
+                <span class="form-label">Qual o valor do Imóvel você busca?</span>
                 <select class="form-control" id="tipo_credito" name="valor_credito" required>
 
                   <option selected>Selecione um</option>
@@ -108,7 +105,7 @@
                   <option>100 a 200 mil</option>
                   <option>200 a 500 mil</option>
                   <option>500 a 1 milhão</option>
-                  <option>Acimda de 1 milhão</option>
+                  <option>Acima de 1 milhão</option>
                 </select>
               </div>
 
@@ -131,8 +128,8 @@
               <input name="fonte" value="{{app('request')->fonte}}" hidden>
               <input name="proprietario" value="{{app('request')->proprietario}}" hidden>
 
-              <div class="form-btn">
-                <button class="submit-btn">Solicitar Simulação</button>
+              <div class="form-btn text-center">
+                <button class="btn btn-success btn-lg">Solicitar Simulação</button>
               </div>
             </form>
           </div>

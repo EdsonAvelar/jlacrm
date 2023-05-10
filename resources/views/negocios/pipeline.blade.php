@@ -302,13 +302,23 @@
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Tipo de Crédito</label>
-                                        <select class="form-select form-control-light" id="task-priority">
-                                            <option selected>IMOVEL</option>
-                                            <option>CARRO</option>
-                                            <option>MOTO</option>
-                                            <option>CAMINHAO</option>
-                                            <option>TERRENO</option>
-                                            <option>SERVICO</option>
+                                        <select class="form-select form-control-light" id="task-priority" name="tipo_credito">
+                                            <?php 
+                                                use App\Enums\NegocioTipo;
+
+                                                $tipos = NegocioTipo::all();
+                                                $i = 0;
+                                                foreach ($tipos as $tipo) {
+
+                                                    if ($i == 0){
+                                                        $i = 1;
+                                                        echo "<option selected>$tipo</option>";
+                                                    }else{
+                                                        echo "<option>$tipo</option>";
+                                                    }
+                                                }
+                                            ?>
+
                                         </select>
                                     </div>
                                 </div>

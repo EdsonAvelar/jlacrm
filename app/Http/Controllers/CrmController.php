@@ -200,6 +200,7 @@ class CrmController extends Controller
         $deal_input['fechamento'] = $input['fechamento'];
         $deal_input['funil_id'] = $input['funil_id'];
         $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
+        $deal_input['tipo'] = $input['tipo_credito'];
 
         $lead_input = array();
         $lead_input['nome'] = $input['nome_lead'];

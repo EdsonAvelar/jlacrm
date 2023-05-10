@@ -15,6 +15,7 @@ class Negocio extends Model
         "valor",
         "lead_id",
         "user_id",
+        "tipo",
         "etapa_funil_id"
     ];
 
