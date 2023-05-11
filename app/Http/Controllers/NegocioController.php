@@ -219,7 +219,7 @@ class NegocioController extends Controller
             $user = User::find($input['novo_proprietario_id']);
 
 
-            Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".Auth::user()->name, $negocio->id );
+            Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".\Auth::user()->name, $negocio->id );
         }
 
         if (sizeof($import_data) > 0) {
