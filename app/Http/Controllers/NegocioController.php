@@ -215,6 +215,11 @@ class NegocioController extends Controller
             NegocioImportado::where('id',$neg->id)->delete();
 
             Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
+
+            $user = User::find($input['novo_proprietario_id']);
+
+
+            Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".Auth::user()->name, $negocio->id );
         }
 
         if (sizeof($import_data) > 0) {
