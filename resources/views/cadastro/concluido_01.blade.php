@@ -30,7 +30,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
            
             <div>
                 <div class="mb-4 text-center">
-                    <img style="width:200px; padding-top: 30px" src="{{url('')}}/images/jlalogo.png" /><br><br><br>
+                    <!--img style="width:200px; padding-top: 30px" src="{{url('')}}/images/jlalogo.png" /--><br><br><br>
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="text-success" width="75" height="75"
                         fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
@@ -44,13 +44,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h5>Fique atento ao telefone, entraremos em contato com você em horário comercial </h5>
                     <br>
                     <p>Ou caso, queira deixar uma mensagem em nosso whatsapp clique no botão abaixo</p>
-                
                     <a href = "https://api.whatsapp.com/send/?phone=55{{$consultor}}&text=Ol%C3%A1,%20fiz%20o%20cadastro%20no%20site,%20gostaria%20de%20Mais%20informa%C3%A7%C3%B5es&type=phone_number&app_absent=0">
-                   
                         <img src="{{url('')}}/images/clique-para-falar-pelo-whatsapp.png" style="width:300px"/>
                     </a>
-                      
-
+            
+                    @if(app('request')->consultor and App::isLocal())
+                        <p>Consultora: {{app('request')->consultor}}</p>
+                    @endif
                 </div>
             </div>
     </body>

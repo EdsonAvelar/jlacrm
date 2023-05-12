@@ -43,37 +43,15 @@
   <div class="section-center">
     <div class="container">
       <div class="row">
-        <div class="col-md-7 col-md-push-5">
-          <span>
-            <img class="logo-img"  src="{{url('')}}/images/jlalogo.png" />
-          </span>
+        <div class="col-md-12 col-md-push-5">
           <div class="booking-cta center">
-
-          @if ( app('request')->headline == "")
-          <h1>Cadastre-se Agora mesmo!</h1>
-          @else 
-          <h1>{{app('request')->headline}}</h1>
-          @endif
-            
-          @if ( app('request')->subheadline == "")
-            <p>e Conheça a forma de compra que mais cresce no brasil
-            </p>
-          @else 
-            <p>{{app('request')->subheadline}}
-            </p>
-          @endif
-          </div>
-
-          <div>
-          @if ( app('request')->banner != "false")
-            <span>
-              <img class="banner-img" src="{{url('')}}/feane/images/about-img.png"  />
-            </span>
-            @endif
-          </div>
+        
+          <h1>Saia do Aluguel</h1>
+            <p>Cadastre-se para um consultor falar com você</p>
+            </div>
         </div>
 
-        <div class="col-md-4 col-md-pull-7">
+        <div class="col-md-12 col-md-pull-7">
           <div class="booking-form">
             <form method="POST" action="{{route('cadastrar')}}">
               @csrf
@@ -82,25 +60,12 @@
                 <input class="form-control" type="text" placeholder="Como quer que chamemos você" name="nome" required>
               </div>
               <div class="form-group">
-                <span class="form-label">*Qual o seu melhor telefone? </span>
+                <span class="form-label">*Qual o telefone para contato? </span>
                 <input class="form-control" type="text" placeholder="(xx) xxxx-xxxx" name="telefone" required>
               </div>
+              <input text="text" name="tipo_credito" value="IMOVEL" hidden>
               <div class="form-group">
-                <span class="form-label">*Você vai usar o valor para comprar?</span>
-                <select class="form-control" id="tipo_credito" name="tipo_credito" required>
-                  <option selected>Selecione</option>
-                  <?php 
-                      use App\Enums\NegocioTipo;
-
-                      $tipos = NegocioTipo::all();
-                      foreach ($tipos as $tipo) {
-                        echo "<option>$tipo</option>";
-                      }
-                  ?>
-                </select>
-              </div>
-              <div class="form-group">
-                <span class="form-label">Qual o valor do bem que você busca?</span>
+                <span class="form-label">Qual o valor do Imóvel que você procura?</span>
                 <select class="form-control" id="tipo_credito" name="valor_credito" required>
 
                   <option selected>Selecione um</option>
@@ -131,7 +96,7 @@
               <input name="fonte" value="{{app('request')->fonte}}" hidden>
               <input name="proprietario" value="{{app('request')->proprietario}}" hidden>
 
-              <div class="form-btn">
+              <div class="form-btn text-center">
                 <button class="submit-btn">Solicitar Simulação</button>
               </div>
             </form>
