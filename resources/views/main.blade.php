@@ -224,7 +224,7 @@ $style = '';
 
                      <!-- Help Box -->
                      <div class="help-box text-white text-center"  style="padding: 7px;">
-                        <img src="{{url('')}}/images/banners/proibido.png" style="width:100%">
+                        <img src="{{url('')}}/images/banners/caixa_milhao.png" style="width:100%">
                     </div>
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
