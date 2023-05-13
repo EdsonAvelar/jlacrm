@@ -76,7 +76,7 @@ class AgendamentoController extends Controller
             
             $cal = array();
             $cal['title'] = "Reunião com ".$agendamento->negocio->lead->nome.' ('.$agendamento->negocio->titulo.')';
-            $cal['start'] = $agendamento['data_agendamento']."T".$agendamento['hora'].":00";
+            $cal['start'] = $agendamento['data_agendado']."T".$agendamento['hora'].":00";
             
             if ( $proprietario_id == -2 ){
                 $start = $cal['title'];
