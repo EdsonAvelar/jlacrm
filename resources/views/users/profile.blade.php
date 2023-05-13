@@ -426,6 +426,24 @@ i.icon-danger {
                                     @endif
                                     </div>
                                 </div>
+
+                                @if(\Auth::user()->hasRole('admin'))
+
+                                <h5 class="mb-4 text-uppercase"><i class="mdi mdi-account-circle me-1"></i> Informações de Marketing</h5>
+                                <div class="row">
+
+                                <div class="col-md-6">
+                                    <label for="task-title" class="form-label">Página Concluido</label>
+                                        <div class="mb-3">
+                                            
+                                
+                                                <a href="{{url('')}}/obrigado?consultor={{$user->telefone}}">{{url('')}}/obrigado?consultor={{$user->telefone}}</a>                                       
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+
                                 
                                 @if (\Auth::user()->hasRole('admin'))
 
