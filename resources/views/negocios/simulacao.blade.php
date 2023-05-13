@@ -168,7 +168,7 @@
       <div class="form-group row financiamento">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Juros a.a.(SAC)</label>
         <div class="col-sm-3">
-          <input value="11,49%" data-mask="0,0%" type="text" name="fin-entrada" class="form-control money input-auto"
+          <input value="12%" data-mask="0,0%" type="text" name="fin-entrada" class="form-control money input-auto"
             id="finJuros" placeholder="Entrada" required>
         </div>
       </div>
@@ -576,11 +576,17 @@
 
         $('#veiculoModelo').css('display', 'none');
         $('#veiculoAno').css('display', 'none');
-
+        $('#finJuros').val('12%');
+        $('#finPrazo').val('360');
+      
       }else {
         $('#veiculoModelo').css('display', 'block');
         $('#veiculoAno').css('display', 'block');
         $('#itbiDiv').css('display', 'none');        
+        
+        $('#finJuros').val('29%');
+        $('#finPrazo').val('60');
+
       }
 
 
