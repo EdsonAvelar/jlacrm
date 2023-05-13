@@ -81,7 +81,6 @@ i.icon-danger {
                                 if ( $user->status == UserStatus::ativo ){
                                     $ischecked = "checked";
                                 }
-
                                 ?>
                                 @if ($user->hasRole('admin'))
                                     <td></td> 
@@ -176,7 +175,8 @@ i.icon-danger {
                             </div>
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">Cargo</label>
-                                <select class="form-select form-control-light" name="cargo_id">
+                                <select class="form-select form-control-light" name="cargo_id" required>
+                                    <option selected >Selecione Cargo</option>
                                     @foreach (\App\Models\Cargo::all() as $cargo)
                                     <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
                                     @endforeach
@@ -294,7 +294,7 @@ $(document).ready(function () {
         $('.toggle-event').change(function($this) {
 
             var user_id = $(this).data('user_id'); 
-          //console.log( $(this).prop('checked') + " user "+ user_id );
+            console.log( $(this).prop('checked') + " user "+ user_id );
 
             info = [];
             info[0] = $(this).prop('checked');
@@ -307,6 +307,7 @@ $(document).ready(function () {
                 Type: 'json',
                 success: function (res) {
                     console.log("Funcionario atualizada com sucesso")
+                    
                 }
             });
 

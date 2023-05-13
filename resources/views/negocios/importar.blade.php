@@ -32,7 +32,7 @@
 
 <!-- Start Content-->
 <div class="container-fluid">
-@include('layouts.alert-msg')
+
 
 <div class="row">
        

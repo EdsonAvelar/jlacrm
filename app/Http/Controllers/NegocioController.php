@@ -190,8 +190,20 @@ class NegocioController extends Controller
         $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
 
         $import_data = array();
+        $negocios_criados = 0;
+        $negocios_rejeitados = 0;
         foreach ($neg_importados as $neg) {
-           
+
+            $lead = Lead::where(['telefone'=>$neg->telefone,'nome' =>$neg->nome ] )->first();
+
+            if ( !empty($lead) ){
+
+                NegocioImportado::where('id',$neg->id)->delete();
+                $negocios_rejeitados = $negocios_rejeitados + 1;
+                continue;
+            }
+
+
             $lead = new Lead();
             $lead->nome = $neg->nome;
             $lead->telefone = $neg->telefone;
@@ -213,25 +225,25 @@ class NegocioController extends Controller
             $negocio = Negocio::create($deal_input);
 
             NegocioImportado::where('id',$neg->id)->delete();
+            $negocios_criados = $negocios_criados + 1;
 
             Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
 
             $user = User::find($input['novo_proprietario_id']);
-
-
+            
+            
             Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".\Auth::user()->name, $negocio->id );
         }
 
-        if (sizeof($import_data) > 0) {
-            try {
-                DB::table('negocios')->insert($import_data);
-            } catch (\Illuminate\Database\QueryException  $ex) {
-                //não faz literalmente nada
+        if ($negocios_criados > 0 ){
+            return back()->with('status',  $negocios_criados." negocios atribuidos com sucesso.\n".$negocios_rejeitados." negocios rejeitados por duplicidade.");
+        }else {
+            if ($negocios_rejeitados> 0){
+                return back()->withErrors($negocios_rejeitados. " rejeitado por duplicidade");
             }
-
+            return back()->withErrors("Erro desconhecido");
         }
 
-        return back()->with('status',  "Negocios atribuidos com sucesso");
     }
 
     public function simulacao(Request $request){
