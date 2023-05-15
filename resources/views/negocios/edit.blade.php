@@ -182,6 +182,11 @@ use App\Models\User;
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#propostas" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                Propostas
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#observacoes" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 ">
                                 Observações
                             </a>
@@ -206,7 +211,9 @@ use App\Models\User;
                                     <div class="timeline-item">
                                         <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                         <div class="timeline-item-info">
-                                            <h5 class="mt-0 mb-0">author: {{$atividade->user->name}}</h5>
+                                            
+                                        <h5 class="mt-0 mb-0">author: {{$atividade->user->name}}</h5>
+
                                             <p class="font-14">{{$atividade->descricao}} <br><span class="ms-0 font-12">{{$atividade->data_atividade}}</span> </p>
                                            
                                         </div>
@@ -218,6 +225,36 @@ use App\Models\User;
                             @endif
                             <!-- end timeline -->
                         </div> <!-- end tab-pane -->
+
+                        <div class="tab-pane" id="propostas">
+                        
+                            @if(isset($negocio->propostas))
+                            <div class="timeline-alt pb-0">
+                                
+                                @foreach($negocio->propostas->sortByDesc('id')  as $proposta) 
+                                    <div class="timeline-item">
+                                        <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                        <div class="timeline-item-info">
+                                            
+                                        <h5 class="mt-0 mb-0">Proposta criada em: {{$proposta->id}}:  </h5>
+
+                                            <p class="font-14">
+                                           
+                                            <a href="{{url('')}}/negocios/proposta/{{$proposta->id}}" target='_blank'>{{$proposta->tipo}} de {{$proposta->credito}}</a>
+                                               
+                                            
+                                            <br><span class="ms-0 font-12">Data de Criação: {{$proposta->created_at}}</span> </p>
+                                           
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @else 
+                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>Nenhuma Atividade</h5>
+                            @endif
+                            <!-- end timeline -->
+                        </div> <!-- end tab-pane -->
+
                         <!-- end about me section content -->
 
                         <div class="tab-pane" id="observacoes">

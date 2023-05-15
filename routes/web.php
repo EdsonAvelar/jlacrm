@@ -71,7 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(
         ['prefix' => 'negocios'],
         function () {
-            #Route::get('/pipeline', [CrmController::class, 'pipeline']);
+
             Route::post('/drag_update', [CrmController::class, 'drag_update']);
             Route::post('/add', [CrmController::class, 'add_negocio']);
             Route::post('/comentario', [CrmController::class, 'inserir_comentario'])->name('inserir_comentario');
@@ -80,8 +80,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/atribuir/one', [CrmController::class, 'atribui_one'])->name('atribui_one');
             Route::get('/pipeline', [CrmController::class, 'pipeline_index'])->name('pipeline_index');
             Route::get('/list', [CrmController::class, 'list_index'])->name('list_index');
-
-
             Route::get('/get', [NegocioController::class, 'negocio_get'])->name('negocio_get');
             Route::get('/edit', [NegocioController::class, 'negocio_edit'])->name('negocio_edit');
             Route::post('/importar/atribuir', [NegocioController::class, 'import_atribuir']);
@@ -90,12 +88,14 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
+
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
+            Route::get('/proposta/{id}', [NegocioController::class, 'view_proposta'])->name('negocios.view_proposta');
+
             Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);
             Route::post('/add_aprovacao', [NegocioController::class, 'add_aprovacao']);
             Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);
 
-            
         }
     );
 

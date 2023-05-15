@@ -105,7 +105,6 @@ function convert($frase){
 <img align="center" class="back-img" src="{{url('')}}/images/proposta/fundo_folha.png"></img>
 	
 <div class="container">
-	
   	 
 		<div class="row pad" >
 	
@@ -114,27 +113,28 @@ function convert($frase){
 			<div class="col-md-12">
 
 			
-				@if ($tipo == "imóvel")
+				@if ($proposta->tipo == "imóvel")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/imovel.jpg"></img>
-				@elseif ($tipo == "veículo")
+				@elseif ($proposta->tipo == "veículo")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/veiculo-2.png"></img>
-				@elseif ($tipo == "maquinário")
+				@elseif ($proposta->tipo == "maquinário")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/maquinario.png"></img>
-				@elseif ($tipo == "caminhão")
+				@elseif ($proposta->tipo == "caminhão")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/caminhao.jpg"></img>
 				@endif
 	            
 				<h3>CRÉDITO SOLICITADO: <span style="font-weight: bold;">
-					<?php echo $_POST['credito'] ?></span>
+					{{$proposta->credito}}</span>
 				</h3>
 				
 				<hr class='titulo'>
 
 				<h4>Consultor Financeiro: <span style="font-weight: bold;">
-					<?php echo $_POST['consultor'] ?></span>
+				{{$proposta->user->name}}</span>
 				</h4>
 				<h4>Cliente: <span style="font-weight: bold;">
-					<?php echo $_POST['cliente'] ?></span>
+				{{'cliente'}} ?></span>
+
 				</h4>
 				<h4>CPF: <span style="font-weight: bold;">
 					<?php 
@@ -146,27 +146,27 @@ function convert($frase){
 					?></span>
 				</h4>
 				<h4>Protocolo: <span style="font-weight: bold;">
-					<?php echo random_int(10000000, 90000000) ?></span>
+					<?php echo 'JLA-'.$proposta->id ?></span>
 				</h4>
 				
 				<h4>Tipo do Bem: <span style="font-weight: bold;">
-					<?php echo ucfirst($_POST['tipo']); ?></span>
+					<?php echo ucfirst( $proposta->tipo ); ?></span>
 				</h4>
 
-				<?php if ($_POST['tipo'] != "imóvel") {
+				<?php if ($proposta->tipo != "imóvel") {
 				?>
 				
 				<h4>Fabricante/Modelo: <span style="font-weight: bold;">
-					<?php echo $_POST['modelo']." - Ano: ".$_POST['ano'] ; ?></span>
+				 <?php echo $proposta->modelo." - Ano: ".$proposta->ano ; ?></span>
 				</h4>
 			
 				<?php
-				    
+				   
 				}    
-				    
+				use Carbon\Carbon;
 				?>
 				<h4>Data da Criação: <span style="font-weight: bold;">
-					<?php echo date('d/m/Y - H:m'); ?></span>
+					{{ $proposta->created_at->format('d/m/Y H:m')}}</span>
 				</h4>
 				<h4>Validade da Proposta: <span style="font-weight: bold;">
 					<?php echo date('d/m/Y', strtotime('+3 days')); ?></span>
@@ -183,7 +183,7 @@ function convert($frase){
 						<td align="left">
 						    <!-- ESQUERDA -->
 						    
-					    <?php if ($_POST['apenasconsorcio'] == "1") { ?>
+					    <?php if (isset($_POST['apenasconsorcio']) and $_POST['apenasconsorcio'] == "1") { ?>
 					         <h4>Modalidade de Crédito: CARTA DE CRÉDITO - CONSÓRCIO</h4>
 					         <h4>Simulação: <span style="font-weight: bold;">
             					Multimarcas</span>
@@ -191,7 +191,7 @@ function convert($frase){
 					    <?php } else { ?>
 					         <h4>Modalidade de Crédito: FINANCIAMENTO BANCÁRIO</h4>
 					         <h4>Simulação: <span style="font-weight: bold;">
-				                <?php echo $_POST['banco'] ?></span>
+				               {{$proposta->banco}}</span>
 			                 </h4>
 			
 					    <?php } ?> 
@@ -199,16 +199,20 @@ function convert($frase){
 						   
 						    
                 <h4>Valor do Bem: <span style="font-weight: bold;">
-					<?php echo $_POST['credito'] ?></span>
+					{{$proposta->credito}}</span>
 				</h4>
 				<h4>Entrada: <span style="font-weight: bold;">
-					<?php echo $_POST['fin-entrada'] ?></span>
+					
+					{{$proposta['fin-entrada']}}
+				</span>
 				</h4>
 				<h4>Parcela: <span style="font-weight: bold;">
-					<?php echo $_POST['fin-parcelas'] ?></span>
+					{{$proposta['fin-parcelas']}} 
+				
+				</span>
 				</h4>
 				<h4>Prazo: <span style="font-weight: bold;">
-					<?php echo $_POST['fin-prazo'] ?> Meses ( <?php echo round($_POST['fin-prazo']/12) ?> Anos ) </span>
+					{{$proposta['fin-prazo']}} Meses ( {{ intval( $proposta['fin-prazo']/12)}} Anos ) </span>
 				</h4>
 						    
 
@@ -216,43 +220,44 @@ function convert($frase){
 						<td align="left">
 						    <!-- DIREITA -->
 						    
-						 <?php if ($_POST['tipo'] == "imóvel") {
+						 <?php 
+						/* if ($_POST['tipo'] == "imóvel") {
 			        ?>
 			        
-			        <?php if ($_POST['apenasconsorcio'] == "1") { ?>
+			        <?php if (isset($_POST['apenasconsorcio']) and $_POST['apenasconsorcio'] == "1") { ?>
 						    <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito</h4>
 				    
 				    <?php } else { ?>
 				        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;"><?php echo $_POST['cartorio'] ?></span></h4>
 		                <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$ 3.400,00</span> </h4>
 		            
-				    <?php } ?> 
-						    
-						    
+				    <?php } ?>   
 			       
-				<?php
-			    
-			    }?>
+					<?php
+					}
+					*/
+					?>
 			    
 			    
 				<h4>Renda líquida mínima exigida: <span style="font-weight: bold;">
-					 <?php echo $_POST['fin-rendaexigida'] ?> </span>
+				{{$proposta['fin-rendaexigida']}} </span>
 				</h4>
 			    
 			  
-			    <?php if ($_POST['apenasconsorcio'] == "1") { ?>
+			    <?php if (isset($_POST['apenasconsorcio']) and $_POST['apenasconsorcio'] == "1") { ?>
 				    <h4>Total de Taxas: <span style="font-weight: bold;">
-					    <?php echo $_POST['fin-juros-pagos'] ?></span>
+					{{$proposta['fin-juros-pagos']}}</span>
 				    </h4>
 			    <?php } else { ?>
 			        <h4>Total de Juros: <span style="font-weight: bold;">
-					    <?php echo $_POST['fin-juros-pagos'] ?></span>
+					{{$proposta['fin-juros-pagos']}} </span>
 				    </h4>
 	            
 			    <?php } ?> 
 
 				<h4>Valor Final do Bem: <span style="font-weight: bold;">
-					<?php echo $_POST['val-pago-total'] ?></span>
+					{{$proposta['val-pago-total']}} 
+					</span>
 				</h4>
 				
 				
@@ -279,7 +284,9 @@ function convert($frase){
 				</h4>
 				
 				<h4>Valor do Bem: <span style="font-weight: bold;">
-					<?php echo $_POST['con-credito'] ?></span>
+					
+					{{$proposta['credito']}} 
+				</span>
 				</h4>
 				
 				<h4>Entrada: <span style="font-weight: bold;">
@@ -289,13 +296,13 @@ function convert($frase){
 					{{$con_parcelas}}</span>
 				</h4>
 				<h4>Prazo: <span style="font-weight: bold;">
-					<?php echo $_POST['con-prazo'] ?> Meses ( <?php echo round($_POST['con-prazo']/12) ?> Anos ) </span>
+				{{$proposta['con-prazo']}}  Meses ( {{ intval($proposta['con-prazo']/12)}}  Anos ) </span>
 				</h4>
 						    
 						    	</td>
 						<td align="left">
 						    <!-- DIREITA -->
-						   <?php if ($_POST['tipo'] == "imóvel") {
+						   <?php if ($proposta['tipo'] == "imóvel") {
 			        ?>
 			       <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito</h4>
 				<?php
@@ -303,14 +310,15 @@ function convert($frase){
 			    }?>
 
 				<h4> Renda Mínima Exigida: <span style="font-weight: bold;">
-					<?php echo $_POST['con-rendaexigida'] ?> </span>
+					{{$proposta['con-rendaexigida']}} </span>
 				</h4>
 				
 				<h4>Total de Taxas: <span style="font-weight: bold;">
-					<?php echo $_POST['con-juros-pagos'] ?></span>
+					{{$proposta['con-juros-pagos']}} </span>
 				</h4>
+
 				<h4>Valor Final do Bem: <span style="font-weight: bold;">
-					<?php echo $_POST['con-valor-pago'] ?></span>
+					{{$proposta['con-valor-pago']}}</span>
 				</h4> 
 						    
 						    

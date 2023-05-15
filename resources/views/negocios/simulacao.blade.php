@@ -72,15 +72,6 @@
         </div>
       </div>
 
-      <!--div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Modo</label>
-        <div class="col-sm-5">
-          <input type="checkbox" id="btFinConsorcio" name="btAutoManual" checked data-toggle="toggle" 
-          data-on="Financiamento"
-            data-off="Apenas Consórcio" data-onstyle="primary" data-offstyle="light">
-        </div>
-      </div-->
-
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Consultor</label>
         <div class="col-sm-5">

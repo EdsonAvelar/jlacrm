@@ -328,6 +328,48 @@ class NegocioController extends Controller
         return view('negocios.proposta', compact('tipo','con_parcelas','con_entrada'));
     }
 
+    public function view_proposta($id){
+
+        $proposta = Proposta::find($id);
+
+
+        $con_parcelas =  $proposta['con-parcelas'];
+
+        if ( $proposta['con-reduzido'] == 's'){
+
+            $subs = array("R","$",".");
+            $valor_reduzido = floatval( str_replace($subs,"",$proposta['con-parcelas']))*70/100;
+            
+            $con_parcelas = "R$ ".number_format($valor_reduzido,2);
+            $proposta['reduzido'] = 's';
+        }else{
+            $proposta['reduzido'] = 'n';
+        }
+
+        $con_entrada = $proposta['con-enrada'];
+        $embutidas = intval( $proposta['parcelas_embutidas']);
+        if ( $embutidas > 0 ){
+            
+            
+            $subs = array("R","$",".");
+            $valor_entrada = floatval( str_replace($subs,"",$proposta['con-entrada']));
+
+            $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas;
+
+            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2);
+        
+        }
+
+
+
+        $tipo = 'IMOVEL';
+        $con_parcelas =  '123';
+        $con_entrada =  '321';
+
+        return view('negocios.proposta_id', compact('proposta', 'con_entrada','con_parcelas'));
+    }
+    
+
     
     public function drag_update(Request $res)
     {
