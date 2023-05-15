@@ -346,7 +346,7 @@ class NegocioController extends Controller
             $proposta['reduzido'] = 'n';
         }
 
-        $con_entrada = $proposta['con-enrada'];
+        $con_entrada = $proposta['con-entrada'];
         $embutidas = intval( $proposta['parcelas_embutidas']);
         if ( $embutidas > 0 ){
             
@@ -361,10 +361,6 @@ class NegocioController extends Controller
         }
 
 
-
-        $tipo = 'IMOVEL';
-        $con_parcelas =  '123';
-        $con_entrada =  '321';
 
         return view('negocios.proposta_id', compact('proposta', 'con_entrada','con_parcelas'));
     }

@@ -133,7 +133,7 @@ function convert($frase){
 				{{$proposta->user->name}}</span>
 				</h4>
 				<h4>Cliente: <span style="font-weight: bold;">
-				{{'cliente'}} ?></span>
+				{{$proposta->negocio->lead->nome}}</span>
 
 				</h4>
 				<h4>CPF: <span style="font-weight: bold;">
