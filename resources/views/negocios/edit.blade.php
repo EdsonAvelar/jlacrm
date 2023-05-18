@@ -236,13 +236,12 @@ use App\Models\User;
                                         <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                         <div class="timeline-item-info">
                                             
-                                        <h5 class="mt-0 mb-0">Proposta criada em: {{$proposta->id}}:  </h5>
+                                        <h5 class="mt-0 mb-0">Proposta : ID {{$proposta->id}}:  </h5>
 
                                             <p class="font-14">
                                            
                                             <a href="{{url('')}}/negocios/proposta/{{$proposta->id}}" target='_blank'>{{$proposta->tipo}} de {{$proposta->credito}}</a>
-                                               
-                                            
+
                                             <br><span class="ms-0 font-12">Data de Criação: {{$proposta->created_at}}</span> </p>
                                            
                                         </div>

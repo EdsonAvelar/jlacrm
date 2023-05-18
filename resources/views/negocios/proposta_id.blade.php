@@ -321,17 +321,13 @@ function convert($frase){
 					{{$proposta['con-valor-pago']}}</span>
 				</h4> 
 						    
-						    
-						    
 				</td>
 				
 					</tr>
 				</table>
 					<!--?php echo "<img  align=\"right\" class=\"logo-multi\" src=\"/wp-content/uploads/2021/12/multimarcas_representanteautorizado.png\"></img>"; ?-->
 				
-				
-				 
-				
+
 				<p>** Sujeito à aprovação de crédito.<br>
                    ** Esta proposta é uma simulação, não gerando qualquer espécie de obrigação entre as partes.
                     </p>

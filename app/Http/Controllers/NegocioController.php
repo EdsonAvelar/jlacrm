@@ -18,8 +18,10 @@ use App\Models\Aprovacao;
 
 use App\Models\Atividade;
 use App\Models\Equipe;
+
 use App\Enums\UserStatus;
 use App\Enums\NegocioTipo;
+
 
 use Carbon\Carbon;
 class NegocioController extends Controller
@@ -71,6 +73,9 @@ class NegocioController extends Controller
         $totalRows = $worksheetinfo[0]['totalRows'];
 
         $import_data = array();
+        $imported = 0;
+        $negocios_rejeitados = 0;
+
         for ($row = 2; $row <= $totalRows; $row++) {
             $nome = $sheet->getCell("A{$row}")->getValue();
             $telefone = $sheet->getCell("B{$row}")->getValue();
@@ -79,19 +84,66 @@ class NegocioController extends Controller
             $fonte = $sheet->getCell("E{$row}")->getValue();
             $create_time = Carbon::now()->format('Y-m-d');
 
+            
+            $lead = Lead::where(['telefone'=>$telefone,'nome' => $nome ] )->first();
+
+            if ( !empty($lead) ){
+                $negocios_rejeitados = $negocios_rejeitados + 1;
+                continue;
+            }
+
+            $negimp = NegocioImportado::where(['telefone'=>$telefone])->first();
+
+            if ( !empty($negimp) ){
+                $negocios_rejeitados = $negocios_rejeitados + 1;
+                continue;
+            }
+
+            $negocio = new NegocioImportado();
+            $negocio->nome = $nome;
+            $negocio->telefone = $telefone;
+            $negocio->email = $email;
+            $negocio->campanha =  $campanha;
+            $negocio->fonte = $fonte;
+            $negocio->data_conversao = $create_time;
+
+            try {
+                $negocio->save();
+            }catch(QueryException  $e){
+                $negocios_rejeitados = $negocios_rejeitados + 1;
+                continue;
+            }
+
+            
+
+            $imported = $imported + 1;
+
             //pula o cabeçalho
-            if ($row > 1) {
-                $import_data[] = [
-                    "nome" => $nome,
-                    "telefone" => $telefone,
-                    "email" => $email,
-                    "campanha" => $campanha,
-                    "fonte" => $fonte,
-                    "data_conversao" => $create_time
-                ];
+            // if ($row > 1) {
+            //     $import_data[] = [
+            //         "nome" => $nome,
+            //         "telefone" => $telefone,
+            //         "email" => $email,
+            //         "campanha" => $campanha,
+            //         "fonte" => $fonte,
+            //         "data_conversao" => $create_time
+            //     ];
+            // }
+        }
+
+        if ($imported > 0){
+            return back()->with('status', $imported.' negocios importados com sucesso. '.$negocios_rejeitados.' rejeitados por duplicidade');
+        }else {
+            if ($negocios_rejeitados > 0){
+                return back()->withErrors('Todos foram rejeitados por duplicidade');
+            }else {
+                return back()->withErrors('Erro ao ler o csv. Cheque se estava no formato correto');
             }
         }
 
+
+
+        /*
         if (sizeof($import_data) > 0) {
             try {
 
@@ -103,6 +155,7 @@ class NegocioController extends Controller
         }
 
         return back()->with('status','upload realizado com sucesso');
+        */
     }
 
     public function check_authorization($request){
