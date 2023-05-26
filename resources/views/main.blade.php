@@ -230,11 +230,6 @@ $style = '';
                     <!-- End Sidebar -->
 
             </div>
-            <!-- Sidebar -left -->
-
- 
-            <!-- Sidebar -left -->
-
         </div>
         <!-- Left Sidebar End -->
 

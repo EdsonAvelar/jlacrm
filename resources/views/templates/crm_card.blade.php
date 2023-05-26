@@ -30,6 +30,16 @@
                         class="mdi mdi-pencil me-1"></i>Editar</a>
                 <!-- item-->
 
+                <?php 
+                    $tel_clean = preg_replace("/[^0-9]/","", $telefone); 
+                ?>
+
+                <a href="http://wa.me/55{{$tel_clean}}" class="dropdown-item"><i
+                        class="mdi mdi-whatsapp me-1"></i>WhatsApp</a>
+                
+                <a href="tel:{{$tel_clean}}" class="dropdown-item"><i
+                class="mdi mdi-phone me-1"></i>Telefone</a>
+
                 @if ( $negocio->status == "ATIVO" )
                 <a href="{{route('negocios.simulacao', array('negocio_id' => $negocio->id) )}}" class="dropdown-item"><i
                         class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
