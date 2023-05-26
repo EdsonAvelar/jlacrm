@@ -73,8 +73,8 @@ i.icon-danger {
                             </tr>
                         </thead>
                         <tbody>
-                        @if(isset($users))
-                            @foreach ($users as $user)
+                        @if(isset($users_ativo))
+                            @foreach ($users_ativo as $user)
                             <tr>
                             <?php
                                 $ischecked = "";
@@ -136,7 +136,96 @@ i.icon-danger {
         <!-- end col-->
     </div>
     <!-- end row -->
+                            
+    <div class="row">
 
+<div class="col-12">
+<div class="page-title-right"></div>
+    <div class="card">
+        <div class="card-body left">
+            <h4 class="header-title m-t-0">Funcionários Inativos</h4>
+                </h4>
+                
+          
+                        <label id="info_label"></label>
+            <table id="example" class="table w-100 nowrap" >
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Cargo</th>
+                        <th>Permissioes</th>
+                        <th>Telefone</th>
+                        <th>Resetada?</th>
+                        <th>Data Contratacao</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                @if(isset($users_inativo))
+                    @foreach ($users_inativo as $user)
+                    <tr>
+                    <?php
+                        $ischecked = "";
+                        if ( $user->status == UserStatus::ativo ){
+                            $ischecked = "checked";
+                        }
+                        ?>
+                        @if ($user->hasRole('admin'))
+                            <td></td> 
+                        @else 
+                            <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
+                        @endif 
+                        
+                        <td>
+                            <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
+                            <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>
+                        <td>{{$user['email']}}</td>
+                        <td>{{$user->cargo->nome}}</td>
+                        <td>
+                            @if ( $user->roles() )
+                                <?php $perms = 1 ?>
+                                @foreach ($user->roles as $role)
+                                <span class="badge badge-info-lighten">{{$role->name}}</span>
+
+                                        @if ($perms > 2 )
+                                            <br>
+                                            <?php $perms = 0; ?>
+                                        @endif
+                                    <?php $perms = $perms + 1; ?>
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>{{$user['telefone']}}</td>
+                        <td>
+                        
+                        
+                        @if ( Hash::check('jla2021', $user['password']))
+                            <span class="badge badge-danger-lighten">Não Resetada</span>
+                        @else 
+                        <span class="badge badge-success-lighten">OK</span>
+                        @endif
+
+
+                        </td>
+                        <td>{{$user['data_contratacao']}}</td>
+                       
+                    </tr>
+
+                    @endforeach
+                @endif
+
+                </tbody>
+            </table>
+        </div>
+        <!-- end card-body -->
+    </div>
+    <!-- end card-->
+</div>
+<!-- end col-->
+</div>
+<!-- end row -->
     
 
 </div>

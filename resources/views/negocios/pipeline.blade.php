@@ -252,7 +252,8 @@
                             'tipo' => $negocio->tipo,
                             'leadname' => $negocio->lead->nome,
                             'last_update' => $last_update,
-                            'telefone' => $negocio->lead->telefone
+                            'telefone' => $negocio->lead->telefone,
+                            'whatsapp' => $negocio->lead->whatsapp
                             ])
                             @endforeach
                         @endif

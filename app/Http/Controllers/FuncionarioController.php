@@ -11,10 +11,12 @@ class FuncionarioController extends Controller
 {
     public function index(Request $req)
     {
-        $users = User::all();
+        $users_ativo = User::where('status', UserStatus::ativo)->get();
+        $users_inativo = User::where('status', UserStatus::inativo)->get();
         #$inative_users = User::where('status', UserStatus::inativo)->get();
 
-        return view('users.funcionarios', compact('users'));
+
+        return view('users.funcionarios', compact('users_ativo','users_inativo'));
     }
 
     public function store(Request $request)
