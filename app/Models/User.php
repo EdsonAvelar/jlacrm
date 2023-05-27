@@ -106,4 +106,11 @@ class User extends Authenticatable
       return false;
     }
 
+    public function ativos()
+    {
+      
+      return $this->where('status', UserStatus::ativo)->get();
+
+    }
+
 }

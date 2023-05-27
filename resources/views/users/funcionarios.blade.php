@@ -337,6 +337,7 @@ $(document).ready(function () {
     let example = $('#example').DataTable({
         scrollX: true,
         scrollY: true,
+        pageLength: 100
     });
 
     let selectall = false;

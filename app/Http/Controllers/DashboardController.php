@@ -120,9 +120,7 @@ class DashboardController extends Controller
         }
         else if ( Auth::user()->hasRole('gerenciar_equipe')){
 
-
             $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
-
             $ids = $equipe->integrantes()->pluck('id')->toArray();
             
             $output = array();
@@ -136,11 +134,8 @@ class DashboardController extends Controller
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->sum('valor');
            
             $output['stats'] = $stats;
-
-            //Agendamento::where($query)
             
             $users = User::whereIn('id', $ids)->where(['status' => UserStatus::ativo] )->get();
-
             
             $output['vendedores'] = array();
             $output['agendamentos'] = array();
@@ -170,10 +165,8 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Reuniao::where($query)->count();
-            
                 array_push($output['reunioes'], $count);
 
-                
                 $query = [
                     ['data_aprovacao', '>=', $from ],
                     ['data_aprovacao', '<=', $to],

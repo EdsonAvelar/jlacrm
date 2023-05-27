@@ -93,6 +93,12 @@
                             </div>
                             <div class="modal-body px-4 pb-4 pt-0">
                                 <div class="row">
+                                <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="control-label form-label">Cliente</label>
+                                            <a href="" class="form-control" id="event-negocio"></a>  
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="mb-3">
                                             <label class="control-label form-label">Nome do Evento</label>
@@ -186,20 +192,24 @@
             this.$formEvent.removeClass("was-validated"),
             (this.$newEventData = null),
             this.$btnDeleteEvent.show(),
-            this.$modalTitle.text("Edit Event"),
+            this.$modalTitle.text("Agendamento"),
             this.$modal.show(),
             (this.$selectedEvent = e.event),
             l("#event-title").val(this.$selectedEvent.title),
+            l("#event-negocio").text(this.$selectedEvent.extendedProps.negocio),
+            l("#event-negocio").attr("href", this.$selectedEvent.extendedProps.href),
             l("#event-hour").val(this.$selectedEvent.start),
             l("#event-category").val(this.$selectedEvent.classNames[0]);
     }),
+    
+
     (e.prototype.onSelect = function(e) {
         this.$formEvent[0].reset(),
             this.$formEvent.removeClass("was-validated"),
             (this.$selectedEvent = null),
             (this.$newEventData = e),
             this.$btnDeleteEvent.hide(),
-            this.$modalTitle.text("Add New Event"),
+            this.$modalTitle.text("Adicionar Novo Evento"),
             this.$modal.show(),
             this.$calendarObj.unselect();
     }),
@@ -215,12 +225,9 @@
             }
         });
 
-
+        
         var t = <?php echo json_encode($calendario);?>,
             a = this;
-
-        console.log(<?php echo json_encode($calendario) ?>);
-        console.log(t);
 
         (a.$calendarObj = new FullCalendar.Calendar(a.$calendar[0], {
             slotDuration: "00:15:00",
