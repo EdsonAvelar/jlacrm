@@ -22,7 +22,7 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{url('')}}/images/favicon.ico">
+    <link rel="shortcut icon" href="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico">
 
     <!-- third party css -->
     <link href="{{url('')}}/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">

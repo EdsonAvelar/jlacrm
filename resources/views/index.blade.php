@@ -21,7 +21,7 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{url('')}}/feane/images/favicon.ico" type="">
+  <link rel="shortcut icon" href="{{url('')}}/feane/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico" type="">
 
   <title> {{env('APP_NAME')}} </title>
 
