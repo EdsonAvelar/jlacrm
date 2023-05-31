@@ -5,10 +5,10 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <meta property="og:title" content="JLA Soluções Financeiras" />
+  <meta property="og:title" content="{{env('APP_NAME')}}" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="{{url('')}}/feane/images/hero-bg.jpg" />
-  <meta property="og:url" content="https://jlasolucoesfinanceiras.com/" />
+  <meta property="og:url" content="{{url('')}}" />
 
   <style>
     #booking::before {
@@ -54,7 +54,7 @@
       <div class="row">
         <div class="col-md-7 col-md-push-5">
           <span>
-            <img class="logo-img"  src="{{url('')}}/images/jlalogo.png" />
+            <img class="logo-img"  src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
           </span>
 
           <div>

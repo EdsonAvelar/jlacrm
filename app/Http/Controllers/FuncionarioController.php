@@ -86,7 +86,7 @@ class FuncionarioController extends Controller
             return "Status de ".$user->name." desativado com sucesso: id=".$res;
         }else {
 
-            $res = $user->update(['status'=> UserStatus::ativo, 'password' =>  Hash::make('jla2021') ]);
+            $res = $user->update(['status'=> UserStatus::ativo, 'password' =>  Hash::make('mudarsenha') ]);
             return "".$user->name." foi ativado com sucesso: id=".$res;
         }
     }

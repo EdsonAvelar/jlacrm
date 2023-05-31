@@ -30,8 +30,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
            
             <div>
                 <div class="mb-4 text-center">
-                    <!--img style="width:200px; padding-top: 30px" src="{{url('')}}/images/jlalogo.png" /--><br><br><br>
-
+                 
                     <svg xmlns="http://www.w3.org/2000/svg" class="text-success" width="75" height="75"
                         fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
                         <path

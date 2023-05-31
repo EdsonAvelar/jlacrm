@@ -79,10 +79,7 @@
   </style>
   
 <?php
-/*
-Template Name: Proposta_JLA
 
-*/
 function convert($frase){
     $padrao = array(".",",",'R$',' ');
     $subs   = array("");
@@ -99,13 +96,6 @@ function convert($frase){
     
 }
 
-if (isset($_GET['token'])) {
-    if ( $_GET['token'] != "e1038bf75f2671cca8c0c139388e657d"){
-		header("Location: https://jlasolucoesfinanceiras.com.br");
-	}
-} else {
-    header("Location: https://jlasolucoesfinanceiras.com.br");
-}
 
 ?>
 
@@ -116,7 +106,7 @@ if (isset($_GET['token'])) {
   	 
 		<div class="row pad" >
 	
-	        <h2 align="center">PROPOSTA COMERCIAL</h2>
+	        <h2 align="center"><b>PROPOSTA COMERCIAL</b></h2>
 	        
 			<div class="col-md-12">
 				

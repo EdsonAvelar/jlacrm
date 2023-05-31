@@ -30,7 +30,7 @@
 
   <div id="jumb" class="jumbotron jumbotron-fluid jumb-auto">
     <div class="container">
-      <h1 class="display-4">JLA Criador de Propostas</h1>
+      <h1 class="display-4">Criador de Propostas</h1>
       <p class="lead">Coloque os valores abaixo e clique em Gerar Proposta</p>
     </div>
   </div>

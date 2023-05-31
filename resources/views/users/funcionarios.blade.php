@@ -111,7 +111,7 @@ i.icon-danger {
                                 <td>
                                 
                                 
-                                @if ( Hash::check('jla2021', $user['password']))
+                                @if ( Hash::check('mudarsenha', $user['password']))
                                     <span class="badge badge-danger-lighten">Não Resetada</span>
                                 @else 
                                 <span class="badge badge-success-lighten">OK</span>
@@ -201,7 +201,7 @@ i.icon-danger {
                         <td>
                         
                         
-                        @if ( Hash::check('jla2021', $user['password']))
+                        @if ( Hash::check('mudarsenha', $user['password']))
                             <span class="badge badge-danger-lighten">Não Resetada</span>
                         @else 
                         <span class="badge badge-success-lighten">OK</span>
@@ -260,7 +260,7 @@ i.icon-danger {
                                 <label for="task-title" class="form-label">Senha Provisoria<span
                                                 class="text-danger"> *</span></label>
                                 <input type="text" class="form-control form-control-light"
-                                    name="password" value="jla2021" required>
+                                    name="password" value="mudarsenha" required>
                             </div>
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">Cargo</label>

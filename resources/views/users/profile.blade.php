@@ -435,11 +435,11 @@ i.icon-danger {
                                 <div class="col-md-6">
                                     <label for="task-title" class="form-label">Página Concluido</label>
                                         <div class="mb-3">
-                                            <a href="https://www.jlasolucoesfinanceiras.com/obrigado?consultor={{$user->telefone}}">{{url('')}}/obrigado?consultor={{$user->telefone}}</a>
+                                            <a href="{{url('')}}/obrigado?consultor={{$user->telefone}}">{{url('')}}/obrigado?consultor={{$user->telefone}}</a>
                                         </div>
                                         <label for="task-title" class="form-label">Landinpage Cadastro</label>
                                         <div class="mb-3">
-                                            <a href="https://www.jlasolucoesfinanceiras.com/landingpages?page=fb_cadastro_02&proprietario={{$user->email}}">{{url('')}}/landingpages?page=fb_cadastro_02&proprietario={{$user->email}}</a>
+                                            <a href="{{url('')}}/landingpages?page=fb_cadastro_02&proprietario={{$user->email}}">{{url('')}}/landingpages?page=fb_cadastro_02&proprietario={{$user->email}}</a>
                                         </div>
                                     </div>
                                 </div>

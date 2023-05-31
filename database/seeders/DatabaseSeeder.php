@@ -157,7 +157,7 @@ class DatabaseSeeder extends Seeder
 		$user->email = 'gerente@jla.com';
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
-		$user->password = Hash::make('Jla#2021');
+		$user->password = Hash::make('#admin123');
 		$user->cargo_id = $cargo_gerente->id;
 		$user->save();
 		$user->roles()->attach($role_gerente);
@@ -176,12 +176,9 @@ class DatabaseSeeder extends Seeder
 		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
 		$role_administrativo = Role::where('name', 'gerenciar_funcionarios')->first();
-		
-	
+			
 		$equipe1 = Equipe::where('nome', 'EquipeFera1')->first();
 		$equipe2 = Equipe::where('nome', 'EquipeFera2')->first();
-
-
 
 		$cargo_vendedor = Cargo::where('nome', 'Vendedor')->first();
 		$cargo_gerente = Cargo::where('nome', 'Gerente Geral')->first();
@@ -203,7 +200,6 @@ class DatabaseSeeder extends Seeder
 		$user->roles()->attach($importar_leads);
 		$user->roles()->attach($gerenciar_equipe);
 		$user->roles()->attach($gerenciar_vendas);
-
 
 		$user = new User();
 		$user->name = 'Administrador';

@@ -17,7 +17,7 @@
     
 
     <meta charset="utf-8">
-    <title>JLA Soluções Financeiras</title>
+    <title>{{env('APP_NAME')}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
@@ -64,19 +64,19 @@ $style = '';
 
         <a class="logo text-center logo-light open-left">
             <span class="logo-lg">
-                <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
             <span class="logo-sm">
-                <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
         </a>
 
         <a class="logo text-center logo-dark open-left">
             <span class="logo-lg">
-                <img src="{{url('')}}/images/logos/jla_simbolo_transparente.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
             <span class="logo-sm">
-                <img src="{{url('')}}/images/logos/jla_circular.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_circular.png" alt="" height="32">
             </span>
         </a>
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
@@ -224,7 +224,7 @@ $style = '';
 
                      <!-- Help Box -->
                      <div class="help-box text-white text-center"  style="padding: 7px;">
-                        <img src="{{url('')}}/images/banners/caixa_milhao.png" style="width:100%">
+                        <img src="{{url('')}}/images/banners/proibido.png" style="width:100%">
                     </div>
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
@@ -415,7 +415,7 @@ $style = '';
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <script>document.write(new Date().getFullYear())</script> © JLA - Soluções Financeiras
+                            <script>document.write(new Date().getFullYear())</script> © {{env('APP_NAME')}}
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-end footer-links d-none d-md-block">

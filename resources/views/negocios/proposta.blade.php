@@ -5,7 +5,7 @@
   
 	
     .pad {
-        margin-top: 15%;
+        margin-top: 8%;
     }
   	.mascote-img{
   		padding-right: 50px;
@@ -80,10 +80,7 @@
   </style>
   
 <?php
-/*
-Template Name: Proposta_JLA
 
-*/
 function convert($frase){
     $padrao = array(".",",",'R$',' ');
     $subs   = array("");
@@ -102,26 +99,26 @@ function convert($frase){
 
 ?>
 
-<img align="center" class="back-img" src="{{url('')}}/images/proposta/fundo_folha.png"></img>
+<img align="center" class="back-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/fundo_folha.png"></img>
 	
 <div class="container">
 	
-  	 
+	<h2 align="center" style="padding-top: 8%"><b>PROPOSTA COMERCIAL</b></h2>
 		<div class="row pad" >
 	
-	        <h2 align="center">PROPOSTA COMERCIAL</h2>
+	        
 	        
 			<div class="col-md-12">
 
 			
 				@if ($tipo == "imóvel")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/imovel.jpg"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.jpg"></img>
 				@elseif ($tipo == "veículo")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/veiculo-2.png"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/veiculo-2.png"></img>
 				@elseif ($tipo == "maquinário")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/maquinario.png"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/maquinario.png"></img>
 				@elseif ($tipo == "caminhão")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/proposta/caminhao.jpg"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/caminhao.jpg"></img>
 				@endif
 	            
 				<h3>CRÉDITO SOLICITADO: <span style="font-weight: bold;">

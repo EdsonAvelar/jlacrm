@@ -3,7 +3,7 @@
 
     <head>
         <meta charset="utf-8" />
-        <title>Log In | JLA Solucoes Financeiras</title>
+        <title>Log In | {{env('APP_NAME')}}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
@@ -27,7 +27,7 @@
                         <!-- Logo -->
                         <div class="auth-brand text-center text-lg-start">
                             <a href="index.html" class="logo-dark">
-                                <span><img src="{{url('')}}/images/jlalogo.png" alt="" height="25"></span>
+                                <span><img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" alt="" height="25"></span>
                             </a>
                             <a href="index.html" class="logo-light">
                                 <span><img src="{{url('')}}/images/logo.png" alt="" height="18"></span>
@@ -102,7 +102,7 @@
             <!-- Auth fluid right content -->
             <div class="auth-fluid-right text-center">
                 <div class="auth-user-testimonial">
-                    <h2 class="mb-3">JLA Manager (Admin/Marketing/CRM)</h2>
+                    <h2 class="mb-3">Client Manager (Admin/Marketing/CRM)</h2>
                     <p class="lead"><i class="mdi mdi-format-quote-open"></i> Tudo que você precisa em um só lugar! . <i class="mdi mdi-format-quote-close"></i>
                     </p>
                     <p>

@@ -23,7 +23,7 @@
   <meta name="author" content="" />
   <link rel="shortcut icon" href="{{url('')}}/feane/images/favicon.ico" type="">
 
-  <title> JLA Soluções Financeiras </title>
+  <title> {{env('APP_NAME')}} </title>
 
   <meta name="facebook-domain-verification" content="ysxreh32o7okqcrkv3ia3we32jx5gz" />
   
@@ -62,7 +62,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{route('landingpages')}}">
             <span>
-            <img src="{{url('')}}/images/jlalogo.png" />
+            <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -108,7 +108,7 @@
                       Economize <span style=" background-color: #ffbe33;color: black;">Tempo </span> e <span style=" background-color: #ffbe33;color: black;">Dinheiro</span> na hora de comprar seu bem!
                     </h1>
                     <p>
-                    A JLA atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
+                    A {{env('APP_SHORT_NAME')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
                     </p>
                     <div class="btn-box">
                       <a href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}" class="btn1">
@@ -156,7 +156,7 @@
               </h2>
             </div>
             <p style="color:black">
-            A JLA atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em <span style=" background-color: #ffbe33;color: black;">todas as instituições financeiras</span> as melhores ofertas para nossos clientes.
+            A {{env('APP_SHORT_NAME')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em <span style=" background-color: #ffbe33;color: black;">todas as instituições financeiras</span> as melhores ofertas para nossos clientes.
             Economize tempo, todas as opções de crédito disponíveis do mercado em um só lugar.Não fique apenas sonhando, realize!
             <br>
             <br>
@@ -597,19 +597,19 @@
               <a href="">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
-                R. Faustolo, 1922 - Sala – Lapa, São Paulo – SP, 05041-001
+                {{env('APP_END')}}
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                    (11) 95485-5581 
+                {{env('APP_TEL')}}
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                   jlasolucoes.adm@gmail.com
+                {{env('APP_EMAIL')}}
                 </span>
               </a>
             </div>
@@ -618,10 +618,10 @@
         <div class="col-md-4 footer-col">
           <div class="footer_detail">
             <a href="" class="footer-logo">
-              JLA Soluções Financeiras
+            {{env('APP_NAME')}}
             </a>
             <p>
-            A JLA atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
+            A {{env('APP_SHORT_NAME')}} atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
             <div class="footer_social">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -658,7 +658,7 @@
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> Todos os direitos reservado por
-          <a href="https://html.design/">JLA Soluções Financeiras</a>
+          <a href="https://html.design/">{{env('APP_NAME')}}</a>
         </p>
       </div>
     </div>
