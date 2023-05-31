@@ -154,10 +154,12 @@ class DatabaseSeeder extends Seeder
 		$role_gerente = Role::where('name', 'admin')->first();
 		$user = new User();
 		$user->name = 'Gerente';
-		$user->email = 'gerente@jla.com';
+		$user->email = 'gerente@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
-		$user->password = Hash::make('#admin123');
+
+		$senha_padrao = '#admin123';
+		$user->password = Hash::make($senha_padrao);
 		$user->cargo_id = $cargo_gerente->id;
 		$user->save();
 		$user->roles()->attach($role_gerente);
@@ -166,6 +168,8 @@ class DatabaseSeeder extends Seeder
 		$user->roles()->attach($gerenciar_equipe);
 		$user->roles()->attach($gerenciar_vendas);
 
+
+		$this->command->info('Usuario Gerente criado com email: '.$user->email.' e senha: '.$senha_padrao);
 	}
 
 	private function usersTable()
@@ -189,7 +193,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Gerente';
-		$user->email = 'gerente@jla.com';
+		$user->email = 'gerente@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
 		$user->password = Hash::make('123');
@@ -203,7 +207,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Administrador';
-		$user->email = 'administrativo@jla.com';
+		$user->email = 'administrativo@'.env('APP_SHORT_NAME').".com";
 		$user->status = UserStatus::ativo;
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_admvo->id;
@@ -213,7 +217,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Coordenador1';
-		$user->email = 'coordenador1@jla.com';
+		$user->email = 'coordenador1@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_coordenador->id;
 		$user->status = UserStatus::ativo;
@@ -228,7 +232,7 @@ class DatabaseSeeder extends Seeder
 		
 		$user = new User();
 		$user->name = 'Coordenador2';
-		$user->email = 'coordenador2@jla.com';
+		$user->email = 'coordenador2@'.env('APP_SHORT_NAME').".com";
 		$user->cargo_id = $cargo_coordenador->id;
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
@@ -243,7 +247,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Vendedor1';
-		$user->email = 'vendedor1@jla.com';
+		$user->email = 'vendedor1@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 
@@ -255,7 +259,7 @@ class DatabaseSeeder extends Seeder
 		
 		$user = new User();
 		$user->name = 'Vendedor2';
-		$user->email = 'vendedor2@jla.com';
+		$user->email = 'vendedor2@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->status = UserStatus::ativo;
@@ -266,7 +270,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Vendedor3';
-		$user->email = 'vendedor3@jla.com';
+		$user->email = 'vendedor3@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->equipe_id = $equipe2->id;
@@ -277,7 +281,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Vendedor4';
-		$user->email = 'vendedor4@jla.com';
+		$user->email = 'vendedor4@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->equipe_id = $equipe2->id;
@@ -288,7 +292,7 @@ class DatabaseSeeder extends Seeder
 		
 		$user = new User();
 		$user->name = 'Pos Venda';
-		$user->email = 'posvenda@jla.com';
+		$user->email = 'posvenda@'.env('APP_SHORT_NAME').".com";
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_posvenda->id;
 		$user->status = UserStatus::ativo;

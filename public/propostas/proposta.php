@@ -37,7 +37,7 @@
 
   <div class="container content-auto" id="content" style="padding:10px">
 
-    <form id="form-criar" action="https://jlasolucoesfinanceiras.com.br/criar_proposta?token=e1038bf75f2671cca8c0c139388e657d" method="post">
+    <form id="form-criar" action="https://{{url('')}}/criar_proposta?token=e1038bf75f2671cca8c0c139388e657d" method="post">
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Preenchimento</label>
@@ -279,7 +279,7 @@
     console.log("alguma coisa");
     var t = JQuery.url.param('token');
     if (t != "e1038bf75f2671cca8c0c139388e657d"){
-        window.location.href = "www.jlasolucoesfinanceiras.com.br";
+        window.location.href = "{{url('')}}";
     }
     function n_extc($frase, $delvirgula = false) {
 
