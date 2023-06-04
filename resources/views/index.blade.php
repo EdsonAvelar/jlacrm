@@ -62,7 +62,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{route('landingpages')}}">
             <span>
-            <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
+            <img style="width:300px" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -610,6 +610,31 @@
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
                 {{env('APP_EMAIL')}}
+
+                
+                </span>
+              </a>
+<?php
+
+function mask($val, $mask) {
+  $maskared = '';
+  $k = 0;
+  for($i = 0; $i<=strlen($mask)-1; $i++) {
+      if($mask[$i] == '#') {
+          if(isset($val[$k])) $maskared .= $val[$k++];
+      } else {
+          if(isset($mask[$i])) $maskared .= $mask[$i];
+      }
+  }
+  return $maskared;
+}
+
+?>
+
+              <a href="https://cnpj.biz/{{env('APP_CNPJ')}}" target="__blank" >
+                <i class="fa fa-building" aria-hidden="true"></i>
+                <span>
+                CNPJ: {{ mask( env('APP_CNPJ'),'##.###.###/####-##') }}
                 </span>
               </a>
             </div>
@@ -690,6 +715,11 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+<script>
+  
+  $('#cnpj').mask('(00) 00000-0000');
+
+</script>
 </body>
 
 </html>
