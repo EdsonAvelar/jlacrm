@@ -646,7 +646,7 @@ function mask($val, $mask) {
             {{env('APP_NAME')}}
             </a>
             <p>
-            A {{env('APP_SHORT_NAME')}} atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
+            A {{env('APP_NAME')}} atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
             <div class="footer_social">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>

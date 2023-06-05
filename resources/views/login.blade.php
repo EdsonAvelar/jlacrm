@@ -14,6 +14,28 @@
         <link href="{{url('')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
         <link href="{{url('')}}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style" />
 
+        <style>
+            .auth-fluid {
+                
+                position: relative;
+                display: -webkit-box;
+                display: -ms-flexbox;
+                display: flex;
+                -webkit-box-align: center;
+                -ms-flex-align: center;
+                align-items: center;
+                min-height: 100vh;
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                -webkit-box-align: stretch;
+                -ms-flex-align: stretch;
+                align-items: stretch;
+                background: url({{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/bg-auth.jpg) center;
+                background-size: cover
+            }
+        </style>
     </head>
 
     <body class="authentication-bg pb-0" data-layout-config='{"darkMode":false}'>
@@ -27,7 +49,7 @@
                         <!-- Logo -->
                         <div class="auth-brand text-center text-lg-start">
                             <a href="index.html" class="logo-dark">
-                                <span><img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" alt="" height="25"></span>
+                                <span><img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal_tx_preto.png" alt="" height="70px"></span>
                             </a>
                             <a href="index.html" class="logo-light">
                                 <span><img src="{{url('')}}/images/logo.png" alt="" height="18"></span>
