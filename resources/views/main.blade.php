@@ -17,7 +17,7 @@
     
 
     <meta charset="utf-8">
-    <title>{{env('APP_NAME')}}</title>
+    <title>{{config('nome')}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
@@ -196,18 +196,25 @@ $style = '';
                         
                         <div class="collapse" id="perfil">
                             <ul class="side-nav-second-level">
-                                    <li>
-                                        <a href="{{route('users_profile', array('id'=> \Auth::user()->id) )}}">Minha Conta</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('change-password')}}">Mudar de Senha</a>
-                                    </li>
-                                    <hr>
-                                    <li>
-                                        <a href="{{url('/logout')}}">Logout</a>
-                                    </li>
+                                <li>
+                                    <a href="{{route('users_profile', array('id'=> \Auth::user()->id) )}}">Minha Conta</a>
+                                </li>
                                 
-                                </ul>
+                                @if (\Auth::user()->hasRole('admin'))
+                                    <li>
+                                        <a href="{{route('empresa_profile', array('id'=> \Auth::user()->id) )}}">Empresa</a>
+                                    </li>
+                                @endif
+
+                                <li>
+                                    <a href="{{route('change-password')}}">Mudar de Senha</a>
+                                </li>
+                                <hr>
+                                <li>
+                                    <a href="{{url('/logout')}}">Logout</a>
+                                </li>
+                            
+                            </ul>
                         </div>
                       
 
@@ -415,7 +422,7 @@ $style = '';
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <script>document.write(new Date().getFullYear())</script> © {{env('APP_NAME')}}
+                            <script>document.write(new Date().getFullYear())</script> © {{config('nome')}}
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-end footer-links d-none d-md-block">

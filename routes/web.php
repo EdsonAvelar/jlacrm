@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EmpresaController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminController;
@@ -110,6 +111,18 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/del/permissao', [AdminController::class, 'del_permissao'])->name('del_permissao');
         }
     );
+
+
+    Route::group(
+        ['prefix' => 'empresa'],
+        function () {
+            Route::get('/profile', [EmpresaController::class, 'empresa_profile'])->name('empresa_profile');
+            Route::post('/save', [EmpresaController::class, 'save'])->name('empresa_save');
+
+        }
+    );
+
+
 });
 
 

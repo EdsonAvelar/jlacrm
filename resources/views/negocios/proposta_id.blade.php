@@ -142,8 +142,9 @@ function convert($frase){
 
 					?></span>
 				</h4>
+		
 				<h4>Protocolo: <span style="font-weight: bold;">
-					<?php echo env('APP_SHORT_NAME')."-".$proposta->id ?></span>
+					{{$proposta->created_at->format('Y')}}<?php echo "/".$proposta->id ?></span>
 				</h4>
 				
 				<h4>Tipo do Bem: <span style="font-weight: bold;">
@@ -290,7 +291,7 @@ function convert($frase){
 					{{$con_entrada}}</span>
 				</h4>
 				<h4>Parcela: <span style="font-weight: bold;">
-					{{$con_parcelas}}</span>
+					{{$proposta['con-parcelas']}}</span>
 				</h4>
 				<h4>Prazo: <span style="font-weight: bold;">
 				{{$proposta['con-prazo']}}  Meses ( {{ intval($proposta['con-prazo']/12)}}  Anos ) </span>

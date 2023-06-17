@@ -118,7 +118,7 @@
             </span>
             <span class="text-nowrap mb-0 d-inline-block">
                 <i class="mdi mdi-cash text-muted"></i>
-                <b>R$ {{ number_format( (float)$valor,2)}}</b>
+                <b>R$ {{ number_format( (float)$valor,2, ',', '.')}}</b>
             </span>
         </p>
 

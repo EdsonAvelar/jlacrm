@@ -28,17 +28,10 @@ class PageController extends Controller
 
     }
 
-    public function get_consultor(){
-        $consultores = ['11993155854','11993620652','11993605637'];
-        
-        $consultor = $consultores[array_rand($consultores)];
-
-        return $consultor;
-    }
 
     public function cadastrar(Request $request){
 
-        $consultor = $this->get_consultor();
+        $consultor = config('whatsapp');
         $input = $request->all();     
 
         $deal_input = array();

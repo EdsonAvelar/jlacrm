@@ -177,7 +177,12 @@ use App\Models\User;
                 <div class="card-body">
                     <ul class="nav nav-pills bg-nav-pills nav-justified mb-3">
                         <li class="nav-item">
-                            <a href="#atividades" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 active">
+                            <a href="#observacoes" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 active ">
+                                Observações
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#atividades" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Atividades
                             </a>
                         </li>
@@ -186,11 +191,7 @@ use App\Models\User;
                                 Propostas
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a href="#observacoes" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 ">
-                                Observações
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a href="#administrativo" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
                                 Adminstrativo
@@ -203,7 +204,56 @@ use App\Models\User;
                         </li>
                     </ul>
                     <div class="tab-content">
-                        <div class="tab-pane show active" id="atividades">
+
+                        <div class="tab-pane show active" id="observacoes">
+
+                            <!-- comment box -->
+                            <div class="border rounded mt-2 mb-3">
+                                <form action="{{route('inserir_comentario')}}" class="comment-area-box" method="POST">
+                                    @csrf
+                                    <textarea rows="3" class="form-control border-0 resize-none"
+                                        placeholder="Escreva uma observação...." name="comentario"></textarea>
+                                    <div class="p-2 bg-light d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
+                                                    class="mdi mdi-account-circle"></i></a>
+                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
+                                                    class="mdi mdi-map-marker"></i></a>
+                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
+                                                    class="mdi mdi-camera"></i></a>
+                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
+                                                    class="mdi mdi-emoticon-outline"></i></a>
+                                        </div>
+                                        <input hidden name="negocio_id" value="{{ $negocio->id }}" />
+                                        <input hidden name="user_id" value="{{ \Auth::user()->id }}" />
+                                        <button type="submit" class="btn btn-sm btn-dark waves-effect">Inserir</button>
+                                    </div>
+                                </form>
+                            </div> <!-- end .border-->
+                            <!-- end comment box -->
+
+
+                            @foreach ($negocio->comentarios->sortDesc() as $negcom)
+
+                            <div class="border border-light rounded p-2 mb-3">
+                                <div class="d-flex">
+                                    <img class="me-2 rounded-circle"
+                                        src="{{url('')}}/images/users/avatars/{{$negcom->user->avatar}}"
+                                        alt="Generic placeholder image" height="32">
+                                    <div>
+                                        <h5 class="m-0">{{$negcom->user->name}}</h5>
+                                        <p class="text-muted"><small>{{$negcom->created_at}}</small></p>
+                                    </div>
+                                </div>
+                                <p>{{$negcom->comentario}}</p>
+
+                            </div>
+                            @endforeach
+
+                        </div>
+
+                        
+                        <div class="tab-pane" id="atividades">
                         
                             @if(isset($negocio->atividades))
                             <div class="timeline-alt pb-0">
@@ -256,52 +306,7 @@ use App\Models\User;
 
                         <!-- end about me section content -->
 
-                        <div class="tab-pane" id="observacoes">
-
-                            <!-- comment box -->
-                            <div class="border rounded mt-2 mb-3">
-                                <form action="{{route('inserir_comentario')}}" class="comment-area-box" method="POST">
-                                    @csrf
-                                    <textarea rows="3" class="form-control border-0 resize-none"
-                                        placeholder="Escreva uma observação...." name="comentario"></textarea>
-                                    <div class="p-2 bg-light d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
-                                                    class="mdi mdi-account-circle"></i></a>
-                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
-                                                    class="mdi mdi-map-marker"></i></a>
-                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
-                                                    class="mdi mdi-camera"></i></a>
-                                            <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
-                                                    class="mdi mdi-emoticon-outline"></i></a>
-                                        </div>
-                                        <input hidden name="negocio_id" value="{{ $negocio->id }}" />
-                                        <input hidden name="user_id" value="{{ \Auth::user()->id }}" />
-                                        <button type="submit" class="btn btn-sm btn-dark waves-effect">Inserir</button>
-                                    </div>
-                                </form>
-                            </div> <!-- end .border-->
-                            <!-- end comment box -->
-
-
-                            @foreach ($negocio->comentarios->sortDesc() as $negcom)
-
-                            <div class="border border-light rounded p-2 mb-3">
-                                <div class="d-flex">
-                                    <img class="me-2 rounded-circle"
-                                        src="{{url('')}}/images/users/avatars/{{$negcom->user->avatar}}"
-                                        alt="Generic placeholder image" height="32">
-                                    <div>
-                                        <h5 class="m-0">{{$negcom->user->name}}</h5>
-                                        <p class="text-muted"><small>{{$negcom->created_at}}</small></p>
-                                    </div>
-                                </div>
-                                <p>{{$negcom->comentario}}</p>
-
-                            </div>
-                            @endforeach
-
-                        </div>
+                        
                         <!-- end timeline content-->
 
                         <div class="tab-pane" id="administrativo">

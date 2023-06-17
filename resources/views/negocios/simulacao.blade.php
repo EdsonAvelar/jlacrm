@@ -7,6 +7,14 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 
 <style>    
+
+    .fakedisabled {
+      color: rgb(58, 57, 57);
+      background-color: rgb(216, 216, 216);
+      cursor: not-allowed;
+    }
+    
+
     hr {
       border: 2px;
       color: black;
@@ -94,8 +102,8 @@
         <label for="inputEmail3" class="col-sm-2 col-form-label">CPF</label>
         <div class="col-sm-3">
         
-          <input type="text" data-mask='000' name="cpf" class="form-control" id="cpf" placeholder="3 Primeiros Digitos"
-            required>
+          <input type="text" data-mask='000' name="cpf" class="form-control" id="cpf" placeholder="3 Primeiros Digitos" value="xxx.xxx.xxx-xx"
+            >
         </div>
       </div>
 
@@ -211,14 +219,14 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Juros</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control" id="vFinJuros" placeholder="Valor" required>
+          <input data-mask='R$ #.##0,00' type="text" name="fin-juros-pagos" class="form-control fakedisabled" id="vFinJuros" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control" id="vFinTotal" placeholder="Valor" required>
+          <input data-mask='R$ #.##0,00' type="text" name="val-pago-total" class="form-control fakedisabled" id="vFinTotal" placeholder="Valor" required>
         </div>
       </div>
 
@@ -255,23 +263,34 @@
       </div>
 
       <div class="form-group row">
-      <span class="text-danger"> *inserir parcela cheia, marque aqui caso queira reduzir 30% na proposta final</span>
         
       <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Parcela (Cheia)</label>
         <div class="col-sm-3">
           
-          <input data-mask='R$ #.##0,00' type="text" name="con-parcelas" class="form-control" id="vConParcela"
+          <input data-mask='R$ #.##0,00' type="text" class="form-control" id="vConParcela"
             placeholder="Inserir Parcela Cheia (Sem Redução)" required>
         </div>
-        <div class="col-sm-3">
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" name="reduzido" value="" id="flexCheckDefault">
-          <label class="form-check-label" for="flexCheckDefault" >
-            Redução 30%
-          </label>
-        </div>
-        </div>
+
       </div>
+
+      <div class="form-group row">
+        <span class="text-danger"> *inserir parcela cheia, marque aqui caso queira reduzir 30% na proposta final</span>
+          
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Reduzido</label>
+          <div class="col-sm-3">
+            
+            <input data-mask='R$ #.##0,00' type="text" name="con-parcelas" class="form-control fakedisabled" id="vConParcelaReduzida"
+              placeholder="Valor da Parcela reduzida" value="" required>
+          </div>
+          <div class="col-sm-3">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="reduzido" value="" id="vConParcelaReduzidaCheck">
+            <label class="form-check-label"  >
+              Redução 30% ?
+            </label>
+          </div>
+          </div>
+        </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Prazo</label>
@@ -292,20 +311,30 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Taxas</label>
         <div class="col-sm-3">
-          <input  data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control" id="vConJuros" placeholder="Valor" required>
+          <input  data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control fakedisabled" id="vConJuros" placeholder="Valor" required>
         </div>
+
+        <div class="col-sm-6" id="calcParcRed" hidden>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="cal-reduzido" value="" id="calculoReduzido">
+            <label class="form-check-label">
+              Calcular com Parcela Reduzida ?
+            </label>
+          </div>
+          </div>
+
       </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">ValorFinal</label>
         <div class="col-sm-3">
-          <input  data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control" id="vConTotal" placeholder="Valor" required>
+          <input  data-mask='R$ #.##0,00' type="text" name="con-valor-pago" class="form-control fakedisabled" id="vConTotal" placeholder="Valor" required>
         </div>
       </div>
 
       <div class="form-group row">
         <div class="col-sm-10">
-          <button type="submit" class="btn btn-primary">Gerar Proposta</button>
+          <button type="submit" class="btn btn-primary" id="gerar_proposta">Gerar Proposta</button>
         </div>
       </div>
 
@@ -318,6 +347,21 @@
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
   <script>
+
+   
+    /** SCRIPT USADO PARA DESABILITAR UM INPUT */
+    window.onload = function() {
+      // var input = document.getElementById("vConParcelaReduzida");
+
+      //   input.addEventListener("focus", function(event) {
+      //     event.preventDefault();
+      //     input.blur();
+      //   });
+
+    };
+
+
+    
   
     function n_extc($frase, $delvirgula = false) {
 
@@ -368,8 +412,6 @@
       preencherValoresConsorcio();
     })
 
-
-
     function preencherValoresConsorcio() {
 
       var vCredito = n_extc($("#vConCredito").val());
@@ -377,21 +419,34 @@
       let vConParcela = n_extc($("#vConParcela").val());
       let vPrazo = n_extc($("#vConPrazo").val());
 
+      let vConParcelaReduzida = vConParcela;
+
+      if (document.getElementById('vConParcelaReduzidaCheck').checked){
+        //vConParcela = vConParcela * 0.7;
+        vConParcelaReduzida = vConParcela * 0.7;
+
+      }
+
       //console.log(vPrazo,vParcela)
 
       rendaExigida = parseFloat((vConParcela * 3));
 
       $('#vConRendaExigida').val(to_m(rendaExigida))
-    
-     
       
       let vTotal = (vPrazo * vConParcela) + vConEntrada
       let vJuros = vTotal - vCredito
+     
+      if (document.getElementById('calculoReduzido').checked){
+        vTotal = (vPrazo * vConParcelaReduzida) + vConEntrada
+        vJuros = vTotal - vCredito
+      }
+      
 
 
       $('#vConCredito').val(to_m(vCredito));
       $('#vConEntrada').val(to_m(vConEntrada));
       $('#vConParcela').val(to_m(vConParcela));
+      $('#vConParcelaReduzida').val(to_m(vConParcelaReduzida));
       $('#vConJuros').val(to_m(vJuros))
       $('#vConTotal').val(to_m(vTotal))
     }
@@ -507,6 +562,26 @@
       
     });
 
+    $('#vConParcelaReduzidaCheck').change(function(){
+      
+      if (this.checked) {
+        $('#calcParcRed').show()
+        preencherValoresConsorcio()
+      }else{
+        preencherValoresConsorcio()
+        $('#calcParcRed').hide()
+      }
+
+    })
+
+    $('#calculoReduzido').change(function(){
+        preencherValoresConsorcio()
+    })
+
+    
+
+
+
   $('#btFinConsorcio').change(function () {
 
     const nomes = ['financiamento']
@@ -581,12 +656,9 @@
       }
 
 
-
-      //console.log('Changed option value ' + this.value);
-     // console.log('Changed option text ' + $(this).find('option').filter(':selected').text());
     });
 
-
+    
   </script>
 
 
@@ -601,6 +673,7 @@
   <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
     rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+
 
 </body>
 </html>

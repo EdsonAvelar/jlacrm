@@ -143,7 +143,7 @@ function convert($frase){
 					?></span>
 				</h4>
 				<h4>Protocolo: <span style="font-weight: bold;">
-					<?php echo random_int(10000000, 90000000) ?></span>
+					<?php echo date('Y').'/'.$proposta_id;  ?></span>
 				</h4>
 				
 				<h4>Tipo do Bem: <span style="font-weight: bold;">
@@ -283,7 +283,7 @@ function convert($frase){
 					{{$con_entrada}}</span>
 				</h4>
 				<h4>Parcela: <span style="font-weight: bold;">
-					{{$con_parcelas}}</span>
+					{{$_POST['con-parcelas'] }}</span>
 				</h4>
 				<h4>Prazo: <span style="font-weight: bold;">
 					<?php echo $_POST['con-prazo'] ?> Meses ( <?php echo round($_POST['con-prazo']/12) ?> Anos ) </span>

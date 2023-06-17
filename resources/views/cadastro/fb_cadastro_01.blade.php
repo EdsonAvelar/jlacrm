@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
   integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-  <meta property="og:title" content="{{env('APP_NAME')}}" />
+  <meta property="og:title" content="{{ config('nome')}}" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="{{url('')}}/feane/images/hero-bg.jpg" />
   <meta property="og:url" content="{{url('')}}" />

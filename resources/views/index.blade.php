@@ -21,9 +21,9 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{url('')}}/feane/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico" type="">
+  <link rel="shortcut icon" href="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico" type="">
 
-  <title> {{env('APP_NAME')}} </title>
+  <title> {{config('nome')}} </title>
 
   <meta name="facebook-domain-verification" content="ysxreh32o7okqcrkv3ia3we32jx5gz" />
   
@@ -108,7 +108,7 @@
                       Economize <span style=" background-color: #ffbe33;color: black;">Tempo </span> e <span style=" background-color: #ffbe33;color: black;">Dinheiro</span> na hora de comprar seu bem!
                     </h1>
                     <p>
-                    A {{env('APP_SHORT_NAME')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
+                    A {{config('nome')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em todas as instituições financeiras as melhores ofertas para nossos clientes.
                     </p>
                     <div class="btn-box">
                       <a href="{{route('landingpages', array('page'=>'fb_cadastro_01'))}}" class="btn1">
@@ -156,7 +156,7 @@
               </h2>
             </div>
             <p style="color:black">
-            A {{env('APP_SHORT_NAME')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em <span style=" background-color: #ffbe33;color: black;">todas as instituições financeiras</span> as melhores ofertas para nossos clientes.
+            A {{config('nome')}} atua na intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem. Buscamos em <span style=" background-color: #ffbe33;color: black;">todas as instituições financeiras</span> as melhores ofertas para nossos clientes.
             Economize tempo, todas as opções de crédito disponíveis do mercado em um só lugar.Não fique apenas sonhando, realize!
             <br>
             <br>
@@ -597,21 +597,19 @@
               <a href="">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
                 <span>
-                {{env('APP_END')}}
+                {{config('endereco')}}
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-phone" aria-hidden="true"></i>
                 <span>
-                {{env('APP_TEL')}}
+                  {{config('telefone')}}
                 </span>
               </a>
               <a href="">
                 <i class="fa fa-envelope" aria-hidden="true"></i>
                 <span>
-                {{env('APP_EMAIL')}}
-
-                
+                  {{config('email')}}
                 </span>
               </a>
 <?php
@@ -631,10 +629,10 @@ function mask($val, $mask) {
 
 ?>
 
-              <a href="https://cnpj.biz/{{env('APP_CNPJ')}}" target="__blank" >
+              <a href="https://cnpj.biz/{{config('cnpj')}}" target="__blank" >
                 <i class="fa fa-building" aria-hidden="true"></i>
                 <span>
-                CNPJ: {{ mask( env('APP_CNPJ'),'##.###.###/####-##') }}
+                CNPJ: {{ mask( config('cnpj'),'##.###.###/####-##') }}
                 </span>
               </a>
             </div>
@@ -643,10 +641,10 @@ function mask($val, $mask) {
         <div class="col-md-4 footer-col">
           <div class="footer_detail">
             <a href="" class="footer-logo">
-            {{env('APP_NAME')}}
+            {{config('nome')}}
             </a>
             <p>
-            A {{env('APP_NAME')}} atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
+            A {{config('nome')}} atua na Intermediação e Liberação de Crédito para clientes que queiram comprar qualquer tipo de bem ou serviço. Trabalhamos com as maiores instituições financeiras do pais para dar segurança e agilidade no processo de liberação de crédito.             </p>
             <div class="footer_social">
               <a href="">
                 <i class="fa fa-facebook" aria-hidden="true"></i>
@@ -683,7 +681,7 @@ function mask($val, $mask) {
       <div class="footer-info">
         <p>
           &copy; <span id="displayYear"></span> Todos os direitos reservado por
-          <a href="https://html.design/">{{env('APP_NAME')}}</a>
+          <a href="https://html.design/">{{config('nome')}}</a>
         </p>
       </div>
     </div>

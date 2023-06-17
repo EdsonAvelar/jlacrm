@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Empresa;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Contracts\Cache\Factory;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,5 +27,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        $empresa__ = Empresa::all();
+        $empresa =  array();
+        foreach (Empresa::all() as $empresa__) {
+           $empresa[$empresa__->settings] =$empresa__->value;
+
+           config()->set($empresa__->settings, $empresa__->value);
+        }
+
+        #config()->set('', $settings);
+        
     }
 }

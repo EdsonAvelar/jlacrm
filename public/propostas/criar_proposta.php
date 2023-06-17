@@ -84,7 +84,6 @@ function convert($frase){
     $padrao = array(".",",",'R$',' ');
     $subs   = array("");
 
-
     if (str_contains($frase, ',')) {
         //echo "conntem";
         $s = explode(",", $frase);
@@ -93,9 +92,7 @@ function convert($frase){
     }else{
         return str_replace($padrao, $subs, $frase);
     }    
-    
 }
-
 
 ?>
 
@@ -147,7 +144,7 @@ function convert($frase){
 					?></span>
 				</h4>
 				<h4>Protocolo: <span style="font-weight: bold;">
-					<?php echo random_int(10000000, 90000000) ?></span>
+					<?php echo date('Y').'/'.$_POST['id']; ?></span>
 				</h4>
 				
 				<h4>Tipo do Bem: <span style="font-weight: bold;">

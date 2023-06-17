@@ -103,7 +103,7 @@ i.icon-danger {
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse( $venda['data_fechamento'])->format('d/m/Y') }}</td>
                                 <td>{{\Carbon\Carbon::parse( $venda['data_primeira_assembleia'])->format('d/m/Y') }}</td>
-                                <td>R$ {{ number_format( (float)$venda['valor'],2)}}</td>
+                                <td>R$ {{ number_format( (float)$venda['valor'],2, ',', '.')}}</td>
                                 <td>{{$venda['parcelas_embutidas']}}</td>
                                 <td>{{$venda['lead_id']}}</td>
                                 
@@ -118,7 +118,7 @@ i.icon-danger {
                         @endif
                         </tbody>
                     </table>
-                    <h3 class="text-success">Total Vendidos: R$ {{number_format($valor_vendido_total,2)}}</h3>
+                    <h3 class="text-success">Total Vendidos: R$ {{number_format($valor_vendido_total,2, ',', '.')}}</h3>
                 </div>
                 <!-- end card-body -->
             </div>

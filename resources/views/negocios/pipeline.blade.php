@@ -236,7 +236,7 @@
                 <div class="tasks">
 
                 @if(isset($negocios))
-                    <h5 class="mt-0 task-header">{{$value}} ({{$count}})<small> <br>R$ {{number_format($valor_vendido_total,2)}}</small></h5>
+                    <h5 class="mt-0 task-header">{{$value}} ({{$count}})<small> <br>R$ {{number_format($valor_vendido_total,2, ',', '.')}}</small></h5>
                     @endif 
                     <div id="{{$value}}"  class="task-list-items" data="{{$key}}" data-etapa="{{$value}}" agendamento="{{EtapaFunil::where('id',$key)->first()->is_agendamento}}">
 
