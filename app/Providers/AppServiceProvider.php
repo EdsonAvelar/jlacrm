@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        /*
         $empresa__ = Empresa::all();
         $empresa =  array();
         foreach (Empresa::all() as $empresa__) {
@@ -35,7 +35,7 @@ class AppServiceProvider extends ServiceProvider
            config()->set($empresa__->settings, $empresa__->value);
         }
 
-        #config()->set('', $settings);
+        */
         
     }
 }

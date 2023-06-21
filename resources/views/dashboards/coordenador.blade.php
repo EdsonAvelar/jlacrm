@@ -12,19 +12,14 @@
 
 @section('main_content')
 
-
 <!-- Start Content-->
 <div class="container-fluid">
- 
-
     @include('layouts.alert-msg')
     <div class="row">
         <div class="col-12">
             <div class="page-title-box">
                 <div class="page-title-right">
                     <form class="d-flex">
-
-                    
                         <div class="input-group"> 
                             <input class="form-control btn btn-primary" type="text" name="daterange" id="datapicker_dash" value="{{app('request')->input('data_inicio')}} - {{app('request')->input('data_fim')}}" />
 
@@ -50,7 +45,6 @@
 
     <div class="row">
        
-
         @include('dashboards.views.card',['card_name'=>'Negócios Ativos','card_value' => $stats['leads_ativos'], 'card_porc'=>'1%'] )
 
         @include('dashboards.views.card',['card_name'=>'Total Vendido','card_value' => "R$ ".number_format($stats['total_vendido'],2, ',', '.'), 'card_porc'=>'3%'] )
@@ -60,7 +54,6 @@
         @include('dashboards.views.card',['card_name'=>'Leads Parados','card_value' => $output['lead_novos'], 'card_porc'=>'5%',
         'card_href' => route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','proprietario'=> '-1', 'status'=>'ativo' ) )
         ] ) 
-        
         
         @include('dashboards.views.bar_plot',['name'=>'Agendamentos','plots'=> [ $output['vendedores'], $output['agendamentos']]])
 
