@@ -113,20 +113,20 @@ i.icon-danger {
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">Endereço</label>
-                                            <input type="text" class="form-control" id="lastname" name="endereco" value={{config('endereco')}}>
+                                            <input type="text" class="form-control" id="lastname" name="endereco" value="{{config('endereco')}}">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">CNPJ</label>
-                                            <input type="text" class="form-control" id="lastname" name="cnpj" value={{config('cnpj')}}>
+                                            <input type="text" class="form-control" id="lastname" name="cnpj" value="{{config('cnpj')}}"">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="lastname" class="form-label">E-mail</label>
                                            
-                                            <input type="text" class="form-control" id="lastname" name="email" value={{config('email')}}>
+                                            <input type="text" class="form-control" id="lastname" name="email" value="{{config('email')}}"">
                                         </div>
                                     </div> <!-- end col -->
 
