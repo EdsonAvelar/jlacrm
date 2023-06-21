@@ -95,7 +95,7 @@ i.icon-danger {
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">Nome Abreviado (minusculo e sem espaço)</label>
-                                            <input type="text" class="form-control" id="firstname" value={{config('nome_abreviado')}} name="nome_abreviado" readonly>
+                                            <input type="text" class="form-control" id="firstname" value="{{config('nome_abreviado')}}" name="nome_abreviado" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">

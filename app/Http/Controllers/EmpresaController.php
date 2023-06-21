@@ -60,10 +60,7 @@ class EmpresaController extends Controller
                 $empresa->value = $value;
                 $empresa->save();
             }
-                     
-
            }
-           
 
         }
         return back()->with('status','Informações Atualizadas com Sucesso');
