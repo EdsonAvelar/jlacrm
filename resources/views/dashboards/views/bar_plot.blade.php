@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-xl-4">
+<div class="col-lg-6 col-xl-6 col-md-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row align-items-center">

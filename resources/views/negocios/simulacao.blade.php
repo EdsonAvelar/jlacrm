@@ -13,6 +13,11 @@
       background-color: rgb(216, 216, 216);
       cursor: not-allowed;
     }
+
+    .toggle.btn {
+      width: 28rem  !important ;
+      height: 4rem !important ;
+    }
     
 
     hr {
@@ -282,9 +287,12 @@
             <input data-mask='R$ #.##0,00' type="text" name="con-parcelas" class="form-control fakedisabled" id="vConParcelaReduzida"
               placeholder="Valor da Parcela reduzida" value="" required>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-6">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="reduzido" value="" id="vConParcelaReduzidaCheck">
+            
+            <input type="checkbox" id="vConParcelaReduzidaCheck" name="reduzido" data-toggle="toggle" 
+            data-on="Com Redução" data-off="Sem Redução" data-onstyle="success" data-offstyle="warning">
+
             <label class="form-check-label"  >
               Redução 30% ?
             </label>
@@ -314,14 +322,31 @@
           <input  data-mask='R$ #.##0,00' type="text" name="con-juros-pagos" class="form-control fakedisabled" id="vConJuros" placeholder="Valor" required>
         </div>
 
-        <div class="col-sm-6" id="calcParcRed" hidden>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="cal-reduzido" value="" id="calculoReduzido">
-            <label class="form-check-label">
-              Calcular com Parcela Reduzida ?
+        <div class="col-sm-7" >
+          <div id="calcParcRed" hidden>
+            <label class="form-check-label"  >
+              Calcular Taxas e Valor Final com Parcela Reduzida ?
             </label>
+            <div class="form-check">
+              <input type="checkbox" id="calculoReduzido" class="calculoReduzido" name="cal-reduzido" data-toggle="toggle" 
+            data-on="Calculo com Parcela Reduzida" data-off="Calculo com Parcela Cheia" data-onstyle="success" data-offstyle="warning">
+            </div>
           </div>
+        </div>
+          
+
+        <!--div class="col-sm-6" id="calcParcRed" hidden>
+          <label class="form-check-label">
+            Calcular Taxas e Valor Final com Parcela Reduzida ?
+          </label>
+          <div class="form-check">
+            
+            <input type="checkbox" id="calculoReduzido" name="cal-reduzido" checked data-toggle="toggle" 
+          data-on="Calculo com Parcela Cheia" data-off="Calculo com Parcela Reduzida" data-onstyle="success" data-offstyle="warning">
+
+            
           </div>
+          </div-->
 
       </div>
 
@@ -422,12 +447,12 @@
       let vConParcelaReduzida = vConParcela;
 
       if (document.getElementById('vConParcelaReduzidaCheck').checked){
-        //vConParcela = vConParcela * 0.7;
+
         vConParcelaReduzida = vConParcela * 0.7;
 
       }
 
-      //console.log(vPrazo,vParcela)
+
 
       rendaExigida = parseFloat((vConParcela * 3));
 
@@ -441,8 +466,6 @@
         vJuros = vTotal - vCredito
       }
       
-
-
       $('#vConCredito').val(to_m(vCredito));
       $('#vConEntrada').val(to_m(vConEntrada));
       $('#vConParcela').val(to_m(vConParcela));

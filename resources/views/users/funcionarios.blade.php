@@ -61,7 +61,7 @@ i.icon-danger {
                     <table id="example" class="table w-100 nowrap" >
                         <thead>
                             <tr>
-                                <th>Status</th>
+                               
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Cargo</th>
@@ -82,12 +82,13 @@ i.icon-danger {
                                     $ischecked = "checked";
                                 }
                                 ?>
-                                @if ($user->hasRole('admin'))
+                                 <!--
+                                if ($user->hasRole('admin'))
                                     <td></td> 
-                                @else 
+                                else 
                                     <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
-                                @endif 
-                                
+                                endif 
+                                 -->
                                 <td>
                                     <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
                                     <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>
@@ -151,7 +152,7 @@ i.icon-danger {
             <table id="example" class="table w-100 nowrap" >
                 <thead>
                     <tr>
-                        <th>Status</th>
+                       
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Cargo</th>
@@ -172,12 +173,13 @@ i.icon-danger {
                             $ischecked = "checked";
                         }
                         ?>
-                        @if ($user->hasRole('admin'))
+                        <!--
+                        if ($user->hasRole('admin'))
                             <td></td> 
-                        @else 
+                        else 
                             <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
-                        @endif 
-                        
+                        endif 
+                        -->
                         <td>
                             <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
                             <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>

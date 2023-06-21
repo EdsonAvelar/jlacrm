@@ -345,10 +345,16 @@ class NegocioController extends Controller
             $subs = array("R","$",".");
             $valor_entrada = floatval( str_replace($subs,"",$input['con-entrada']));
 
-            $valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas;
+            //$valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas;
 
-            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');
-        
+            if($input['reduzido'] == 's'){
+                $valor_parcela = (floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas )/0.7;
+            }else {
+                $valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas ;
+            }
+
+
+            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');        
         }
         
         $proposta = new Proposta();
@@ -419,7 +425,13 @@ class NegocioController extends Controller
             $subs = array("R","$",".");
             $valor_entrada = floatval( str_replace($subs,"",$proposta['con-entrada']));
 
-            $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas;
+            if($proposta['con-reduzido'] == 's'){
+                $valor_parcela = (floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas )/0.7;
+            }else {
+                $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas ;
+            }
+
+            
 
             $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');
         

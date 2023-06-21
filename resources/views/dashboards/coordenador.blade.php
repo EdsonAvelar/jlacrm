@@ -66,13 +66,11 @@
 
         @include('dashboards.views.bar_plot',['name'=>'Reuniões','plots'=> [ $output['vendedores'], $output['reunioes']]])
 
-        @include('dashboards.views.bar_plot',['name'=>'Aprovações','plots'=> [ $output['vendedores'], $output['aprovacoes']]])
-
         @include('dashboards.views.bar_plot',['name'=>'Propostas','plots'=> [ $output['vendedores'], $output['propostas']]])
 
+        @include('dashboards.views.bar_plot',['name'=>'Aprovações','plots'=> [ $output['vendedores'], $output['aprovacoes']]])
+
         @include('dashboards.views.bar_plot',['name'=>'Vendas','plots'=> [ $output['vendedores'], $output['vendas']]])
-        
-        
         
     </div>  
 
