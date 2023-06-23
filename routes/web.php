@@ -92,7 +92,6 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
             Route::get('/proposta/{id}', [NegocioController::class, 'view_proposta'])->name('negocios.view_proposta');
-
             Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);
             Route::post('/add_aprovacao', [NegocioController::class, 'add_aprovacao']);
             Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);

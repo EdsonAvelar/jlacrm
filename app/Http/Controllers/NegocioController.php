@@ -30,7 +30,9 @@ class NegocioController extends Controller
     {
         $negocios_importados = NegocioImportado::all();
 
-        $users = User::all();
+        //$users = User::all();
+
+        $users = User::where('status',UserStatus::ativo)->pluck('name', 'id');
 
         return view('negocios/importar', compact('negocios_importados','users'));       
     }
