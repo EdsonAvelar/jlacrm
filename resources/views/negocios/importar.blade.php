@@ -165,8 +165,8 @@
                     <select class="form-select form-control-light" id="task-priority" name="novo_proprietario_id">
                         <option selected="true">NOVO PROPRIETÁRIO</option>
 
-                        @foreach ($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                        @foreach ($users as $user_id => $name)
+                        <option value="{{$user_id}}">{{$name}}</option>
                         @endforeach
                     </select>
                 </div>

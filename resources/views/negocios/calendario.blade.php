@@ -32,8 +32,11 @@
                     @if (isset($proprietarios))
                     <div class="dropdown-menu dropdown-menu-end">
                         @foreach ($proprietarios as $proprietario_id => $value)
+
+                        
                         <a class="dropdown-item" target="_self"
                             href="{{route('agendamento.calendario', array('proprietario' =>  $proprietario_id) )}}">{{$value}}</a>
+
                         @endforeach
 
                         @if (Auth::user()->hasAnyRole( ['gerenciar_equipe']) )

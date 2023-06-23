@@ -157,14 +157,16 @@ class CrmController extends Controller
         $etapa_funils = $pipeline->first()->etapa_funils()->pluck('nome', 'ordem')->toArray();
         ksort($etapa_funils);
         
-        $users = User::all();
+        $users = User::where('status',UserStatus::ativo)->pluck('name', 'id');
 
 
         $proprietarios = NULL;
         if ( Auth::user()->hasRole('admin')){
-            $proprietarios = User::all()->pluck('name', 'id');
+
+            $proprietarios = User::where('status',UserStatus::ativo)->pluck('name', 'id');
+
         }else if (Auth::user()->hasRole('gerenciar_equipe')){
-            $proprietarios = User::where('equipe_id', $equipe->id)->pluck('name', 'id');
+            $proprietarios = User::where(['equipe_id'=> $equipe->id, 'status'=>UserStatus::ativo])->pluck('name', 'id');
         }
 
         $motivos = MotivoPerda::all();

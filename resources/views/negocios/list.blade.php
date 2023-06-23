@@ -232,8 +232,8 @@
                 <div class="mb-1 nowrap w-100">
                     <select class="form-select form-control-light" id="task-priority" name="novo_proprietario_id">
                         <option value="-1" selected="true">SEM PROPRIETÁRIO</option>
-                        @foreach ($users as $user)
-                        <option value="{{$user->id}}">{{$user->name}}</option>
+                        @foreach ($users as $user_id => $name)
+                        <option value="{{$user_id}}">{{$name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -324,8 +324,10 @@
                         <img src="{{url('')}}/images/distribuicao.png" width="200px">
                     </div>
                     <div class="col-4 scroll">
-                        @foreach ($users as $user)
-                            <input type="checkbox" name="usuarios[]" value="{{$user->id}}" class="select-user"/> {{$user->name}}<br>
+                   
+
+                        @foreach ($users as $user_id => $name)
+                            <input type="checkbox" name="usuarios[]" value="{{$user_id}}" class="select-user"/> {{$name}}<br>
                         @endforeach
 
                     </div>
