@@ -126,7 +126,7 @@ class DashboardController extends Controller
             }
             
 
-            $stats['funil'] = [ $stats['sum_agendamentos'], $stats['sum_reunioes'],  $stats['sum_aprovacoes'] , $stats['sum_propostas'], $stats['sum_vendas'] ];
+            $stats['funil'] = [ $stats['sum_agendamentos'], $stats['sum_reunioes'], $stats['sum_propostas'], $stats['sum_aprovacoes'] ,  $stats['sum_vendas'] ];
                         
             $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
 
