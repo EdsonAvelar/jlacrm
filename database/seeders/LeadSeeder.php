@@ -24,7 +24,7 @@ class LeadSeeder extends Seeder
 
     private function createLeads(){
 
-        /**
+        
         
         $faker = \Faker\Factory::create('pt_BR');
 
@@ -44,7 +44,7 @@ class LeadSeeder extends Seeder
            
         }
 
-        */
+       
 
         
        

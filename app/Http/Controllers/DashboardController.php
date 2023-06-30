@@ -43,8 +43,13 @@ class DashboardController extends Controller
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::where('status',NegocioStatus::ATIVO)->sum('valor');
 
-           
-            $output['stats'] = $stats;
+
+            $stats['sum_agendamentos'] = 0;
+            $stats['sum_reunioes'] = 0;
+            $stats['sum_aprovacoes'] = 0;
+            $stats['sum_propostas'] = 0;
+            $stats['sum_vendas'] = 0;
+            
 
             //Agendamento::where($query)
             //$cargo = Cargo::where(  ['nome' => 'Vendedor' ])->first();
@@ -59,6 +64,7 @@ class DashboardController extends Controller
             $output['vendas'] = array();
             $output['propostas'] = array();
 
+
             foreach ($users as $vendedor){
                 array_push($output['vendedores'], $vendedor->name);
                 $query = [
@@ -69,6 +75,8 @@ class DashboardController extends Controller
                 
                 $count = Agendamento::where($query)->count();
                 array_push($output['agendamentos'], $count);
+
+                $stats['sum_agendamentos'] = $stats['sum_agendamentos'] +  $count;
                 
                 $query = [
                     ['data_reuniao', '>=', $from ],
@@ -77,8 +85,8 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Reuniao::where($query)->count();
-            
                 array_push($output['reunioes'], $count);
+                $stats['sum_reunioes'] = $stats['sum_reunioes'] +  $count;
 
                 
                 $query = [
@@ -90,6 +98,7 @@ class DashboardController extends Controller
                 $count = Aprovacao::where($query)->count();
             
                 array_push($output['aprovacoes'], $count);
+                $stats['sum_aprovacoes'] = $stats['sum_aprovacoes'] +  $count;
 
                 $query = [
                     ['data_fechamento', '>=', $from ],
@@ -101,20 +110,30 @@ class DashboardController extends Controller
              
                 array_push($output['vendas'], $vendas_totais);
 
+                $count = Venda::where($query)->count();
+                $stats['sum_vendas'] = $stats['sum_vendas'] +  $count;
+
                 $query = [
                     ['data_proposta', '>=', $from ],
                     ['data_proposta', '<=', $to],
                     ['user_id', '=', $vendedor->id]
                 ];
                 
-                $__propostas = Proposta::where($query)->count();
+                $count = Proposta::where($query)->count();
              
-                array_push($output['propostas'], $__propostas);
+                array_push($output['propostas'], $count);
+                $stats['sum_propostas'] = $stats['sum_propostas'] +  $count;
             }
+            
+
+            $stats['funil'] = [ $stats['sum_agendamentos'], $stats['sum_reunioes'],  $stats['sum_aprovacoes'] , $stats['sum_propostas'], $stats['sum_vendas'] ];
                         
             $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
 
             $output['lead_novos'] = $lead_novos;
+            $output['stats'] = $stats;
+            
+            //dd($output);
 
             return view('dashboards.geral', compact('stats','lead_novos','output'));
         }
