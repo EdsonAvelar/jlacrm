@@ -136,8 +136,10 @@ function convert($frase){
 				<h4>CPF: <span style="font-weight: bold;">
 					<?php 
 					
-					if (!empty($_POST['cpf'])){
-					    echo $_POST['cpf'].".***.***-**" ;    
+					if (!$proposta->negocio->lead->cpf){
+					    echo $proposta->negocio->lead->cpf ;    
+					}else {
+						echo $proposta->negocio->lead->cpf;
 					}
 
 					?></span>
@@ -219,21 +221,13 @@ function convert($frase){
 						    <!-- DIREITA -->
 						    
 						 <?php 
-						/* if ($_POST['tipo'] == "imóvel") {
+						 if ($proposta->tipo == "imóvel") {
 			        ?>
-			        
-			        <?php if (isset($_POST['apenasconsorcio']) and $_POST['apenasconsorcio'] == "1") { ?>
-						    <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito</h4>
-				    
-				    <?php } else { ?>
-				        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;"><?php echo $_POST['cartorio'] ?></span></h4>
+				        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;"><?php echo $proposta->cartorio ?></span></h4>
 		                <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$ 3.400,00</span> </h4>
-		            
-				    <?php } ?>   
-			       
 					<?php
 					}
-					*/
+				
 					?>
 			    
 			    

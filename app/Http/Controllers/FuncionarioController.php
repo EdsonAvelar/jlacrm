@@ -13,8 +13,6 @@ class FuncionarioController extends Controller
     {
         $users_ativo = User::where('status', UserStatus::ativo)->get();
         $users_inativo = User::where('status', UserStatus::inativo)->get();
-        #$inative_users = User::where('status', UserStatus::inativo)->get();
-
 
         return view('users.funcionarios', compact('users_ativo','users_inativo'));
     }

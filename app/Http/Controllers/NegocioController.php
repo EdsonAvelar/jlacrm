@@ -323,31 +323,25 @@ class NegocioController extends Controller
 
     public function criar_proposta(Request $request){
 
-        $input = $request->all();
-        
+        $input = $request->all();      
         $tipo = $input["tipo"];
   
-
         if ($request->has('reduzido')){
 
-            //$subs = array("R","$",".");
-            //$valor_reduzido = floatval( str_replace($subs,"",$input['con-parcelas']))*70/100;
-            
-            //$con_parcelas = "R$ ".number_format($valor_reduzido,2);
             $input['reduzido'] = 's';
         }else{
             $input['reduzido'] = 'n';
         }
 
         $con_entrada = $input['con-entrada'];
+
+        /*
         $embutidas = intval( $input['parcelas_embutidas']);
+
         if ( $embutidas > 0 ){
-            
             
             $subs = array("R","$",".");
             $valor_entrada = floatval( str_replace($subs,"",$input['con-entrada']));
-
-            //$valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas;
 
             if($input['reduzido'] == 's'){
                 $valor_parcela = (floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas )/0.7;
@@ -355,10 +349,11 @@ class NegocioController extends Controller
                 $valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas ;
             }
 
-
             $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');        
         }
-        
+        */
+    
+
         $proposta = new Proposta();
         $proposta['tipo'] = $input['tipo'];
         $proposta['banco'] = $input['banco'];
@@ -382,6 +377,15 @@ class NegocioController extends Controller
         $proposta['user_id'] = \Auth::user()->id;
         $proposta['negocio_id'] = $input['negocio_id'];
 
+        //*** Faltando */
+        $proposta['con-credito'] = $input['con-credito'];
+        $proposta['con-adesao'] = $input['con-adesao'];
+        $proposta['con-juros-pagos'] = $input['con-juros-pagos'];
+        $proposta['modelo'] = $input['modelo']; 
+        $proposta['ano'] = $input['ano'];
+       
+
+        
         
         $proposta->save();
 
@@ -407,17 +411,7 @@ class NegocioController extends Controller
         $proposta['con-juros-pagos'] = $valor_parcela = "R$ ".number_format($vtotal - $credito,2, ',', '.'); 
 
         
-        
-        // if ( $proposta['con-reduzido'] == 's'){
-
-        //     $subs = array("R","$",".");
-        //     $valor_reduzido = floatval( str_replace($subs,"",$proposta['con-parcelas']))*70/100;
-            
-        //     $con_parcelas = "R$ ".number_format($valor_reduzido,2);
-        //     $proposta['reduzido'] = 's';
-        // }else{
-        //     $proposta['reduzido'] = 'n';
-        // }
+   
 
         $con_entrada = $proposta['con-entrada'];
         $embutidas = intval( $proposta['parcelas_embutidas']);
@@ -431,15 +425,10 @@ class NegocioController extends Controller
                 $valor_parcela = (floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas )/0.7;
             }else {
                 $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas ;
-            }
-
-            
+            }          
 
             $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');
-        
         }
-
-
 
         return view('negocios.proposta_id', compact('proposta', 'con_entrada'));
     }

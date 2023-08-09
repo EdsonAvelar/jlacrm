@@ -250,30 +250,37 @@
       </div>
 
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Entrada</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Adesão</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="con-entrada" class="form-control" id="vConEntrada"
-            placeholder="Entrada" required>
+          <input data-mask='R$ #.##0,00' type="text" name="con-adesao" class="form-control" id="vConAdesao"
+            placeholder="Adesão" required>
         </div>
+      </div>
+
+      <div class="form-group row">
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Parcela (Cheia)</label>
         <div class="col-sm-3">
-        <select class="form-select select-items" name="parcelas_embutidas" aria-label="Default select example">
-          <option selected value="0">Embutir Parcelas?</option>
-          <option value="1">Embutir 1</option>
-          <option value="2">Embutir 2</option>
-          <option value="3">Embutir 3</option>
-          <option value="4">Embutir 4</option>
-        </select>
+          <input data-mask='R$ #.##0,00' type="text" class="form-control" id="vConParcela"
+            placeholder="Inserir Parcela Cheia (Sem Redução)" required>
         </div>
 
       </div>
 
       <div class="form-group row">
-        
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Valor Parcela (Cheia)</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Entrada</label>
         <div class="col-sm-3">
-          
-          <input data-mask='R$ #.##0,00' type="text" class="form-control" id="vConParcela"
-            placeholder="Inserir Parcela Cheia (Sem Redução)" required>
+          <input data-mask='R$ #.##0,00' type="text" name="con-entrada" class="form-control fakedisabled" id="vConEntrada"
+            placeholder="Entrada" required>
+        </div>
+        <div class="col-sm-3">
+        <select class="form-select select-items" name="parcelas_embutidas" id="vConEmbutidas" aria-label="Default select example">
+          <option selected value="0">Embutir Parcelas?</option>
+          <option value="0">Embutir 0</option>
+          <option value="1">Embutir 1</option>
+          <option value="2">Embutir 2</option>
+          <option value="3">Embutir 3</option>
+          <option value="4">Embutir 4</option>
+        </select>
         </div>
 
       </div>
@@ -311,7 +318,7 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Renda Exigida</label>
         <div class="col-sm-3">
-          <input data-mask='R$ #.##0,00' type="text" name="con-rendaexigida" class="form-control" id="vConRendaExigida"
+          <input data-mask='R$ #.##0,00' type="text" name="con-rendaexigida" class="form-control fakedisabled" id="vConRendaExigida"
             placeholder="Renda Exigida" required>
         </div>
       </div>
@@ -366,8 +373,6 @@
     </form>
   </div>
 
-
-
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"
     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
@@ -384,9 +389,6 @@
       //   });
 
     };
-
-
-    
   
     function n_extc($frase, $delvirgula = false) {
 
@@ -436,23 +438,38 @@
     $("#vConParcela").focusout(function () {
       preencherValoresConsorcio();
     })
+    $("#vConAdesao").focusout(function () {
+      preencherValoresConsorcio();
+    })
+
+    $("#vConEmbutidas").change(function(){
+      preencherValoresConsorcio();
+    });
 
     function preencherValoresConsorcio() {
 
       var vCredito = n_extc($("#vConCredito").val());
-      let vConEntrada = n_extc($("#vConEntrada").val());
+
+      let vConAdesao = n_extc($("#vConAdesao").val());
+      let vConEmbutidas = n_extc($("#vConEmbutidas").val()) ;
+
       let vConParcela = n_extc($("#vConParcela").val());
       let vPrazo = n_extc($("#vConPrazo").val());
 
       let vConParcelaReduzida = vConParcela;
 
-      if (document.getElementById('vConParcelaReduzidaCheck').checked){
-
-        vConParcelaReduzida = vConParcela * 0.7;
-
+      console.log('vConEmbutidas: ' + vConEmbutidas)
+      
+      let vConEntrada = 0;
+      if (vConEmbutidas > 0) {
+        vConEntrada = vConAdesao + vConParcela + (vConParcela * vConEmbutidas);
+      }else {
+        vConEntrada = vConAdesao + vConParcela ;
       }
 
-
+      if (document.getElementById('vConParcelaReduzidaCheck').checked){
+        vConParcelaReduzida = vConParcela * 0.7;
+      }
 
       rendaExigida = parseFloat((vConParcela * 3));
 
@@ -467,14 +484,13 @@
       }
       
       $('#vConCredito').val(to_m(vCredito));
+      $('#vConAdesao').val(to_m(vConAdesao));
       $('#vConEntrada').val(to_m(vConEntrada));
       $('#vConParcela').val(to_m(vConParcela));
       $('#vConParcelaReduzida').val(to_m(vConParcelaReduzida));
       $('#vConJuros').val(to_m(vJuros))
       $('#vConTotal').val(to_m(vTotal))
     }
-
-
 
     function financiarSac($vFinanciado, $taxa, $prazo) {
 
@@ -580,7 +596,6 @@
         $('#jumb').addClass('jumb-manual')
         $('#content').removeClass('content-auto');
         $('#content').addClass('content-manual');
-
       }
       
     });
