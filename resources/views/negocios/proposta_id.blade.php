@@ -5,7 +5,7 @@
   
 	
     .pad {
-        margin-top: 8%;
+        margin-top: 25%;
     }
   	.mascote-img{
   		padding-right: 50px;
@@ -58,7 +58,7 @@
 
 
 	hr.proposta {
-		margin-top: 50px;
+		/*margin-top: 50px;*/
 		size: 10px;
 		border-color: #C69316;
 		border-width: 5px 0;
@@ -102,7 +102,7 @@ function convert($frase){
 <img align="center" class="back-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/fundo_folha.png"></img>
 	
 <div class="container">
-	<h2 align="center" style="padding-top: 8%"><b>PROPOSTA COMERCIAL</b></h2>
+
 		<div class="row pad" >
 	
 	    
@@ -111,7 +111,7 @@ function convert($frase){
 
 			
 				@if ($proposta->tipo == "imóvel")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.jpg"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.png"></img>
 				@elseif ($proposta->tipo == "veículo")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/veiculo-2.png"></img>
 				@elseif ($proposta->tipo == "maquinário")
@@ -166,7 +166,7 @@ function convert($frase){
 				use Carbon\Carbon;
 				?>
 				<h4>Data da Criação: <span style="font-weight: bold;">
-					{{ $proposta->created_at->format('d/m/Y H:m')}}</span>
+					{{ $proposta->created_at->format('d/m/Y - H:m')}}</span>
 				</h4>
 				<h4>Validade da Proposta: <span style="font-weight: bold;">
 					<?php echo date('d/m/Y', strtotime('+3 days')); ?></span>

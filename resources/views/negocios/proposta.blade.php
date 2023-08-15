@@ -5,7 +5,7 @@
   
 	
     .pad {
-        margin-top: 8%;
+        margin-top: 25%;
     }
   	.mascote-img{
   		padding-right: 50px;
@@ -58,7 +58,7 @@
 
 
 	hr.proposta {
-		margin-top: 50px;
+		/*margin-top: 50px;*/
 		size: 10px;
 		border-color: #C69316;
 		border-width: 5px 0;
@@ -103,7 +103,7 @@ function convert($frase){
 	
 <div class="container">
 	
-	<h2 align="center" style="padding-top: 8%"><b>PROPOSTA COMERCIAL</b></h2>
+	
 		<div class="row pad" >
 	
 	        
@@ -112,7 +112,7 @@ function convert($frase){
 
 			
 				@if ($tipo == "imóvel")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.jpg"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.png"></img>
 				@elseif ($tipo == "veículo")
 					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/veiculo-2.png"></img>
 				@elseif ($tipo == "maquinário")

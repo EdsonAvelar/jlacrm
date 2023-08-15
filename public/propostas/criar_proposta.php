@@ -109,7 +109,7 @@ function convert($frase){
 				
 				<?php 				
 					if ($_POST['tipo'] == "imóvel") {
-						echo "<img  align=\"right\" class=\"mascote-img\" src=\"/wp-content/uploads/2021/11/imovel.jpg\"></img>";
+						echo "<img  align=\"right\" class=\"mascote-img\" src=\"/wp-content/uploads/2021/11/imovel.png\"></img>";
 					} elseif ($_POST['tipo'] == "veículo"){
 						echo "<img  align=\"right\" class=\"mascote-img\" src=\"/wp-content/uploads/2021/11/veiculo-2.png\"></img>";
 					}elseif ($_POST['tipo'] == "maquinário"){
