@@ -32,7 +32,7 @@
                 -webkit-box-align: stretch;
                 -ms-flex-align: stretch;
                 align-items: stretch;
-                background: url({{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/bg-auth.jpg) center;
+                background: url({{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/bg-auth.png) center;
                 background-size: cover
             }
         </style>
