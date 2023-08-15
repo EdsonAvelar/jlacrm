@@ -47,7 +47,8 @@ class EquipeController extends Controller
 
         $equipe->descricao = $nome_equipe;
 
-        $nome_equipe = strtolower(trim(preg_replace('/\s+/', '_', $nome_equipe)));
+        
+        $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
 
         $equipe->nome = $nome_equipe;
 
