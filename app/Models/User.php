@@ -68,6 +68,11 @@ class User extends Authenticatable
       return $this->belongsTo("App\Models\Cargo");
     }
 
+
+    public function vendas(){
+      return $this->hasMany("App\Models\Venda");
+    }
+
     
     public function is($roleName)
     {

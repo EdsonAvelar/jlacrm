@@ -336,7 +336,7 @@
             </label>
             <div class="form-check">
               <input type="checkbox" id="calculoReduzido" class="calculoReduzido" name="cal-reduzido" data-toggle="toggle" 
-            data-on="Calculo com Parcela Reduzida" data-off="Calculo com Parcela Cheia" data-onstyle="success" data-offstyle="warning">
+            data-on="Calculo com Parcela Reduzida" data-off="Calculo com Parcela Cheia" data-onstyle="success" data-offstyle="warning" checked>
             </div>
           </div>
         </div>

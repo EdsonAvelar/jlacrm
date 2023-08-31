@@ -94,7 +94,7 @@ i.icon-danger {
                         @if(isset($vendas))
                             @foreach ($vendas as $venda)
                             <tr>
-                                <td>{{$venda->lead->nome}}</td>
+                                <td><a href="{{route('negocio_edit',array('id'=>$venda->negocio->id))}}">{{$venda->negocio->lead->nome}}</a></td>
                                 <td>{{$venda->vendedor_principal->name}}</td>
                                 <td>
                                 @if ($venda->vendedor_secundario)
@@ -103,7 +103,7 @@ i.icon-danger {
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse( $venda['data_fechamento'])->format('d/m/Y') }}</td>
                                 <td>{{\Carbon\Carbon::parse( $venda['data_primeira_assembleia'])->format('d/m/Y') }}</td>
-                                <td>R$ {{ number_format( (float)$venda['valor'],2, ',', '.')}}</td>
+                                <td>R$ {{ number_format( (float)$venda->negocio->valor,2, ',', '.')}}</td>
                                 <td>{{$venda['parcelas_embutidas']}}</td>
                                 <td>{{$venda['lead_id']}}</td>
                                 

@@ -49,19 +49,14 @@ class VendaController extends Controller
 
         Lead::where('id',$cliente_id)->update(['nome'=>$cliente_nome]);
     
-        # Atualizar tipo de negociacao
-
-        Negocio::where('id',$negocio_id)->update([
-                'valor'=>$valor,
-                'tipo'=>$tipo_credito,
-                'status'=> NegocioStatus::VENDIDO]);
+  
 
         $venda = new Venda();
         $venda->data_fechamento = $data_fechamento;
         $venda->data_primeira_assembleia = $data_primeira_assembleia;
         $venda->valor = $valor;
         $venda->parcelas_embutidas = $parcelas_embutidas;
-        $venda->lead_id = $cliente_id;
+        $venda->negocio_id = $negocio_id;
         $venda->vendedor_principal_id = $vendedor_principal;
         $venda->status = VendaStatus::FECHADA;
 
@@ -70,6 +65,14 @@ class VendaController extends Controller
         }
        
         $venda->save();
+
+
+        # Atualizar tipo de negociacao
+
+        Negocio::where('id',$negocio_id)->update([
+        'valor'=>$valor,
+        'tipo'=>$tipo_credito,
+        'status'=> NegocioStatus::VENDIDO]);
 
         Atividade::add_atividade(\Auth::user()->id, "Cliente GANHO", $negocio_id);
 

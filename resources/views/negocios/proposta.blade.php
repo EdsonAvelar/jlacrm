@@ -137,7 +137,7 @@ function convert($frase){
 					<?php 
 					
 					if (!empty($_POST['cpf'])){
-					    echo $_POST['cpf'].".***.***-**" ;    
+					    echo $_POST['cpf'] ;    
 					}
 
 					?></span>
@@ -163,7 +163,7 @@ function convert($frase){
 				    
 				?>
 				<h4>Data da Criação: <span style="font-weight: bold;">
-					<?php echo date('d/m/Y - H:m'); ?></span>
+					<?php echo \Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y - H:m');?></span>
 				</h4>
 				<h4>Validade da Proposta: <span style="font-weight: bold;">
 					<?php echo date('d/m/Y', strtotime('+3 days')); ?></span>

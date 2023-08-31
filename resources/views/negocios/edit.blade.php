@@ -182,6 +182,11 @@ use App\Models\User;
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#levantamento" data-bs-toggle="tab" aria-expanded="true" class="nav-link rounded-0 ">
+                                Levantamento
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#atividades" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Atividades
                             </a>
@@ -205,6 +210,211 @@ use App\Models\User;
                     </ul>
                     <div class="tab-content">
 
+                        <div class="tab-pane" id="levantamento">
+                            <div class="row">
+                                <div class="col-md-12" >
+                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Ao Telefone </h5>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="firstname" class="form-label">Qual Bem ?</label>
+                                    <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                        <option selected>IMOVEL</option>
+                                        <option>CARRO</option>
+                                        <option>MOTO</option>
+                                        <option>CAMINHAO</option>
+                                        <option>TERRENO</option>
+                                        <option>SERVICO</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="firstname" class="form-label">Grande Dificuldade?</label>
+                                    <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                        <option selected>OBTER CRÉDITO</option>
+                                        <option>ENCONTRAR IMOVEL</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Região de Interesse</label>
+                                        <input type="text" class="form-control" name="regiao" >
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Valor do Bem Desejado</label>
+                                        <input type="text" class="form-control" name="valor_bem" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">É Urgente ?</label>
+                                        <select class="form-select form-control-light" id="urgencia" name="urgencia">
+                                            <option selected>até 3 mês</option>
+                                            <option>de 3 a 6 meses</option>
+                                            <option>6 a 12 meses</option>
+                                            <option>mais de 12 meses</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Parcela Máx Acessível</label>
+                                        <input type="text" class="form-control" name="parcela" >
+                                    </div>
+                                </div>
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Possui Valor de Entrada</label>
+                                        <input type="text" class="form-control" name="parcela"  value="0">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Desfazer de Algum Bem?</label>
+                                        <input type="text" class="form-control" name="parcela"  value="">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Se Mora de Alguel, Valor?</label>
+                                        <input type="text" class="form-control" name="parcela" value="0" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Decisores</label>
+                                        <input type="text" class="form-control" name="parcela" value="" >
+                                    </div>
+                                </div>
+
+                                
+                                <div class="col-md-12" >
+                                    <h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Presencial </h5>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Valor do FGTS</label>
+                                        <input type="text" class="form-control" name="parcela" value="0" >
+                                    </div>
+                                </div>
+                               
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Vai Compor Renda?</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            <option selected>NÃO</option>
+                                            <option>SIM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">FINANCIAMENTO,EMPRESTIMO OU ACORDO</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            <option selected>NÃO</option>
+                                            <option>SIM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">POSSUI FILHO?</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            <option selected>NÃO</option>
+                                            <option>SIM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Status Civil</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            <option selected>CASADO</option>
+                                            <option>SOLTEIRO</option>
+                                            <option>DIVORCIADO</option>
+                                            <option>VIUVO</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">TEM CASA PRÓPRIA?</label>
+                                        <select class="form-select form-control-light" id="tipo_credito" name="tipo_credito">
+                                            <option selected>NÃO</option>
+                                            <option>SIM</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Valor Total da Renda Comprovada</label>
+                                        <input type="text" class="form-control" name="parcela" value="" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Como comprovar a renda?</label>
+                                        <input type="text" class="form-control" name="parcela" value="IR,Holerite" >
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3" id="imovel">
+                                    <!--h5 class="mb-3 text-uppercase bg-light p-2"><i
+                                        class="mdi mdi-office-building me-1"></i> Veiculo</h5-->
+                                    <div class="col-md-12">
+                                        <label for="firstname" class="form-label">Possui Alguma Restrição?</label>
+                                        <input type="text" class="form-control" name="parcela" value="0" >
+                                    </div>
+                                </div>
+
+                               
+                            </div> <!-- end row -->
+
+                            <input name="id_negocio" value="{{app('request')->id}}" hidden >
+                                <div class="text-end">
+                                    <button type="submit" class="btn btn-success mt-2"><i
+                                            class="mdi mdi-content-save"></i> Salvar</button>
+                                </div>
+
+                        </div>
+
                         <div class="tab-pane show active" id="observacoes">
 
                             <!-- comment box -->
@@ -226,7 +436,7 @@ use App\Models\User;
                                         </div>
                                         <input hidden name="negocio_id" value="{{ $negocio->id }}" />
                                         <input hidden name="user_id" value="{{ \Auth::user()->id }}" />
-                                        <button type="submit" class="btn btn-sm btn-dark waves-effect">Inserir</button>
+                                        <button type="submit" class="btn btn-sm btn-dark waves-effect">Salvar</button>
                                     </div>
                                 </form>
                             </div> <!-- end .border-->

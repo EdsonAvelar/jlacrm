@@ -9,20 +9,13 @@ class Venda extends Model
 {
     use HasFactory;
 
-
-    public function vendedor_secundario()
+    public function negocio()
     {
-        return $this->belongsTo("App\Models\User");
+        return $this->belongsTo("App\Models\Negocio");
     }
 
-
-    public function vendedor_principal()
+    public function vendedores()
     {
-        return $this->belongsTo("App\Models\User");
-    }
- 
-    public function lead()
-    {
-        return $this->belongsTo("App\Models\Lead");
+        return $this->belongsToMany("App\Models\User");
     }
 }

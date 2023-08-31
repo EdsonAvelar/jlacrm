@@ -265,9 +265,10 @@ i.icon-danger {
                                     name="password" value="mudarsenha" required>
                             </div>
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Cargo</label>
+                                <label for="task-title" class="form-label">Cargo<span
+                                    class="text-danger"> *</label>
                                 <select class="form-select form-control-light" name="cargo_id" required>
-                                    <option selected >Selecione Cargo</option>
+                                    <option value="">Selecione Cargo</option>
                                     @foreach (\App\Models\Cargo::all() as $cargo)
                                     <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
                                     @endforeach
