@@ -130,6 +130,13 @@ i.icon-danger {
                                         </div>
                                     </div> <!-- end col -->
 
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="lastname" class="form-label">Site</label>
+                                            <input type="text" class="form-control" id="site" name="site" value="{{config('site')}}"">
+                                        </div>
+                                    </div> <!-- end col -->
+
                        
 
                                 </div> 

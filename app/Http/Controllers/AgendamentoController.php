@@ -108,11 +108,9 @@ class AgendamentoController extends Controller
             $proprietarios = User::where(['equipe_id'=> $equipe->id, 'status'=>UserStatus::ativo])->pluck('name', 'id');
         }
 
-
         return view('negocios.calendario', compact('calendario','proprietarios','proprietario'));
     }
 
-    
 
     public function add(Request $request)
     {
@@ -122,19 +120,8 @@ class AgendamentoController extends Controller
         $data_agendamento = Carbon::now()->format('Y-m-d');
         $hora = $input['hora_agendado'];
 
-
         $negocio_id = $input['negocio_id'];
         $proprietario_id = $input['proprietario_id'];
-
-        /*
-        $agendamento = Agendamento::firstOrCreate(
-            ['data_agendado' =>  $data_agendado],
-            ['data_agendamento' => $data_agendamento],
-            ['hora' => $hora],
-            ['negocio_id' => $data_agendamento],
-            ['user_id' => $proprietario_id],
-        );*/
-
         
         $query = [
             ['negocio_id', '=', $negocio_id ],
@@ -155,7 +142,7 @@ class AgendamentoController extends Controller
 
             Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para ".$agendamento->data_agendamento, $negocio_id );
 
-            return "Agendamento de realizado com sucesso";
+            return [ Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y') , $hora];
         }else {
 
             
@@ -166,18 +153,8 @@ class AgendamentoController extends Controller
             $agendamento->user_id = $proprietario_id;
             $agendamento->save();
 
-            return "Agendamento desse cliente já realizado";
+            return [Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y'), $hora];
         }
-
-        /*
-        $agendamento = new Agendamento();
-        $agendamento->data_agendado = $data_agendado;
-        $agendamento->data_agendamento = $data_agendamento;
-        $agendamento->hora = $hora;
-        $agendamento->negocio_id = $negocio_id;
-        $agendamento->user_id = $proprietario_id;
-        $agendamento->save();
-        */
 
     }
 }

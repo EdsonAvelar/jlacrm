@@ -8,7 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\NegocioController;
 use App\Http\Controllers\FuncionarioController;
-use App\Http\Controllers\VendaController;
+use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
@@ -62,9 +62,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(
         ['prefix' => 'vendas'],
         function () {
-            Route::post('/nova', [VendaController::class, 'nova_venda'])->name('nova_venda');
-            Route::get('/index', [VendaController::class, 'index'])->name('vendas.lista');
-            Route::post('/perdida', [VendaController::class, 'venda_perdida'])->name('vendas.perdida');
+            Route::post('/nova', [FechamentoController::class, 'nova_venda'])->name('nova_venda');
+            Route::get('/index', [FechamentoController::class, 'index'])->name('vendas.lista');
+            Route::post('/perdida', [FechamentoController::class, 'venda_perdida'])->name('vendas.perdida');
 
         }
     );
@@ -72,7 +72,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(
         ['prefix' => 'negocios'],
         function () {
-
             Route::post('/drag_update', [CrmController::class, 'drag_update']);
             Route::post('/add', [CrmController::class, 'add_negocio']);
             Route::post('/comentario', [CrmController::class, 'inserir_comentario'])->name('inserir_comentario');
@@ -82,22 +81,25 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/pipeline', [CrmController::class, 'pipeline_index'])->name('pipeline_index');
             Route::get('/list', [CrmController::class, 'list_index'])->name('list_index');
             Route::get('/get', [NegocioController::class, 'negocio_get'])->name('negocio_get');
+
             Route::get('/edit', [NegocioController::class, 'negocio_edit'])->name('negocio_edit');
+            Route::get('/fechamento', [NegocioController::class, 'negocio_fechamento'])->name('negocio_fechamento');
+
             Route::post('/importar/atribuir', [NegocioController::class, 'import_atribuir']);
             Route::post('/negocio_update', [NegocioController::class, 'negocio_update'])->name('negocio_update');
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
-
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
             Route::get('/proposta/{id}', [NegocioController::class, 'view_proposta'])->name('negocios.view_proposta');
             Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);
             Route::post('/add_aprovacao', [NegocioController::class, 'add_aprovacao']);
             Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);
-
         }
     );
+
+
 
 
     Route::group(
@@ -111,19 +113,14 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
-
     Route::group(
         ['prefix' => 'empresa'],
         function () {
             Route::get('/profile', [EmpresaController::class, 'empresa_profile'])->name('empresa_profile');
             Route::post('/save', [EmpresaController::class, 'save'])->name('empresa_save');
-
         }
     );
-
-
 });
-
 
 Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function () {
     Route::group(
@@ -135,7 +132,6 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function
             Route::post('/ativar_desativar', [FuncionarioController::class, 'ativar_desativar'])->name('funcionarios.ativar_desativar');
 
         }
-
     );
 });
 

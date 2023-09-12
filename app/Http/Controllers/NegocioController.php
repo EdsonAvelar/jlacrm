@@ -116,21 +116,7 @@ class NegocioController extends Controller
                 continue;
             }
 
-            
-
             $imported = $imported + 1;
-
-            //pula o cabeçalho
-            // if ($row > 1) {
-            //     $import_data[] = [
-            //         "nome" => $nome,
-            //         "telefone" => $telefone,
-            //         "email" => $email,
-            //         "campanha" => $campanha,
-            //         "fonte" => $fonte,
-            //         "data_conversao" => $create_time
-            //     ];
-            // }
         }
 
         if ($imported > 0){
@@ -142,22 +128,6 @@ class NegocioController extends Controller
                 return back()->withErrors('Erro ao ler o csv. Cheque se estava no formato correto');
             }
         }
-
-
-
-        /*
-        if (sizeof($import_data) > 0) {
-            try {
-
-                DB::table('negocio_importados')->insert($import_data);
-            } catch (\Illuminate\Database\QueryException  $ex) {
-                //não faz literalmente nada
-            }
-
-        }
-
-        return back()->with('status','upload realizado com sucesso');
-        */
     }
 
     public function check_authorization($request){
@@ -224,6 +194,18 @@ class NegocioController extends Controller
         $negocio = Negocio::find($id);
 
         return view('negocios.edit', compact('negocio') );
+    }
+
+    public function negocio_fechamento(Request $request) {
+
+
+        $this->check_if_active();      
+        $this->check_authorization($request);      
+
+        $id = $request->query('id');
+        $negocio = Negocio::find($id);
+
+        return view('negocios.fechamento', compact('negocio') );
     }
 
     public function negocio_get(Request $request) {
@@ -335,25 +317,6 @@ class NegocioController extends Controller
 
         $con_entrada = $input['con-entrada'];
 
-        /*
-        $embutidas = intval( $input['parcelas_embutidas']);
-
-        if ( $embutidas > 0 ){
-            
-            $subs = array("R","$",".");
-            $valor_entrada = floatval( str_replace($subs,"",$input['con-entrada']));
-
-            if($input['reduzido'] == 's'){
-                $valor_parcela = (floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas )/0.7;
-            }else {
-                $valor_parcela = floatval( str_replace($subs,"",$input['con-parcelas'])) * $embutidas ;
-            }
-
-            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');        
-        }
-        */
-    
-
         $proposta = new Proposta();
         $proposta['tipo'] = $input['tipo'];
         $proposta['banco'] = $input['banco'];
@@ -385,8 +348,6 @@ class NegocioController extends Controller
         $proposta['ano'] = $input['ano'];
        
 
-        
-        
         $proposta->save();
 
         $proposta_id = $proposta->id;
@@ -411,8 +372,6 @@ class NegocioController extends Controller
         $proposta['con-juros-pagos'] = $valor_parcela = "R$ ".number_format($vtotal - $credito,2, ',', '.'); 
 
         
-   
-
         $con_entrada = $proposta['con-entrada'];
         $embutidas = intval( $proposta['parcelas_embutidas']);
         if ( $embutidas > 0 ){

@@ -1,10 +1,34 @@
 @extends('main')
-<?php  use App\Models\EtapaFunil; ?>
+<?php  
+use App\Models\EtapaFunil; 
+use App\Models\User; 
+use Carbon\Carbon;
+$protocolo_dia = 0;
+$protocolo_hora = 0;
+
+
+?>
 @section('headers')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{url('')}}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
+
+.divtext {
+    border: ridge 2px;
+    padding: 5px;
+    width: 20em;
+    min-height: 5em;
+    overflow: auto;
+}
+
+textarea {
+    resize: none;
+    border: none;
+    outline: none;
+    height: auto;
+}
+
 
 .body {
     style="overflow-y: hidden;"
@@ -290,20 +314,30 @@
                         <div class="col-md-6">
 
                             <div class="row">
+
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Titulo<span class="text-danger">
-                                                </label>
-                                        <input type="text" class="form-control form-control-light" 
-                                            name="titulo" placeholder="Digite o nome completo do cliente" required
-                                            value="" maxlength="30">
+                                        <label for="task-title" class="form-label">Nome Contato<span
+                                                class="text-danger"> *</label>
+                                        <input type="text" class="form-control form-control-light" id="add_nome_contato"
+                                            placeholder="Digite nome" required value="" name="nome_lead">
                                     </div>
                                 </div>
 
                                 <div class="col-md-12">
                                     <div class="mb-12">
+                                        <label for="task-title" class="form-label">Telefone<span class="text-danger">
+                                                *</span></label>
+                                        <input type="text" class="form-control form-control-light telefone"
+                                            id="task-title" placeholder="Digite Telefone" required name="tel_lead">
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="mb-12">
                                         <label for="task-title" class="form-label">Tipo de Crédito</label>
-                                        <select class="form-select form-control-light" id="task-priority" name="tipo_credito">
+                                        <select class="form-select form-control-light" id="add_credito_tipo" name="tipo_credito">
                                             <?php 
                                                 use App\Enums\NegocioTipo;
 
@@ -324,30 +358,16 @@
                                     </div>
                                 </div>
 
+                                
                                 <div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Valor Crédito</label>
-                                        <input type="text" class="form-control form-control-light money" id="valor_credito"
+                                        <input type="text" class="form-control form-control-light money" id="add_nome_valor"
                                             placeholder="Valor do Crédito" name="valor">
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Funil</label>
-                                        <select class="form-select form-control-light" id="task-priority"
-                                            name="funil_id" onchange="this.value = 'VENDAS'">
-                                            @foreach ($funils as $key => $value)
-                                                @if ($key == 1)
-                                                <option value="{{$key}}" selected="true">{{$value}}</option>
-
-                                                @else
-                                                <option value="{{$key}}">{{$value}}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
+                               
 
                                 <!--div class="col-md-12">
                                     <div class="mb-12">
@@ -366,13 +386,13 @@
                                 </div-->
                                 <input name="etapa_funil_id" value="1" hidden>
 
-                                <div class="col-md-12">
+                                <!--div class="col-md-12">
                                     <div class="mb-12">
                                         <label for="task-priority" class="form-label">Previsão de Fechamento</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true" name="fechamento" value="<?php echo date("d/m/Y"); ?>">
                                     </div>
-                                </div>
+                                </div-->
                             </div>
                         </div>
                         <!-- Painel Esquedo -->
@@ -380,19 +400,11 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mb-12">
-                                        <label for="task-title" class="form-label">Nome Contato<span
-                                                class="text-danger"> *</label>
-                                        <input type="text" class="form-control form-control-light" id="task-title"
-                                            placeholder="Digite nome" required value="" name="nome_lead">
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="task-title" class="form-label">Telefone<span class="text-danger">
-                                                *</span></label>
-                                        <input type="text" class="form-control form-control-light telefone"
-                                            id="task-title" placeholder="Digite Telefone" required name="tel_lead">
+                                        <label for="task-title" class="form-label">Titulo<span class="text-danger">
+                                                </label>
+                                        <input type="text" class="form-control form-control-light" id="add_titulo"
+                                            name="titulo" placeholder="Digite o titulo do negocio" required
+                                            value="" maxlength="30">
                                     </div>
                                 </div>
 
@@ -411,8 +423,27 @@
                                             placeholder="Digite e-mail">
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <div class="mb-12" hidden>
+                                        <label for="task-title" class="form-label">Funil</label>
+                                        <select class="form-select form-control-light" id="task-priority"
+                                            name="funil_id" onchange="this.value = 'VENDAS'" >
+                                            @foreach ($funils as $key => $value)
+                                                @if ($key == 1)
+                                                <option value="{{$key}}" selected="true">{{$value}}</option>
+
+                                                @else
+                                                <option value="{{$key}}">{{$value}}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
+                        <br><br>
                     </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -585,8 +616,6 @@
                         <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
                     <input name="negocio_id" id="negocio_id_perdido" hidden value="">
-                    
-             
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -598,7 +627,6 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-           
                 <h5 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h5>
             </div>
             <div class="modal-body">
@@ -607,7 +635,6 @@
                     <div class="row">
                         <!-- Painel Esquedo -->
                         <div class="col-md-12">
-                       
                             <div class="mb-12">
                                 <label for="task-priority" class="form-label">Agendado para:</label>
                                 <input type="text" class="form-control form-control-light agendamento"
@@ -615,12 +642,17 @@
                             </div>
                             <div class="mb-12">
                                 <label for="task-priority" class="form-label">Hora:</label>
-                                <input type="text" name="hora_agendado" class="form-control form-control-light timedatapicker" >
+                                <input type="text" name="hora_agendado" class="form-control form-control-light timedatapicker">
                             </div>
                         </div>
                     </div>
                     <br>
-                   
+                    <div class="text-start">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="check_protocolo">
+                            <label class="form-label form-check-label" for="flexSwitchCheckDefault">Gerar Protocolo</label>
+                        </div>
+                    </div>
                     <div class="text-end">
                         <button type="submit" id="confirmar_agendamento" class="btn btn-success">Confirmar</button>
                     </div>
@@ -634,13 +666,56 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div class="modal fade task-modal-content" id="agendamento-protocolo" 
+    aria-labelledby="NewTaskModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" class="center" id="venda_titulo">Protocolo de Agendamento</h5>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="mb-12" class="divtext">
+                                <p id="txt_protocolo" rows="22"  cols="50">_*REUNIÃO AGENDADA*_ <br>
+*Protocolo: {{ DB::table('Agendamentos')->latest('updated_at')->first()->id}}/{{Carbon::now('America/Sao_Paulo')->format('Y')}}* <br>
+*Dia: <span id="ptcl_dia"></span>*<br>
+*Hora: <span id="ptcl_hora"></span>* <br>
+<br>
+_*Documentos necessários:*_<br>
+RG, CPF, Comprovante de Residência Atual<br>
+<br>
+_*Endereço:*_<br>
+{{ config('endereco') }}<br>
+<br>
+_*Na Recepção procurar por:*_ <br>
+{{ User::find(app('request')->proprietario)->name}}<br>
+🏡🚗🏍✅<br>
+<br>
+Estacionamento Gratuito<br>
+{{ config('nome') }}<br>
+SITE : {{ config('site') }}<br>
+CNPJ :{{ config('cnpj') }}<br>
+<br>
+Confirme com OK✅<br>    
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="text-end">
+                        <button onclick="copyProtocolo()" class="btn btn-success">Copiar</button>
+                    </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <div class="modal fade task-modal-content" id="agendamento-confirmar" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-           
                 <h5 class="modal-title" class="center" id="venda_titulo">Confirmar Reunião</h5>
                 <h2 id="agendamento_confirmar_nome">Cliente</h2>
              
@@ -671,6 +746,9 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+
+
+
 <div id="spinner-div" class="pt-5">
   <div class="spinner-border2 text-primary" role="status">
   </div>
@@ -693,6 +771,32 @@
 <script>
 
 
+
+    function copyProtocolo() {
+
+        var text = document.getElementById('txt_protocolo').innerText;
+        var elem = document.createElement("textarea");
+        document.body.appendChild(elem);
+        elem.value = text;
+        elem.select();
+        document.execCommand("copy");
+        document.body.removeChild(elem);
+
+
+    /* Get the text field
+    var copyText = document.getElementById("txt_protocolo");
+
+    // Select the text field
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+
+    // Copy the text inside the text field
+    navigator.clipboard.writeText(copyText.value);
+    */
+    showAlert({message: "protocolo copiado", class:"success"});
+    $('#agendamento-protocolo').modal('hide'); 
+    }
+
     function showAlert(obj){
         var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
             '   <strong>' + obj.message + '</strong>'+
@@ -704,9 +808,6 @@
 			});
 		}, 4000);
     }
-
-
-    //document.addEventListener('touchmove', function (e) { e.preventDefault(); }, { passive: false });
 
     var cont = [];
     var arr = Array( $('.container-drag').data('containers'))[0];
@@ -753,9 +854,6 @@
         }else {
             $('.board').css({"max-height": height__})
         }
-
-
-        
         set_columns_height();
     }, true);
 
@@ -789,44 +887,46 @@
         e.preventDefault(); // avoid to execute the actual submit of the form.
         $('#confirmar_agendamento').prop("disabled", false);
    
-
         var form = $(this);
         var actionUrl = form.attr('action');
 
-
         $.ajax({
-        type: "POST",
-        url: actionUrl,
-        data: form.serialize(), // serializes the form's elements.
-        success: function(data)
-        {
-            showAlert({message: "reunião de agendada com sucesso", class:"success"});
-            $.ajax({
-                url: "{{url('negocios/drag_update')}}",
-                type: 'post',
-                data: { info: info },
-                Type: 'json',
-                success: function (res) {
-                    //showAlert({message: "reunião de "+res+" agendada com sucesso", class:"success"});
-                },
-                error : function (res) {
-                    showAlert({message: "erro ao salvar card em agendamento: "+res, class:"danger"});
-                    console.log(res);
-                    $("#spinner-div").hide();
-                },
-                
-                complete: function (res) {
-                    $("#spinner-div").hide(); 
-                }
-            });
-        }, 
-        error : function (res) {
-            showAlert({message: " Erro no agendamento", class:"danger"});
+            type: "POST",
+            url: actionUrl,
+            data: form.serialize(), // serializes the form's elements.
+            success: function(data)
+            {
+                showAlert({message: "reunião de agendada com sucesso", class:"success"});
+                $.ajax({
+                    url: "{{url('negocios/drag_update')}}",
+                    type: 'post',
+                    data: { info: info },
+                    Type: 'json',
+                    success: function (res) {
+                        //showAlert({message: "reunião de "+res+" agendada com sucesso", class:"success"});
+                    },
+                    error : function (res) {
+                        showAlert({message: "Erro ao salvar card em agendamento: "+res, class:"danger"});
+                        console.log(res);
+                        $("#spinner-div").hide();
+                    },
+                    complete: function (res) {
+                        $("#spinner-div").hide();
 
-            $("#spinner-div").hide(); 
-        },
+                        if (document.getElementById('check_protocolo').checked) {
+                            ptcl_dia.textContent = data[0];
+                            ptcl_hora.textContent = data[1];
 
-
+                            $('#agendamento-protocolo').modal('show');
+                        }
+                       
+                    }
+                });
+            }, 
+            error : function (res) {
+                showAlert({message: " Erro no agendamento", class:"danger"});
+                $("#spinner-div").hide(); 
+            },
         });
     });
 
@@ -871,12 +971,12 @@
                     },
                     complete: function () {
                         $("#spinner-div").hide(); //Request is complete so hide spinner
+                       
                     }
                 });
             }else {
                 showAlert({message: 'O negócio precisa estar em REUNIAO_AGENDADA antes de REUNIAO', class:"danger"});
                 dragek.cancel(true);
-               
             }
         
         } else if(target.getAttribute('data-etapa') == "APROVACAO"){
@@ -901,7 +1001,6 @@
                 }else {
                     showAlert({message: 'O negócio precisa estar em REUNIÃO antes de APROVACAO', class:"danger"});
                     dragek.cancel(true);
-                
                 }
 
             }else {
@@ -949,7 +1048,7 @@
             dataType: "json",
             success:function(response) {
     
-                document.getElementById("negocio_id_perdido").value 	= response[0]['id'];
+                document.getElementById("negocio_id_perdido").value = response[0]['id'];
 
                 $('#negocio-perdeu').modal('show');
 
@@ -982,7 +1081,6 @@
                 var i;
                 for (i = 0; i < x.length; i++) {
                    
-
                     if (x[i].value ==  response[0]['tipo']){
                         x[i].selected = 'selected';
                         break;
@@ -993,6 +1091,14 @@
             }
         });
     });
+
+
+   
+
+       
+
+
+        
 
 
     $(document).ready(function(){
@@ -1006,6 +1112,30 @@
 
         $('.timedatapicker').timepicker({ 'timeFormat': 'H:i' });
         $('.timedatapicker').timepicker('setTime', new Date());
+
+        
+        function change_titulo(item){
+                var tipo = $("#add_credito_tipo").val();
+                var nome =$("#add_nome_contato").val().split(' ')[0];
+                var valor = $("#add_nome_valor").val();
+                $("#add_titulo").val(tipo + "-"+ valor+"-"+nome);
+                
+        }
+
+        $("#add_nome_contato").change(function() {
+            change_titulo(this);
+        });
+
+        $("#add_credito_tipo").change(function() {
+            change_titulo(this);
+        });
+
+
+        $("#add_nome_valor").change(function() {
+            change_titulo(this);
+        });
+
+        
 
     });
 

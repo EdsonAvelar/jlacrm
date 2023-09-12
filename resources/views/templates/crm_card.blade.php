@@ -54,8 +54,8 @@
                 @endif
                 <hr>
                 @if ( $negocio->status == "ATIVO" )
-                    <a href="#" class="dropdown-item ganhou_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-up"></i><span
-                        class="text-success"> Ganhou</span></a>
+                    <a href="{{route('negocio_fechamento', array('id'=>$negocio_id))}}" class="dropdown-item ganhou_button"><i class="dripicons-thumbs-up"></i><span
+                        class="text-success"> Fechamento</span></a>
 
                    <!-- item-->
                    <a href="javascript:void(0);" class="dropdown-item perdeu_button" data-id="{{$negocio_id}}"><i class="dripicons-thumbs-down"></i><span

@@ -9,7 +9,7 @@ use App\Enums\NegocioStatus;
 use App\Enums\UserStatus;
 use Carbon\Carbon;
 use App\Models\Negocio;
-use App\Models\Venda;
+use App\Models\Fechamento;
 use App\Models\User;
 use App\Models\Cargo;
 use App\Models\Reuniao;
@@ -39,7 +39,7 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
 
-            $stats['total_vendido'] = Venda::whereBetween('data_fechamento', [$from, $to])->sum('valor');
+            $stats['total_vendido'] = Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::where('status',NegocioStatus::ATIVO)->sum('valor');
 
@@ -106,11 +106,11 @@ class DashboardController extends Controller
                     ['vendedor_principal_id', '=', $vendedor->id]
                 ];
                 
-                $vendas_totais = Venda::where($query)->sum('valor');
+                $vendas_totais = Fechamento::where($query)->sum('valor');
              
                 array_push($output['vendas'], $vendas_totais);
 
-                $count = Venda::where($query)->count();
+                $count = Fechamento::where($query)->count();
                 $stats['sum_vendas'] = $stats['sum_vendas'] +  $count;
 
                 $query = [
@@ -148,7 +148,7 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
             
-            $stats['total_vendido'] = Venda::whereIn('vendedor_principal_id', $ids)->whereBetween('data_fechamento', [$from, $to])->sum('valor');
+            $stats['total_vendido'] = Fechamento::whereIn('vendedor_principal_id', $ids)->whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->sum('valor');
            
@@ -202,7 +202,7 @@ class DashboardController extends Controller
                     ['vendedor_principal_id', '=', $vendedor->id]
                 ];
                 
-                $vendas_totais = Venda::where($query)->sum('valor');
+                $vendas_totais = Fechamento::where($query)->sum('valor');
              
                 array_push($output['vendas'], $vendas_totais);
 

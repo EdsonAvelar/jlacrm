@@ -6,13 +6,13 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Lead;
 use App\Models\Negocio;
-use App\Models\Venda;
+use App\Models\Fechamento;
 use App\Enums\VendaStatus;
 use App\Enums\NegocioStatus;
 use App\Models\Atividade;
 
 
-class VendaController extends Controller
+class FechamentoController extends Controller
 {
     public function index(Request $request)
     {
@@ -24,7 +24,7 @@ class VendaController extends Controller
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
 
-            $vendas = Venda::whereBetween('data_fechamento', [$from, $to])->get();
+            $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])->get();
         }
 
         return view('vendas.index', compact('vendas'));
@@ -40,29 +40,30 @@ class VendaController extends Controller
 
         $data_fechamento = Carbon::createFromFormat('d/m/Y',$input['data_fechamento'])->format('Y-m-d');
         $data_primeira_assembleia = Carbon::createFromFormat('d/m/Y',$input['data_primeira_assembleia'])->format('Y-m-d');
-        $vendedor_principal = $input['vendedor_principal'];
-        $vendedor_secundario = $input['vendedor_secundario'];
+
+        #$vendedor_principal = $input['vendedor_principal'];
+        #$vendedor_secundario = $input['vendedor_secundario'];
         $negocio_id = $input['negocio_id'];
-        $cliente_id = $input['cliente_id'];
-        $tipo_credito = $input['tipo_credito'];
+        #$cliente_id = $input['cliente_id'];
+        #$tipo_credito = $input['tipo_credito'];
         $parcelas_embutidas = $input['parcelas_embutidas'];
 
-        Lead::where('id',$cliente_id)->update(['nome'=>$cliente_nome]);
+        #Lead::where('id',$cliente_id)->update(['nome'=>$cliente_nome]);
     
   
 
-        $venda = new Venda();
+        $venda = new Fechamento();
         $venda->data_fechamento = $data_fechamento;
         $venda->data_primeira_assembleia = $data_primeira_assembleia;
         $venda->valor = $valor;
         $venda->parcelas_embutidas = $parcelas_embutidas;
         $venda->negocio_id = $negocio_id;
-        $venda->vendedor_principal_id = $vendedor_principal;
+        #$venda->vendedor_principal_id = $vendedor_principal;
         $venda->status = VendaStatus::FECHADA;
 
-        if ($vendedor_secundario != "null"){
-            $venda->vendedor_secundario_id = $vendedor_secundario;
-        }
+        #if ($vendedor_secundario != "null"){
+        #    $venda->vendedor_secundario_id = $vendedor_secundario;
+        #}
        
         $venda->save();
 
@@ -71,7 +72,7 @@ class VendaController extends Controller
 
         Negocio::where('id',$negocio_id)->update([
         'valor'=>$valor,
-        'tipo'=>$tipo_credito,
+        #'tipo'=>$tipo_credito,
         'status'=> NegocioStatus::VENDIDO]);
 
         Atividade::add_atividade(\Auth::user()->id, "Cliente GANHO", $negocio_id);
