@@ -155,6 +155,7 @@
         <select class="form-select form-select-lg mb-3 select-items" name="banco" aria-label=".form-select-lg example">
           <option selected value="Bradesco">Bradesco</option>
           <option value="Itau">Itau</option>
+          <option value="Santander">Santander</option>
           <option value="Banco BV">Banco BV</option>
           <option value="Caixa">Caixa</option> 
         </select>
@@ -552,7 +553,12 @@
 
       if (globalThis.automatic === true) {
         $('#vFinEntrada').val(to_m(vFinEntrada))
-        $('#vFinParcela').val(to_m(vParcela))
+
+        if ($custom != "vFinParcela"){
+          $('#vFinParcela').val(to_m(vParcela))
+        }
+        
+        
         $('#vFinRendaExigida').val(to_m(rendaExigida))
         $('#vITBI').val(to_m(itbi))
         $("#vConCredito").val($("#vCredito").val())

@@ -34,6 +34,11 @@ class Negocio extends Model
     {
         return $this->belongsTo("App\Models\Agendamento");
     }
+
+    public function fechamento()
+    {
+        return $this->belongsTo("App\Models\Fechamento");
+    }
  
 
     public function propostas()
@@ -49,6 +54,10 @@ class Negocio extends Model
     public function lead()
     {
         return $this->belongsTo("App\Models\Lead");
+    }
+    public function conjuge()
+    {
+        return $this->belongsTo("App\Models\Lead","conjuge_id");
     }
 
 

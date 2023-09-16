@@ -18,11 +18,7 @@ return new class extends Migration
         Schema::create('fechamentos', function (Blueprint $table) {
             $table->increments('id');
 
-            $table->string('data_fechamento');
-            $table->string('data_primeira_assembleia');
-
-            $table->string('valor', 20);
-
+            $table->string('data_fechamento')->nullable();
             $table->enum('status', VendaStatus::all());
 
             //DADOS DO PLANO CONTRATADO
@@ -37,14 +33,18 @@ return new class extends Migration
             $table->string('plano_leve')->nullable();
             $table->string('seguro_prestamista')->nullable();
             $table->string('grupo_em_formacao')->nullable();
+            $table->string('grupo')->nullable();
             $table->string('grupo_em_andamento')->nullable();
             $table->string('numero_assembleia_adesao')->nullable();
             $table->string('data_assembleia')->nullable();
             $table->string('pagamento_incorporado')->nullable();
             $table->string('pagamento_ate_contemplacao')->nullable();
-            $table->string('table')->nullable();
+            $table->string('tabela')->nullable();
+            $table->string('numero_contrato')->nullable();
+
 
             // FORMA DE PAGAMENTO INICIAL
+            $table->string('valor')->nullable();
             $table->string('parcela')->nullable();
             $table->string('parcela_antecipada')->nullable();
             $table->string('total_antecipado')->nullable();
@@ -52,8 +52,6 @@ return new class extends Migration
             $table->string('primeira_parcela')->nullable();
             $table->string('total_pago')->nullable();
             $table->string('forma_pagamento')->nullable();
-            $table->integer('parcelas_embutidas');
-                    
 
             // CHECAGEM DO ADMINISTRATIVO
             $table->string('doc_consorciado')->nullable();
@@ -67,15 +65,17 @@ return new class extends Migration
 
             $table->text('comentarios')->nullable();
 
+            # proprietário do negócio
+            $table->integer('primeiro_vendedor_id')->unsigned();
+            $table->foreign('primeiro_vendedor_id')->references('id')->on('users');
 
-            $table->integer('negocio_id')->unsigned();
-            $table->foreign('negocio_id')->references('id')->on('negocios');
+            # proprietário do negócio
+            $table->integer('segundo_vendedor_id')->unsigned()->nullable();
+            $table->foreign('segundo_vendedor_id')->references('id')->on('users');
 
-            //conjude
-            $table->integer('lead_id')->unsigned()->nullable();;
-            $table->foreign('lead_id')->references('id')->on('leads');
-
-            
+            # proprietário do negócio
+            $table->integer('terceiro_vendedor_id')->unsigned()->nullable();
+            $table->foreign('terceiro_vendedor_id')->references('id')->on('users');
 
             $table->timestamps();
         });
@@ -88,6 +88,7 @@ return new class extends Migration
      */
     public function down()
     {
+        
         Schema::dropIfExists('fechamentos');
     }
 };

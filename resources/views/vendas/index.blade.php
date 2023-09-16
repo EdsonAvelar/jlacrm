@@ -1,5 +1,9 @@
 @extends('main')
 
+<?php  
+use App\Models\User; 
+?>
+
 @section('headers')
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -94,16 +98,16 @@ i.icon-danger {
                         @if(isset($vendas))
                             @foreach ($vendas as $venda)
                             <tr>
-                                <td><a href="{{route('negocio_edit',array('id'=>$venda->negocio->id))}}">{{$venda->negocio->lead->nome}}</a></td>
-                                <td>{{$venda->vendedor_principal->name}}</td>
+                                <td><a href="{{route('negocio_fechamento', array('id'=>$venda->negocio->id))}}">{{$venda->negocio->lead->nome}}</a></td>
+                                <td>{{ User::find($venda->primeiro_vendedor_id)->name}}</td>
                                 <td>
-                                @if ($venda->vendedor_secundario)
-                                    {{$venda->vendedor_secundario->name}}
+                                @if ($venda->segundo_vendedor_id)
+                                    {{User::find($venda->segundo_vendedor_id)->name}}
                                 @endif
                                 </td>
                                 <td>{{ \Carbon\Carbon::parse( $venda['data_fechamento'])->format('d/m/Y') }}</td>
                                 <td>{{\Carbon\Carbon::parse( $venda['data_primeira_assembleia'])->format('d/m/Y') }}</td>
-                                <td>R$ {{ number_format( (float)$venda->negocio->valor,2, ',', '.')}}</td>
+                                <td>R$ {{ number_format( (float)$venda->valor,2, ',', '.')}}</td>
                                 <td>{{$venda['parcelas_embutidas']}}</td>
                                 <td>{{$venda['lead_id']}}</td>
                                 

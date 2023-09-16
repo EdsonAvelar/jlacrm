@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\EtapaFunil;
+use App\Models\Fechamento;
 use Illuminate\Http\Request;
 use Validator;
 
@@ -205,7 +206,21 @@ class NegocioController extends Controller
         $id = $request->query('id');
         $negocio = Negocio::find($id);
 
-        return view('negocios.fechamento', compact('negocio') );
+        if ( $negocio->lead->conjuge_id ){
+            $conjuge = Lead::find($negocio->lead->conjuge_id);
+        }else {
+            $conjuge = new Lead();
+        }
+        
+        #id = $negocio->fechamento_id;
+
+        if ($negocio->fechamento_id ){
+            $fechamento = Fechamento::find( $negocio->fechamento_id);
+        }else {
+            $fechamento = new Fechamento();
+        }
+
+        return view('negocios.fechamento', compact('negocio','conjuge','fechamento') );
     }
 
     public function negocio_get(Request $request) {

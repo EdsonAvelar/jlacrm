@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'vendas'],
         function () {
             Route::post('/nova', [FechamentoController::class, 'nova_venda'])->name('nova_venda');
+            Route::post('/fechamento', [FechamentoController::class, 'nova_venda'])->name('vendas.fechamento');
             Route::get('/index', [FechamentoController::class, 'index'])->name('vendas.lista');
             Route::post('/perdida', [FechamentoController::class, 'venda_perdida'])->name('vendas.perdida');
 

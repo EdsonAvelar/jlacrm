@@ -103,7 +103,7 @@ class DashboardController extends Controller
                 $query = [
                     ['data_fechamento', '>=', $from ],
                     ['data_fechamento', '<=', $to],
-                    ['vendedor_principal_id', '=', $vendedor->id]
+                    ['primeiro_vendedor_id', '=', $vendedor->id]
                 ];
                 
                 $vendas_totais = Fechamento::where($query)->sum('valor');
@@ -148,7 +148,7 @@ class DashboardController extends Controller
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
             
-            $stats['total_vendido'] = Fechamento::whereIn('vendedor_principal_id', $ids)->whereBetween('data_fechamento', [$from, $to])->sum('valor');
+            $stats['total_vendido'] = Fechamento::whereIn('primeiro_vendedor_id', $ids)->whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->sum('valor');
            
@@ -199,7 +199,7 @@ class DashboardController extends Controller
                 $query = [
                     ['data_fechamento', '>=', $from ],
                     ['data_fechamento', '<=', $to],
-                    ['vendedor_principal_id', '=', $vendedor->id]
+                    ['primeiro_vendedor_id', '=', $vendedor->id]
                 ];
                 
                 $vendas_totais = Fechamento::where($query)->sum('valor');

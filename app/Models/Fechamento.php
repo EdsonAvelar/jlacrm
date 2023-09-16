@@ -11,7 +11,7 @@ class Fechamento extends Model
 
     public function negocio()
     {
-        return $this->belongsTo("App\Models\Negocio");
+        return $this->hasOne("App\Models\Negocio");
     }
 
     public function vendedores()

@@ -526,9 +526,9 @@ textarea {
                                         <select class="form-select form-control-light" id="vendedor_principal" name="vendedor_principal">
                                             <option selected value="{{Auth::user()->id}}">{{ Auth::user()->name}}</option>
                                             @foreach (\Auth::user()->get() as $user)
-                                            @if ($user->id != Auth::user()->id)
-                                                <option value="{{$user->id}}">{{ $user->name}}</option>
-                                            @endif
+                                                @if ($user->id != Auth::user()->id)
+                                                    <option value="{{$user->id}}">{{ $user->name}}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -678,24 +678,29 @@ textarea {
                         <div class="col-md-12">
                             <div class="mb-12" class="divtext">
                                 <p id="txt_protocolo" rows="22"  cols="50">_*REUNIÃO AGENDADA*_ <br>
-*Protocolo: {{ DB::table('Agendamentos')->latest('updated_at')->first()->id}}/{{Carbon::now('America/Sao_Paulo')->format('Y')}}* <br>
-*Dia: <span id="ptcl_dia"></span>*<br>
-*Hora: <span id="ptcl_hora"></span>* <br>
+*Protocolo: {{ random_int(999, 999999)}}/{{Carbon::now('America/Sao_Paulo')->format('Y')}}* <br>
+📅<span> </span>*Data: <span id="ptcl_dia"></span>*<br>
+⏰<span> </span>*Hora: <span id="ptcl_hora"></span>* <br>
 <br>
 _*Documentos necessários:*_<br>
-RG, CPF, Comprovante de Residência Atual<br>
+➡RG<br>
+➡CPF<br>
+➡Comprovante de Residência Atual<br>
 <br>
 _*Endereço:*_<br>
-{{ config('endereco') }}<br>
+📍{{ config('endereco') }}<br>
+
 <br>
 _*Na Recepção procurar por:*_ <br>
+@if (app('request')->proprietario > 0 )
 {{ User::find(app('request')->proprietario)->name}}<br>
+@endif
 🏡🚗🏍✅<br>
 <br>
 Estacionamento Gratuito<br>
 {{ config('nome') }}<br>
-SITE : {{ config('site') }}<br>
-CNPJ :{{ config('cnpj') }}<br>
+SITE: {{ config('site') }}<br>
+CNPJ: {{ config('cnpj') }}<br>
 <br>
 Confirme com OK✅<br>    
                                 </p>
@@ -782,19 +787,8 @@ Confirme com OK✅<br>
         document.execCommand("copy");
         document.body.removeChild(elem);
 
-
-    /* Get the text field
-    var copyText = document.getElementById("txt_protocolo");
-
-    // Select the text field
-    copyText.select();
-    copyText.setSelectionRange(0, 99999); // For mobile devices
-
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(copyText.value);
-    */
-    showAlert({message: "protocolo copiado", class:"success"});
-    $('#agendamento-protocolo').modal('hide'); 
+        showAlert({message: "protocolo copiado", class:"success"});
+        $('#agendamento-protocolo').modal('hide'); 
     }
 
     function showAlert(obj){
@@ -1049,7 +1043,6 @@ Confirme com OK✅<br>
             success:function(response) {
     
                 document.getElementById("negocio_id_perdido").value = response[0]['id'];
-
                 $('#negocio-perdeu').modal('show');
 
             }
@@ -1094,16 +1087,9 @@ Confirme com OK✅<br>
 
 
    
-
-       
-
-
-        
-
-
     $(document).ready(function(){
         $('#valor_credito_md').mask('000.000.000.000.000,00', { reverse: true });
-        $('#valor_credito').mask('000.000.000.000.000,00', { reverse: true });
+        $('#add_nome_valor').mask('000.000.000.000.000,00', { reverse: true });
         $('.telefone').mask('(00) 00000-0000');
 
         $(document).ready(function(){
@@ -1134,8 +1120,6 @@ Confirme com OK✅<br>
         $("#add_nome_valor").change(function() {
             change_titulo(this);
         });
-
-        
 
     });
 
