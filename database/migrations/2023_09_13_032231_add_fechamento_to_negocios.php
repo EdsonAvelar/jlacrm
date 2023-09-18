@@ -20,6 +20,8 @@ return new class extends Migration
 
             $table->integer('fechamento_id')->unsigned()->nullable();
             $table->foreign('fechamento_id')->references('id')->on('fechamentos');
+            
+
 
         });
     }

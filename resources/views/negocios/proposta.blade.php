@@ -251,6 +251,10 @@ function convert($frase){
 				<h4>Valor Final do Bem: <span style="font-weight: bold;">
 					<?php echo $_POST['val-pago-total'] ?></span>
 				</h4>
+
+				<h4>Sistema de Amortização: <span style="font-weight: bold;">
+					<?php echo strtoupper( $amortizacao ) ?></span>
+				</h4>
 				
 				
 						</td>

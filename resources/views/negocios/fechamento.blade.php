@@ -721,7 +721,7 @@ function to_data($data){
                         <div class="col-md-12">
                             <div class="mb-12" class="divtext">
                                 <p id="txt_protocolo" rows="22"  cols="50">_*SEJA BEM VINDO*_<br>
-Estimado Cliente {{$negocio->lead->nome}}. Passando aqui para parabenizar você pela *COTA DE CONSÓRCIO* que a você aderiu!!
+Estimado Cliente {{$negocio->lead->nome}}. Passando aqui para parabenizar você pela *COTA DE CONSÓRCIO* que você aderiu!!
 👏🎉🎊<br>
 Informações do seu contrato de Consórcio: <br>
 📄 Contrato: *{{$fechamento->numero_contrato}}* <br>
@@ -730,9 +730,9 @@ Informações do seu contrato de Consórcio: <br>
 ✅Adesão: *R$ {{$fechamento->adesao }}* <br>
 🟢Parcelas: *R$ {{$fechamento->parcela }}* <br>
 <br>
-Lembrando que no Consórcio não existe data de garantia de contemplação, você concorrerá tanto por sorteio quanto por lance. qualquer dúvida estou a disposição!
+Lembrando que no Consórcio não existe data de garantia de contemplação, você concorrerá tanto por sorteio quanto por lance. Qualquer dúvida estarei a disposição!
 <br><br>
-Seja bem vindo {{ config('nome') }}!!! 🥳🥳🥳☺️☺️☺️
+Seja bem vindo a {{ config('nome') }}!!! 🥳🥳🥳☺️☺️☺️
                                 </p>
                             </div>
                         </div>

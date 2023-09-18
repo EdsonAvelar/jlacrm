@@ -251,7 +251,9 @@ function convert($frase){
 					{{$proposta['val-pago-total']}} 
 					</span>
 				</h4>
-				
+				<h4>Sistema de Amortização: <span style="font-weight: bold;">
+					<?php echo strtoupper( $proposta['amortizacao'] ) ?></span>
+				</h4>
 				
 						</td>
 					
@@ -312,6 +314,8 @@ function convert($frase){
 				<h4>Valor Final do Bem: <span style="font-weight: bold;">
 					{{$proposta['con-valor-pago']}}</span>
 				</h4> 
+
+				
 						    
 				</td>
 				

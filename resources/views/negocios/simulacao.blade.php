@@ -147,12 +147,21 @@
           <label for="formGroupExampleInput" class="financiamento">FINANCIAMENTO</label>
           <label for="formGroupExampleInput" class="consorcio" style="display:none">CONSÓRCIO 1</label>
         <br>
+        
       <br>
 
       <div class="form-group row financiamento">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Amortização</label>
+        <div class="col-sm-3">
+          <input type="checkbox" id="sac_price" name="amortizacao" value="sac" data-toggle="toggle" 
+            data-on="SAC" data-off="PRICE" data-onstyle="success" data-offstyle="warning" checked>
+        </div>
+    </div>
+
+      <div class="form-group row ">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Banco</label>
-        <div class="col-sm-5">
-        <select class="form-select form-select-lg mb-3 select-items" name="banco" aria-label=".form-select-lg example">
+        <div class="col-sm-3">
+        <select class="form-select form-select-lg mb-3 select-items" id="selected_banco" name="banco" aria-label=".form-select-lg example">
           <option selected value="Bradesco">Bradesco</option>
           <option value="Itau">Itau</option>
           <option value="Santander">Santander</option>
@@ -165,13 +174,13 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Crédito</label>
         <div class="col-sm-3">
-          <input value="R$ 200.000" data-mask='R$ #.##0,00' type="text" name="credito" class="form-control input-auto"
+          <input value="R$ 200.000,00" data-mask='R$ #.##0,00' type="text" name="credito" class="form-control input-auto"
             id="vCredito" placeholder="Crédito" required>
         </div>
       </div>
 
       <div class="form-group row financiamento">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Juros a.a.(SAC)</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Juros a.a</label>
         <div class="col-sm-3">
           <input value="12%" data-mask="0,0%" type="text" name="fin-entrada" class="form-control money input-auto"
             id="finJuros" placeholder="Entrada" required>
@@ -379,6 +388,7 @@
 
   <script>
 
+    var sistema_amortizacao = "sac";
    
     /** SCRIPT USADO PARA DESABILITAR UM INPUT */
     window.onload = function() {
@@ -518,16 +528,47 @@
       return [$juros, $juros + $vFinanciado]
     }
 
+    function financiarPrice($vFinanciado, $taxa, $prazo) {
+
+      let $saldo_inicial = $vFinanciado
+      let $amortizacao = $vFinanciado / $prazo
+      let $valorJuros = $saldo_inicial * $taxa
+      let $saldo_atualizado = $saldo_inicial + $valorJuros
+      //let $prestacao = $amortizacao + $valorJuros
+      
+      let $prestacao = (($taxa * ($vFinanciado * ($taxa + 1 )**$prazo) ) / ( ($taxa + 1 )**$prazo - 1 ) );
+      
+      $juros_totais = ($prestacao * $prazo) - $vFinanciado;
+
+      return [$juros_totais, $juros_totais + $vFinanciado, $prestacao]
+  }
+
 
     function preencherValores($custom) {
 
       var vCredito = n_extc($("#vCredito").val());
 
+      var taxa_entrada = 0.2;
+      var selected_banco = $("#selected_banco :selected").text();
+      if (selected_banco == "Bradesco"){
+        taxa_entrada = 0.2;
+      }else if(selected_banco == "Caixa"){
+        taxa_entrada = 0.3;
+      }else if(selected_banco == "Itau"){
+        taxa_entrada = 0.1;
+      }
+
+
       let vFinEntrada = 0
       if ($custom == "vCredito") {
-        vFinEntrada = vCredito * 0.1;
+        vFinEntrada = vCredito * taxa_entrada;
       } else {
         vFinEntrada = n_extc($("#vFinEntrada").val()); //vCredito * 0.1;
+      }
+
+
+      if ( isNaN( vFinEntrada )){
+        vFinEntrada = 0;
       }
 
 
@@ -536,13 +577,26 @@
       }
 
       var vFinanciado = vCredito - vFinEntrada;
-      var finPrazo = $("#finPrazo").val()
+      var finPrazo = n_extc($("#finPrazo").val())
 
       var vAmort = vFinanciado / finPrazo
       var taxa = parseFloat($("#finJuros").val().replace(',', '.')) / 12 / 100
       var vJuros = taxa * parseFloat(vFinanciado)
 
-      var vParcela = vAmort + vJuros
+      var vParcela = 0;
+
+
+      let financ =  0;
+        if (sistema_amortizacao == "sac"){
+          financ = financiarSac(vFinanciado, taxa, finPrazo);
+          vParcela = vAmort + vJuros;
+
+        }else {
+          financ = financiarPrice(vFinanciado, taxa, finPrazo)
+          vParcela = financ[2]
+        }
+       
+
 
       var itbi = vCredito / 2 * 0.1;
 
@@ -562,8 +616,8 @@
         $('#vFinRendaExigida').val(to_m(rendaExigida))
         $('#vITBI').val(to_m(itbi))
         $("#vConCredito").val($("#vCredito").val())
+      
 
-        let financ = financiarSac(vFinanciado, taxa, finPrazo)
         $("#vFinJuros").val(to_m(financ[0]))
         $("#vFinTotal").val(to_m(financ[1] + vFinEntrada))
 
@@ -616,16 +670,33 @@
         $('#calcParcRed').hide()
       }
 
-    })
+    });
+
+    $('#sac_price').change(function(){
+      
+      if (this.checked) {
+        sistema_amortizacao = "sac";
+        preencherValores("vCredito");
+        this.prop('value','sac');
+      }else{
+        sistema_amortizacao = "price";
+        preencherValores("vCredito");
+        this.prop('value','price');
+      }
+
+    });
+
+    $('#selected_banco').change(function(){
+      
+      preencherValores('vCredito');
+
+    });
 
     $('#calculoReduzido').change(function(){
         preencherValoresConsorcio()
     })
 
-    
-
-
-
+  
   $('#btFinConsorcio').change(function () {
 
     const nomes = ['financiamento']
@@ -674,13 +745,15 @@
         //console.log( 'valor: ', posvirg.length )
       }
 
-      return valorfinal //vCredito * 0.1
+      return valorfinal;
     }
 
 
     $('#tipoCredito').on('change', function () {
 
       if (this.value === "imóvel"){
+
+        //sistema_amortizacao = "sac";
         
         $('#itbiDiv').css('display', 'block');
 
@@ -690,6 +763,10 @@
         $('#finPrazo').val('360');
       
       }else {
+
+        //sistema_amortizacao = "price";
+
+
         $('#veiculoModelo').css('display', 'block');
         $('#veiculoAno').css('display', 'block');
         $('#itbiDiv').css('display', 'none');        
@@ -699,13 +776,17 @@
 
       }
 
+   
+
+      if (globalThis.automatic == true){
+        preencherValores("vCredito");
+      }
+      
 
     });
 
     
   </script>
-
-
 
   <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <script type="text/javascript"

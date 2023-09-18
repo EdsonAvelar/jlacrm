@@ -361,6 +361,17 @@ class NegocioController extends Controller
         $proposta['con-juros-pagos'] = $input['con-juros-pagos'];
         $proposta['modelo'] = $input['modelo']; 
         $proposta['ano'] = $input['ano'];
+
+        $amortizacao = 'sac';
+        if ($request->filled('amortizacao')) {
+            $amortizacao = 'sac';
+            $proposta['amortizacao'] = 'sac';
+            $input['amortizacao'] = 'sac';
+        }else {
+            $amortizacao = 'price';
+            $proposta['amortizacao'] = 'price';
+            $input['amortizacao'] = 'price';
+        }
        
 
         $proposta->save();
@@ -368,7 +379,7 @@ class NegocioController extends Controller
         $proposta_id = $proposta->id;
         Atividade::add_atividade(\Auth::user()->id, "Nova proposta criada id: ".$proposta->id, $input['negocio_id'] );
         
-        return view('negocios.proposta', compact('tipo','con_entrada','proposta_id'));
+        return view('negocios.proposta', compact('tipo','con_entrada','proposta_id', 'amortizacao'));
     }
 
     public function view_proposta($id){
