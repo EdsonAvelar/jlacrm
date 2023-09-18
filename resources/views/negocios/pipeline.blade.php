@@ -976,7 +976,7 @@ Confirme com OK✅<br>
         } else if(target.getAttribute('data-etapa') == "APROVACAO"){
 
                 if ( source.getAttribute('data-etapa') == "REUNIAO"){
-                    $("#spinner-div").show();
+                $("#spinner-div").show();
                     $.ajax({
                         url: "{{url('negocios/add_aprovacao')}}",
                         type: 'post',
@@ -997,8 +997,10 @@ Confirme com OK✅<br>
                     dragek.cancel(true);
                 }
 
-            }else {
-            
+        }else if(target.getAttribute('data-etapa') == "FECHAMENTO"){
+       
+            var negocio_id = info[0];
+           
             $.ajax({
                 url: "{{url('negocios/drag_update')}}",
                 type: 'post',
@@ -1007,7 +1009,21 @@ Confirme com OK✅<br>
                 success: function (res) {
                 } ,
                 complete: function () {
-                   
+                    window.location.href = "{{url('')}}"+'/negocios/fechamento?id='+negocio_id
+                }
+            });
+
+        }else {
+        
+            $.ajax({
+                url: "{{url('negocios/drag_update')}}",
+                type: 'post',
+                data: { info: info },
+                Type: 'json',
+                success: function (res) {
+                } ,
+                complete: function () {
+                    
                 }
             });
         }       
