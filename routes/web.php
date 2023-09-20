@@ -75,6 +75,9 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::post('/drag_update', [CrmController::class, 'drag_update']);
             Route::post('/add', [CrmController::class, 'add_negocio']);
+            Route::post('/massive/add', [CrmController::class, 'add_negocio_massiva']);
+
+
             Route::post('/comentario', [CrmController::class, 'inserir_comentario'])->name('inserir_comentario');
             Route::post('/changemassive', [CrmController::class, 'massive_change'])->name('massive_change');
             Route::post('/reativar', [CrmController::class, 'reativar'])->name('reativar');

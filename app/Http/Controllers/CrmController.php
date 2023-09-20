@@ -190,6 +190,88 @@ class CrmController extends Controller
         
     }
 
+    public function add_negocio_massiva(Request $request){
+        $input = $request->all();
+        $deal_input = array();
+        $text = trim($input['negocios']);
+        $textAr = explode("\n", $text);
+        $textAr = array_filter($textAr, 'trim'); // remove any extra \r characters left behind
+
+        $counts = 0;
+   
+        if ($textAr){
+            foreach ($textAr as $linha) {
+                
+                $neg = explode(',', $linha);
+
+                if ( count($neg) == 2){
+
+                    if (!is_numeric($neg[1])){
+                        continue;
+                    }
+
+                }elseif ( count( $neg ) == 3){   
+
+                    
+
+                    $neg[2] = trim(str_replace('.','',$neg[2] ) );
+                    $deal_input['valor'] = $neg[2];
+
+                    $neg[1] = trim(str_replace('(','',$neg[1] ) );
+                    $neg[1] = trim(str_replace(')','',$neg[1] ) );
+                    $neg[1] = trim(str_replace('-','',$neg[1] ) );
+
+                    if (!is_numeric( $neg[1] ) or !is_numeric( $neg[2])){
+                        continue;
+                    }
+                    
+
+                }else {
+                    // Pula este 
+                    continue;
+                }
+
+                $nome_a = explode(' ', $neg[0]);
+                $nome = $neg[0];
+                if ( count($nome_a) > 2 ){
+                    $nome = $nome_a[0];
+                }
+
+                $deal_input['titulo'] = "Negócio ".$nome."-".$input['tipo_credito'];
+                 
+                $deal_input['funil_id'] = $input['funil_id'];
+                $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
+                $deal_input['tipo'] = $input['tipo_credito'];
+        
+                $lead_input = array();
+                $lead_input['nome'] = $neg[0];
+                $lead_input['telefone'] = $neg[1];
+                $lead_input['whatsapp'] = $neg[1];
+                                        
+                $lead = new Lead();
+                $lead->nome = $lead_input['nome'];
+                $lead->telefone = $lead_input['telefone'];
+                $lead->whatsapp = $lead_input['whatsapp'];
+                $lead->save();
+
+                // associando lead ao negócio
+                $deal_input['lead_id'] = $lead->id;
+
+                $deal_input['user_id'] = \Auth::user()->id;
+
+                //criando o negócio
+                $negocio = Negocio::create($deal_input);
+
+                Atividade::add_atividade(\Auth::user()->id, "Cliente criado manualmente por ".\Auth::user()->name, $negocio->id);    
+                
+                $counts = $counts + 1;
+            }
+
+        }
+
+        
+        return back()->with('status', $counts. " Negócios Criados com Sucesso");
+    }
 
     public function add_negocio(Request $request)
     {

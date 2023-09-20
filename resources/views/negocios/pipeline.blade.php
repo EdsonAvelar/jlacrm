@@ -14,6 +14,8 @@ $protocolo_hora = 0;
 <link href="{{url('')}}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
 
+
+
 .divtext {
     border: ridge 2px;
     padding: 5px;
@@ -22,12 +24,6 @@ $protocolo_hora = 0;
     overflow: auto;
 }
 
-textarea {
-    resize: none;
-    border: none;
-    outline: none;
-    height: auto;
-}
 
 
 .body {
@@ -232,6 +228,8 @@ textarea {
                 <h4 class="page-title" style="line-height: 110px">Negócios
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model"
                         class="btn btn-success btn-sm ms-3">+ Add</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-massive"
+                        class="btn btn-info btn-sm ms-3">++Add</a>
                         
                 </h4>
             </div>
@@ -456,6 +454,88 @@ textarea {
 </div><!-- /.modal -->
 
 
+<!-- Modal -->
+<div class="modal top fade"
+     id="add-negocio-massive"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
+     data-mdb-backdrop="true"
+     data-mdb-keyboard="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content">
+       
+        <form style="margin: 0; padding: 0; background-color: #dbcdc3;display: contents;height: 100%;"
+         action="{{url('negocios/massive/add')}}" method="POST">
+            @csrf
+
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Adição de Negócio em Massa</h5>  
+     
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+    
+      <div class="modal-body">
+        
+        <div class="row">
+            
+            <label for="email" class="form-label"><strong>TIPO DE CRÉDITO:</strong></label>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="IMOVEL" checked>
+                    <label class="form-check-label" >IMOVEL</label>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="CARRO">
+                    <label class="form-check-label" >CARRO</label>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="MOTO">
+                    <label class="form-check-label" >MOTO</label>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="MARQUINARIO">
+                    <label class="form-check-label" >MAQUINARIO</label>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="CAMINHAO">
+                    <label class="form-check-label" >CAMINHAO</label>
+                  </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="tipo_credito" value="SERVICO">
+                    <label class="form-check-label" >SERVICO</label>
+                  </div>
+            </div>
+            
+        </div>
+        <textarea style="width:  100% !important; height: 100%;font-size: 16px;" name="negocios" rows=5></textarea>
+      </div>
+
+      <input name="etapa_funil_id" value="1" hidden>
+      <input name="funil_id" value="1" hidden>
+
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal">
+          Fechar
+        </button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>
 
 <div class="modal fade task-modal-content" id="negocio-ganho" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
@@ -494,6 +574,7 @@ textarea {
                                             <option>CARRO</option>
                                             <option>MOTO</option>
                                             <option>CAMINHAO</option>
+                                            <option>MAQUINARIO</option>
                                             <option>TERRENO</option>
                                             <option>SERVICO</option>
                                         </select>

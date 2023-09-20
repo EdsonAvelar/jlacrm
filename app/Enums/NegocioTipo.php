@@ -12,7 +12,7 @@ final class NegocioTipo extends Enum
     const CAMINHAO = 'CAMINHAO';
     const TERRENO = 'TERRENO';
     const MAQUINARIO = 'MAQUINARIO';
-    const SERVICO = 'MAQUINARIO';
+    const SERVICO = 'SERVICO';
 
     public static function all(){
         return ['IMOVEL', 'CARRO','MOTO', 'CAMINHAO','TERRENO', 'MAQUINARIO', 'SERVICO'] ;
