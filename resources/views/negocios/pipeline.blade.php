@@ -783,7 +783,7 @@ _*Na Recepção procurar por:*_ <br>
 <br>
 Estacionamento Gratuito<br>
 {{ config('nome') }}<br>
-SITE: {{ config('site') }}<br>
+<!--SITE: {{ config('site') }}<br> -->
 CNPJ: {{ config('cnpj') }}<br>
 <br>
 Confirme com OK✅<br>    
