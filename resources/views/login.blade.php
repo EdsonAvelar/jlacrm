@@ -8,7 +8,7 @@
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <!-- App favicon -->
-        <link rel="shortcut icon" href="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico">
+        <link rel="shortcut icon" href="{{url('')}}/images/empresa/logos/favicon.ico">
 
         <!-- App css -->
         <link href="{{url('')}}/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -32,7 +32,7 @@
                 -webkit-box-align: stretch;
                 -ms-flex-align: stretch;
                 align-items: stretch;
-                background: url({{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/bg-auth.png) center;
+                background: url({{url('')}}/images/empresa/outros/background.png) center;
                 background-size: cover
             }
         </style>
@@ -49,10 +49,10 @@
                         <!-- Logo -->
                         <div class="auth-brand text-center text-lg-start">
                             <a href="index.html" class="logo-dark">
-                                <span><img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal_tx_preto.png" alt="" height="70px"></span>
+                                <span><img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" alt="" height="70px"></span>
                             </a>
                             <a href="index.html" class="logo-light">
-                                <span><img src="{{url('')}}/images/logo.png" alt="" height="18"></span>
+                                <span><img src="{{url('')}}/images/logos/empresa_logo_horizontal.png" alt="" height="18"></span>
                             </a>
                         </div>
 

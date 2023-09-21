@@ -122,6 +122,8 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/profile', [EmpresaController::class, 'empresa_profile'])->name('empresa_profile');
             Route::post('/save', [EmpresaController::class, 'save'])->name('empresa_save');
+            Route::post('/image/save', [EmpresaController::class, 'empresa_images'])->name('empresa_images');
+
         }
     );
 });

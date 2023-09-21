@@ -51,6 +51,9 @@ i.icon-danger {
         border: 1px solid #000;
         margin: 10px 5px 0 0;
     }
+    .card-body {
+        padding: 1.5rem 1.5rem;
+    }
 </style>
 @endsection
 
@@ -61,14 +64,164 @@ i.icon-danger {
 
     <div class="row">
         <div class="col-xl-4 col-lg-5">
-            <div class="card text-center">
-                <div class="card-body">
-                    <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image" onclick="myfunction()">
-                    
-                </div> <!-- end card-body -->
-            </div> <!-- end card -->
+            <h5 class="mb-3 text-uppercase text-white  bg-info p-2"><i
+                class="mdi mdi-office-building me-1"></i> LOGOS</h5>
+            <div class="row">
+                <div class="card text-center">
+                    <h5>Logo Circular 512px x 512px (PNG) </h5>
+                    <div class="card-body">
+                        
+                        <p><a href="#" onclick="image_save('logos','/empresa_logo_circular.png')" class="text-muted font-14" >
+                            <img src="{{url('')}}/images/empresa/logos/empresa_logo_circular.png" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">    
+                        </a></p>
 
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div>
+
+        
+            <div class="row">
+                <div class="card text-center">
+                    <h5>Logo Horizontal 512px x 256px (PNG) </h5>
+                    <div class="card-body">
+                        
+                        <p><a href="#" onclick="image_save('logos','/empresa_logo_transparente.png')" class="text-muted font-14" >
+                            <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                        </a></p>
+
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div>
+
+            <div class="row">
+                <div class="card text-center">
+                    <h5>Logo Horizontal 1280px x 128px (PNG) </h5>
+                    <div class="card-body">
+                        
+                        <p><a href="#" onclick="image_save('logos','/empresa_logo_horizontal.png')" class="text-muted font-14" >
+                            <img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                        </a></p>
+
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div>
+
+            <div class="row">
+                <div class="card text-center">
+                    <h5>Logo Favicon 48px x 48px (ICO) </h5>
+                    <div class="card-body">
+                        
+                        <p><a href="#" onclick="image_save('logos','/favicon.ico')" class="text-muted font-14" >
+                            <img src="{{url('')}}/images/empresa/logos/favicon.ico" class="rounded-circle avatar-lg img-thumbnail" alt="profile-image">    
+                        </a></p>
+
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div>
+
+
+
+            <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i
+                class="mdi mdi-office-building me-1"></i> PROPOSTA</h5>
+
+                <div class="row">
+                    <div class="card text-center">
+                        <h5>Fundo Folha de Proposta </h5>
+                        <div class="card-body">
+                            
+                            <p><a href="#" onclick="image_save('proposta','/fundo_proposta.png')" class="text-muted font-14" >
+                                <img src="{{url('')}}/images/empresa/proposta/fundo_proposta.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                            </a></p>
+    
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+
+
+                <div class="row">
+                    <div class="card text-center">
+                        <h5>Icone - Imovel</h5>
+                        <div class="card-body">
+                            
+                            <p><a href="#" onclick="image_save('proposta','/imovel.png')" class="text-muted font-14" >
+                                <img src="{{url('')}}/images/empresa/proposta/imovel.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                            </a></p>
+    
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+    
+
+                <div class="row">
+                    <div class="card text-center">
+                        <h5>Icone - Caminhão</h5>
+                        <div class="card-body">
+                            
+                            <p><a href="#" onclick="image_save('proposta','/caminhao.png')" class="text-muted font-14" >
+                                <img src="{{url('')}}/images/empresa/proposta/caminhao.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                            </a></p>
+    
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+
+                <div class="row">
+                    <div class="card text-center">
+                        <h5>Icone - Maquinario</h5>
+                        <div class="card-body">
+                            
+                            <p><a href="#" onclick="image_save('proposta','/maquinario.png')" class="text-muted font-14" >
+                                <img src="{{url('')}}/images/empresa/proposta/maquinario.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                            </a></p>
+    
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+
+                <div class="row">
+                    <div class="card text-center">
+                        <h5>Icone - Veiculo</h5>
+                        <div class="card-body">
+                            
+                            <p><a href="#" onclick="image_save('proposta','/veiculo.png')" class="text-muted font-14" >
+                                <img src="{{url('')}}/images/empresa/proposta/veiculo.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                            </a></p>
+    
+                        </div> <!-- end card-body -->
+                    </div> <!-- end card -->
+                </div>
+
+                <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i
+                    class="mdi mdi-office-building me-1"></i> OUTROS</h5>
+                    <div class="row">
+                        <div class="card text-center">
+                            <h5>Login - Background</h5>
+                            <div class="card-body">
+                                
+                                <p><a href="#" onclick="image_save('outros','/background.png')" class="text-muted font-14" >
+                                    <img src="{{url('')}}/images/empresa/outros/background.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                                </a></p>
+        
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div>
+
+                    <div class="row">
+                        <div class="card text-center">
+                            <h5>Banner - 366px x 512px</h5>
+                            <div class="card-body">
+                                
+                                <p><a href="#" onclick="image_save('outros','/banner.png')" class="text-muted font-14" >
+                                    <img src="{{url('')}}/images/empresa/outros/banner.png" class="avatar-lx img-thumbnail" alt="profile-image">    
+                                </a></p>
+        
+                            </div> <!-- end card-body -->
+                        </div> <!-- end card -->
+                    </div>
+    
         </div> <!-- end col-->
+        
+
 
         <div class="col-xl-8 col-lg-7">
             <div class="card">
@@ -170,10 +323,50 @@ i.icon-danger {
             </div> <!-- end card -->
         </div> <!-- end col -->
     </div>
-    <!-- end row-->
-   
-
 </div> <!-- container -->
+
+
+<div class="modal fade"  id="change_logo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Foto de Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            <form class="p-2" action="{{route('empresa_images')}}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Faça o Upload da Sua Imagem<span class="text-danger">
+                                                *</label>
+                                                <input type="file" name="image" id="inputImage"  class="form-control @error('image') is-invalid @enderror">
+                                                <input name="user_id" hidden value={{app('request')->id}}>
+                                            <br>
+                                            <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#" >
+                                            <input name="pasta_imagem" id="pasta_imagem" hidden/>
+                                            <input name="imagem_name" id="imagem_name" hidden/>
+                                    </div>
+                                </div>
+            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i> Salvar</button>
+                    </div>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -191,7 +384,13 @@ i.icon-danger {
         }
     });
 
- 
+    function image_save($folder, $imgname){
+      
+        $('#pasta_imagem').val($folder);
+        $('#imagem_name').val($imgname);
+
+        $('#change_logo').modal('show');
+    }
 
 
     $('.toggle-event').change(function($this) {

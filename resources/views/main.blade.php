@@ -22,7 +22,7 @@
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico">
+    <link rel="shortcut icon" href="{{url('')}}/images/empresa/logos/favicon.ico">
 
     <!-- third party css -->
     <link href="{{url('')}}/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
@@ -64,19 +64,19 @@ $style = '';
 
         <a class="logo text-center logo-light open-left">
             <span class="logo-lg">
-                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
             <span class="logo-sm">
-                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
         </a>
 
         <a class="logo text-center logo-dark open-left">
             <span class="logo-lg">
-                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_transparente.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
             </span>
             <span class="logo-sm">
-                <img src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_circular.png" alt="" height="32">
+                <img src="{{url('')}}/images/empresa/logos/empresa_logo_circular.png" alt="" height="32">
             </span>
         </a>
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
@@ -231,7 +231,7 @@ $style = '';
 
                      <!-- Help Box -->
                      <div class="help-box text-white text-center"  style="padding: 7px;">
-                        <img src="{{url('')}}/images/banners/proibido.png" style="width:100%">
+                        <img src="{{url('')}}/images/empresa/outros/banner.png" style="width:100%">
                     </div>
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
@@ -245,7 +245,7 @@ $style = '';
         <!-- ============================================================== -->
 
         <div class="content-page">
-            <div class="content">
+            <div class="content" id="content">
                 <!-- Topbar Start -->
                 
                 <div class="navbar-custom">
@@ -434,19 +434,10 @@ $style = '';
                     </div>
                 </div>
             </footer>
-            <!-- end Footer -->
 
         </div>
-
-        <!-- ============================================================== -->
-        <!-- End Page content -->
-        <!-- ============================================================== -->
-
-
     </div>
     <!-- END wrapper -->
-
-
 
     <!-- bundle -->
     <script src="{{url('')}}/js/vendor.min.js"></script>
@@ -474,9 +465,17 @@ $style = '';
             $(":submit", this).attr("disabled", "disabled");
         });
 
-        $("#fullscreen")
+        var modoTv = false;
 
         function entrarFullScreen(){
+
+            $("#cabecalho").show();
+                $("#menuEsquerda").show();
+                $("#menuCentral").hide();
+                $("#menuCentral").removeClass("col-md-12");
+                $("#menuCentral").addClass("col-md-8 col-md-offset-1");
+                $("#menuCentral").show();
+
             if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { 
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
@@ -491,6 +490,14 @@ $style = '';
         }
             
         function sairFullScreen(){
+
+            $("#cabecalho").hide();
+            $("#menuEsquerda").hide();
+            $("#menuCentral").hide(); //esconde para remodular as classes
+            $("#menuCentral").removeClass("col-md-8 col-md-offset-1");
+            $("#menuCentral").addClass("col-md-12");
+            $("#menuCentral").fadeIn(1500); //reaparece com estilo ^_~
+
             if (document.exitFullscreen) {
                 document.exitFullscreen();
             } else if (document.msExitFullscreen) {
@@ -503,36 +510,32 @@ $style = '';
         }
 
         $( document ).ready(function() {
-	var modoTv = false;
-
-        $("#btnModoTV").click(function(){
-            if(modoTv == false){
-                $("#cabecalho").hide();
-                $("#menuEsquerda").hide();
-                $("#menuCentral").hide(); //esconde para remodular as classes
-                $("#menuCentral").removeClass("col-md-8 col-md-offset-1");
-                $("#menuCentral").addClass("col-md-12");
-                $("#menuCentral").fadeIn(1500); //reaparece com estilo ^_~
-                //$("#btnModoTV").html("Desativar Modo TV");
-                modoTv = true;
-                
-                entrarFullScreen();
-                
-            }else{
-                $("#cabecalho").show();
-                $("#menuEsquerda").show();
-                $("#menuCentral").hide();
-                $("#menuCentral").removeClass("col-md-12");
-                $("#menuCentral").addClass("col-md-8 col-md-offset-1");
-                $("#menuCentral").show();
-                //$("#btnModoTV").html("Ativar Modo TV");
-                modoTv = false;
-                
-                sairFullScreen();
-                
-            }
+            $("#btnModoTV").click(function(){
+                if(modoTv == false){
+                    modoTv = true;
+                    entrarFullScreen();
+                    
+                }else{
+                    modoTv = false;
+                    sairFullScreen();
+                }
+            });
         });
-    });
+
+    $(document).ready(function() {
+        setInterval(function() {
+            if (modoTv == true) {
+            cache_clear()
+            }
+        }, 3000);
+        });
+
+        function cache_clear() {
+
+            console.log(location.href + "#dashboard");
+            $("#dashboard").load(location.href + "#dashboard");
+
+        }
 
 
     function showAlert(obj){

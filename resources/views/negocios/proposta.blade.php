@@ -99,7 +99,7 @@ function convert($frase){
 
 ?>
 
-<img align="center" class="back-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/fundo_folha.png"></img>
+<img align="center" class="back-img" src="{{url('')}}/images/empresa/proposta/fundo_proposta.png"></img>
 	
 <div class="container">
 	
@@ -112,13 +112,13 @@ function convert($frase){
 
 			
 				@if ($tipo == "imóvel")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/imovel.png"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/imovel.png"></img>
 				@elseif ($tipo == "veículo")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/veiculo-2.png"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/veiculo.png"></img>
 				@elseif ($tipo == "maquinário")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/maquinario.png"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/maquinario.png"></img>
 				@elseif ($tipo == "caminhão")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/proposta/caminhao.jpg"></img>
+					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/caminhao.png"></img>
 				@endif
 	            
 				<h3>CRÉDITO SOLICITADO: <span style="font-weight: bold;">

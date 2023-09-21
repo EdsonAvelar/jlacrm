@@ -9,7 +9,7 @@ use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use Validator;
 class EmpresaController extends Controller
 {
     public function empresa_profile(Request $request)
@@ -36,6 +36,42 @@ class EmpresaController extends Controller
             return abort(401);
         }
         
+    }
+
+    public function empresa_images(Request $request){
+        
+        $input = $request->all();
+
+        $rules = array(
+            'image' => 'required|mimes:png,ico|max:2048',
+        );
+
+        $error_msg = [
+            'image.required' => 'Imagem é Obrigatório',
+            'image.max' => 'Limite Máximo do Arquivo 2mb',
+            'image.mimes' => 'extensões válidas (png,ico)'
+        ];
+
+        $validator = Validator::make($input, $rules, $error_msg);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+
+        $pasta_imagem = $input['pasta_imagem'];
+        $imagem_name = $input['imagem_name'];
+
+
+        $destino = public_path('images')."/empresa/".$pasta_imagem."";
+
+        $request->image->move($destino, $imagem_name);
+
+
+        return back()->with("status", "Imagem salva com sucesso");
     }
 
     public function save(Request $request){

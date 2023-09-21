@@ -21,7 +21,7 @@
   <meta name="keywords" content="" />
   <meta name="description" content="" />
   <meta name="author" content="" />
-  <link rel="shortcut icon" href="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/favicon.ico" type="">
+  <link rel="shortcut icon" href="{{url('')}}/images/empresa/logos/favicon.ico" type="">
 
   <title> {{config('nome')}} </title>
 
@@ -62,7 +62,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{route('landingpages')}}">
             <span>
-            <img style="width:300px" src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
+            <img style="width:300px" src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

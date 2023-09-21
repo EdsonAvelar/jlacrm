@@ -13,7 +13,7 @@
 @section('main_content')
 
 <!-- Start Content-->
-<div class="container-fluid">
+<div class="container-fluid" id="dashboard">
     @include('layouts.alert-msg')
     <div class="row">
         <div class="col-12">

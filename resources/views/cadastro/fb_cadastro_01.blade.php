@@ -45,7 +45,7 @@
       <div class="row">
         <div class="col-md-7 col-md-push-5">
           <span>
-            <img class="logo-img"  src="{{url('')}}/images/empresa/{{env('APP_SHORT_NAME')}}/logos/empresa_logo_horizontal.png" />
+            <img class="logo-img"  src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" />
           </span>
           <div class="booking-cta center">
 
