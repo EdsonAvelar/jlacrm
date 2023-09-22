@@ -62,6 +62,8 @@
         ] ) 
         
         
+        @include('dashboards.views.bar_plot',['name'=>'Oportunidades','plots'=> [ $output['vendedores'], $output['oportunidades']]])
+
         @include('dashboards.views.bar_plot',['name'=>'Agendamentos','plots'=> [ $output['vendedores'], $output['agendamentos']]])
 
         @include('dashboards.views.bar_plot',['name'=>'Reuniões','plots'=> [ $output['vendedores'], $output['reunioes']]])

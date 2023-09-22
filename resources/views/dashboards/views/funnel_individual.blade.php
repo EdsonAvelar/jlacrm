@@ -27,11 +27,11 @@ var gd = document.getElementById('funnel_individual');
 var data = [
     {
         type: 'funnel', 
-        y: ["Agendamentos", "Reuniões", "Propostas", "Aprovações", "Vendas"], 
+        y: ["Oportunidades", "Agendamentos", "Reuniões", "Propostas", "Aprovações", "Vendas"], 
         x: <?php echo json_encode( $plots['funil']) ?>, 
         textposition: "inside", textinfo: "value+percent initial",
         hoverinfo: 'x+percent previous+percent initial+percent total',
-        marker: {color: ["5c4152", "b4585d", "d97f76", "f7d0a9", "a1c0ae"]}
+        marker: {color: ["5c4152","5c4152", "b4585d", "d97f76", "f7d0a9", "a1c0ae"]}
     }
 
 ];

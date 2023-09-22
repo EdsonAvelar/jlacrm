@@ -43,21 +43,19 @@ class DashboardController extends Controller
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::where('status',NegocioStatus::ATIVO)->sum('valor');
 
-
+            $stats['sum_oportunidades'] = 0;
             $stats['sum_agendamentos'] = 0;
             $stats['sum_reunioes'] = 0;
             $stats['sum_aprovacoes'] = 0;
             $stats['sum_propostas'] = 0;
             $stats['sum_vendas'] = 0;
             
-
-            //Agendamento::where($query)
-            //$cargo = Cargo::where(  ['nome' => 'Vendedor' ])->first();
             $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
             $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo] )->get();
 
             
             $output['vendedores'] = array();
+            $output['oportunidades'] = array();
             $output['agendamentos'] = array();
             $output['reunioes'] = array();
             $output['aprovacoes'] = array();
@@ -67,6 +65,19 @@ class DashboardController extends Controller
 
             foreach ($users as $vendedor){
                 array_push($output['vendedores'], $vendedor->name);
+
+                $query = [
+                    ['data_criacao', '>=', $from ],
+                    ['data_criacao', '<=', $to],
+                    ['user_id', '=', $vendedor->id]
+                ];
+                
+                $count = Negocio::where($query)->count();
+                array_push($output['oportunidades'], $count);
+
+                $stats['sum_oportunidades'] = $stats['sum_oportunidades'] + $count;
+
+
                 $query = [
                     ['data_agendamento', '>=', $from ],
                     ['data_agendamento', '<=', $to],
@@ -126,7 +137,7 @@ class DashboardController extends Controller
             }
             
 
-            $stats['funil'] = [ $stats['sum_agendamentos'], $stats['sum_reunioes'], $stats['sum_propostas'], $stats['sum_aprovacoes'] ,  $stats['sum_vendas'] ];
+            $stats['funil'] = [  $stats['sum_oportunidades'], $stats['sum_agendamentos'], $stats['sum_reunioes'], $stats['sum_propostas'], $stats['sum_aprovacoes'] ,  $stats['sum_vendas'] ];
                         
             $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
 

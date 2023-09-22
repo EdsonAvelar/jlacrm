@@ -273,6 +273,9 @@ class NegocioController extends Controller
             $deal_input['tipo'] = $neg->campanha;
             $deal_input['lead_id'] = $lead->id;
             $deal_input['user_id'] = $input['novo_proprietario_id'];
+            
+            $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
 
             $negocio = Negocio::create($deal_input);
 

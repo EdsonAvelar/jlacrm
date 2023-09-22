@@ -15,6 +15,7 @@ use App\Enums\NegocioStatus;
 use \App\Models\NegocioComentario;
 use Auth;
 use Validator;
+use Carbon\Carbon;
 
 use App\Models\Atividade;
 
@@ -259,6 +260,8 @@ class CrmController extends Controller
 
                 $deal_input['user_id'] = \Auth::user()->id;
 
+                $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
                 //criando o negócio
                 $negocio = Negocio::create($deal_input);
 
@@ -337,6 +340,7 @@ class CrmController extends Controller
 
         $deal_input['user_id'] = \Auth::user()->id;
 
+        $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
         //criando o negócio
         $negocio = Negocio::create($deal_input);
 
