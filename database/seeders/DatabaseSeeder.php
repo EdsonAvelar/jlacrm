@@ -154,7 +154,7 @@ class DatabaseSeeder extends Seeder
 		$role_gerente = Role::where('name', 'admin')->first();
 		$user = new User();
 		$user->name = 'Gerente';
-		$user->email = 'gerente@'.env('APP_DOMAIN');
+		$user->email = 'gerente';
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
 
