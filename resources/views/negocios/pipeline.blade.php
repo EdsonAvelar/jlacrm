@@ -345,7 +345,7 @@ $protocolo_hora = 0;
                             <div class="col-md-2">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="tipo_credito"
-                                        value="MARQUINARIO">
+                                        value="MAQUINARIO">
                                     <label class="form-check-label">MAQUINARIO</label>
                                 </div>
                             </div>
