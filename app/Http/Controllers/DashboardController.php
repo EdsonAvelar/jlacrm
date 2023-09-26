@@ -15,10 +15,28 @@ use App\Models\Cargo;
 use App\Models\Reuniao;
 use App\Models\Aprovacao;
 use App\Models\Equipe;
+use H;
 
 class DashboardController extends Controller
 {
+    public function nformat($num)
+    {
+        if( $num > 1000) {
+
+            $x = round($num);
+            $x_number_format = number_format($x);
+            $x_array = explode(',', $x_number_format);
+            $x_parts = array('K', 'M', 'B', 'T');
+            $x_count_parts = count($x_array) - 1;
+            $x_display = $x;
+            $x_display = $x_array[0] . ((int) $x_array[1][0] !== 0 ? '.' . $x_array[1][0] : '');
+            $x_display .= $x_parts[$x_count_parts - 1];
     
+            return $x_display;
+      }
+    
+      return $num;
+    }
     public function dashboard(Request $request){
         
         $data_inicio = $request->query('data_inicio');
@@ -118,6 +136,8 @@ class DashboardController extends Controller
                 ];
                 
                 $vendas_totais = Fechamento::where($query)->sum('valor');
+
+          
              
                 array_push($output['vendas'], $vendas_totais);
 

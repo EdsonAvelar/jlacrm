@@ -87,6 +87,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/get', [NegocioController::class, 'negocio_get'])->name('negocio_get');
 
             Route::get('/edit', [NegocioController::class, 'negocio_edit'])->name('negocio_edit');
+            Route::post('/levantamento', [NegocioController::class, 'negocio_levantamento'])->name('negocio_levantamento');
+
             Route::get('/fechamento', [NegocioController::class, 'negocio_fechamento'])->name('negocio_fechamento');
 
             Route::post('/importar/atribuir', [NegocioController::class, 'import_atribuir']);

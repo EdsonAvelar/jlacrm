@@ -72,7 +72,7 @@
 
         @include('dashboards.views.bar_plot',['name'=>'Aprovações','plots'=> [ $output['vendedores'], $output['aprovacoes']]])
 
-        @include('dashboards.views.bar_plot',['name'=>'Vendas','plots'=> [ $output['vendedores'], $output['vendas']]])
+        @include('dashboards.views.bar_plot',['name'=>'Vendas','plots'=> [ $output['vendedores'], $output['vendas'] ]])
 
         @include('dashboards.views.funnel',['name'=>'Funil','plots'=> $output['stats'] ])
 

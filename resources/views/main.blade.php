@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,105 +5,127 @@
 
 
     <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-T8M2RFC');</script>
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-T8M2RFC');
+    </script>
     <!-- End Google Tag Manager -->
 
-    
+
 
     <meta charset="utf-8">
-    <title>{{config('nome')}}</title>
+    <title>{{ config('nome') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{url('')}}/images/empresa/logos/favicon.ico">
+    <link rel="shortcut icon" href="{{ url('') }}/images/empresa/logos/favicon.ico">
 
     <!-- third party css -->
-    <link href="{{url('')}}/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
+    <link href="{{ url('') }}/css/vendor/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css">
     <!-- third party css end -->
 
     <!-- App css -->
-    <link href="{{url('')}}/css/icons.min.css" rel="stylesheet" type="text/css">
-    <link href="{{url('')}}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
-    <link href="{{url('')}}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
-    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+    <link href="{{ url('') }}/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ url('') }}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
+    <link href="{{ url('') }}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+    <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+        rel="stylesheet">
 
     @yield('headers')
 </head>
 
-<?php 
+<?php
 $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 $style = '';
-    if ((strpos($url,'pipeline') !== false) && (app('request')->view != 'list')) {
-        $style = 'style="overflow-y: hidden;"';
-    }
+if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
+    $style = 'style="overflow-y: hidden;"';
+}
 ?>
-<body class="loading" <?php echo $style;?>
-    
+
+<body class="loading" <?php echo $style; ?>
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
     <!-- Begin page -->
     <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8M2RFC"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8M2RFC" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
-    
+
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
         <div class="leftside-menu">
-        <a class="button-menu-mobile open-left">
-                            <i class="mdi mdi-menu"></i>
-    </a>
+            <a class="button-menu-mobile open-left">
+                <i class="mdi mdi-menu"></i>
+            </a>
 
-        <a class="logo text-center logo-light open-left">
-            <span class="logo-lg">
-                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
-            </span>
-            <span class="logo-sm">
-                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
-            </span>
-        </a>
+            <a class="logo text-center logo-light open-left">
+                <span class="logo-lg">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
+                        height="32">
+                </span>
+                <span class="logo-sm">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
+                        height="32">
+                </span>
+            </a>
 
-        <a class="logo text-center logo-dark open-left">
-            <span class="logo-lg">
-                <img src="{{url('')}}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
-            </span>
-            <span class="logo-sm">
-                <img src="{{url('')}}/images/empresa/logos/empresa_logo_circular.png" alt="" height="32">
-            </span>
-        </a>
+            <a class="logo text-center logo-dark open-left">
+                <span class="logo-lg">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
+                        height="32">
+                </span>
+                <span class="logo-sm">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png" alt=""
+                        height="32">
+                </span>
+            </a>
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
 
                 <!--- Sidemenu -->
                 <ul class="side-nav">
-                 
+
 
 
                     <li class="side-nav-item">
-                        <?php 
-                            $data_inicio = "20/".Carbon\Carbon::now('America/Sao_Paulo')->subMonth()->format('m/Y');
-                            $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+                        <?php
+                        $data_inicio =
+                            '20/' .
+                            Carbon\Carbon::now('America/Sao_Paulo')
+                                ->subMonth()
+                                ->format('m/Y');
+                        $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                         ?>
 
-                        <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false"
-                            aria-controls="dashboard" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false" aria-controls="dashboard"
+                            class="side-nav-link">
                             <i class="uil-store"></i>
                             <span> Dashboards </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="dashboard">
                             <ul class="side-nav-second-level">
-                                
+
                                 <li>
-                                    <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Geral</a>
+                                    <a
+                                        href="{{ route('home', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Geral</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Equipes</a>
+                                    <a
+                                        href="{{ route('home', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
                                 </li>
                             </ul>
                         </div>
@@ -113,11 +133,11 @@ $style = '';
 
 
 
-                    
+
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#crm" aria-expanded="false"
-                            aria-controls="crm" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#crm" aria-expanded="false" aria-controls="crm"
+                            class="side-nav-link">
                             <i class="uil-store"></i>
                             <span> Negócios </span>
                             <span class="menu-arrow"></span>
@@ -125,27 +145,30 @@ $style = '';
                         <div class="collapse" id="crm">
                             <ul class="side-nav-second-level">
                                 <li>
-                                    <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo','view_card'=>'compact') )}}">Pipeline</a>
+                                    <a
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'status' => 'ativo', 'view_card' => 'compact']) }}">Pipeline</a>
                                 </li>
                                 <li>
-                                    <a href="{{route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id, 'view' => 'list','status'=> 'ativo' ) )}}">Lista</a>
-                                </li>
-                                
-                                <li>
-                                    <a href="{{route('agendamento.calendario', array('proprietario' =>  \Auth::user()->id ) )}}">Calendário</a>
+                                    <a
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista</a>
                                 </li>
 
-                                @if (Auth::user()->hasAnyRole( ['importar_leads']) )
                                 <li>
-                                    <a href="{{route('importar.negocios.index')}}">Importar</a>
+                                    <a
+                                        href="{{ route('agendamento.calendario', ['proprietario' => \Auth::user()->id]) }}">Calendário</a>
                                 </li>
+
+                                @if (Auth::user()->hasAnyRole(['importar_leads']))
+                                    <li>
+                                        <a href="{{ route('importar.negocios.index') }}">Importar</a>
+                                    </li>
                                 @endif
 
                             </ul>
                         </div>
                     </li>
 
-                   
+
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#funcionarios" aria-expanded="false"
                             aria-controls="funcionarios" class="side-nav-link">
@@ -153,85 +176,93 @@ $style = '';
                             <span> Administrativo </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        
-                        
+
+
                         <div class="collapse" id="funcionarios">
                             <ul class="side-nav-second-level">
 
-                                @if (Auth::user()->hasAnyRole( ['gerenciar_funcionarios']) )
+                                @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
                                     <li>
-                                        <a href="{{route('users.funcionarios')}}">Funcionários</a>
+                                        <a href="{{ route('users.funcionarios') }}">Funcionários</a>
                                     </li>
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole( ['gerenciar_vendas']) )
+                                @if (Auth::user()->hasAnyRole(['gerenciar_vendas']))
                                     <li>
-                                        <?php 
-                                            $data_inicio = "20/".Carbon\Carbon::now('America/Sao_Paulo')->subMonth()->format('m/Y');
-                                            $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+                                        <?php
+                                        $data_inicio =
+                                            '20/' .
+                                            Carbon\Carbon::now('America/Sao_Paulo')
+                                                ->subMonth()
+                                                ->format('m/Y');
+                                        $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                                         ?>
-                                        <a href="{{route('vendas.lista', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim))}}">Vendas Realizadas</a>
-                                    </li> 
+                                        <a
+                                            href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
+                                            Realizadas</a>
+                                    </li>
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole( ['gerenciar_funcionarios']) )
+                                @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
                                     <li>
-                                        <a href="{{route('equipes.index')}}">Equipes</a>
+                                        <a href="{{ route('equipes.index') }}">Equipes</a>
                                     </li>
                                 @endif
                             </ul>
                         </div>
-                      
+
 
                     </li>
 
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#perfil" aria-expanded="false"
-                            aria-controls="perfil" class="side-nav-link">
+                        <a data-bs-toggle="collapse" href="#perfil" aria-expanded="false" aria-controls="perfil"
+                            class="side-nav-link">
                             <i class="uil-bright"></i>
                             <span> Configurações </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        
+
                         <div class="collapse" id="perfil">
                             <ul class="side-nav-second-level">
                                 <li>
-                                    <a href="{{route('users_profile', array('id'=> \Auth::user()->id) )}}">Minha Conta</a>
+                                    <a href="{{ route('users_profile', ['id' => \Auth::user()->id]) }}">Minha
+                                        Conta</a>
                                 </li>
-                                
+
                                 @if (\Auth::user()->hasRole('admin'))
                                     <li>
-                                        <a href="{{route('empresa_profile', array('id'=> \Auth::user()->id) )}}">Empresa</a>
+                                        <a
+                                            href="{{ route('empresa_profile', ['id' => \Auth::user()->id]) }}">Empresa</a>
                                     </li>
                                 @endif
 
                                 <li>
-                                    <a href="{{route('change-password')}}">Mudar de Senha</a>
+                                    <a href="{{ route('change-password') }}">Mudar de Senha</a>
                                 </li>
                                 <hr>
                                 <li>
-                                    <a href="{{url('/logout')}}">Logout</a>
+                                    <a href="{{ url('/logout') }}">Logout</a>
                                 </li>
-                            
+
                             </ul>
                         </div>
-                      
+
 
                     </li>
 
                     <li class="side-nav-item">
-                   
+
                         <a class="side-nav-link" id="btnModoTV">
                             <i class="uil-home-alt"></i>
                             <span> Modo TV </span>
                         </a>
-                    </li> 
+                    </li>
 
 
-                     <!-- Help Box -->
-                     <div class="help-box text-white text-center"  style="padding: 7px;">
-                        <img src="{{url('')}}/images/empresa/outros/banner.png" style="width:100%">
+                    <!-- Help Box -->
+                    <div class="help-box text-white text-center" style="padding: 7px;">
+                        <img src="{{ url('') }}/images/empresa/outros/banner.png" style="width:100%">
                     </div>
                     <!-- end Help Box -->
                     <!-- End Sidebar -->
@@ -247,7 +278,7 @@ $style = '';
         <div class="content-page">
             <div class="content" id="content">
                 <!-- Topbar Start -->
-                
+
                 <div class="navbar-custom">
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list d-lg-none">
@@ -262,7 +293,7 @@ $style = '';
                                 </form>
                             </div>
                         </li>
-                        
+
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#"
@@ -307,7 +338,7 @@ $style = '';
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="{{url('')}}/images/users/avatar-2.jpg"
+                                            <img src="{{ url('') }}/images/users/avatar-2.jpg"
                                                 class="img-fluid rounded-circle" alt="">
                                         </div>
                                         <p class="notify-details">Cristina Pride</p>
@@ -329,7 +360,7 @@ $style = '';
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="{{url('')}}/images/users/avatar-4.jpg"
+                                            <img src="{{ url('') }}/images/users/avatar-4.jpg"
                                                 class="img-fluid rounded-circle" alt="">
                                         </div>
                                         <p class="notify-details">Karen Robinson</p>
@@ -359,18 +390,18 @@ $style = '';
                             </div>
                         </li>
 
-                        
+
 
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    <img src="{{url('')}}/images/users/user_{{\Auth::user()->id}}/{{\Auth::user()->avatar}}" alt="user-image"
-                                        class="rounded-circle">
+                                    <img src="{{ url('') }}/images/users/user_{{ \Auth::user()->id }}/{{ \Auth::user()->avatar }}"
+                                        alt="user-image" class="rounded-circle">
                                 </span>
                                 <span>
-                                    <span class="account-user-name">{{\Auth::user()->name}}</span>
-                                    <span class="account-position">{{\Auth::user()->cargo()->first()->nome}}</span>
+                                    <span class="account-user-name">{{ \Auth::user()->name }}</span>
+                                    <span class="account-position">{{ \Auth::user()->cargo()->first()->nome }}</span>
                                 </span>
                             </a>
                             <div
@@ -381,18 +412,19 @@ $style = '';
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{route('users_profile', array('id'=> \Auth::user()->id) )}}" class="dropdown-item notify-item">
+                                <a href="{{ route('users_profile', ['id' => \Auth::user()->id]) }}"
+                                    class="dropdown-item notify-item">
                                     <i class="mdi mdi-account-circle me-1"></i>
                                     <span>Minha Conta</span>
                                 </a>
-                                <a href="{{route('change-password')}}" class="dropdown-item notify-item">
+                                <a href="{{ route('change-password') }}" class="dropdown-item notify-item">
                                     <i class="mdi textbox-password me-1"></i>
                                     <span>Mudar Senha</span>
                                 </a>
                                 <hr>
-                          
+
                                 <!-- item-->
-                                <a href="{{url('/logout')}}" class="dropdown-item notify-item">
+                                <a href="{{ url('/logout') }}" class="dropdown-item notify-item">
                                     <i class="mdi mdi-logout me-1"></i>
                                     <span>Logout</span>
                                 </a>
@@ -401,14 +433,14 @@ $style = '';
 
                     </ul>
 
-                    
+
                     <button class="button-menu-mobile open-left">
-                            <i class="mdi mdi-menu"></i>
-                        </button>
+                        <i class="mdi mdi-menu"></i>
+                    </button>
                 </div>
 
-               
-                
+
+
                 <!-- end Topbar -->
                 @include('layouts.alert-msg')
                 <div id="alert"></div>
@@ -422,7 +454,9 @@ $style = '';
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <script>document.write(new Date().getFullYear())</script> © {{config('nome')}}
+                            <script>
+                                document.write(new Date().getFullYear())
+                            </script> © {{ config('nome') }}
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-end footer-links d-none d-md-block">
@@ -440,25 +474,25 @@ $style = '';
     <!-- END wrapper -->
 
     <!-- bundle -->
-    <script src="{{url('')}}/js/vendor.min.js"></script>
-    <script src="{{url('')}}/js/app.min.js"></script>
+    <script src="{{ url('') }}/js/vendor.min.js"></script>
+    <script src="{{ url('') }}/js/app.min.js"></script>
 
     <!-- third party js -->
-    <script src="{{url('')}}/js/vendor/apexcharts.min.js"></script>
-    <script src="{{url('')}}/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
-    <script src="{{url('')}}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script>
+    <script src="{{ url('') }}/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
+    <script src="{{ url('') }}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
     <!-- third party js ends -->
 
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- end demo js-->
-    
+
 
     <script type="text/javascript">
-			window.setTimeout(function() {
-			$(".alert").fadeTo(500, 0).slideUp(500, function(){
-				$(this).remove(); 
-			});
-		}, 4000);
+        window.setTimeout(function() {
+            $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 4000);
 
 
         $("form").submit(function() {
@@ -467,16 +501,17 @@ $style = '';
 
         var modoTv = false;
 
-        function entrarFullScreen(){
+        function entrarFullScreen() {
 
             $("#cabecalho").show();
-                $("#menuEsquerda").show();
-                $("#menuCentral").hide();
-                $("#menuCentral").removeClass("col-md-12");
-                $("#menuCentral").addClass("col-md-8 col-md-offset-1");
-                $("#menuCentral").show();
+            $("#menuEsquerda").show();
+            $("#menuCentral").hide();
+            $("#menuCentral").removeClass("col-md-12");
+            $("#menuCentral").addClass("col-md-8 col-md-offset-1");
+            $("#menuCentral").show();
 
-            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) { 
+            if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !
+                document.msFullscreenElement) {
                 if (document.documentElement.requestFullscreen) {
                     document.documentElement.requestFullscreen();
                 } else if (document.documentElement.msRequestFullscreen) {
@@ -488,8 +523,8 @@ $style = '';
                 }
             }
         }
-            
-        function sairFullScreen(){
+
+        function sairFullScreen() {
 
             $("#cabecalho").hide();
             $("#menuEsquerda").hide();
@@ -509,25 +544,25 @@ $style = '';
             }
         }
 
-        $( document ).ready(function() {
-            $("#btnModoTV").click(function(){
-                if(modoTv == false){
+        $(document).ready(function() {
+            $("#btnModoTV").click(function() {
+                if (modoTv == false) {
                     modoTv = true;
                     entrarFullScreen();
-                    
-                }else{
+
+                } else {
                     modoTv = false;
                     sairFullScreen();
                 }
             });
         });
 
-    $(document).ready(function() {
-        setInterval(function() {
-            if (modoTv == true) {
-            cache_clear()
-            }
-        }, 3000);
+        $(document).ready(function() {
+            setInterval(function() {
+                if (modoTv == true) {
+                    cache_clear()
+                }
+            }, 3000);
         });
 
         function cache_clear() {
@@ -538,27 +573,70 @@ $style = '';
         }
 
 
-    function showAlert(obj){
-        var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">'+
-            '   <strong>' + obj.message + '</strong>'+
-            '   </div>';
-        $('#alert').append(html);
-        window.setTimeout(function() {
-			$(".alert").fadeTo(500, 0).slideUp(500, function(){
-				$(this).remove(); 
-			});
-		}, 4000);
-    }
+        function showAlert(obj) {
+            var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">' +
+                '   <strong>' + obj.message + '</strong>' +
+                '   </div>';
+            $('#alert').append(html);
+            window.setTimeout(function() {
+                $(".alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 4000);
+        }
+
+        function nFormatter(num, digits) {
+            const lookup = [{
+                    value: 1,
+                    symbol: ""
+                },
+                {
+                    value: 1e3,
+                    symbol: "K"
+                },
+                {
+                    value: 1e6,
+                    symbol: "M"
+                },
+                {
+                    value: 1e9,
+                    symbol: "G"
+                },
+                {
+                    value: 1e12,
+                    symbol: "T"
+                },
+                {
+                    value: 1e15,
+                    symbol: "P"
+                },
+                {
+                    value: 1e18,
+                    symbol: "E"
+                }
+            ];
+            num = num.split(',')[0]
+            num = num.replaceAll('.', '')
+
+            const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+            var item = lookup.slice().reverse().find(function(item) {
+                return num >= item.value;
+            });
+            return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+        }
 
 
-	</script>
+        $('.money').mask('000.000.000.000.000,00', {
+            reverse: true
+        });
+    </script>
 
 
-   
-    
+
+
     @yield('specific_scripts')
-    
- 
+
+
 
 </body>
 

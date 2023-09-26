@@ -23,6 +23,8 @@ use App\Models\Equipe;
 use App\Enums\UserStatus;
 use App\Enums\NegocioTipo;
 
+use App\Models\Levantamento;
+
 
 use Carbon\Carbon;
 class NegocioController extends Controller
@@ -36,6 +38,45 @@ class NegocioController extends Controller
         $users = User::where('status',UserStatus::ativo)->pluck('name', 'id');
 
         return view('negocios/importar', compact('negocios_importados','users'));       
+    }
+
+    public function negocio_levantamento(Request $request){
+
+        $input = $request->except('token');
+
+        $negocio = Negocio::find( $input['negocio_id']);
+
+        $levantamento = Levantamento::where('negocio_id',$negocio->id)->first();
+
+        if (empty($levantamento)){
+            $levantamento = new Levantamento();
+        }
+
+        $levantamento->dificuldade = $input['dificuldade'];
+        $levantamento->regiao = $input['regiao'];
+        $levantamento->planejamento = $input['planejamento'];
+        $levantamento->parcela_max = $input['parcela_max'];
+        $levantamento->entrada_max = $input['entrada_max'];
+        $levantamento->desfazer_bem = $input['desfazer_bem'];
+        $levantamento->aluguel = $input['aluguel'];
+        $levantamento->decisores = $input['decisores'];
+        $levantamento->valor_fgts = $input['valor_fgts'];
+        $levantamento->compor_renda = $input['compor_renda'];
+        $levantamento->financiamento = $input['financiamento'];
+        $levantamento->filhos = $input['filhos'];
+        $levantamento->status_civil = $input['status_civil'];
+        $levantamento->casa_propria = $input['casa_propria'];
+        $levantamento->renda_total = $input['renda_total'];
+        $levantamento->renda_comprovacao = $input['renda_comprovacao'];
+        $levantamento->restricao = $input['restricao'];
+        $levantamento->negocio_id = $input['negocio_id'];
+        $levantamento->save();
+
+        $negocio->tipo = $input['tipo_credito'];
+        $negocio->valor = $input['valor'];
+        $negocio->save();
+
+        return back()->with('status', 'Levantamento Salvo com sucesso');
     }
 
     public function importar_upload(Request $request)
@@ -194,7 +235,14 @@ class NegocioController extends Controller
         $id = $request->query('id');
         $negocio = Negocio::find($id);
 
-        return view('negocios.edit', compact('negocio') );
+        $levantamento = Levantamento::where('negocio_id',$negocio->id)->first();
+
+        if (empty($levantamento)){
+            $levantamento = new Levantamento();
+        }
+
+
+        return view('negocios.edit', compact('negocio','levantamento') );
     }
 
     public function negocio_fechamento(Request $request) {
@@ -218,7 +266,10 @@ class NegocioController extends Controller
             $fechamento = Fechamento::find( $negocio->fechamento_id);
         }else {
             $fechamento = new Fechamento();
+            $fechamento->data_fechamento = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+            $fechamento->valor = $negocio->valor;
         }
+
 
         return view('negocios.fechamento', compact('negocio','conjuge','fechamento') );
     }

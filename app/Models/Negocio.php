@@ -36,6 +36,11 @@ class Negocio extends Model
         return $this->belongsTo("App\Models\Agendamento");
     }
 
+    public function levantamento()
+    {
+        return $this->belongsTo("App\Models\Levantamento");
+    }
+
     public function fechamento()
     {
         return $this->belongsTo("App\Models\Fechamento");

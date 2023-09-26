@@ -64,6 +64,7 @@ class FechamentoController extends Controller
         $venda['preco_bem'] = $input['preco_bem'];
         $venda['duracao_grupo'] = $input['duracao_grupo'];
         $venda['grupo'] = $input['grupo'];
+        $venda['cota'] = $input['cota'];
         $venda['duracao_plano'] = $input['duracao_plano'];
         $venda['tipo_plano'] = $input['tipo_plano'];
         $venda['plano_leve'] = $input['plano_leve'];

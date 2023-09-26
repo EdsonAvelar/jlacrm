@@ -2,17 +2,17 @@
     <div class="card">
         <div class="card-body">
             <div class="row align-items-center">
-            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">{{$name}}</h5>
+                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">{{ $name }}</h5>
                 <div class="col-12">
                     <div class="text-end">
-                        
-                        <div id="chart_{{$name}}">
+
+                        <div id="chart_{{ $name }}">
                         </div>
 
                     </div>
                 </div>
 
-                
+
             </div> <!-- end row-->
 
         </div> <!-- end card-body -->
@@ -20,29 +20,76 @@
 </div> <!-- end col -->
 
 <script>
-
-
     var options = {
         chart: {
             type: 'bar'
         },
         series: [{
-            name: '{{$name}}',
-            data: <?php echo json_encode( $plots[1]) ?> ,
-            
+            name: '{{ $name }}',
+            data: <?php echo json_encode($plots[1]); ?>,
+
         }],
         xaxis: {
-            categories: <?php echo json_encode($plots[0]) ?>
+            categories: <?php echo json_encode($plots[0]); ?>
         },
         plotOptions: {
             bar: {
-            distributed: true
+                distributed: true
             }
-        }  
+        },
+        dataLabels: {
+            enabled: true,
+            formatter: function(num) {
+                const digits = 0;
+                const lookup = [{
+                        value: 1,
+                        symbol: ""
+                    },
+                    {
+                        value: 1e3,
+                        symbol: "K"
+                    },
+                    {
+                        value: 1e6,
+                        symbol: "M"
+                    },
+                    {
+                        value: 1e9,
+                        symbol: "G"
+                    },
+                    {
+                        value: 1e12,
+                        symbol: "T"
+                    },
+                    {
+                        value: 1e15,
+                        symbol: "P"
+                    },
+                    {
+                        value: 1e18,
+                        symbol: "E"
+                    }
+                ];
+
+
+
+                const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+                var item = lookup.slice().reverse().find(function(item) {
+                    return num >= item.value;
+                });
+                return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+
+
+                return nFormatter(val, 0);
+            },
+            offsetY: -20,
+            style: {
+                fontSize: '12px',
+                colors: ["#304758"]
+            }
+        },
     }
 
-    var chart1 = new ApexCharts(document.querySelector("#chart_{{$name}}"), options);
+    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
-
 </script>
-
