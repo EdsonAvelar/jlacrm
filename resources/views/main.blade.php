@@ -1,3 +1,7 @@
+<?php
+use Carbon\Carbon;
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,12 +106,23 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                     <li class="side-nav-item">
                         <?php
-                        $data_inicio =
-                            '20/' .
-                            Carbon\Carbon::now('America/Sao_Paulo')
+                        
+                        $dia = intval(
+                            Carbon::now('America/Sao_Paulo')
                                 ->subMonth()
-                                ->format('m/Y');
-                        $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+                                ->format('d'),
+                        );
+                        if ($dia <= 20) {
+                            $data_inicio =
+                                '20/' .
+                                Carbon::now('America/Sao_Paulo')
+                                    ->subMonth()
+                                    ->format('m/Y');
+                        } else {
+                            $data_inicio = '20/' . Carbon::now('America/Sao_Paulo')->format('m/Y');
+                        }
+                        
+                        $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                         ?>
 
                         <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false" aria-controls="dashboard"
@@ -130,10 +145,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             </ul>
                         </div>
                     </li>
-
-
-
-
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#crm" aria-expanded="false" aria-controls="crm"
@@ -190,12 +201,28 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 @if (Auth::user()->hasAnyRole(['gerenciar_vendas']))
                                     <li>
                                         <?php
-                                        $data_inicio =
-                                            '20/' .
-                                            Carbon\Carbon::now('America/Sao_Paulo')
+                                        // $data_inicio =
+                                        //     '20/' .
+                                        //    Carbon::now('America/Sao_Paulo')
+                                        //         ->subMonth()
+                                        //         ->format('m/Y');
+                                        
+                                        $dia = intval(
+                                            Carbon::now('America/Sao_Paulo')
                                                 ->subMonth()
-                                                ->format('m/Y');
-                                        $data_fim = Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+                                                ->format('d'),
+                                        );
+                                        if ($dia <= 20) {
+                                            $data_inicio =
+                                                '20/' .
+                                                Carbon::now('America/Sao_Paulo')
+                                                    ->subMonth()
+                                                    ->format('m/Y');
+                                        } else {
+                                            $data_inicio = '20/' . Carbon::now('America/Sao_Paulo')->format('m/Y');
+                                        }
+                                        
+                                        $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
                                         ?>
                                         <a
                                             href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
