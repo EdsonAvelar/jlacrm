@@ -176,8 +176,10 @@ class NegocioController extends Controller
 
         if ($action == "fechamento"){
             //Autorizado
-            \Auth::user()->hasRole('gerenciar_vendas');
-            return;
+            if ( \Auth::user()->hasRole('gerenciar_vendas') ){
+                return true;
+            }
+            
         }
 
         $id = $request->query('id');

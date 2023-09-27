@@ -110,16 +110,9 @@ function convert($frase)
 
         <div class="col-md-12">
 
-            {{-- @if ($tipo == 'imóvel') --}}
+
             <img align="right" class="mascote-img"
                 src="{{ url('') }}/images/empresa/proposta/{{ strtolower($tipo) }}.png"></img>
-            {{-- @elseif ($tipo == "veículo")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/veiculo.png"></img>
-				@elseif ($tipo == "maquinário")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/maquinario.png"></img>
-				@elseif ($tipo == "caminhão")
-					<img align="right" class="mascote-img" src="{{url('')}}/images/empresa/proposta/caminhao.png"></img>
-				@endif --}}
 
             <h3>CRÉDITO SOLICITADO: <span style="font-weight: bold;">
                     <?php echo $_POST['credito']; ?></span>
@@ -213,7 +206,7 @@ function convert($frase)
                     <td align="left">
                         <!-- DIREITA -->
 
-                        <?php if ($_POST['tipo'] == "imóvel") {
+                        <?php if ($_POST['tipo'] == "IMOVEL") {
 			        ?>
 
                         <?php if ($_POST['apenasconsorcio'] == "1") { ?>
@@ -296,7 +289,7 @@ function convert($frase)
                     </td>
                     <td align="left">
                         <!-- DIREITA -->
-                        <?php if ($_POST['tipo'] == "imóvel") {
+                        <?php if ($_POST['tipo'] == "IMOVEL") {
 			        ?>
                         <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito</h4>
                         <?php
@@ -320,15 +313,10 @@ function convert($frase)
 
                 </tr>
             </table>
-            <!--?php echo "<img  align=\"right\" class=\"logo-multi\" src=\"/wp-content/uploads/2021/12/multimarcas_representanteautorizado.png\"></img>"; ?-->
-
-
-
 
             <p>** Sujeito à aprovação de crédito.<br>
                 ** Esta proposta é uma simulação, não gerando qualquer espécie de obrigação entre as partes.
             </p>
         </div>
-
     </div>
 </div>
