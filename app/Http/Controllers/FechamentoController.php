@@ -43,6 +43,7 @@ class FechamentoController extends Controller
             $venda = Fechamento::find($negocio->fechamento_id);
         }else {
             $venda = new Fechamento();
+            
         }
         
         $docs = ['data_fechamento','data_assembleia',

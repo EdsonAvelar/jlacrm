@@ -985,25 +985,28 @@ $protocolo_hora = 0;
                     dragek.cancel(true);
                 }
 
-            } else if (target.getAttribute('data-etapa') == "FECHAMENTO") {
+            }
 
-                var negocio_id = info[0];
+            // else if (target.getAttribute('data-etapa') == "FECHAMENTO") {
 
-                $.ajax({
-                    url: "{{ url('negocios/drag_update') }}",
-                    type: 'post',
-                    data: {
-                        info: info
-                    },
-                    Type: 'json',
-                    success: function(res) {},
-                    complete: function() {
-                        window.location.href = "{{ url('') }}" + '/negocios/fechamento?id=' +
-                            negocio_id
-                    }
-                });
+            //     var negocio_id = info[0];
 
-            } else {
+            //     $.ajax({
+            //         url: "{{ url('negocios/drag_update') }}",
+            //         type: 'post',
+            //         data: {
+            //             info: info
+            //         },
+            //         Type: 'json',
+            //         success: function(res) {},
+            //         complete: function() {
+            //             window.location.href = "{{ url('') }}" + '/negocios/fechamento?id=' +
+            //                 negocio_id
+            //         }
+            //     });
+
+            // } 
+            else {
 
                 $.ajax({
                     url: "{{ url('negocios/drag_update') }}",

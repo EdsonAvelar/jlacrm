@@ -172,7 +172,13 @@ class NegocioController extends Controller
         }
     }
 
-    public function check_authorization($request){
+    public function check_authorization($request, $action){
+
+        if ($action == "fechamento"){
+            //Autorizado
+            \Auth::user()->hasRole('gerenciar_vendas');
+            return;
+        }
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
@@ -230,7 +236,8 @@ class NegocioController extends Controller
 
 
         $this->check_if_active();      
-        $this->check_authorization($request);      
+
+        $this->check_authorization($request,'edit');      
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
@@ -248,8 +255,8 @@ class NegocioController extends Controller
     public function negocio_fechamento(Request $request) {
 
 
-        $this->check_if_active();      
-        $this->check_authorization($request);      
+        $this->check_if_active();
+        $this->check_authorization($request, 'fechamento');      
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
