@@ -37,6 +37,117 @@ class DashboardController extends Controller
     
       return $num;
     }
+
+    public function dashboard_equipes(Request $request){
+
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+
+        if ( is_null($data_inicio) and is_null($data_fim) ){
+
+            $dia = intval ( Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d') );
+            if ( $dia <= 20){
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+            }else {
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->format('m/Y'));
+            }
+            
+            $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+            return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
+        }
+
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
+
+
+        $output = [];
+        $output['oportunidades'] = [];
+        $output['agendamentos'] = [];
+        $output['reunioes'] = [];
+        $output['aprovacoes'] = [];
+        $output['vendas'] = [];
+        $output['propostas']= [];
+
+        $stats = [];
+
+        $output['equipes'] = [];
+        
+        $equipes = Equipe::all();
+
+        foreach ($equipes as $equipe){
+            array_push($output['equipes'], $equipe->descricao);
+
+            // #########
+            // Oportunidade
+            // #########
+            $ids = $equipe->integrantes()->pluck('id')->toArray();
+            $query = [
+                ['data_criacao', '>=', $from ],
+                ['data_criacao', '<=', $to],
+                ['status', '=','ativo']
+              
+            ];
+            $sql = Negocio::where($query)->whereIn('user_id', $ids)->toSql();
+
+            $count = Negocio::where($query)->whereIn('user_id', $ids)->count();
+            array_push($output['oportunidades'], $count);
+
+            // #########
+            // Agendamentos
+            // #########
+
+            $query = [
+                ['data_agendamento', '>=', $from ],
+                ['data_agendamento', '<=', $to],
+               
+            ];
+            
+            $count = Agendamento::where($query)->whereIn('user_id', $ids)->count();
+            array_push($output['agendamentos'], $count);
+
+            // #########
+            // reunioes
+            // #########
+
+            $query = [
+                ['data_reuniao', '>=', $from ],
+                ['data_reuniao', '<=', $to],
+               
+            ];
+            
+            $count = Reuniao::where($query)->whereIn('user_id', $ids)->count();
+            array_push($output['reunioes'], $count);
+
+            // #########
+            // Aprovacao
+            // #########
+            $query = [
+                ['data_aprovacao', '>=', $from ],
+                ['data_aprovacao', '<=', $to],
+            
+            ];
+            
+            $count = Aprovacao::where($query)->whereIn('user_id', $ids)->count();
+            array_push($output['aprovacoes'], $count);
+
+            // #########
+            // Fechamento
+            // #########
+            $query = [
+                ['data_fechamento', '>=', $from ],
+                ['data_fechamento', '<=', $to],
+               
+            ];
+            $vendas_totais = Fechamento::where($query)->whereIn('primeiro_vendedor_id', $ids)->sum('valor');         
+         
+            array_push($output['vendas'], $vendas_totais);        
+            
+        }
+
+        return view('dashboards.coordenador', compact('output'));
+    }
+
     public function dashboard(Request $request){
         
         $data_inicio = $request->query('data_inicio');
@@ -96,7 +207,8 @@ class DashboardController extends Controller
                 $query = [
                     ['data_criacao', '>=', $from ],
                     ['data_criacao', '<=', $to],
-                    ['user_id', '=', $vendedor->id]
+                    ['user_id', '=', $vendedor->id],
+                    ['status', '=','ativo']
                 ];
                 
                 $count = Negocio::where($query)->count();
@@ -144,9 +256,7 @@ class DashboardController extends Controller
                     ['primeiro_vendedor_id', '=', $vendedor->id]
                 ];
                 
-                $vendas_totais = Fechamento::where($query)->sum('valor');
-
-          
+                $vendas_totais = Fechamento::where($query)->sum('valor');         
              
                 array_push($output['vendas'], $vendas_totais);
 

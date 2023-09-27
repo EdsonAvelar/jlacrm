@@ -140,7 +140,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
                                 <li>
                                     <a
-                                        href="{{ route('home', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
+                                        href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
                                 </li>
                             </ul>
                         </div>
@@ -587,7 +587,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         $(document).ready(function() {
             setInterval(function() {
                 if (modoTv == true) {
-                    cache_clear()
+                    //cache_clear()
                 }
             }, 3000);
         });

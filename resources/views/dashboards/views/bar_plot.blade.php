@@ -1,27 +1,37 @@
-<div class="col-lg-6 col-xl-6 col-md-12">
+<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ strtolower($name) }}">
     <div class="card">
-        <div class="card-body">
-            <div class="row align-items-center">
-                <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">{{ $name }}</h5>
-                <div class="col-12">
-                    <div class="text-end">
+        <a href="#" onclick="fullscreen('{{ $name }}')">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $name }}">{{ $name }}
+                    </h5>
+                    <div class="col-12">
+                        <div class="text-end">
 
-                        <div id="chart_{{ $name }}">
+                            <div id="chart_{{ $name }}">
+                            </div>
+
                         </div>
-
                     </div>
-                </div>
+                </div> <!-- end row-->
 
-
-            </div> <!-- end row-->
-
-        </div> <!-- end card-body -->
+            </div> <!-- end card-body -->
+        </a>
     </div> <!-- end card -->
 </div> <!-- end col -->
 
 <script>
     var options = {
         chart: {
+            toolbar: {
+                show: false,
+                offsetX: 0,
+                offsetY: 0,
+                tools: {
+     
+                },
+    
+            },
             type: 'bar'
         },
         series: [{
@@ -34,7 +44,11 @@
         },
         plotOptions: {
             bar: {
-                distributed: true
+                distributed: true,
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'center', // top, center, bottom
+                },
             }
         },
         dataLabels: {
@@ -82,9 +96,9 @@
 
                 return nFormatter(val, 0);
             },
-            offsetY: -20,
+            offsetY: 0,
             style: {
-                fontSize: '12px',
+                fontSize: '24px',
                 colors: ["#304758"]
             }
         },
@@ -92,4 +106,13 @@
 
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
+
+
+    function fullscreen($this) {
+
+        var nome = 'grafico_' + $this.toLowerCase();
+
+        $("#" + nome).attr('class', "col-lg-12 col-xl-12 col-md-12");
+
+    }
 </script>

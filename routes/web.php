@@ -34,6 +34,7 @@ Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
+    Route::get('/equipes', [DashboardController::class, 'dashboard_equipes'])->name('dashboard_equipes');
     Route::get('/logout', [AdminController::class, 'logout']);
 
     Route::get('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
