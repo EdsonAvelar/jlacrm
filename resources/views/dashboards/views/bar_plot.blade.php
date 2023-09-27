@@ -1,3 +1,8 @@
+<style>
+    .modal-content {
+        width: auto;
+    }
+</style>
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ strtolower($name) }}">
     <div class="card">
         <div class="card-body">
