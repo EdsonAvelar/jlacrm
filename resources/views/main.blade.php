@@ -48,6 +48,7 @@ use Carbon\Carbon;
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
         rel="stylesheet">
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @yield('headers')
 </head>
 

@@ -3,7 +3,7 @@
 
 @section('headers')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <!-- Include Date Range Picker -->
 
     <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -113,7 +113,8 @@
                 },
                 function(start, end, label) {
                     //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-                    window.location.href = "{{ url('crm?') }}" + "data_inicio=" + start.format('DD/MM/YYYY') +
+                    window.location.href = "{{ url('equipes?') }}" + "data_inicio=" + start.format(
+                        'DD/MM/YYYY') +
                         "&" + "data_fim=" + end.format('DD/MM/YYYY');
 
                 });

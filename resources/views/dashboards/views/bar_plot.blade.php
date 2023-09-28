@@ -28,34 +28,41 @@
     </div> <!-- end card -->
 </div> <!-- end col -->
 
-<div class="modal fade" id="modal_{{ $name }}" tabindex="-1" role="dialog"
-    aria-labelledby="modal_{{ $name }}" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-zoom modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-body" id="modal_content_{{ $name }}">
+<div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
+    aria-labelledby="modal_{{ $name }}" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="row">
+            <div class="col-lg-12 col-xl-12 col-md-12">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ $name }}</h5>
 
+                    </div>
+                    <div class="modal-body" id="modal_content_{{ $name }}">
 
+                        <div id="modal_chart_{{ $name }}" style="margin: 0; padding: 0; height: 100%;">
+                        </div>
+                    </div>
+
+                </div>
             </div>
-
         </div>
     </div>
 </div>
 
 <script>
-    function showmodal($name) {
-
-        console.log('#grafico_' + $name.toLowerCase())
-
-        var $button = $('#grafico_' + $name.toLowerCase()).clone();
-        $button.attr('class', "col-lg-12 col-xl-12 col-md-12");
-        $button.remove("click" + $name.toLowerCase());
-
-        $('#modal_content_' + $name).html($button);
-
-        $("#modal_" + $name).modal('show');
-    }
-
     var options = {
+
+        theme: {
+            mode: 'light',
+            palette: 'palette7',
+            monochrome: {
+                enabled: false,
+                color: '#111111',
+                shadeTo: 'light',
+                shadeIntensity: 0.65
+            },
+        },
         chart: {
             toolbar: {
                 show: false,
@@ -81,7 +88,8 @@
                 distributed: true,
                 borderRadius: 10,
                 dataLabels: {
-                    position: 'center', // top, center, bottom
+                    position: 'top', // top, center, bottom
+
                 },
             }
         },
@@ -130,16 +138,25 @@
 
                 return nFormatter(val, 0);
             },
-            offsetY: 0,
+            offsetY: -20,
             style: {
-                fontSize: '24px',
-                colors: ["#304758"]
+                fontSize: '16px',
+                colors: ['#338888']
             }
-        },
+        }
     }
 
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
+
+
+    function showmodal($name) {
+
+        var chart1 = new ApexCharts(document.querySelector("#modal_chart_" + $name), options);
+        chart1.render();
+
+        $("#modal_" + $name).modal('show');
+    }
 
 
     function fullscreen($this) {

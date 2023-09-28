@@ -3,7 +3,7 @@
 
 @section('headers')
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
     <!-- Include Date Range Picker -->
 
     <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
