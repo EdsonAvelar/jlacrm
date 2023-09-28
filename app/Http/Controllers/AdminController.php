@@ -18,6 +18,10 @@ class AdminController extends Controller
 
         return view('index');
     }
+    
+    public function simulador_de_fresco(){
+        return view('fresco');
+    }
 
     public function login(Request  $req){
 

@@ -3,12 +3,17 @@
         width: auto;
     }
 </style>
-<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ strtolower($name) }}">
+
+<?php
+$name = strtolower($name);
+?>
+
+<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
     <div class="card">
         <div class="card-body">
 
             <div class="row align-items-center">
-                <a href="#" onclick="showmodal('{{ $name }}')" id="click_{{ strtolower($name) }}">
+                <a href="#" onclick="showmodal('{{ $name }}')" id="click_{{ $name }}">
                     <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $name }}">{{ $name }}
                     </h5>
 
@@ -38,7 +43,7 @@
                         <h5 class="modal-title" id="exampleModalLabel">{{ $name }}</h5>
 
                     </div>
-                    <div class="modal-body" id="modal_content_{{ $name }}">
+                    <div class="modal-body">
 
                         <div id="modal_chart_{{ $name }}" style="margin: 0; padding: 0; height: 100%;">
                         </div>
@@ -52,7 +57,6 @@
 
 <script>
     var options = {
-
         theme: {
             mode: 'light',
             palette: 'palette7',
@@ -146,6 +150,11 @@
         }
     }
 
+    var chart_option = chart_option || array();
+    chart_option[{{ $name }}] = options;
+
+    console.log("chart_option" + chart_option)
+
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
 
@@ -154,6 +163,8 @@
 
         var chart1 = new ApexCharts(document.querySelector("#modal_chart_" + $name), options);
         chart1.render();
+
+
 
         $("#modal_" + $name).modal('show');
     }
