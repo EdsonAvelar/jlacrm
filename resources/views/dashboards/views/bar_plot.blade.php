@@ -150,10 +150,14 @@ $name = strtolower($name);
         }
     }
 
-    var chart_option = chart_option || array();
-    chart_option[{{ $name }}] = options;
+    try {
+        var chart_option = chart_option || [];
+    } catch (error) {
+        var chart_option = [];
+    }
 
-    console.log("chart_option" + chart_option)
+    chart_option["{{ $name }}"] = options;
+    console.log(chart_option)
 
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
@@ -161,11 +165,8 @@ $name = strtolower($name);
 
     function showmodal($name) {
 
-        var chart1 = new ApexCharts(document.querySelector("#modal_chart_" + $name), options);
+        var chart1 = new ApexCharts(document.querySelector("#modal_chart_" + $name), chart_option[$name]);
         chart1.render();
-
-
-
         $("#modal_" + $name).modal('show');
     }
 
@@ -173,7 +174,6 @@ $name = strtolower($name);
     function fullscreen($this) {
 
         var nome = 'grafico_' + $this.toLowerCase();
-
         $("#" + nome).attr('class', "col-lg-12 col-xl-12 col-md-12");
 
     }

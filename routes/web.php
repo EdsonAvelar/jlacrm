@@ -23,8 +23,6 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/simulador_de_fresco',[AdminController::class, 'simulador_de_fresco'])->name('simulador');
-
 Route::get('/', [AdminController::class, 'index'])->name('landingpage');
 
 Route::get('/login', [AdminController::class, 'login'])->name('login');
