@@ -138,10 +138,13 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('home', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Geral</a>
                                 </li>
-                                <li>
-                                    <a
-                                        href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
-                                </li>
+
+                                @if (\Auth::user()->hasRole('admin'))
+                                    <li>
+                                        <a
+                                            href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
+                                    </li>
+                                @endif
                             </ul>
                         </div>
                     </li>

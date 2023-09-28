@@ -153,8 +153,6 @@ class DashboardController extends Controller
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
 
-       
-
         if ( is_null($data_inicio) and is_null($data_fim) ){
 
             $dia = intval ( Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d') );
@@ -302,11 +300,22 @@ class DashboardController extends Controller
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status',NegocioStatus::ATIVO)->sum('valor');
            
-            $output['stats'] = $stats;
+
+            $stats['sum_oportunidades'] = 0;
+            $stats['sum_agendamentos'] = 0;
+            $stats['sum_reunioes'] = 0;
+            $stats['sum_aprovacoes'] = 0;
+            $stats['sum_propostas'] = 0;
+            $stats['sum_vendas'] = 0;
+
+            
+
+            
             
             $users = User::whereIn('id', $ids)->where(['status' => UserStatus::ativo] )->get();
             
             $output['vendedores'] = array();
+            $output['oportunidades'] = array();
             $output['agendamentos'] = array();
             $output['reunioes'] = array();
             $output['aprovacoes'] = array();
@@ -318,6 +327,17 @@ class DashboardController extends Controller
                 array_push($output['vendedores'], $vendedor->name);
 
                 $query = [
+                    ['data_criacao', '>=', $from ],
+                    ['data_criacao', '<=', $to],
+                    ['user_id', '=', $vendedor->id],
+                    ['status', '=','ativo']
+                ];
+                
+                $count = Negocio::where($query)->count();
+                array_push($output['oportunidades'], $count);
+                $stats['sum_oportunidades'] = $stats['sum_oportunidades'] + $count;
+
+                $query = [
                     ['data_agendamento', '>=', $from ],
                     ['data_agendamento', '<=', $to],
                     ['user_id', '=', $vendedor->id]
@@ -326,6 +346,7 @@ class DashboardController extends Controller
                 $count = Agendamento::where($query)->count();
        
                 array_push($output['agendamentos'], $count);
+                $stats['sum_agendamentos'] = $stats['sum_agendamentos'] +  $count;
                 
                 $query = [
                     ['data_reuniao', '>=', $from ],
@@ -335,6 +356,7 @@ class DashboardController extends Controller
                 
                 $count = Reuniao::where($query)->count();
                 array_push($output['reunioes'], $count);
+                $stats['sum_reunioes'] = $stats['sum_reunioes'] +  $count;
 
                 $query = [
                     ['data_aprovacao', '>=', $from ],
@@ -343,8 +365,10 @@ class DashboardController extends Controller
                 ];
                 
                 $count = Aprovacao::where($query)->count();
+                $stats['sum_vendas'] = $stats['sum_vendas'] +  $count;
             
                 array_push($output['aprovacoes'], $count);
+                $stats['sum_aprovacoes'] = $stats['sum_aprovacoes'] +  $count;
 
                 $query = [
                     ['data_fechamento', '>=', $from ],
@@ -365,13 +389,20 @@ class DashboardController extends Controller
                 $__propostas = Proposta::where($query)->count();
              
                 array_push($output['propostas'], $__propostas);
+                $stats['sum_propostas'] = $stats['sum_propostas'] +  $count;
+
             }
                         
             $lead_novos = Negocio::whereIn('user_id', $ids)->where(['etapa_funil_id' => 1, 'status' => 'ativo' ])->count();
 
-            $output['lead_novos'] = $lead_novos;
 
-            return view('dashboards.coordenador', compact('stats','lead_novos','output'));
+            $stats['funil'] = [  $stats['sum_oportunidades'], $stats['sum_agendamentos'], $stats['sum_reunioes'], $stats['sum_propostas'], $stats['sum_aprovacoes'] ,  $stats['sum_vendas'] ];
+
+
+            $output['lead_novos'] = $lead_novos;
+            $output['stats'] = $stats;
+
+            return view('dashboards.geral', compact('stats','lead_novos','output'));
         }else {
             return redirect( route('pipeline_index', array('id' => 1, 'proprietario' =>  \Auth::user()->id,'status'=> 'ativo') ) );
         }
