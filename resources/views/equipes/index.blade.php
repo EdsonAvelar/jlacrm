@@ -9,6 +9,12 @@
         /*maintain aspect ratio*/
         max-width: 500px;
     }
+
+    #equipe_logo {
+        display: block;
+        width: 100px;
+        height: 100px;
+    }
 </style>
 @section('main_content')
     <!-- Start Content-->
@@ -36,90 +42,97 @@
         </div>
         <!-- end page title -->
 
-        <div class="row container" id="container" data-containers='["semequipe","<?php echo implode('","', $equipes->pluck('nome')->toArray()); ?>"]'>
-            <div class="row" style="padding-top: 20px;">
-                <div class="col-md-4">
-                    <div class="bg-dragula p-2 p-lg-4" style="background: rgb(217 217 217);">
+        <div class="row container_exp" id="container" data-containers='["semequipe","<?php echo implode('","', $equipes->pluck('nome')->toArray()); ?>"]'>
+            <div class="col-md-3">
+                <div class="row" style="padding-top: 20px;">
+                    <div class="col-md-12">
+                        <div class="bg-dragula p-2 p-lg-4" style="background: rgb(217 217 217);">
 
-                        <h5 class="mt-0">Sem Equipe</h5>
-                        <div id="semequipe" class="py-2" data=-1>
-                            @foreach ($semequipes as $user)
-                                <div class="card mb-0 mt-2" id="{{ $user->id }}">
-                                    <div class="card-body">
-                                        <div class="d-flex align-items-start">
-                                            <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
-                                                alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
-                                            <div class="w-100 overflow-hidden">
-                                                <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
-                                            </div> <!-- end w-100 -->
-                                            <span class="dragula-handle"></span>
-                                        </div> <!-- end d-flex -->
-                                    </div> <!-- end card-body -->
-                                </div> <!-- end col -->
-                            @endforeach
-                        </div> <!-- end company-list-1-->
-                    </div> <!-- end div.bg-light-->
-                </div> <!-- end col -->
-
-
-                @foreach ($equipes as $equipe)
-                    <div class="col-md-3">
-                        <div class="bg-dragula p-2 p-lg-4" style="background: rgb(206 231 239);">
-
-                            <div class="dropdown float-end">
-                                <a href="#" class="dropdown-toggle text-muted arrow-none" data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <i class="mdi mdi-dots-vertical font-18"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-
-                                    <!-- item-->
-                                    <a href="#" class="dropdown-item editar_equipe" data-id="{{ $equipe->id }}"><i
-                                            class="mdi mdi-pencil me-1"></i><span class="text-success">
-                                            Editar</span></a>
-
-                                    <!-- item-->
-                                    <a href="#" class="dropdown-item excluir_equipe" data-id="{{ $equipe->id }}"
-                                        data-name="{{ $equipe->nome }}" data-descricao="{{ $equipe->descricao }}"><i
-                                            class="dripicons-trash"></i><span class="text-success"> Excluir</span></a>
-
-                                </div>
-                            </div>
-
-
-                            <h5 class="mt-0">{{ $equipe->descricao }}</h5>
-                            <div class="d-flex align-items-start">
-                                <img src="{{ url('') }}/images/equipes/{{ $equipe->nome }}/{{ $equipe->logo }}"
-                                    alt="user-image" class="rounded-circle" width="50">
-                                <div class="w-100 overflow-hidden">
-                                    <p class="mb-0 mt-0"> Lider </p>
-                                    <h3 class="mb-1 mt-1">{{ $equipe->lider()->first()->name }}</h3>
-                                </div>
-
-                            </div>
-                            <div id="{{ $equipe->nome }}" class="py-2" data={{ $equipe->id }}>
-
-                                @foreach ($equipe->integrantes()->get() as $user)
-                                    @if ($equipe->lider()->first()->id != $user->id)
-                                        <div class="card mb-0 mt-1" id="{{ $user->id }}" style="height: 5rem;">
-                                            <div class="card-body">
-                                                <div class="d-flex align-items-start">
-                                                    <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
-                                                        alt="image"
-                                                        class="me-3 d-none d-sm-block avatar-sm rounded-circle">
-                                                    <div class="w-100 overflow-hidden">
-                                                        <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
-                                                    </div> <!-- end w-100 -->
-                                                    <span class="dragula-handle"></span>
-                                                </div> <!-- end d-flex -->
-                                            </div> <!-- end card-body -->
-                                        </div> <!-- end col -->
-                                    @endif
+                            <h5 class="mt-0">Sem Equipe</h5>
+                            <div id="semequipe" class="py-2" data=-1>
+                                @foreach ($semequipes as $user)
+                                    <div class="card mb-0 mt-2" id="{{ $user->id }}">
+                                        <div class="card-body">
+                                            <div class="d-flex align-items-start">
+                                                <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
+                                                    alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                                <div class="w-100 overflow-hidden">
+                                                    <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
+                                                </div> <!-- end w-100 -->
+                                                <span class="dragula-handle"></span>
+                                            </div> <!-- end d-flex -->
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end col -->
                                 @endforeach
                             </div> <!-- end company-list-1-->
                         </div> <!-- end div.bg-light-->
                     </div> <!-- end col -->
-                @endforeach
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="row" style="padding-top: 20px;">
+                    @foreach ($equipes as $equipe)
+                        <div class="col-md-4" style="padding-bottom: 20;">
+                            <div class="bg-dragula p-2 p-lg-4" style="background: rgb(206 231 239);">
+
+                                <div class="dropdown float-end">
+                                    <a href="#" class="dropdown-toggle text-muted arrow-none"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="mdi mdi-dots-vertical font-18"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+
+                                        <!-- item-->
+                                        <a href="#" class="dropdown-item editar_equipe"
+                                            data-id="{{ $equipe->id }}"><i class="mdi mdi-pencil me-1"></i><span
+                                                class="text-success">
+                                                Editar</span></a>
+
+                                        <!-- item-->
+                                        <a href="#" class="dropdown-item excluir_equipe" data-id="{{ $equipe->id }}"
+                                            data-name="{{ $equipe->nome }}" data-descricao="{{ $equipe->descricao }}"><i
+                                                class="dripicons-trash"></i><span class="text-success"> Excluir</span></a>
+
+                                    </div>
+                                </div>
+
+
+                                <h5 class="mt-0">{{ $equipe->descricao }}</h5>
+                                <div class="d-flex align-items-start">
+                                    <img id="equipe_logo"
+                                        src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}"
+                                        alt="user-image" class="rounded-circle" width="50" height="50">
+                                    <div class="w-100 overflow-hidden">
+                                        <p class="mb-0 mt-0"> Lider </p>
+                                        <h3 class="mb-0 mt-0">{{ $equipe->lider()->first()->name }}</h3>
+                                    </div>
+
+                                </div>
+                                <div id="{{ $equipe->nome }}" class="py-2" data={{ $equipe->id }}>
+
+                                    @foreach ($equipe->integrantes()->get() as $user)
+                                        @if ($equipe->lider()->first()->id != $user->id)
+                                            <div class="card mb-0 mt-1" id="{{ $user->id }}">
+                                                <div class="card-body">
+                                                    <div class="d-flex align-items-start">
+                                                        <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
+                                                            alt="image"
+                                                            class="me-0 d-none d-sm-block avatar-sm rounded-circle">
+                                                        <div class="w-100 overflow-hidden">
+                                                            <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
+                                                        </div> <!-- end w-100 -->
+                                                        <span class="dragula-handle"></span>
+                                                    </div> <!-- end d-flex -->
+                                                </div> <!-- end card-body -->
+                                            </div> <!-- end col -->
+                                        @endif
+                                    @endforeach
+                                </div> <!-- end company-list-1-->
+                            </div> <!-- end div.bg-light-->
+                        </div> <!-- end col -->
+                    @endforeach
+                </div>
             </div>
 
         </div> <!-- end row -->
@@ -188,7 +201,7 @@
     </form>
 
     {{-- Form para Editar Equipe  --}}
-    <form id="target" action="{{ url('equipe/change_lead') }}" method="POST">
+    <form id="target" action="{{ url('equipes/change_equipe') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <div class="modal fade" id="editarequipe_modal" tabindex="-1" aria-labelledby="configurarLeaderLabel"
@@ -223,7 +236,7 @@
                                     <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe<span
                                             class="text-danger">
                                             *</label>
-                                    <input type="file" name="image" id="inputImage"
+                                    <input type="file" name="image" id="EditInputImage"
                                         class="form-control @error('image') is-invalid @enderror">
                                     <br>
                                     <img id="edit_img_equipe" class="rounded-circle avatar-lg img-thumbnail"
@@ -281,7 +294,7 @@
 
     <script>
         var cont = [];
-        var arr = Array($('.container').data('containers'))[0];
+        var arr = Array($('.container_exp').data('containers'))[0];
 
         arr.forEach(function(n) {
             if (n != "") {
@@ -333,17 +346,16 @@
                 Type: 'json',
                 success: function(res) {
                     console.log(res)
+
+                    $('#editar_equipe_id').val(res[0]);
                     $('#edit_nome_equipe').val(res[3]);
-                    $('#edit_nome_equipe').val(res[3]);
+                    $('#edit_nome_lider').val(res[2]);
                     $('#edit_img_equipe').attr('src', "{{ url('') }}" + "/images/equipes/" + res[
-                            1] +
+                            0] +
                         '/' +
                         res[4]);
                 }
             });
-
-
-
 
             $('#editarequipe_modal').modal('show');
         });
@@ -356,12 +368,9 @@
             var descricao = $(this).data('descricao');
 
             $('#excluir_equipe_id').val(id);
-
             $("#nome_equipe").html(descricao);
-
             $('#deletarEquipe').modal('show');
         });
-
 
         $(function() {
             $(":file").change(function() {
@@ -376,6 +385,20 @@
 
         function imageIsLoaded(e) {
             $('#myImg').attr('src', e.target.result);
+        };
+
+
+        $("#EditInputImage").change(function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = EditInputImageLoaded;
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        function EditInputImageLoaded(e) {
+            $('#edit_img_equipe').attr('src', e.target.result);
         };
     </script>
 @endsection

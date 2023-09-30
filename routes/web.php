@@ -153,6 +153,8 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
             Route::post('/drag_update', [EquipeController::class, 'drag_update']);
             Route::post('/excluir', [EquipeController::class, 'excluir']);           
             Route::post('/create', [EquipeController::class, 'create']);           
+            Route::post('/change_equipe', [EquipeController::class, 'change_equipe'])->name('change_equipe');           
+
 
             Route::get('/get', [EquipeController::class, 'equipe_get'])->name('equipe_get');
 

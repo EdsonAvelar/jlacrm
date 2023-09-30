@@ -28,10 +28,51 @@ class EquipeController extends Controller
 
         $user = User::find($equipe->lider_id);
 
-        return [$equipe->id,$equipe->nome, $user->name,$equipe->descricao,$equipe->logo];
+        return [$equipe->id, $equipe->nome, $user->name, $equipe->descricao, $equipe->logo];
     }
 
 
+    public function change_equipe(Request $request){
+
+        $input = $request->all();
+
+        $equipe = Equipe::find($input['editar_equipe_id']);
+        $nome_equipe = $input['edit_nome_equipe'];
+        $equipe->descricao = $nome_equipe;
+        
+
+        $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
+        $equipe->nome = $nome_equipe;
+
+        if ($request->filled('image')){
+            $rules = array(
+                'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
+            );
+    
+            $error_msg = [
+                'image.max' => 'Limite Máximo do Arquivo 3mb',
+                'image.mimes' => 'extensões válidas (jpg,png,jpeg,gif,svg)'
+            ];
+    
+            $validator = Validator::make($input, $rules, $error_msg);
+    
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+
+            $imageName = "logo.".$request->image->extension();
+            $request->image->move(public_path('images')."/equipes/". $equipe->id."/", $imageName);
+            $equipe->logo = $imageName;
+        }
+        
+             
+        $equipe->save();
+
+        return back()->with("status", "Equipe Editada com sucesso");
+    }
 
     public function create(Request $request)
     {
@@ -45,7 +86,7 @@ class EquipeController extends Controller
         $error_msg = [
             'image.required' => 'Imagem é Obrigatório',
             'image.max' => 'Limite Máximo do Arquivo 3mb',
-            'image.mimes' => 'extensões válidas (jpg,png,jpeg,gif,svg)'
+            'image.mimes' => 'extensões válidas (jpg,jpeg,png,jpeg,gif,svg)'
         ];
 
         $validator = Validator::make($input, $rules, $error_msg);
@@ -60,7 +101,6 @@ class EquipeController extends Controller
         $nome_equipe = $input['nome_equipe'];
 
         $equipe->descricao = $nome_equipe;
-
         
         $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
 
@@ -69,10 +109,12 @@ class EquipeController extends Controller
         $equipe->lider_id =  $input['lider_id'];
 
         $imageName = "logo.".$request->image->extension();
-        $request->image->move(public_path('images')."/equipes/". $nome_equipe."/", $imageName);
+       
 
         $equipe->logo = $imageName;
         $equipe->save();
+
+        $request->image->move(public_path('images')."/equipes/".$equipe->id."/", $imageName);
 
         User::where('id', $input['lider_id'])->update(['equipe_id'=> $equipe->id]);
 
