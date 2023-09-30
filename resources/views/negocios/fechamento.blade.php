@@ -4,6 +4,8 @@
 use App\Enums\UserStatus;
 use App\Models\User;
 use Carbon\Carbon;
+use App\Enums\SimNao;
+use App\Enums\Tabela;
 
 function to_data($data)
 {
@@ -20,38 +22,80 @@ function to_data($data)
         .mb-3 {
             margin-bottom: 0.25rem !important;
         }
+
+        @media print {
+            .myDivToPrint {
+                background-color: white;
+                height: 100%;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0;
+                padding: 15px;
+                font-size: 14px;
+                line-height: 18px;
+            }
+        }
     </style>
-    <div class="container-fluid">
+    <div class="container-fluid" id="areaprint">
         <div class="row">
             <div class="col-sm-12">
                 <!-- Profile -->
                 <div class="card bg-secondary">
                     <div class="card-body profile-user-box">
                         <div class="row">
-                            <div class="col-sm-12">
+                            <div class="col-sm-6">
                                 <div class="row align-items-center">
-
-                                    <a href="{{ route('negocio_edit', ['id' => $negocio->id]) }}">
-
-                                        <div class="col-auto">
-                                            <div class="avatar-lg">
-                                                <img src="{{ url('') }}/images/users/avatars/user-padrao.png"
-                                                    alt="" class="rounded-circle img-thumbnail">
-                                            </div>
+                                    <div class="col-auto">
+                                        <div class="avatar-lg">
+                                            <img src="{{ url('') }}/images/users/avatars/user-padrao.png"
+                                                alt="" class="rounded-circle img-thumbnail">
                                         </div>
-                                        <div class="col-sm-12">
-                                            <div>
-                                                <p class="font-20 text-white-50">FICHA DE CADASTRAMENTO DE VENDA</p>
-                                                <p class="font-20 text-white-50">
+                                    </div>
+                                    <div class="col-sm-12">
+                                        <div>
+                                            <p class="font-20 text-white-50">FICHA DE CADASTRAMENTO DE VENDA</p>
+                                            <p class="font-20 text-white-50">
 
 
-                                                    Cliente: {{ $negocio->lead->nome }}
+                                                Cliente: {{ $negocio->lead->nome }}
 
-                                                </p>
+                                            </p>
 
-                                            </div>
                                         </div>
-                                    </a>
+                                    </div>
+
+
+                                </div>
+                            </div> <!-- end col-->
+
+                            <div class="col-sm-6">
+                                <div class="text-center mt-sm-0 mt-3 text-sm-end">
+
+                                    <div class="btn-group mt-sm-0 mt-3 text-sm-end">
+                                        <a type="button" class="btn btn-primary" onclick="PrintElement()" href="#"
+                                            aria-haspopup="true" aria-expanded="false">
+                                            <i class="mdi mdi-printer"></i><span></span></a>
+                                    </div>
+
+                                    <div class="btn-group mt-sm-0 mt-3 text-sm-end">
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="mdi mdi-apps"></i><span></span>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item"
+                                                href="{{ route('negocio_edit', ['id' => $negocio->id]) }}">Editar
+                                                Negócio</a>
+
+
+                                        </div>
+
+
+
+                                    </div>
                                 </div>
                             </div> <!-- end col-->
 
@@ -84,15 +128,22 @@ function to_data($data)
                                                 name="nome">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                             <input type="text" class="form-control form-control-light pfechamento"
                                                 data-single-date-picker="true"
-                                                value="{{ to_data($negocio->lead->datanasc) }}" name="data_nasc">
+                                                value="{{ to_data($negocio->lead->data_nasc) }}" name="data_nasc">
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">EMAIL</label>
+                                            <input type="text" class="form-control" value="{{ $negocio->lead->email }}"
+                                                name="email">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">TELEFONE</label>
                                             <input type="text" class="form-control"
@@ -118,6 +169,51 @@ function to_data($data)
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">CEP</label>
+                                            <input type="text" class="form-control" value="{{ $negocio->lead->cep }}"
+                                                name="cep">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">ENDEREÇO</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->lead->endereco }}" name="endereco">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">NÚMERO</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->lead->numero }}" name="numero">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">BAIRRO</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->lead->bairro }}" name="bairro">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">CIDADE</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->lead->cidade }}" name="cidade">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">ESTADO</label>
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->lead->estado }}" name="estado">
+                                        </div>
+                                    </div>
+
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-4">
@@ -139,7 +235,7 @@ function to_data($data)
                                         <div class="mb-3">
                                             <label for="email" class="form-label">ORGÃO EXPEDITOR</label>
                                             <input type="text" class="form-control" name="orgao_exp"
-                                                value="{{ $negocio->lead->orgao }}">
+                                                value="{{ $negocio->lead->orgao_exp }}">
                                         </div>
                                     </div>
                                 </div>
@@ -183,9 +279,6 @@ function to_data($data)
                                         </div>
                                     </div>
                                 </div>
-
-
-
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
@@ -194,7 +287,6 @@ function to_data($data)
                                                 value="{{ $negocio->lead->formacao }}" name="formacao">
                                         </div>
                                     </div>
-
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">PROFISSÃO/CARGO</label>
@@ -209,12 +301,7 @@ function to_data($data)
                                                 value="{{ $negocio->lead->renda_liquida }}">
                                         </div>
                                     </div>
-
                                 </div>
-
-
-
-
                                 <h5 class="mb-3 text-uppercase bg-warning p-2"><i
                                         class="mdi mdi-office-building me-1"></i> INFORMAÇÕES PESSOAIS DO CÔNJUDE</h5>
 
@@ -222,8 +309,8 @@ function to_data($data)
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">NOME COMPLETO</label>
-                                            <input type="text" class="form-control" value="{{ $conjuge->nome }}"
-                                                name="conj_nome">
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->conjuge->nome }}" name="conj_nome">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -231,14 +318,14 @@ function to_data($data)
                                             <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                             <input type="text" class="form-control form-control-light pfechamento"
                                                 data-single-date-picker="true" name="conj_data_nasc"
-                                                value="{{ to_data($conjuge->data_nasc) }}">
+                                                value="{{ to_data($negocio->conjuge->data_nasc) }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">TELEFONE</label>
-                                            <input type="text" class="form-control" value="{{ $conjuge->telefone }}"
-                                                name="conf_telefone">
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->conjuge->telefone }}" name="conf_telefone">
                                         </div>
                                     </div>
                                 </div>
@@ -246,33 +333,31 @@ function to_data($data)
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">CPF</label>
-                                            <input type="text" class="form-control" value="{{ $conjuge->cpf }}"
-                                                name="conj_cpf">
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->conjuge->cpf }}" name="conj_cpf">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">RG</label>
                                             <input type="text" class="form-control" name="conj_rg"
-                                                value="{{ $conjuge->rg }}">
+                                                value="{{ $negocio->conjuge->rg }}">
                                         </div>
                                     </div>
-
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">ORGÃO EXPEDITOR</label>
                                             <input type="text" class="form-control" name="conj_orgao_exp"
-                                                value="{{ $conjuge->orgao_exp }}">
+                                                value="{{ $negocio->conjuge->orgao_exp }}">
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">DATA DE EXPEDIÇÃO</label>
                                             <input type="text" class="form-control form-control-light pfechamento"
-                                                data-single-date-picker="true" value="{{ to_data($conjuge->data_exp) }}"
+                                                data-single-date-picker="true" value="{{ $negocio->conjuge->data_exp }}"
                                                 name="conj_data_exp">
                                         </div>
                                     </div>
@@ -281,32 +366,30 @@ function to_data($data)
                                         <div class="mb-3">
                                             <label for="email" class="form-label">NACIONALIDADE</label>
                                             <input type="text" class="form-control" name="conj_nacionalidade"
-                                                value="{{ $conjuge->nacionalidade }}">
+                                                value="{{ $negocio->conjuge->nacionalidade }}">
                                         </div>
                                     </div>
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">NATURALIDADE</label>
                                             <input type="text" class="form-control" name="conj_naturalidade"
-                                                value="{{ $conjuge->naturalidade }}">
+                                                value="{{ $negocio->conjuge->naturalidade }}">
                                         </div>
                                     </div>
-
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">GÊNERO</label>
                                             <input type="text" class="form-control" name="conj_genero"
-                                                value="{{ $conjuge->genero }}">
+                                                value="{{ $negocio->conjuge->genero }}">
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">FORMAÇÃO</label>
-                                            <input type="text" class="form-control" value="{{ $conjuge->formacao }}"
-                                                name="conj_formacao">
+                                            <input type="text" class="form-control"
+                                                value="{{ $negocio->conjuge->formacao }}" name="conj_formacao">
                                         </div>
                                     </div>
 
@@ -314,14 +397,14 @@ function to_data($data)
                                         <div class="mb-3">
                                             <label for="email" class="form-label">PROFISSÃO/CARGO</label>
                                             <input type="text" class="form-control" name="conj_profissao"
-                                                value="{{ $conjuge->profissao }}">
+                                                value="{{ $negocio->conjuge->profissao }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">RENDA LIQUIDA MENSAL</label>
-                                            <input type="text" class="form-control" name="conj_renda_liquida"
-                                                value="{{ $conjuge->renda_liquida }}">
+                                            <input type="text" class="form-control money" name="conj_renda_liquida"
+                                                value="{{ $negocio->conjuge->renda_liquida }}">
                                         </div>
                                     </div>
                                 </div>
@@ -426,8 +509,17 @@ function to_data($data)
                                             <label for="firstname" class="form-label">GRUPO EM FORMAÇÃO</label>
                                             <select class="form-select" name="grupo_em_formacao">
                                                 <option selected value="">Selecione</option>
-                                                <option value="sim">SIM</option>
-                                                <option value="nao">NÃO</option>
+                                                @foreach (SimNao::all() as $res)
+                                                    @if ($fechamento->grupo_em_formacao == $res)
+                                                        <option value="{{ $res }}" selected>{{ $res }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $res }}">{{ $res }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
+
+
                                             </select>
                                         </div>
                                     </div>
@@ -436,8 +528,15 @@ function to_data($data)
                                             <label for="firstname" class="form-label">GRUPO EM ANDAMENTO</label>
                                             <select class="form-select" name="grupo_em_andamento">
                                                 <option selected value="">Selecione</option>
-                                                <option value="sim">SIM</option>
-                                                <option value="nao">NÃO</option>
+                                                @foreach (SimNao::all() as $res)
+                                                    @if ($fechamento->grupo_em_andamento == $res)
+                                                        <option value="{{ $res }}" selected>{{ $res }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $res }}">{{ $res }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
@@ -486,11 +585,20 @@ function to_data($data)
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">TABELA</label>
+
                                             <select class="form-select" aria-label="Default select example"
                                                 name="tabela">
+
                                                 <option selected value="">Selecione</option>
-                                                <option value="cima">DE CIMA</option>
-                                                <option value="baixo">DE BAIXO</option>
+                                                @foreach (Tabela::all() as $res)
+                                                    @if ($fechamento->tabela == $res)
+                                                        <option value="{{ $res }}" selected>{{ $res }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $res }}">{{ $res }}
+                                                        </option>
+                                                    @endif
+                                                @endforeach
 
                                             </select>
                                         </div>
@@ -534,7 +642,7 @@ function to_data($data)
                                     <div class="col-md-3">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">TOTAL ANTECIPADO</label>
-                                            <input type="text" class="form-control" name="total_antecipado"
+                                            <input type="text" class="form-control money" name="total_antecipado"
                                                 value="{{ $fechamento->total_antecipado }}">
                                         </div>
                                     </div>
@@ -552,62 +660,88 @@ function to_data($data)
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">PRIMEIRA PARCELA</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control money"
                                                 value="{{ $fechamento->primeira_parcela }}" name="primeira_parcela">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">TOTAL PAGO EM GERAL</label>
-                                            <input type="text" class="form-control" name="total_pago"
+                                            <input type="text" class="form-control money" name="total_pago"
                                                 value="{{ $fechamento->total_pago }}">
                                         </div>
                                     </div>
                                 </div>
 
                                 </br>
+
                                 <div class="row">
                                     <label for="email" class="form-label"><strong>FORMA DE PAGAMENTO DO
                                             PLANO:</strong></label>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="dinheiro">
+                                                id="forma_pagamento" value="dinheiro" checked>
                                             <label class="form-check-label" for="forma_pagamento">DINHEIRO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="debito">
+                                                id="forma_pagamento" value="debito" <?php
+                                                if ($fechamento->forma_pagamento == 'debito') {
+                                                    echo 'checked';
+                                                }
+                                                
+                                                ?>>
                                             <label class="form-check-label" for="forma_pagamento">CARTÃO DÉBITO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="credito">
+                                                id="forma_pagamento" value="credito" <?php
+                                                if ($fechamento->forma_pagamento == 'credito') {
+                                                    echo 'checked';
+                                                }
+                                                
+                                                ?>>
                                             <label class="form-check-label" for="forma_pagamento">CARTÃO CRÉDITO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="fgts">
+                                                id="forma_pagamento" value="fgts"<?php
+                                                if ($fechamento->forma_pagamento == 'debito') {
+                                                    echo 'fgts';
+                                                }
+                                                
+                                                ?>>
                                             <label class="form-check-label" for="forma_pagamento">FGTS</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="boleto">
+                                                id="forma_pagamento" value="boleto" <?php
+                                                if ($fechamento->forma_pagamento == 'boleto') {
+                                                    echo 'checked';
+                                                }
+                                                
+                                                ?>>
                                             <label class="form-check-label" for="forma_pagamento">BOLETO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="forma_pagamento"
-                                                id="forma_pagamento" value="transferencia">
+                                                id="forma_pagamento" value="transferencia" <?php
+                                                if ($fechamento->forma_pagamento == 'transferencia') {
+                                                    echo 'checked';
+                                                }
+                                                
+                                                ?>>
                                             <label class="form-check-label"
                                                 for="forma_pagamento">TRANSFERÊNCIA/PIX</label>
                                         </div>
@@ -617,14 +751,9 @@ function to_data($data)
                                 <div class="row">
                                     <label class="form-check-label" for="forma_pagamento">COMENTÁRIOS</label>
                                     <div class="col-md-12">
-
                                         <textarea class="form-check-input" type="radio" name="comentarios" rows="20" cols="100"><textarea></textarea>
-
                                     </div>
-
                                 </div>
-
-
                                 <div class="row">
                                     <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i
                                             class="mdi mdi-office-building me-1"></i> INFORMAÇÕES DO COMERCIAL</h5>
@@ -632,9 +761,9 @@ function to_data($data)
                                         <label for="task-title" class="form-label">Primeiro Vendedor</label>
                                         <select class="form-select form-control-light" id="vendedor_principal"
                                             name="primeiro_vendedor_id">
-                                            <option selected value="{{ Auth::user()->id }}">{{ Auth::user()->name }}
+                                            <option selected value="">Selecione</option>
                                             </option>
-                                            @foreach (\Auth::user()->get() as $user)
+                                            @foreach (\Auth::user()->vendedores() as $user)
                                                 @if ($user->id != Auth::user()->id)
                                                     @if ($user->id == $fechamento->primeiro_vendedor_id)
                                                         <option value="{{ $user->id }}" selected>{{ $user->name }}
@@ -651,7 +780,7 @@ function to_data($data)
                                         <select class="form-select form-control-light" id="vendedor_secundario"
                                             name="segundo_vendedor_id">
                                             <option selected value="">Selecione</option>
-                                            @foreach (\Auth::user()->get() as $user)
+                                            @foreach (\Auth::user()->vendedores() as $user)
                                                 @if ($user->id == $fechamento->segundo_vendedor_id)
                                                     <option value="{{ $user->id }}" selected>{{ $user->name }}
                                                     </option>
@@ -666,7 +795,7 @@ function to_data($data)
                                         <select class="form-select form-control-light" id="vendedor_secundario"
                                             name="terceiro_vendedor_id">
                                             <option selected value="">Selecione</option>
-                                            @foreach (\Auth::user()->get() as $user)
+                                            @foreach (\Auth::user()->vendedores() as $user)
                                                 @if ($user->id != Auth::user()->id)
                                                     @if ($user->id == $fechamento->terceiro_vendedor_id)
                                                         <option value="{{ $user->id }}" selected>{{ $user->name }}
@@ -679,11 +808,12 @@ function to_data($data)
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row" hidden>
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">COMISSÃO VENDEDOR 1</label>
-                                            <input type="text" class="form-control" value="">
+                                            <input type="text" class="form-control"
+                                                value="{{ $fechamento->comissao }}">
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -699,77 +829,93 @@ function to_data($data)
                                         </div>
                                     </div>
                                 </div>
-
                                 </br>
-
-
                                 <h5 class="mb-3 text-uppercase bg-success p-2"><i
                                         class="mdi mdi-office-building me-1"></i> CHECAGEM DO ADMINISTRATIVO</h5>
-
                                 <div class="row">
-
                                     <label for="email" class="form-label"><strong>:</strong></label>
-
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="doc_consorciado">
+                                            <input class="form-check-input" type="checkbox" name="doc_consorciado"
+                                                <?php if ($fechamento->doc_consorciado) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">DOCUMENTO CONSÓRCIADO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="doc_conjuge">
+                                            <input class="form-check-input" type="checkbox" name="doc_conjuge"
+                                                <?php if ($fechamento->doc_conjuge) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">DOCUMENTO CÔNJUGUE</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="comp_pagamento">
+                                            <input class="form-check-input" type="checkbox" name="comp_pagamento"
+                                                <?php if ($fechamento->comp_pagamento) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">COMPROVANTE PAGAMENTO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="comp_endereco">
+                                            <input class="form-check-input" type="checkbox" name="comp_endereco"
+                                                <?php if ($fechamento->comp_endereco) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">COMPROVANTE ENDEREÇO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="comp_venda">
+                                            <input class="form-check-input" type="checkbox" name="comp_venda"
+                                                <?php if ($fechamento->comp_venda) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">COMPROVANTE VENDA</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="self_declaracao">
+                                            <input class="form-check-input" type="checkbox" name="self_declaracao"
+                                                <?php if ($fechamento->self_declaracao) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label" for="flexSwitchCheckDefault">SELF
                                                 DECLARAÇÃO</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="controle_qualidade">
+                                            <input class="form-check-input" type="checkbox" name="controle_qualidade"
+                                                <?php if ($fechamento->controle_qualidade) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">CONTROLE DE QUALIDADE</label>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
                                         <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" name="video">
+                                            <input class="form-check-input" type="checkbox" name="video"
+                                                <?php if ($fechamento->video) {
+                                                    echo 'checked';
+                                                } ?>>
                                             <label class="form-label form-check-label"
                                                 for="flexSwitchCheckDefault">VIDEO</label>
                                         </div>
                                     </div>
                                     </br>
-
                                 </div>
-
                                 <input name="negocio_id" value="{{ app('request')->id }}" hidden>
                                 <div class="text-end">
                                     <button type="text"class="btn btn-info mt-2" id="gerar_protocolo"><i
@@ -875,5 +1021,10 @@ function to_data($data)
                 $('#fechamento-protocolo').modal('show');
                 event.preventDefault();
             });
+
+        function PrintElement() {
+
+            print();
+        }
     </script>
 @endsection

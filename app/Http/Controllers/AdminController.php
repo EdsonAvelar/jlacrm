@@ -166,12 +166,6 @@ class AdminController extends Controller
 
         $user->avatar = $imageName;
         $user->save();
-
-       #$image_path = $request->file('image')->store('image/users', 'public');
-
-        #File::makeDirectory(＄path, 0777, true, true);
-
-
         return back()->with("status", "Imagem salva com sucesso");
     }
 }

@@ -116,7 +116,14 @@ class User extends Authenticatable
     {
       
       return $this->where('status', UserStatus::ativo)->get();
+    }
 
+    public function vendedores()
+    {
+      $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
+      $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo] )->get();
+
+      return $users;
     }
 
 }

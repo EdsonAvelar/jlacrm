@@ -1,14 +1,8 @@
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-KDP7THC');</script>
+
 <!-- End Google Tag Manager -->
 
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-
-<meta name="facebook-domain-verification" content="aavuiu3h07oo0p09zmc7yz4afs0k3u" />
 
 
 <style type="text/css">
@@ -56,9 +50,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 		width: 100%;
 		height:	100%;
 	}
-
-
-
 
 	hr.proposta {
 		margin-top: 50px;

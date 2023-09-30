@@ -262,14 +262,18 @@ class NegocioController extends Controller
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
-
+        $conjuge = null;
         if ( $negocio->lead->conjuge_id ){
             $conjuge = Lead::find($negocio->lead->conjuge_id);
         }else {
+           
             $conjuge = new Lead();
+            $conjuge->nome = "";
+            $conjuge->telefone = "";
+            $conjuge->save();
         }
         
-        #id = $negocio->fechamento_id;
+        $id = $conjuge->conjuge_id;
 
         if ($negocio->fechamento_id ){
             $fechamento = Fechamento::find( $negocio->fechamento_id);
@@ -277,10 +281,12 @@ class NegocioController extends Controller
             $fechamento = new Fechamento();
             $fechamento->data_fechamento = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $fechamento->valor = $negocio->valor;
+
+            $negocio->conjuge_id = $conjuge->id;
         }
 
 
-        return view('negocios.fechamento', compact('negocio','conjuge','fechamento') );
+        return view('negocios.fechamento', compact('negocio','fechamento') );
     }
 
     public function negocio_get(Request $request) {
@@ -368,9 +374,6 @@ class NegocioController extends Controller
         
         $etapa = EtapaFunil::find($negocio->etapa_funil_id)->nome;
 
-        //$negocio->etapa_funil_id'
-
-        
 
         if ($etapa == "REUNIAO"){
 

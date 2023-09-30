@@ -43,7 +43,6 @@ class FechamentoController extends Controller
             $venda = Fechamento::find($negocio->fechamento_id);
         }else {
             $venda = new Fechamento();
-            
         }
         
         $docs = ['data_fechamento','data_assembleia',
@@ -56,9 +55,7 @@ class FechamentoController extends Controller
 
         $venda->valor = $valor;
 
-        
         //DADOS DO PLANO CONTRATADO
-        
         $venda['marca'] = $input['marca'];
         $venda['modelo'] = $input['modelo'];
         $venda['codigo_bem'] = $input['codigo_bem'];
@@ -69,6 +66,7 @@ class FechamentoController extends Controller
         $venda['duracao_plano'] = $input['duracao_plano'];
         $venda['tipo_plano'] = $input['tipo_plano'];
         $venda['plano_leve'] = $input['plano_leve'];
+        $venda['especie'] = $input['especie'];
         $venda['seguro_prestamista'] = $input['seguro_prestamista'];
         $venda['grupo_em_formacao'] = $input['grupo_em_formacao'];
         $venda['grupo_em_andamento'] = $input['grupo_em_andamento'];
@@ -89,9 +87,7 @@ class FechamentoController extends Controller
         $venda['primeira_parcela'] = $input['primeira_parcela'];
         $venda['total_pago'] = $input['total_pago'];
 
-        if ( in_array('forma_pagamento',$input)){
-            $venda['forma_pagamento'] = $input['forma_pagamento'];
-        }
+        $venda['forma_pagamento'] = $input['forma_pagamento'];
         
          // CHECAGEM DO ADMINISTRATIVO
         $docs = ['doc_consorciado','doc_conjuge','comp_pagamento','comp_endereco',
@@ -130,8 +126,9 @@ class FechamentoController extends Controller
         $conjuge['orgao_exp'] = $input['conj_orgao_exp'];
         $conjuge['data_exp'] = $input['conj_data_exp'];
         $conjuge['nacionalidade'] = $input['conj_nacionalidade'];
-        $conjuge['naturalidade'] = $input['conj_naturalidade'];
         $conjuge['genero'] = $input['conj_genero'];
+        $conjuge['naturalidade'] = $input['conj_naturalidade'];
+        $conjuge['estado_civil'] = $input['estado_civil'];
         $conjuge['formacao'] = $input['conj_formacao'];
         $conjuge['profissao'] = $input['conj_profissao'];
         $conjuge['renda_liquida'] = $input['conj_renda_liquida'];
@@ -154,10 +151,20 @@ class FechamentoController extends Controller
         $lead['data_exp'] = $input['data_exp'];
         $lead['nacionalidade'] = $input['nacionalidade'];
         $lead['naturalidade'] = $input['naturalidade'];
+        $lead['estado_civil'] = $input['estado_civil'];
         $lead['genero'] = $input['genero'];
         $lead['formacao'] = $input['formacao'];
         $lead['profissao'] = $input['profissao'];
         $lead['renda_liquida'] = $input['renda_liquida'];
+        
+        $lead['email'] = $input['email'];
+        $lead['cep'] = $input['cep'];
+        $lead['endereco'] = $input['endereco'];
+        $lead['numero'] = $input['numero'];
+        $lead['bairro'] = $input['bairro'];
+        $lead['cidade'] = $input['cidade'];
+        $lead['estado'] = $input['estado'];
+ 
         $lead->save();
         
         # Atualizar tipo de negociacao
@@ -178,7 +185,7 @@ class FechamentoController extends Controller
     {
         $input = $request->all();
         $negocio_id = $input['negocio_id'];
-        Negocio::where('id',$negocio_id)->update(['status'=> NegocioStatus::PERDIDO]);
+        Negocio::where('id',$negocio_id)->update(['status' => NegocioStatus::PERDIDO]);
 
         Atividade::add_atividade(\Auth::user()->id, "Negócio PERDIDO", $negocio_id);
 

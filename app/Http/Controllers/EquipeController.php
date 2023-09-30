@@ -18,6 +18,20 @@ class EquipeController extends Controller
         return view('equipes.index', compact('equipes','semequipes','users'));
     }
 
+    
+    public function equipe_get(Request $request) {
+
+        $id = $request->query('id');
+        $equipe = Equipe::find($id);
+
+        $lider = $equipe->lider_id;
+
+        $user = User::find($equipe->lider_id);
+
+        return [$equipe->id,$equipe->nome, $user->name,$equipe->descricao,$equipe->logo];
+    }
+
+
 
     public function create(Request $request)
     {

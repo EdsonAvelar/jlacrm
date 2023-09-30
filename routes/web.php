@@ -154,6 +154,8 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
             Route::post('/excluir', [EquipeController::class, 'excluir']);           
             Route::post('/create', [EquipeController::class, 'create']);           
 
+            Route::get('/get', [EquipeController::class, 'equipe_get'])->name('equipe_get');
+
         }
     );
 });

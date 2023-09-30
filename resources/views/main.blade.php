@@ -7,28 +7,6 @@ use Carbon\Carbon;
 
 <head>
 
-
-    <!-- Google Tag Manager -->
-    <script>
-        (function(w, d, s, l, i) {
-            w[l] = w[l] || [];
-            w[l].push({
-                'gtm.start': new Date().getTime(),
-                event: 'gtm.js'
-            });
-            var f = d.getElementsByTagName(s)[0],
-                j = d.createElement(s),
-                dl = l != 'dataLayer' ? '&l=' + l : '';
-            j.async = true;
-            j.src =
-                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
-            f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-T8M2RFC');
-    </script>
-    <!-- End Google Tag Manager -->
-
-
-
     <meta charset="utf-8">
     <title>{{ config('nome') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -48,6 +26,10 @@ use Carbon\Carbon;
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
         rel="stylesheet">
 
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/vue-dragula@1.3.1/styles/dragula.min.css" />
+
+
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     @yield('headers')
 </head>
@@ -62,12 +44,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 <body class="loading" <?php echo $style; ?>
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
-    <!-- Begin page -->
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T8M2RFC" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
+    
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
     <div class="wrapper">

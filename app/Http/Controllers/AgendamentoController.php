@@ -126,7 +126,7 @@ class AgendamentoController extends Controller
         $query = [
             ['negocio_id', '=', $negocio_id ],
             ['user_id', '=', $proprietario_id],
-            ['data_agendado', '=', $data_agendado]
+          //  ['data_agendado', '=', $data_agendado]
         ];
 
         $agendamento = Agendamento::where($query)->first();
@@ -152,6 +152,8 @@ class AgendamentoController extends Controller
             $agendamento->negocio_id = $negocio_id;
             $agendamento->user_id = $proprietario_id;
             $agendamento->save();
+
+            Atividade::add_atividade(\Auth::user()->id, "Reagendamento feito para ".$agendamento->data_agendamento, $negocio_id );
 
             return [Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y'), $hora];
         }
