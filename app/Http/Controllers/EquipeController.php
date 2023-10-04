@@ -12,8 +12,9 @@ class EquipeController extends Controller
     public function index(){
 
         $equipes = Equipe::all();
-        $semequipes = User::doesntHave('equipe')->get();
-        $users = User::all();
+        $semequipes =  (new User())->vendedores_sem_equipes();
+
+        $users = (new User())->vendedores();
 
         return view('equipes.index', compact('equipes','semequipes','users'));
     }

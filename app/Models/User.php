@@ -126,4 +126,14 @@ class User extends Authenticatable
       return $users;
     }
 
+    public function vendedores_sem_equipes()
+    {
+
+
+      $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
+      $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo, 'equipe_id' => null] )->get();
+
+      return $users;
+    }
+
 }

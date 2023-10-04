@@ -119,6 +119,19 @@ class DashboardController extends Controller
             $count = Reuniao::where($query)->whereIn('user_id', $ids)->count();
             array_push($output['reunioes'], $count);
 
+
+            // #########
+            // Proposta
+            // #########
+            $query = [
+                ['data_proposta', '>=', $from ],
+                ['data_proposta', '<=', $to],
+            ];
+
+            $count = Proposta::where($query)->whereIn('user_id', $ids)->count();
+            array_push($output['propostas'], $count);
+
+
             // #########
             // Aprovacao
             // #########

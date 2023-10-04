@@ -114,7 +114,7 @@
                 function(start, end, label) {
                     //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
                     window.location.href = "{{ url('equipes?') }}" + "data_inicio=" + start.format(
-                        'DD/MM/YYYY') +
+                            'DD/MM/YYYY') +
                         "&" + "data_fim=" + end.format('DD/MM/YYYY');
 
                 });

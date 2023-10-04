@@ -762,15 +762,12 @@ function to_data($data)
                                         <select class="form-select form-control-light" id="vendedor_principal"
                                             name="primeiro_vendedor_id">
                                             <option selected value="">Selecione</option>
-                                            </option>
                                             @foreach (\Auth::user()->vendedores() as $user)
-                                                @if ($user->id != Auth::user()->id)
-                                                    @if ($user->id == $fechamento->primeiro_vendedor_id)
-                                                        <option value="{{ $user->id }}" selected>{{ $user->name }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                    @endif
+                                                @if ($user->id == $fechamento->primeiro_vendedor_id)
+                                                    <option value="{{ $user->id }}" selected>{{ $user->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
@@ -796,13 +793,11 @@ function to_data($data)
                                             name="terceiro_vendedor_id">
                                             <option selected value="">Selecione</option>
                                             @foreach (\Auth::user()->vendedores() as $user)
-                                                @if ($user->id != Auth::user()->id)
-                                                    @if ($user->id == $fechamento->terceiro_vendedor_id)
-                                                        <option value="{{ $user->id }}" selected>{{ $user->name }}
-                                                        </option>
-                                                    @else
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                    @endif
+                                                @if ($user->id == $fechamento->terceiro_vendedor_id)
+                                                    <option value="{{ $user->id }}" selected>{{ $user->name }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
                                                 @endif
                                             @endforeach
                                         </select>
