@@ -10,10 +10,17 @@
         max-width: 500px;
     }
 
-    #equipe_logo {
-        display: block;
-        width: 100px;
-        height: 100px;
+    @media screen and (max-width: 767px) {
+        #equipe_logo {
+            display: block;
+            width: 100px;
+            height: 100px;
+        }
+    }
+
+    .container_exp {
+
+        overflow-y: scroll;
     }
 </style>
 @section('main_content')
@@ -146,7 +153,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="criar_equipeLeaderLabel">Mudar de lider</h5>
+                        <h5 class="modal-title" id="criar_equipeLeaderLabel">Criar Equipe</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -191,7 +198,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <input type="submit" class="btn btn-success mt-2" value="Enviar">
+                        <input type="submit" class="btn btn-success mt-2" value="Criar">
                         <input type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" value="Cancelar">
                     </div>
                 </div>
@@ -249,7 +256,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="text" id="editar_equipe_id" name="editar_equipe_id" hidden value="">
-                        <input type="submit" class="btn btn-success mt-2" value="Enviar">
+                        <input type="submit" class="btn btn-success mt-2" value="Atualizar">
                         <input type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" value="Cancelar">
                     </div>
                 </div>
@@ -276,7 +283,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="text" id="excluir_equipe_id" name="excluir_equipe_id" hidden value="">
-                        <input type="submit" class="btn btn-success mt-2" value="Enviar">
+                        <input type="submit" class="btn btn-success mt-2" value="Deletar">
                         <input type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" value="Cancelar">
                     </div>
                 </div>
@@ -304,7 +311,7 @@
         });
 
 
-        console.log(cont);
+
 
         var drake = dragula(cont);
 
@@ -345,7 +352,7 @@
                 type: 'get',
                 Type: 'json',
                 success: function(res) {
-                    console.log(res)
+
 
                     $('#editar_equipe_id').val(res[0]);
                     $('#edit_nome_equipe').val(res[3]);
@@ -354,10 +361,14 @@
                             0] +
                         '/' +
                         res[4]);
+
+                    $('#editarequipe_modal').modal('show');
                 }
+
+
             });
 
-            $('#editarequipe_modal').modal('show');
+
         });
 
 
@@ -400,5 +411,37 @@
         function EditInputImageLoaded(e) {
             $('#edit_img_equipe').attr('src', e.target.result);
         };
+
+        function change_max_height() {
+            var height__ = parseInt(document.documentElement.clientHeight) - 210;
+
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                $('.container_exp').css({
+                    "max-height": height__ + 100
+                })
+            } else {
+                $('.container_exp').css({
+                    "max-height": height__
+                })
+            }
+
+            //set_columns_height();
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+
+            change_max_height()
+        });
+
+        $(window).resize(function() {
+            change_max_height()
+            // if (screen.width == window.innerWidth) {
+            //     alert("you are on normal page with 100% zoom");
+            // } else if (screen.width > window.innerWidth) {
+            //     alert("you have zoomed in the page i.e more than 100%");
+            // } else {
+            //     alert("you have zoomed out i.e less than 100%")
+            // }
+        });
     </script>
 @endsection
