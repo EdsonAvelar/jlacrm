@@ -760,7 +760,7 @@ function to_data($data)
                                     <div class="col-md-4">
                                         <label for="task-title" class="form-label">Primeiro Vendedor</label>
                                         <select class="form-select form-control-light" id="vendedor_principal"
-                                            name="primeiro_vendedor_id">
+                                            name="primeiro_vendedor_id" required>
                                             <option selected value="">Selecione</option>
                                             @foreach (\Auth::user()->vendedores() as $user)
                                                 @if ($user->id == $fechamento->primeiro_vendedor_id)

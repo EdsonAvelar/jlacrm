@@ -97,7 +97,10 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
+            
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
+            Route::get('/simulacao_consorcio', [NegocioController::class, 'simulacao_consorcio'])->name('negocios.simulacao_consorcio');
+
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
             Route::get('/proposta/{id}', [NegocioController::class, 'view_proposta'])->name('negocios.view_proposta');
             Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);

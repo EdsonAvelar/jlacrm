@@ -118,7 +118,7 @@ class FechamentoController extends Controller
             $input['conf_telefone'] = "";
         }
         
-        $conjuge['nome'] = $input['conj_nome'];
+        $conjuge['nome'] = strtoupper($input['conj_nome']);
         $conjuge['telefone'] = $input['conf_telefone'];
         $conjuge['data_nasc'] = $input['conj_data_nasc'];
         $conjuge['cpf'] = $input['conj_cpf'];
@@ -140,7 +140,7 @@ class FechamentoController extends Controller
             $lead = new Lead();
         }
 
-        $lead['nome'] = $input['nome'];
+        $lead['nome'] = strtoupper($input['nome']);
         $lead['telefone'] = $input['telefone'];
         $lead['nome_pai'] = $input['nome_pai'];
         $lead['nome_mae'] = $input['nome_mae'];

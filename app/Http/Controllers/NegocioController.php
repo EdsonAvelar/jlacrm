@@ -384,6 +384,23 @@ class NegocioController extends Controller
         
     }
 
+    public function simulacao_consorcio(Request $request){
+       
+        $negocio_id = $request->query('negocio_id');
+        $negocio = Negocio::where('id',$negocio_id)->first();
+        
+        $etapa = EtapaFunil::find($negocio->etapa_funil_id)->nome;
+
+
+        if ($etapa == "REUNIAO"){
+
+            return view('negocios.simulacao_consorcio',compact('negocio'));
+        }else {
+            return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
+        }
+        
+    }
+
     public function criar_proposta(Request $request){
 
         $input = $request->all();      
