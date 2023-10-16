@@ -210,7 +210,11 @@ class DashboardController extends Controller
 
 
         foreach ($weeks as $week){
-            array_push($output['weeks'], $week[0]."/".$week[1]  );
+            
+            $from_label = Carbon::createFromFormat('Y-m-d', $week[0])->format('d/m');
+            $to_label = Carbon::createFromFormat('Y-m-d', $week[1])->format('d/m');;
+
+            array_push($output['weeks'], $from_label." - ".$to_label  );
             
             $from = $week[0];
             $to = $week[1];
