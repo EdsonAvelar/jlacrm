@@ -205,7 +205,7 @@ class DashboardController extends Controller
             $startWeek = Carbon::now()->subWeek($i)->startOfWeek()->format('Y-m-d');
             $endWeek   = Carbon::now()->subWeek($i)->endOfWeek()->format('Y-m-d');
 
-            array_push($weeks,  [$startWeek, $endWeek] );
+            array_unshift($weeks,  [$startWeek, $endWeek] );
         } 
 
 
