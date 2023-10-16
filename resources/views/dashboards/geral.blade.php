@@ -114,7 +114,7 @@
 
 
             @include('dashboards.views.donuts', [
-                'name' => 'VendasPorcentagem',
+                'name' => 'Vendas Porcentagem',
                 'plots' => [$output['vendedores'], $output['vendas']],
             ])
 

@@ -5,7 +5,11 @@
 </style>
 
 <?php
+$fullname = $name;
+
+$name = str_replace(' ', '_', $name);
 $name = strtolower($name);
+
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
@@ -14,7 +18,7 @@ $name = strtolower($name);
 
             <div class="row align-items-center">
                 <a href="#" onclick="showmodal('{{ $name }}')" id="click_{{ $name }}">
-                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $name }}">{{ $name }}
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $fullname }}">{{ $fullname }}
                     </h5>
 
                     <div class="col-12">
@@ -40,7 +44,7 @@ $name = strtolower($name);
             <div class="col-lg-12 col-xl-12 col-md-12">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ $name }}</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">{{ $fullname }}</h5>
 
                     </div>
                     <div class="modal-body">
@@ -83,7 +87,7 @@ $name = strtolower($name);
             data: <?php echo json_encode($plots[1]); ?>,
 
         }],
-        
+
         xaxis: {
             labels: {
                 rotate: -30
@@ -160,7 +164,6 @@ $name = strtolower($name);
     }
 
     chart_option["{{ $name }}"] = options;
-    console.log(chart_option)
 
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
