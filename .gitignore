@@ -23,4 +23,6 @@ debug/*
 logs/debug.log
 /logs
 
+public/images/backup/*
 
+public/images/equipes/*
