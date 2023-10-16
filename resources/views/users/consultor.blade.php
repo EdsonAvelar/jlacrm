@@ -3,9 +3,8 @@
 
 <head itemscope itemtype="http://schema.org/WebSite">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title itemprop="name">Preview bootstrap html snippet. about me</title>
-    <meta name="description" itemprop="description"
-        content="Preview bootstrap html snippet. about me. Copy and paste the html, css and js code for save time, build your app faster and responsive">
+    <title itemprop="name">Reunião Agendada - Adriano Avelar</title>
+    <meta name="description" itemprop="description" content="">
     <meta name="keywords"
         content="html, css, javascript, themes, templates, code snippets, ui examples, react js, react-native, plagraounds, cards, front-end, profile, invoice, back-end, web-designers, web-developers">
     <link itemprop="sameAs" href="https://www.facebook.com/bootdey">
@@ -18,9 +17,11 @@
     <link rel="canonical" href="https://www.bootdey.com/snippets/view/about-me" itemprop="url">
     <meta property="twitter:account_id" content="2433978487" />
 
-    <meta name="twitter:image" content="https://www.bootdey.com/files/SnippetsImages/bootstrap-snippets-1060.png">
-    <meta name="twitter:url" content="https://www.bootdey.com/snippets/preview/about-me?full-screen=true">
+    <meta name="twitter:image" content="{{ url('') }}/images/cartao.png">
+    <meta name="twitter:url" content="">
+    <meta name="twitter:description" content="">
     <meta property="og:image" content="{{ url('') }}/images/cartao.png">
+    <meta property="og:url" content="">
     <meta property="og:description" content="">
 </head>
 
