@@ -20,11 +20,8 @@
 
     <meta name="twitter:image" content="https://www.bootdey.com/files/SnippetsImages/bootstrap-snippets-1060.png">
     <meta name="twitter:url" content="https://www.bootdey.com/snippets/preview/about-me?full-screen=true">
-    <meta property="og:title" content="Preview bootstrap html snippet. about me">
-    <meta property="og:url" content="https://www.bootdey.com/snippets/preview/about-me?full-screen=true">
-    <meta property="og:image" content="https://www.bootdey.com/files/SnippetsImages/bootstrap-snippets-1060.png">
-    <meta property="og:description"
-        content="Preview bootstrap html snippet. about me. Copy and paste the html, css and js code for save time, build your app faster and responsive">
+    <meta property="og:image" content="{{ url('') }}/images/cartao.png">
+    <meta property="og:description" content="">
 </head>
 
 <body>
@@ -36,43 +33,41 @@
                 <div class="row align-items-center flex-row-reverse">
                     <div class="col-lg-6">
                         <div class="about-text go-to">
-                            <h3 class="dark-color">About Me</h3>
-                            <h6 class="theme-color lead">A Lead UX &amp; UI designer based in Canada</h6>
-                            <p>I <mark>design and develop</mark> services for customers of all sizes, specializing in
-                                creating stylish, modern websites, web services and online stores. My passion is to
-                                design digital user experiences through the bold interface and meaningful interactions.
+                            <h3 class="dark-color">Adriano Avelar</h3>
+                            <h6 class="theme-color lead">Consultor Financeiro</h6>
+                            <p style="text-align: justify;">Tenho <mark>10 anos</mark> de experiência e já ajudei mais
+                                de <mark>150</mark> clientes a
+                                conseguirem
+                                realizar o sonho da casa própria ou da compra do seu veículo.
+
                             </p>
                             <div class="row about-list">
-                                <div class="col-md-6">
-                                    <div class="media"> <label>Birthday</label>
-                                        <p>4th april 1998</p>
+                                <div class="col-md-12">
+                                    <div class="media"> <label>Contato</label>
+                                        <p>(11) 98192-2920</p>
                                     </div>
-                                    <div class="media"> <label>Age</label>
-                                        <p>22 Yr</p>
+                                    <div class="media"> <label>Endereço</label>
+
+                                        <a href="https://maps.app.goo.gl/VoRLb6wvSoQJPzya8">Av Independência, 3562 -
+                                            Piracicaba/SP</a>
+
                                     </div>
-                                    <div class="media"> <label>Residence</label>
-                                        <p>Canada</p>
-                                    </div>
-                                    <div class="media"> <label>Address</label>
-                                        <p>California, USA</p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="media"> <label>E-mail</label>
-                                        <p><a href="/cdn-cgi/l/email-protection" class="__cf_email__"
-                                                data-cfemail="3851565e57785c5755595156165b5755">[email&#160;protected]</a>
-                                        </p>
-                                    </div>
-                                    <div class="media"> <label>Phone</label>
-                                        <p>820-885-3321</p>
-                                    </div>
-                                    <div class="media"> <label>Skype</label>
-                                        <p>skype.0404</p>
-                                    </div>
-                                    <div class="media"> <label>Freelance</label>
-                                        <p>Available</p>
+                                    <div class="row">
+                                        <div class="col-md-6"> <a
+                                                href="https://maps.app.goo.gl/VoRLb6wvSoQJPzya8">GOOGLE
+                                                MAPS
+                                                <img src="https://cdn-icons-png.flaticon.com/512/2642/2642502.png"
+                                                    width="50">
+                                            </a></div>
+
+                                        <div class="col-md-6"> <a href="https://maps.app.goo.gl/VoRLb6wvSoQJPzya8">WAZE
+                                                <img width="50"
+                                                    src="https://iconlogovector.com/uploads/images/2023/03/md-35c57b2f19b2a6138825e8fb29e8344251.jpg"></a>
+
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -86,28 +81,32 @@
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="500" data-speed="500">500</h6>
-                                <p class="m-0px font-w-600">Happy Clients</p>
+                                <p class="m-0px font-w-600">Clientes Felizes</p>
                             </div>
                         </div>
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="150" data-speed="150">150</h6>
-                                <p class="m-0px font-w-600">Project Completed</p>
+                                <p class="m-0px font-w-600">Imoveis Entregues</p>
                             </div>
                         </div>
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="850" data-speed="850">850</h6>
-                                <p class="m-0px font-w-600">Photo Capture</p>
+                                <p class="m-0px font-w-600">Carros Entregues</p>
                             </div>
                         </div>
                         <div class="col-6 col-lg-3">
                             <div class="count-data text-center">
                                 <h6 class="count h2" data-to="190" data-speed="190">190</h6>
-                                <p class="m-0px font-w-600">Telephonic Talk</p>
+                                <p class="m-0px font-w-600">Maquinários</p>
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="row align-items-center flex-row-reverse">
+                    <button class="btn btn-button btn-success"> SIMULAR </button>
                 </div>
             </div>
         </section>
@@ -115,12 +114,23 @@
             /*<![CDATA[*/
             body {
                 color: #6F8BA4;
-                margin-top: 20px;
+
+            }
+
+            .btn {
+                padding: 20px;
+                margin: 10px;
+                width: 100%;
             }
 
             .section {
-                padding: 100px 0;
+                padding: 20px 0 40px 0;
                 position: relative;
+            }
+
+            .lead {
+                padding-bottom: 20px;
+
             }
 
             .gray-bg {
