@@ -33,11 +33,9 @@ $name = strtolower($name);
                         </div>
                     </div>
                 </a>
-            </div> <!-- end row-->
-
-        </div> <!-- end card-body -->
-
-    </div> <!-- end card -->
+            </div>
+        </div> 
+    </div>
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
