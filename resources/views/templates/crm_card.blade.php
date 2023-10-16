@@ -49,7 +49,6 @@ if (app('request')->view_card == 'compact') {
                             class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
                 @endif
 
-
                 <hr>
                 @if ($negocio->status == 'ATIVO')
                     <a href="{{ route('negocio_fechamento', ['id' => $negocio_id]) }}"

@@ -2,6 +2,10 @@
     .modal-content {
         width: auto;
     }
+
+    .apexcharts-legend-series {
+        align-self: flex-start;
+    }
 </style>
 
 <?php
@@ -55,103 +59,102 @@ $name = strtolower($name);
 </div>
 
 <script>
+    function formatter(num) {
+        const digits = 0;
+        const lookup = [{
+                value: 1,
+                symbol: ""
+            },
+            {
+                value: 1e3,
+                symbol: "K"
+            },
+            {
+                value: 1e6,
+                symbol: "M"
+            },
+            {
+                value: 1e9,
+                symbol: "G"
+            },
+            {
+                value: 1e12,
+                symbol: "T"
+            },
+            {
+                value: 1e15,
+                symbol: "P"
+            },
+            {
+                value: 1e18,
+                symbol: "E"
+            }
+        ];
+
+
+
+        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+        var item = lookup.slice().reverse().find(function(item) {
+            return num >= item.value;
+        });
+        return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+
+
+        return nFormatter(val, 0);
+    }
+
+
     var options = {
-        theme: {
-            mode: 'light',
-            palette: 'palette7',
-            monochrome: {
-                enabled: false,
-                color: '#111111',
-                shadeTo: 'light',
-                shadeIntensity: 0.65
-            },
-        },
+
+
         chart: {
-            toolbar: {
-                show: false,
-                offsetX: 0,
-                offsetY: 0,
-                tools: {
 
-                },
-
-            },
-            type: 'bar'
+            type: 'donut',
         },
         series: [{
             name: '{{ $name }}',
             data: <?php echo json_encode($plots[1]); ?>,
 
         }],
-        
-        xaxis: {
-            labels: {
-                rotate: -30
-            },
-            categories: <?php echo json_encode($plots[0]); ?>
-        },
-        plotOptions: {
-            bar: {
-                distributed: true,
-                borderRadius: 10,
-                dataLabels: {
-                    position: 'top', // top, center, bottom
-
-                },
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            formatter: function(num) {
-                const digits = 0;
-                const lookup = [{
-                        value: 1,
-                        symbol: ""
-                    },
-                    {
-                        value: 1e3,
-                        symbol: "K"
-                    },
-                    {
-                        value: 1e6,
-                        symbol: "M"
-                    },
-                    {
-                        value: 1e9,
-                        symbol: "G"
-                    },
-                    {
-                        value: 1e12,
-                        symbol: "T"
-                    },
-                    {
-                        value: 1e15,
-                        symbol: "P"
-                    },
-                    {
-                        value: 1e18,
-                        symbol: "E"
-                    }
-                ];
 
 
-
-                const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-                var item = lookup.slice().reverse().find(function(item) {
-                    return num >= item.value;
-                });
-                return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-
-
-                return nFormatter(val, 0);
-            },
-            offsetY: -20,
-            style: {
-                fontSize: '16px',
-                colors: ['#338888']
-            }
-        }
     }
+
+    var a = <?php echo json_encode($plots[1]); ?>;
+    var labels = <?php echo json_encode($plots[0]); ?>;
+
+    var options = {
+        series: a,
+        chart: {
+            type: 'donut',
+        },
+        labels: labels,
+        responsive: [{
+            breakpoint: 480,
+            options: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }],
+        tooltip: {
+            enabled: true,
+
+            y: {
+                formatter: function(value, series) {
+                    return formatter(value);
+                }
+            }
+        },
+
+        legend: {
+            horizontalAlign: 'right',
+            formatter: function(val, opts) {
+                return val + " - " + formatter(opts.w.globals.series[opts.seriesIndex]);
+            }
+        },
+
+    };
 
     try {
         var chart_option = chart_option || [];

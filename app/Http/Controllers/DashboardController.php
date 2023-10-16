@@ -84,8 +84,7 @@ class DashboardController extends Controller
             $ids = $equipe->integrantes()->pluck('id')->toArray();
             $query = [
                 ['data_criacao', '>=', $from ],
-                ['data_criacao', '<=', $to],
-                ['status', '=','ativo']
+                ['data_criacao', '<=', $to]
               
             ];
             $sql = Negocio::where($query)->whereIn('user_id', $ids)->toSql();
@@ -161,6 +160,139 @@ class DashboardController extends Controller
         return view('dashboards.coordenador', compact('output'));
     }
 
+    public function dashboard_semanas(Request $request){
+
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+
+        if ( is_null($data_inicio) and is_null($data_fim) ){
+
+            $dia = intval ( Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d') );
+            if ( $dia <= 20){
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+            }else {
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->format('m/Y'));
+            }
+            
+            $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+            return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
+        }
+
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio);
+        $to = Carbon::createFromFormat('d/m/Y',$data_fim);
+
+
+        $count_weeks = $from->diffInWeeks($to);
+
+ 
+
+
+        $output = [];
+        $output['oportunidades'] = [];
+        $output['agendamentos'] = [];
+        $output['reunioes'] = [];
+        $output['aprovacoes'] = [];
+        $output['vendas'] = [];
+        $output['propostas']= [];
+
+
+        $output['weeks'] = [];
+
+        $weeks = [];
+        for ($i = 0; $i < $count_weeks ; $i = $i + 1){
+
+            $startWeek = Carbon::now()->subWeek($i)->startOfWeek()->format('Y-m-d');
+            $endWeek   = Carbon::now()->subWeek($i)->endOfWeek()->format('Y-m-d');
+
+            array_push($weeks,  [$startWeek, $endWeek] );
+        } 
+
+
+        foreach ($weeks as $week){
+            array_push($output['weeks'], $week[0]."/".$week[1]  );
+            
+            $from = $week[0];
+            $to = $week[1];
+            // #########
+            // Oportunidade
+            // #########
+            $query = [
+                ['data_criacao', '>=', $from ],
+                ['data_criacao', '<=', $to]
+              
+            ];
+
+
+            $count = Negocio::where($query)->count();
+            array_push($output['oportunidades'], $count);
+
+            
+            // #########
+            // Agendamento
+            // #########
+            $query = [
+                ['data_agendamento', '>=', $week[0] ],
+                ['data_agendamento', '<=', $week[1]],
+               
+            ];
+            
+            $count = Agendamento::where($query)->count();
+            array_push($output['agendamentos'], $count);
+
+             // #########
+            // reunioes
+            // #########
+
+            $query = [
+                ['data_reuniao', '>=', $from ],
+                ['data_reuniao', '<=', $to],
+               
+            ];
+            
+            $count = Reuniao::where($query)->count();
+            array_push($output['reunioes'], $count);
+
+            // #########
+            // Proposta
+            // #########
+            $query = [
+                ['data_proposta', '>=', $from ],
+                ['data_proposta', '<=', $to],
+            ];
+
+            $count = Proposta::where($query)->count();
+            array_push($output['propostas'], $count);
+
+            // #########
+            // Aprovacao
+            // #########
+            $query = [
+                ['data_aprovacao', '>=', $from ],
+                ['data_aprovacao', '<=', $to],
+            
+            ];
+            
+            $count = Aprovacao::where($query)->count();
+            array_push($output['aprovacoes'], $count);
+
+            // #########
+            // Fechamento
+            // #########
+            $query = [
+                ['data_fechamento', '>=', $from ],
+                ['data_fechamento', '<=', $to],
+               
+            ];
+            $vendas_totais = Fechamento::where($query)->sum('valor');         
+         
+            array_push($output['vendas'], $vendas_totais);       
+
+        }
+
+        return view('dashboards.semanas', compact('output'));
+    }
+
     public function dashboard(Request $request){
         
         $data_inicio = $request->query('data_inicio');
@@ -202,7 +334,6 @@ class DashboardController extends Controller
             $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
             $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo] )->get();
 
-            
             $output['vendedores'] = array();
             $output['oportunidades'] = array();
             $output['agendamentos'] = array();
@@ -210,7 +341,6 @@ class DashboardController extends Controller
             $output['aprovacoes'] = array();
             $output['vendas'] = array();
             $output['propostas'] = array();
-
 
             foreach ($users as $vendedor){
                 array_push($output['vendedores'], $vendedor->name);
@@ -288,13 +418,10 @@ class DashboardController extends Controller
             
 
             $stats['funil'] = [  $stats['sum_oportunidades'], $stats['sum_agendamentos'], $stats['sum_reunioes'], $stats['sum_propostas'], $stats['sum_aprovacoes'] ,  $stats['sum_vendas'] ];
-                        
             $lead_novos = Negocio::where(['user_id' => NULL, 'status' => 'ativo' ])->count();
 
             $output['lead_novos'] = $lead_novos;
             $output['stats'] = $stats;
-            
-            //dd($output);
 
             return view('dashboards.geral', compact('stats','lead_novos','output'));
         }

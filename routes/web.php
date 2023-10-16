@@ -35,6 +35,8 @@ Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/equipes', [DashboardController::class, 'dashboard_equipes'])->name('dashboard_equipes');
+    Route::get('/semanas', [DashboardController::class, 'dashboard_semanas'])->name('dashboard_semanas');
+
     Route::get('/logout', [AdminController::class, 'logout']);
 
     Route::get('/change-password', [AdminController::class, 'changePassword'])->name('change-password');
@@ -99,7 +101,6 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
             
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
-            Route::get('/simulacao_consorcio', [NegocioController::class, 'simulacao_consorcio'])->name('negocios.simulacao_consorcio');
 
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
             Route::get('/proposta/{id}', [NegocioController::class, 'view_proposta'])->name('negocios.view_proposta');

@@ -44,7 +44,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 <body class="loading" <?php echo $style; ?>
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
-    
+
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
     <div class="wrapper">
@@ -121,6 +121,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <li>
                                         <a
                                             href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
+                                    </li>
+                                    <li>
+                                        <a
+                                            href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanas</a>
                                     </li>
                                 @endif
                             </ul>
