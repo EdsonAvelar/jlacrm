@@ -18,6 +18,11 @@ class AdminController extends Controller
 
         return view('index');
     }
+
+    public function consultor($consultor_nome){
+
+        return view('users.consultor');
+    }
     
 
     public function login(Request  $req){

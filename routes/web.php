@@ -32,6 +32,10 @@ Route::get('/landingpages', [PageController::class, 'landingpages'])->name('land
 Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
 Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
+
+Route::get('/consultor/{slug}', [AdminController::class, 'consultor'])->name('consultor');
+
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/equipes', [DashboardController::class, 'dashboard_equipes'])->name('dashboard_equipes');
