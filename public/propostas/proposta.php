@@ -76,7 +76,7 @@
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">CPF</label>
         <div class="col-sm-2">
-          <input type="text" value="xxx" data-mask='000' name="cpf" class="form-control" id="cpf" placeholder="3 Primeiros Digitos"
+          <input type="text" value="xxx" data-mask='000' name="cpf" class="form-control" id="cpf" placeholder="digite o cpf do cliente"
             required>
         </div>
       </div>
@@ -204,9 +204,17 @@
 
       <hr>
       <br>
-      <label for="formGroupExampleInput">CONSÓRCIO 2</label>
+      <label for="formGroupExampleInput">CONSÓRCIO</label>
       <br>
       <br>
+
+      <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Administradora</label>
+            <div class="col-sm-3">
+                <input type="text" name="con-administradora" class="form-control"
+                    id="administradora" placeholder="Nome da Administradora" value="MULTIMARCAS">
+            </div>
+        </div>
 
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Crédito</label>
@@ -215,7 +223,7 @@
             placeholder="Valor" required>
         </div>
       </div>
-
+      
       <div class="form-group row">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Entrada</label>
         <div class="col-sm-3">

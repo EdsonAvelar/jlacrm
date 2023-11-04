@@ -171,10 +171,8 @@ function convert($frase)
             <table width="100%">
                 <tr>
                     <td align="left">
-                        <!-- ESQUERDA -->
-
                         <?php if ($_POST['apenasconsorcio'] == "1") { ?>
-                        <h4>Modalidade de Crédito: CARTA DE CRÉDITO - CONSÓRCIO</h4>
+                        <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
                         <h4>Simulação: <span style="font-weight: bold;">
                                 Multimarcas</span>
                         </h4>
@@ -264,12 +262,10 @@ function convert($frase)
             <table width="100%">
                 <tr>
                     <td align="left">
-                        <!-- ESQUERDA -->
 
-
-                        <h4>Modalidade de Crédito: CARTA DE CRÉDITO - CONSÓRCIO</h4>
+                        <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
                         <h4>Simulação: <span style="font-weight: bold;">
-                                Multimarcas</span>
+                            <?php echo $_POST['con-administradora']; ?></span></span>
                         </h4>
 
                         <h4>Valor do Bem: <span style="font-weight: bold;">

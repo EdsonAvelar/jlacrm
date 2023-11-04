@@ -420,12 +420,19 @@ class NegocioController extends Controller
         $proposta['user_id'] = \Auth::user()->id;
         $proposta['negocio_id'] = $input['negocio_id'];
 
+        $neg = Negocio::find($input['negocio_id']);
+        $lead = Lead::find($neg->lead->id );
+        $lead->cpf = $input['cpf'];
+        $lead->save();
+
         //*** Faltando */
         $proposta['con-credito'] = $input['con-credito'];
         $proposta['con-adesao'] = $input['con-adesao'];
         $proposta['con-juros-pagos'] = $input['con-juros-pagos'];
         $proposta['modelo'] = $input['modelo']; 
         $proposta['ano'] = $input['ano'];
+
+        $proposta['con-administradora'] = strtoupper( $input['con-administradora'] );
 
         $amortizacao = 'sac';
         if ($request->filled('amortizacao')) {

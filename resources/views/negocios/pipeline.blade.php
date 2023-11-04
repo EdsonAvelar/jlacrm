@@ -617,7 +617,7 @@ $protocolo_hora = 0;
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-12" class="divtext">
-                                <p id="txt_protocolo" rows="22" cols="50">_*REUNIÃO AGENDADA*_ <br>
+                                <p id="txt_protocolo" rows="22" cols="50">-=_*REUNIÃO AGENDADA*_=-<br>
                                     *Protocolo:
                                     {{ random_int(999, 999999) }}/{{ Carbon::now('America/Sao_Paulo')->format('Y') }}*
                                     <br>

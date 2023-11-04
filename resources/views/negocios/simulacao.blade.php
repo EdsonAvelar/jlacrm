@@ -109,8 +109,16 @@ use App\Enums\NegocioTipo;
             <label for="inputEmail3" class="col-sm-2 col-form-label">CPF</label>
             <div class="col-sm-3">
 
-                <input type="text" data-mask='000' name="cpf" class="form-control" id="cpf"
-                    placeholder="3 Primeiros Digitos" value="xxx.xxx.xxx-xx">
+                <input type="text" data-mask='000.000.000-00' name="cpf" class="form-control" id="cpf"
+                    placeholder="CPF do Cliente" value="<?php
+                    
+                    if ($negocio->lead->cpf) {
+                        echo $negocio->lead->cpf;
+                    } else {
+                        echo 'xxx.xxx.xxx-xx';
+                    }
+                    
+                    ?>">
             </div>
         </div>
 
@@ -263,9 +271,17 @@ use App\Enums\NegocioTipo;
 
         <hr>
         <br>
-        <label for="formGroupExampleInput">CONSÓRCIO 2</label>
+        <label for="formGroupExampleInput">CONSÓRCIO</label>
         <br>
         <br>
+
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Administradora</label>
+            <div class="col-sm-3">
+                <input type="text" name="con-administradora" class="form-control" id="administradora"
+                    placeholder="Nome da Administradora" value="MULTIMARCAS">
+            </div>
+        </div>
 
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Crédito</label>
