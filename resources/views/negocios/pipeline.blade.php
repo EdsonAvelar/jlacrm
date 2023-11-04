@@ -642,7 +642,7 @@ $protocolo_hora = 0;
                                     Estacionamento Gratuito<br>
                                     {{ config('nome') }}<br>
                                     <!--SITE: {{ config('site') }}<br> -->
-                                    CNPJ: {{ config('cnpj') }}<br>
+                                    <!-- CNPJ: {{ config('cnpj') }}<br> -->
                                     <br>
                                     Confirme com OK✅<br>
                                 </p>
