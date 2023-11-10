@@ -26,3 +26,6 @@ logs/debug.log
 public/images/backup/*
 
 public/images/equipes/*
+
+public/images/empresa/*
+/public/images/empresa
