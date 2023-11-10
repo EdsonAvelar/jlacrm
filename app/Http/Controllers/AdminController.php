@@ -94,6 +94,8 @@ class AdminController extends Controller
 
         $user = User::find($id);
 
+        $user->slug =  strtolower( str_replace(' ','.', $user->name) );
+
         $equipes = Equipe::all();
 
         $roles = Role::all();

@@ -155,6 +155,14 @@
                                                 value="{{ $user->slug }}" name="slug">
                                         </div>
                                     </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="firstname" class="form-label">Nome</label>
+                                            <a href="{{ route('consultor', ['slug' => $user->slug]) }}">
+                                                {{ $user->name }}</a>
+                                        </div>
+                                    </div>
                                 </div>
 
 

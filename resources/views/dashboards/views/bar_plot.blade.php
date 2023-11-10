@@ -107,7 +107,7 @@ $name = strtolower($name);
         dataLabels: {
             enabled: true,
             formatter: function(num) {
-                const digits = 0;
+                const digits = 1;
                 const lookup = [{
                         value: 1,
                         symbol: ""
@@ -142,8 +142,10 @@ $name = strtolower($name);
 
                 const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
                 var item = lookup.slice().reverse().find(function(item) {
+
                     return num >= item.value;
                 });
+
                 return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
 
 
