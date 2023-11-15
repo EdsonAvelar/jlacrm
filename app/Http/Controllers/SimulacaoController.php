@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Atividade;
+use App\Models\EtapaFunil;
 use App\Models\Lead;
 use App\Models\Proposta;
 use Carbon\Carbon;
@@ -19,17 +20,21 @@ class SimulacaoController extends Controller
         $negocio_id = $request->query('negocio_id');
         $negocio = Negocio::where('id',$negocio_id)->first();
 
-        /*
+
+           
         $etapa = EtapaFunil::find($negocio->etapa_funil_id)->nome;
+
+
         if ($etapa == "REUNIAO"){
 
-            return view('negocios.simulacao',compact('negocio'));
+            return view('negocios.simulacao2',compact('negocio'));
         }else {
             return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
         }
-        */
 
-        return view('negocios.simulacao2',compact('negocio'));
+        
+
+        
     }
 
     public function criar_proposta(Request $request){
