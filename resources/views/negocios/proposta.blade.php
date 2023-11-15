@@ -253,10 +253,7 @@ function convert($frase)
                 </tr>
             </table>
 
-
             <hr class="proposta">
-
-
             <h3>PROPOSTA 2:</h3>
 
             <table width="100%">

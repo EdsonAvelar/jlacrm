@@ -34,7 +34,7 @@ $name = strtolower($name);
                     </div>
                 </a>
             </div>
-        </div> 
+        </div>
     </div>
 </div> <!-- end col -->
 
@@ -61,7 +61,7 @@ $name = strtolower($name);
 
 <script>
     function formatter(num) {
-        const digits = 0;
+        const digits = 2;
         const lookup = [{
                 value: 1,
                 symbol: ""

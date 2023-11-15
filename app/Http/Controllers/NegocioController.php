@@ -459,7 +459,6 @@ class NegocioController extends Controller
         $proposta = Proposta::find($id);
 
 
-        //$con_parcelas =  $proposta['con-parcelas'];
         $subs = array("R","$",".");
         $valor_entrada = floatval( str_replace($subs,"",$proposta['con-entrada']));
         $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas']));

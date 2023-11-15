@@ -459,7 +459,7 @@ function to_data($data)
                                     <div class="col-md-4">
                                         <div class="mb-3">
                                             <label for="firstname" class="form-label">PREÇO DO BEM</label>
-                                            <input type="text" class="form-control"
+                                            <input type="text" class="form-control money"
                                                 value="{{ $fechamento->preco_bem }}" name="preco_bem">
                                         </div>
                                     </div>

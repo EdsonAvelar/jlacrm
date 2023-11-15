@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\SimulacaoController;
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CrmController;
@@ -32,8 +32,18 @@ Route::get('/landingpages', [PageController::class, 'landingpages'])->name('land
 Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar');
 Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
-
 Route::get('/consultor/{slug}', [AdminController::class, 'consultor'])->name('consultor');
+
+
+Route::group(
+    ['prefix' => 'simulacao'],
+    function () {
+        Route::get('/', [SimulacaoController::class, 'simulacao'])->name('simulacao.index');
+        Route::post('/criar_proposta', [SimulacaoController::class, 'criar_proposta'])->name('simulacao.criar_proposta');
+        Route::get('/proposta', [SimulacaoController::class, 'ver_proposta'])->name('simulacao.ver_proposta');
+    }
+);
+
 
 
 Route::group(['middleware' => 'auth'], function () {
@@ -76,6 +86,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         }
     );
+
+
 
     Route::group(
         ['prefix' => 'negocios'],

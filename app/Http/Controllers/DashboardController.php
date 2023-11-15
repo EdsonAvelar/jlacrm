@@ -185,8 +185,6 @@ class DashboardController extends Controller
 
         $count_weeks = $from->diffInWeeks($to);
 
- 
-
 
         $output = [];
         $output['oportunidades'] = [];

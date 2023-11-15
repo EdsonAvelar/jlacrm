@@ -52,6 +52,11 @@ class Negocio extends Model
         return $this->hasMany("App\Models\Proposta");
     }
 
+    public function simulacoes()
+    {
+        return $this->hasMany("App\Models\Simulacao");
+    }
+
     public function etapa_funil()
     {
         return $this->belongsTo("App\Models\EtapaFunil");

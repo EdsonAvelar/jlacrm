@@ -107,7 +107,7 @@ $name = strtolower($name);
         dataLabels: {
             enabled: true,
             formatter: function(num) {
-                const digits = 1;
+                const digits = 2;
                 const lookup = [{
                         value: 1,
                         symbol: ""

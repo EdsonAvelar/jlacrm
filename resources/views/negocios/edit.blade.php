@@ -13,7 +13,6 @@ use App\Enums\ComprovacaoRenda;
 ?>
 
 @section('main_content')
-
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-12">
@@ -68,11 +67,6 @@ use App\Enums\ComprovacaoRenda;
 
                                     </div>
 
-                                    <!--button type="button" class="btn btn-success"><i class="mdi mdi-thumb-up"></i>
-                                                                                                                                                                                    <span>Ganhou</span> </button>
-                                                                                                                                                                                <button type="button" class="btn btn-danger"><i class="mdi mdi-thumb-down"></i>
-                                                                                                                                                                                    <span>Perdeu</span> </button-->
-
                                     <div class="btn-group mt-sm-0 mt-3 text-sm-end">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
                                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,6 +76,11 @@ use App\Enums\ComprovacaoRenda;
                                         <div class="dropdown-menu">
                                             <a class="dropdown-item"
                                                 href="{{ route('negocios.simulacao', ['negocio_id' => $negocio->id]) }}">Simulacao</a>
+
+                                            <a class="dropdown-item"
+                                                href="{{ route('simulacao.index', ['negocio_id' => $negocio->id]) }}">Simulacao
+                                                Multi</a>
+
                                             <a class="dropdown-item"
                                                 href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'status' => 'ativo']) }}">Pipeline</a>
                                             <hr>
@@ -539,12 +538,9 @@ use App\Enums\ComprovacaoRenda;
 
                                     </div>
                                 @endforeach
-
                             </div>
 
-
                             <div class="tab-pane" id="atividades">
-
                                 @if (isset($negocio->atividades))
                                     <div class="timeline-alt pb-0">
                                         @foreach ($negocio->atividades->sortByDesc('id') as $atividade)
@@ -563,30 +559,34 @@ use App\Enums\ComprovacaoRenda;
                                         @endforeach
                                     </div>
                                 @else
-                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>Nenhuma Atividade
+                                    <h5 class="text-uppercase">
+                                        <i class="mdi mdi-briefcase me-1"></i>Nenhuma Atividade
                                     </h5>
                                 @endif
                                 <!-- end timeline -->
                             </div> <!-- end tab-pane -->
 
+                            <?php $nenhum = true; ?>
+
                             <div class="tab-pane" id="propostas">
 
-                                @if (isset($negocio->propostas))
+                                @if (isset($negocio->simulacoes))
                                     <div class="timeline-alt pb-0">
-
-                                        @foreach ($negocio->propostas->sortByDesc('id') as $proposta)
+                                        @foreach ($negocio->simulacoes->sortByDesc('id') as $proposta)
+                                            <?php $nenhum = false; ?>
                                             <div class="timeline-item">
                                                 <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                                 <div class="timeline-item-info">
 
-                                                    <h5 class="mt-0 mb-0">Proposta : ID {{ $proposta->id }}: </h5>
-
+                                                    <h5 class="mt-0 mb-0">Proposta (Versão 2): ID {{ $proposta->id }}
+                                                    </h5>
                                                     <p class="font-14">
-
-                                                        <a href="{{ url('') }}/negocios/proposta/{{ $proposta->id }}"
-                                                            target='_blank'>{{ $proposta->tipo }} de
-                                                            {{ $proposta->credito }}</a>
-
+                                                        <a href="{{ url('') }}/simulacao/proposta?id={{ $proposta->id }}"
+                                                            target='_blank'>Simulação de {{ $proposta->tipo }} de
+                                                            @foreach ($proposta->consorcios as $con)
+                                                                {{ $con['con-credito'] }}
+                                                            @endforeach
+                                                        </a>
                                                         <br><span class="ms-0 font-12">Data de Criação:
                                                             {{ $proposta->created_at }}</span>
                                                     </p>
@@ -595,17 +595,40 @@ use App\Enums\ComprovacaoRenda;
                                             </div>
                                         @endforeach
                                     </div>
-                                @else
+                                @endif
+
+
+                                @if (isset($negocio->propostas))
+                                    <div class="timeline-alt pb-0">
+
+                                        @foreach ($negocio->propostas->sortByDesc('id') as $proposta)
+                                            <?php $nenhum = false; ?>
+                                            <div class="timeline-item">
+                                                <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
+                                                <div class="timeline-item-info">
+                                                    <h5 class="mt-0 mb-0">Proposta (Versão 1): ID {{ $proposta->id }}:
+                                                    </h5>
+                                                    <p class="font-14">
+                                                        <a href="{{ url('') }}/negocios/proposta/{{ $proposta->id }}"
+                                                            target='_blank'>Simulação de {{ $proposta->tipo }}</a>
+
+                                                        <br><span class="ms-0 font-12">Data de Criação:
+                                                            {{ $proposta->created_at }}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+
+
+
+                                @if ($nenhum == true)
                                     <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>Nenhuma Atividade
                                     </h5>
                                 @endif
                                 <!-- end timeline -->
                             </div> <!-- end tab-pane -->
-
-                            <!-- end about me section content -->
-
-
-                            <!-- end timeline content-->
 
                             <div class="tab-pane" id="administrativo">
                                 <form method="POST" action="{{ route('negocio_update') }}">
@@ -762,9 +785,6 @@ use App\Enums\ComprovacaoRenda;
 
     </div>
     <!-- container -->
-
-
-
 @endsection
 
 
