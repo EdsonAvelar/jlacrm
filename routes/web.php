@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SimulacaoController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
@@ -33,6 +34,8 @@ Route::post('/cadastrar', [PageController::class, 'cadastrar'])->name('cadastrar
 Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
 Route::get('/consultor/{slug}', [AdminController::class, 'consultor'])->name('consultor');
+
+Route::get('/webhooks', [WebhookController::class, 'index'])->name('webhook.index');
 
 
 Route::group(
