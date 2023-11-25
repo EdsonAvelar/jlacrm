@@ -265,6 +265,13 @@
                                     Editar Informações
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="#marketing" data-bs-toggle="tab" aria-expanded="false"
+                                    class="nav-link rounded-0 ">
+                                    Marketing
+                                </a>
+                            </li>
+
                         </ul>
                         <div class="tab-content">
                             <div class="tab-pane  show active" id="settings">
@@ -361,6 +368,28 @@
                                 </form>
                             </div>
                             <!-- end settings content-->
+                            <div class="tab-pane" id="marketing">
+
+                                <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                    INFORMAÇÕES DE MARKETING</h5>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="firstname" class="form-label">Nome</label>
+
+                                            <button onclick="myFacebookLogin()" class="btn btn-primary">
+                                                Facebook</button>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+
+                            </div> <!-- end tab-pane -->
+
+
 
                         </div> <!-- end tab-content -->
                     </div> <!-- end card body -->
@@ -418,6 +447,35 @@
 @endsection
 
 @section('specific_scripts')
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1384940535738260',
+                xfbml: true,
+                version: 'v18.0'
+            });
+        };
+
+
+
+        function myFacebookLogin() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    console.log('Welcome!  Fetching your information.... ');
+                    FB.api('/me', function(response) {
+                        console.log('Good to see you, ' + response.name + '.');
+                    });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            }, {
+                scope: 'manage_pages'
+            });
+        }
+    </script>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+
+
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {
