@@ -37,6 +37,8 @@ Route::get('/consultor/{slug}', [AdminController::class, 'consultor'])->name('co
 
 Route::get('/webhooks', [WebhookController::class, 'index'])->name('webhook.index');
 
+Route::post('/webhooks', [WebhookController::class, 'post_index']);
+
 
 Route::group(
     ['prefix' => 'simulacao'],
