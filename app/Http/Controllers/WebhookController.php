@@ -19,6 +19,6 @@ class WebhookController extends Controller
             "hub.verify_token" => "da39a3ee5e6b4b0d3255bfef95601890afd80709"
         ];
             
-        return json_encode($data); 
+        return $challenger; 
     }
 }
