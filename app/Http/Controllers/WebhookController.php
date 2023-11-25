@@ -32,10 +32,13 @@ class WebhookController extends Controller
     
     public function post_index(Request $request) {
 
-        
-        $mode = $request->query('hub_mode');
-        $challenger = $request->query('hub_challenge');
-        $verify_token = $request->query('hub_verify_token');
+        $input = $request->all();    
+
+
+        $mode = $input['hub_mode'];
+
+        $challenger = $input['hub_challenge'];
+        $verify_token = $input['hub_verify_token'];
 
         if ($verify_token ==  "da39a3ee5e6b4b0d3255bfef95601890afd80709"){
             if ($mode == "subscribe"){
