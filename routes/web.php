@@ -116,6 +116,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/fechamento', [NegocioController::class, 'negocio_fechamento'])->name('negocio_fechamento');
 
             Route::post('/importar/atribuir', [NegocioController::class, 'import_atribuir']);
+            Route::post('/importar/massivo', [NegocioController::class, 'import_massivo']);
             Route::post('/negocio_update', [NegocioController::class, 'negocio_update'])->name('negocio_update');
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');

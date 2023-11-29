@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Funil;
 use App\Models\EtapaFunil;
 use App\Models\Fechamento;
 use Illuminate\Http\Request;
 use Validator;
-
+use App\Enums\NegocioStatus;
 use App\Models\NegocioImportado;
 use App\Models\Negocio;
 use App\Models\User;
@@ -301,8 +302,113 @@ class NegocioController extends Controller
     }
 
 
-    public function import_atribuir(Request $request)
-    {
+    public function import_massivo(Request $request){
+
+        $input = request()->all();
+        
+        $curr_funil_id = intval( $input['curr_funil_id']) ;
+        $pipeline = Funil::where('id', $curr_funil_id)->get();
+
+        $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
+        ksort($etapa_funils);
+
+
+        if ( $input['modo'] == "atribuir" ){
+            return $this->import_atribuir($request);
+
+        }elseif ($input['modo'] == "distribuir"){
+
+            $usuarios = $input['usuarios'];
+            $user_count = count($usuarios);
+            $negocio_count = count($input['negocios_importados']);
+
+            $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
+
+            $import_data = array();
+            $negocios_criados = 0;
+            $negocios_rejeitados = 0;
+
+            $user_count_dist = 0;
+
+            foreach ($neg_importados as $neg) {
+
+                // $negocio->user_id = $usuarios[$user_count_dist];
+                // $negocio->etapa_funil_id = $etapa_funils[1];
+                // $negocio->save();
+
+                
+                $lead = Lead::where(['telefone'=>$neg->telefone,'nome' =>$neg->nome ] )->first();
+
+                if ( !empty($lead) ){
+
+                    NegocioImportado::where('id',$neg->id)->delete();
+                    $negocios_rejeitados = $negocios_rejeitados + 1;
+                    continue;
+                }
+
+
+                $lead = new Lead();
+                $lead->nome = $neg->nome;
+                $lead->telefone = $neg->telefone;
+                $lead->email = $neg->email;
+                $lead->fonte = $neg->fonte;
+                
+                $lead->data_conversao = $neg->data_conversao;
+                $lead->save();
+
+                $deal_input = array();
+                $deal_input['titulo'] = "Negócio com ".$neg->nome;
+                $deal_input['valor'] = 0;
+                $deal_input['funil_id'] = $input['funil_id'];
+                $deal_input['etapa_funil_id'] = $etapa_funils[1];
+                $deal_input['tipo'] = $neg->campanha;
+                $deal_input['lead_id'] = $lead->id;
+                $deal_input['user_id'] = $usuarios[$user_count_dist];
+                
+                $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
+
+                $negocio = Negocio::create($deal_input);
+
+                NegocioImportado::where('id',$neg->id)->delete();
+                $negocios_criados = $negocios_criados + 1;
+
+                Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
+
+                $user = User::find( $deal_input['user_id'] );
+                
+                
+                Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".\Auth::user()->name, $negocio->id );
+
+                if ($user_count_dist + 1 == $user_count){
+                    $user_count_dist = 0;
+                }else{
+                    $user_count_dist = $user_count_dist + 1;
+                }
+
+            }
+            return back()->with('status', "Distribuidos ".$negocio_count." negócios para ".$user_count." usuários.");
+       
+        }elseif($input['modo'] == "desativar"){
+
+            $negocios = $input['negocios_importados'];
+            $negocios = NegocioImportado::whereIn('id', $negocios)->get();    
+            $user_count_dist = 0;
+            foreach ($negocios as $negocio){
+                $negocio->delete();
+ 
+                $user_count_dist = $user_count_dist + 1;
+            }
+            return back()->with('status', "Deletados ".$user_count_dist." negócios.");
+
+        }
+
+    }
+
+
+    public function import_atribuir(Request $request)    {
+
+
 
         $input = request()->all();
         $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
@@ -310,6 +416,7 @@ class NegocioController extends Controller
         $import_data = array();
         $negocios_criados = 0;
         $negocios_rejeitados = 0;
+        
         foreach ($neg_importados as $neg) {
 
             $lead = Lead::where(['telefone'=>$neg->telefone,'nome' =>$neg->nome ] )->first();
@@ -491,8 +598,7 @@ class NegocioController extends Controller
     
 
     
-    public function drag_update(Request $res)
-    {
+    public function drag_update(Request $res)    {
 
         $input = $res->input();
         $id_negocio = $input['info'][0];
@@ -508,8 +614,7 @@ class NegocioController extends Controller
         }
     }
 
-    public function add_reuniao(Request $res)
-    {
+    public function add_reuniao(Request $res)    {
         $input = $res->input();
         $id_negocio = $input['info'][0];
         $id_destino = $input['info'][2];
@@ -590,8 +695,7 @@ class NegocioController extends Controller
         }
     }
 
-    public function negocio_update(Request $res)
-    {
+    public function negocio_update(Request $res)    {
         $input = $res->input();
         
         $id_negocio = $input['id_negocio'];
