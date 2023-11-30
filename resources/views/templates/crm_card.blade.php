@@ -4,19 +4,45 @@
         text-decoration: none;
         color: black;
     }
+
+    .card-body {
+        -webkit-box-flex: 1;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 0.6rem 0.6rem !important;
+    }
 </style>
 <?php
 $styles = '';
 $compact = false;
 $mb = 'mt-2 mb-2';
 if (app('request')->view_card == 'compact') {
-    $styles = 'height: 7rem;';
+    $styles = 'height: 6rem;';
     $compact = true;
     $mb = 'mt-1 mb-1';
 }
 ?>
-<div class="card mb-0 mt-1" id={{ $negocio_id }} style="{{ $styles }}">
-    <div class="card-body p-3">
+
+<div class="card mb-1 mt-1" id={{ $negocio_id }} style="{{ $styles }}">
+    <div class="card-body p-3" <?php
+    
+    if (config('card_colorido') == 'true') {
+        if ($negocio->status == 'ATIVO') {
+            if ($last_update < 1) {
+                echo "style='background-color: #ebfaed;'";
+            } elseif ($last_update < 3) {
+                echo "style='background-color: #ffffff;'";
+            } elseif ($last_update < 5) {
+                echo "style='background-color: #f5f9cc;'";
+            } else {
+                echo "style='background-color: #f8c9c9;'";
+            }
+        }
+    
+        $styles = 'height: 6rem;margin-bottom: 2rem !important;';
+    }
+    
+    ?>>
 
         <div class="dropdown float-end">
             <a href="#" class="dropdown-toggle text-muted arrow-none" data-bs-toggle="dropdown" aria-expanded="false">
@@ -79,7 +105,9 @@ if (app('request')->view_card == 'compact') {
         <?php
         
         if ($negocio->status == 'ATIVO') {
-            if ($last_update < 2) {
+            if ($last_update < 1) {
+                echo "<span class=\"badge bg-success float-begin\">RECENTE</span>";
+            } elseif ($last_update < 3) {
                 echo "<span class=\"badge bg-info float-begin\">NOVO</span>";
             } elseif ($last_update < 5) {
                 echo "<span class=\"badge bg-warning float-begin\">ATENÇÃO</span>";
@@ -109,11 +137,11 @@ if (app('request')->view_card == 'compact') {
         </h5>
 
         <p class="{{ $mb }}" style="padding: 2 px">
-            <span class="pe-2 text-nowrap mb-0 d-inline-block">
+            <span class="pe-2 text-nowrap mb-1 d-inline-block">
                 <i class="mdi mdi-briefcase-outline text-muted"></i>
                 {{ $tipo }}
             </span>
-            <span class="text-nowrap mb-0 d-inline-block">
+            <span class="text-nowrap mb-1 d-inline-block">
                 <i class="mdi mdi-cash text-muted"></i>
                 <b>R$ {{ number_format((float) $valor, 2, ',', '.') }}</b>
             </span>

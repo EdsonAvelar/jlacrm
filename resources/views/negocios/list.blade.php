@@ -380,7 +380,7 @@
             });
             $('.checkbox_sensitive').hide();
             let example = $('#example').DataTable({
-                
+                pageLength: 100
             });
             let selectall = false;
 

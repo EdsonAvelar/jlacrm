@@ -29,6 +29,7 @@ class EmpresaController extends Controller
            $empresa[$empresa__->settings] =$empresa__->value;
         }
 
+       
 
         if ( Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente','gerenciar_funcionarios']) ){
             return view('empresa.profile', compact('user','equipes','roles','empresa'));
@@ -36,6 +37,33 @@ class EmpresaController extends Controller
             return abort(401);
         }
         
+    }
+    
+    public function empresa_config(Request $request){
+
+
+        $input = $request->except('_token');
+
+        $config_name = $input['info'][0];
+        $config_value = $input['info'][1];
+           
+
+        $empresa = Empresa::where('settings', $config_name )->first();
+
+        // Make sure you've got the Page model
+        if( $empresa) {
+            $empresa->value =$config_value;
+            $empresa->save();
+        }else {
+            $empresa =  new Empresa();
+            $empresa->settings = $config_name;
+            $empresa->value = $config_value;
+            $empresa->save();
+        }
+        
+        return "Configuração atualizada com sucesso";
+      
+
     }
 
     public function empresa_images(Request $request){

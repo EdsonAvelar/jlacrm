@@ -153,6 +153,9 @@ class CrmController extends Controller
         }else {
             $negocios = Negocio::where($query)->get();
         }
+
+        $negocios = $negocios->sortByDesc('created_at');
+  
         
 
         $etapa_funils = $pipeline->first()->etapa_funils()->pluck('nome', 'ordem')->toArray();

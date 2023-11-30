@@ -62,9 +62,7 @@ use App\Enums\ComprovacaoRenda;
                                                         href="{{ route('atribui_one', ['negocio_id' => $negocio->id, 'novo_proprietario_id' => $user->id]) }}">{{ $user->name }}</a>
                                                 @endif
                                             @endforeach
-
                                         </div>
-
                                     </div>
 
                                     <div class="btn-group mt-sm-0 mt-3 text-sm-end">
@@ -790,8 +788,39 @@ use App\Enums\ComprovacaoRenda;
 
 @section('specific_scripts')
     <script>
-        function atribuir($negocio_id, $user_id) {
-            console.log("Atribuir " + $negocio_id + "para" + $user_id);
-        }
+
+        $('.toggle-event').change(function($this) {
+
+            var user_id = $(this).data('user_id');
+            console.log($(this).prop('checked') + " user " + user_id);
+
+            info = [];
+            info[0] = $(this).prop('checked');
+            info[1] = user_id;
+
+            $.ajax({
+                url: "{{ url('funcionarios/ativar_desativar') }}",
+                type: 'post',
+                data: {
+                    info: info
+                },
+                Type: 'json',
+                success: function(res) {
+                    console.log("Funcionario atualizada com sucesso: ")
+                    showAlert({
+                        message: res,
+                        class: "success"
+                    });
+                },
+                error: function(res) {
+                    console.log(res);
+                    showAlert({
+                        message: res,
+                        class: "danger"
+                    });
+                },
+            });
+
+        });
     </script>
 @endsection

@@ -54,6 +54,11 @@
         i.icon-danger {
             color: red;
         }
+
+        .toggle.btn {
+            width: 100% !important;
+            height: 0rem !important;
+        }
     </style>
     <style>
         touch-action: none;
@@ -266,6 +271,12 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a href="#config" data-bs-toggle="tab" aria-expanded="false"
+                                    class="nav-link rounded-0 ">
+                                    Configurações CRM
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a href="#marketing" data-bs-toggle="tab" aria-expanded="false"
                                     class="nav-link rounded-0 ">
                                     Marketing
@@ -338,7 +349,7 @@
                                             <div class="mb-3">
                                                 <label for="lastname" class="form-label">Site</label>
                                                 <input type="text" class="form-control" id="site" name="site"
-                                                    value="{{ config('site') }}"">
+                                                    value="{{ config('site') }}">
                                             </div>
                                         </div> <!-- end col -->
 
@@ -373,9 +384,9 @@
                                 <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                     INFORMAÇÕES DE MARKETING</h5>
 
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
+                                {{-- <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="mb-12">
                                             <label for="firstname" class="form-label">Nome</label>
 
                                             <button onclick="myFacebookLogin()" class="btn btn-primary">
@@ -384,11 +395,57 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </div> --}}
 
 
                             </div> <!-- end tab-pane -->
 
+
+                            <div class="tab-pane" id="config">
+
+                                <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                    CONFIGURAÇÕES DE CRM</h5>
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label for="lastname" class="form-label">Produção</label>
+                                            <input class="form-control btn btn-primary" type="text" name="daterange"
+                                                id="datapicker_config"
+                                                value="
+                                                @if (config('data_inicio')) {{ config('data_inicio') }} - {{ config('data_fim') }} @endif
+                                                " />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="mb-3">
+                                            <label for="inputEmail3" class="col-form-label">Cards
+                                                Coloridos</label>
+
+                                            <input class="toggle-event" type="checkbox" <?php
+                                            
+                                            if (array_key_exists('card_colorido', $empresa)) {
+                                                if ($empresa['card_colorido'] == 'true') {
+                                                    echo 'checked';
+                                                }
+                                            }
+                                            ?>
+                                                data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
+                                                data-off="sem cor" data-onstyle="success" data-offstyle="danger">
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+
+
+
+                            </div> <!-- end tab-pane -->
 
 
                         </div> <!-- end tab-content -->
@@ -417,8 +474,8 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="mb-12">
-                                            <label for="task-title" class="form-label">Faça o Upload da Sua Imagem<span
-                                                    class="text-danger">
+                                            <label for="task-title" class="form-label">Faça o Upload da Sua
+                                                Imagem<span class="text-danger">
                                                     *</label>
                                             <input type="file" name="image" id="inputImage"
                                                 class="form-control @error('image') is-invalid @enderror">
@@ -491,29 +548,22 @@
             $('#change_logo').modal('show');
         }
 
+        function save_config(config_info, config_value) {
 
-        $('.toggle-event').change(function($this) {
-
-            var user_id = $(this).data('user_id');
-            console.log($(this).prop('checked') + " user " + user_id);
 
             info = [];
-            info[0] = $(this).prop('checked');
-            info[1] = user_id;
+            info[0] = config_info;
+            info[1] = config_value;
 
             $.ajax({
-                url: "{{ url('funcionarios/ativar_desativar') }}",
+                url: "{{ url('empresa/config') }}",
                 type: 'post',
                 data: {
                     info: info
                 },
                 Type: 'json',
                 success: function(res) {
-                    console.log("Funcionario atualizada com sucesso: ")
-                    showAlert({
-                        message: res,
-                        class: "success"
-                    });
+
                 },
                 error: function(res) {
                     console.log(res);
@@ -523,6 +573,14 @@
                     });
                 },
             });
+        }
+
+        $('.toggle-event').change(function($this) {
+
+            var config_info = $(this).data('config_info');
+            var config_value = $(this).prop('checked');
+
+            save_config(config_info, config_value);
 
         });
 
@@ -560,6 +618,24 @@
             todayHighlight: true,
             format: "dd/mm/yyyy",
             defaultDate: +7
+        });
+
+        $(document).ready(function() {
+
+
+            $('#datapicker_config').daterangepicker({
+                    locale: {
+                        format: 'DD-MM-YYYY'
+                    }
+                },
+                function(start, end, label) {
+
+                    save_config('data_inicio', start.format('DD/MM/YYYY'));
+                    save_config('data_fim', end.format('DD/MM/YYYY'));
+
+                });
+
+
         });
     </script>
 @endsection

@@ -8,7 +8,7 @@ use Carbon\Carbon;
 <head>
 
     <meta charset="utf-8">
-    
+
 
     <meta name="facebook-domain-verification" content="2v42l4jph9cgfkrorr6gejjod4bqx6" />
 
@@ -105,6 +105,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         }
                         
                         $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+                        
+                        if (config('data_inicio') & config('data_fim')) {
+                            $data_inicio = config('data_inicio');
+                            $data_fim = config('data_fim');
+                        }
                         ?>
 
                         <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false" aria-controls="dashboard"
@@ -157,13 +162,16 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('agendamento.calendario', ['proprietario' => \Auth::user()->id]) }}">Calendário</a>
                                 </li>
+                                <li>
+                                    <a
+                                        href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
+                                </li>
 
                                 @if (Auth::user()->hasAnyRole(['importar_leads']))
                                     <li>
                                         <a href="{{ route('importar.negocios.index') }}">Importar</a>
                                     </li>
                                 @endif
-
                             </ul>
                         </div>
                     </li>
@@ -189,30 +197,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 @if (Auth::user()->hasAnyRole(['gerenciar_vendas']))
                                     <li>
-                                        <?php
-                                        // $data_inicio =
-                                        //     '20/' .
-                                        //    Carbon::now('America/Sao_Paulo')
-                                        //         ->subMonth()
-                                        //         ->format('m/Y');
-                                        
-                                        $dia = intval(
-                                            Carbon::now('America/Sao_Paulo')
-                                                ->subMonth()
-                                                ->format('d'),
-                                        );
-                                        if ($dia <= 20) {
-                                            $data_inicio =
-                                                '20/' .
-                                                Carbon::now('America/Sao_Paulo')
-                                                    ->subMonth()
-                                                    ->format('m/Y');
-                                        } else {
-                                            $data_inicio = '20/' . Carbon::now('America/Sao_Paulo')->format('m/Y');
-                                        }
-                                        
-                                        $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
-                                        ?>
+
                                         <a
                                             href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                             Realizadas</a>
@@ -470,9 +455,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-6">
-                            <script>
-                                document.write(new Date().getFullYear())
-                            </script> © {{ config('nome') }}
+                            <script></script> © {{ config('nome') }}
                         </div>
                         <div class="col-md-6">
                             <div class="text-md-end footer-links d-none d-md-block">

@@ -560,103 +560,10 @@ $protocolo_hora = 0;
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
-    <div class="modal fade task-modal-content" id="agendamento-add" aria-labelledby="NewTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" class="center" id="venda_titulo">Novo Agendamento</h5>
-                </div>
-                <div class="modal-body">
-                    <form class="p-2" action="{{ route('agendamento.add') }}" method="POST" id="agendamento_para">
-                        @csrf
-                        <div class="row">
-                            <!-- Painel Esquedo -->
-                            <div class="col-md-12">
-                                <div class="mb-12">
-                                    <label for="task-priority" class="form-label">Agendado para:</label>
-                                    <input type="text" class="form-control form-control-light agendamento"
-                                        data-single-date-picker="true" name="data_agendado" value="{{ date('d/m/Y') }}">
-                                </div>
-                                <div class="mb-12">
-                                    <label for="task-priority" class="form-label">Hora:</label>
-                                    <input type="text" name="hora_agendado"
-                                        class="form-control form-control-light timedatapicker">
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <div class="text-start">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="check_protocolo">
-                                <label class="form-label form-check-label" for="flexSwitchCheckDefault">Gerar
-                                    Protocolo</label>
-                            </div>
-                        </div>
-                        <div class="text-end">
-                            <button type="submit" id="confirmar_agendamento" class="btn btn-success">Confirmar</button>
-                        </div>
-                        <input name="proprietario_id" hidden value="{{ app('request')->proprietario }}">
-                        <input name="negocio_id" id="negocio_id_agen" hidden value="">
-                        <input id="agend_confirm" hidden value="false">
-                        <div id="database" data-el="" data-source="" data-target=""></div>
-                    </form>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
+    @include('templates.add_agendamento', [])
+    @include('templates.add_protocolo', [])
 
-    <div class="modal fade task-modal-content" id="agendamento-protocolo" aria-labelledby="NewTaskModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" class="center" id="venda_titulo">Protocolo de Agendamento</h5>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="mb-12" class="divtext">
-                                <p id="txt_protocolo" rows="22" cols="50">-=_*REUNIÃO AGENDADA*_=-<br>
-                                    *Protocolo:
-                                    {{ random_int(999, 999999) }}/{{ Carbon::now('America/Sao_Paulo')->format('Y') }}*
-                                    <br>
-                                    📅<span> </span>*Data: <span id="ptcl_dia"></span>*<br>
-                                    ⏰<span> </span>*Hora: <span id="ptcl_hora"></span>* <br>
-                                    <br>
-                                    _*Documentos necessários:*_<br>
-                                    ➡RG<br>
-                                    ➡CPF<br>
-                                    ➡Comprovante de Residência Atual<br>
-                                    <br>
-                                    _*Endereço:*_<br>
-                                    📍{{ config('endereco') }}<br>
 
-                                    <br>
-                                    _*Na Recepção procurar por:*_ <br>
-                                    @if (app('request')->proprietario > 0)
-                                        {{ User::find(app('request')->proprietario)->name }}<br>
-                                    @endif
-                                    🏡🚗🏍✅<br>
-                                    <br>
-                                    Estacionamento Gratuito<br>
-                                    {{ config('nome') }}<br>
-                                    <!--SITE: {{ config('site') }}<br> -->
-                                    <!-- CNPJ: {{ config('cnpj') }}<br> -->
-                                    <br>
-                                    Confirme com OK✅<br>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="text-end">
-                        <button onclick="copyProtocolo()" class="btn btn-success">Copiar</button>
-                    </div>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
 
     <div class="modal fade task-modal-content" id="agendamento-confirmar" tabindex="-1" role="dialog"
         aria-labelledby="NewTaskModalLabel" aria-hidden="true">
@@ -717,23 +624,6 @@ $protocolo_hora = 0;
 
 
     <script>
-        function copyProtocolo() {
-
-            var text = document.getElementById('txt_protocolo').innerText;
-            var elem = document.createElement("textarea");
-            document.body.appendChild(elem);
-            elem.value = text;
-            elem.select();
-            document.execCommand("copy");
-            document.body.removeChild(elem);
-
-            showAlert({
-                message: "protocolo copiado",
-                class: "success"
-            });
-            $('#agendamento-protocolo').modal('hide');
-        }
-
         function showAlert(obj) {
             var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">' +
                 '   <strong>' + obj.message + '</strong>' +
@@ -985,28 +875,7 @@ $protocolo_hora = 0;
                     dragek.cancel(true);
                 }
 
-            }
-
-            // else if (target.getAttribute('data-etapa') == "FECHAMENTO") {
-
-            //     var negocio_id = info[0];
-
-            //     $.ajax({
-            //         url: "{{ url('negocios/drag_update') }}",
-            //         type: 'post',
-            //         data: {
-            //             info: info
-            //         },
-            //         Type: 'json',
-            //         success: function(res) {},
-            //         complete: function() {
-            //             window.location.href = "{{ url('') }}" + '/negocios/fechamento?id=' +
-            //                 negocio_id
-            //         }
-            //     });
-
-            // } 
-            else {
+            } else {
 
                 $.ajax({
                     url: "{{ url('negocios/drag_update') }}",

@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
             Route::get('/calendario', [AgendamentoController::class, 'calendario'])->name('agendamento.calendario');
+            Route::get('/lista', [AgendamentoController::class, 'lista'])->name('agendamento.lista');
             Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');         
 
         }
@@ -151,6 +152,7 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/profile', [EmpresaController::class, 'empresa_profile'])->name('empresa_profile');
             Route::post('/save', [EmpresaController::class, 'save'])->name('empresa_save');
+            Route::post('/config', [EmpresaController::class, 'empresa_config'])->name('empresa_config');
             Route::post('/image/save', [EmpresaController::class, 'empresa_images'])->name('empresa_images');
 
         }

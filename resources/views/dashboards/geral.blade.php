@@ -21,11 +21,25 @@
                     <div class="page-title-right">
                         <form class="d-flex">
 
-
                             <div class="input-group">
+
                                 <input class="form-control btn btn-primary" type="text" name="daterange"
                                     id="datapicker_dash"
                                     value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
+
+
+                                {{-- @if (app('request')->input('custom_date') == true)
+                                    <input class="form-control btn btn-primary" type="text" name="daterange"
+                                        id="datapicker_dash"
+                                        value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
+                                @else
+                                    @if (config('data_inicio'))
+                                        <input class="form-control btn btn-primary" type="text" name="daterange"
+                                            id="datapicker_dash"
+                                            value=" {{ config('data_inicio') }} - {{ config('data_fim') }}" />
+                                    @endif
+                                @endif --}}
+
 
                                 <span class="input-group-text bg-primary border-primary text-white">
                                     <i class="mdi mdi-calendar-range font-13"></i>
@@ -142,7 +156,7 @@
                 function(start, end, label) {
                     //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
                     window.location.href = "{{ url('crm?') }}" + "data_inicio=" + start.format('DD/MM/YYYY') +
-                        "&" + "data_fim=" + end.format('DD/MM/YYYY');
+                        "&" + "data_fim=" + end.format('DD/MM/YYYY') + "&custom_date=true";
 
                 });
 

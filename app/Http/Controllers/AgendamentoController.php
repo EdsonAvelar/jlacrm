@@ -17,6 +17,39 @@ class AgendamentoController extends Controller
         return view('negocios.calendario');
     }
 
+    public function lista(Request $request)
+    {
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+
+      
+
+        if ( is_null($data_inicio) and is_null($data_fim) ){
+
+            $dia = intval ( Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d') );
+            if ( $dia <= 20){
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+            }else {
+                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->format('m/Y'));
+            }
+            
+            $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+            return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
+        }
+
+    
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
+        
+        $query = [
+            ['data_agendamento', '>=', $from ],
+            ['data_agendamento', '<=', $to],
+        ];
+        
+        $agendamentos = Agendamento::where($query)->get();
+        return view('negocios.agendamentos', compact('agendamentos'));
+    }
+
     public function calendario(Request $request)
     {
 
@@ -96,7 +129,7 @@ class AgendamentoController extends Controller
             }
             
            
-            $cal['href'] = route('negocio_edit', array('id' => $agendamento->negocio->id ) );//route('pipeline_index', array('id' => '1', 'proprietario' =>  \Auth::user()->id, 'proprietario'=>  \Auth::user()->id, 'status'=>'ativo' ));
+            $cal['href'] = route('negocio_edit', array('id' => $agendamento->negocio->id ) );
 
             array_push( $calendario, $cal );
         }
@@ -126,12 +159,12 @@ class AgendamentoController extends Controller
         $query = [
             ['negocio_id', '=', $negocio_id ],
             ['user_id', '=', $proprietario_id],
-          //  ['data_agendado', '=', $data_agendado]
         ];
 
         $agendamento = Agendamento::where($query)->first();
 
         if ( !$agendamento ){
+
             $agendamento = new Agendamento();
             $agendamento->data_agendado = $data_agendado;
             $agendamento->data_agendamento = $data_agendamento;

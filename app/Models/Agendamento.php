@@ -28,4 +28,9 @@ class Agendamento extends Model
         return $this->belongsTo("App\Models\Negocio");
     }
 
+    public function reuniao()
+    {
+        return $this->hasOne("App\Models\Reuniao");
+    }
+
 }

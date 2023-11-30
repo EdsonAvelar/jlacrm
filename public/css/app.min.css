@@ -16370,8 +16370,8 @@ body[data-layout="topnav"] .container-xxl {
 
 .card {
     border: none;
-    -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
-    box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+    /* -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15); */
+    /* box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15); */
     margin-bottom: 24px;
 }
 
