@@ -9,12 +9,16 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="mb-12" class="divtext">
-                            <p id="txt_protocolo" rows="22" cols="50">-=_*REUNIÃO AGENDADA*_=-<br>
-                                *Protocolo:
-                                {{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
+                            <p id="txt_protocolo" rows="22" cols="50">
+                                Parabéns *<span id="ptcl_cliente"></span>*, esse é o primeiro passo para realização do
+                                seu
+                                sonho!<br><br>
+                                *-= Reunião Agendada =-*<br>
+                                Protocolo:
+                                *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
                                 <br>
-                                📅<span> </span>*Data: <span id="ptcl_dia"></span>*<br>
-                                ⏰<span> </span>*Hora: <span id="ptcl_hora"></span>* <br>
+                                📅<span> </span>Data: *<span id="ptcl_dia"></span>*<br>
+                                ⏰<span> </span>Hora: *<span id="ptcl_hora"></span>* <br>
                                 <br>
                                 _*Documentos necessários:*_<br>
                                 ➡RG<br>
@@ -36,7 +40,7 @@
                                 <!--SITE: {{ config('site') }}<br> -->
                                 <!-- CNPJ: {{ config('cnpj') }}<br> -->
                                 <br>
-                                Confirme com OK✅<br>
+                                Aguardo você✅<br>
                             </p>
                         </div>
                     </div>

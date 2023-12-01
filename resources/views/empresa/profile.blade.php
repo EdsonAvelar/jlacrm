@@ -421,8 +421,16 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <div class="mb-3">
-                                            <label for="inputEmail3" class="col-form-label">Cards
-                                                Coloridos</label>
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                title="
+verde - criado hoje
+branco - dentro da janela de 2 dias
+amarelo - de 3 a  5 dias parados
+vermelho mais do que 5 dias parados
+                                                ">
+                                                <label for="inputEmail3" class="col-form-label">Cards
+                                                    Coloridos <span class="mdi mdi-information"></span>
+                                                </label> </span>
 
                                             <input class="toggle-event" type="checkbox" <?php
                                             
@@ -434,20 +442,10 @@
                                             ?>
                                                 data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
                                                 data-off="sem cor" data-onstyle="success" data-offstyle="danger">
-
-
                                         </div>
                                     </div>
-
-
-
                                 </div>
-
-
-
                             </div> <!-- end tab-pane -->
-
-
                         </div> <!-- end tab-content -->
                     </div> <!-- end card body -->
                 </div> <!-- end card -->

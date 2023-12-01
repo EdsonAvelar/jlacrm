@@ -2,6 +2,7 @@
 
 <?php
 use App\Models\User;
+use App\Enums\VendaStatus;
 ?>
 
 @section('headers')
@@ -52,11 +53,13 @@ use App\Models\User;
         i.icon-danger {
             color: red;
         }
+
+        .badge {
+            padding: 0.5em 0.4em !important;
+        }
     </style>
 @endsection
 @section('main_content')
-
-
     <!-- Start Content-->
     <div class="container-fluid">
         <div class="row">
@@ -91,18 +94,21 @@ use App\Models\User;
                             <thead>
                                 <tr class="table-light">
                                     <th>Cliente </th>
+                                    <th>Contrato </th>
                                     <th>Vendedor Principal </th>
                                     <th>Vendedor Secundário</th>
                                     <th>Data Fechamento</th>
                                     <th>Primeira Assembleia</th>
                                     <th>Valor</th>
-                                    <th>Parcelas Embutidas</th>
-                                    <th>Lead ID</th>
+                                    <th>Status</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                $valor_vendido_total = 0;
+                                $vendas_fechadas = 0;
+                                $vendas_checadas = 0;
+                                $vendas_canceladas = 0;
                                 ?>
                                 @if (isset($vendas))
                                     @foreach ($vendas as $venda)
@@ -110,31 +116,68 @@ use App\Models\User;
                                             <td><a
                                                     href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{ $venda->negocio->lead->nome }}</a>
                                             </td>
+                                            <td><a href="">{{ $venda->numero_contrato }}</a>
+                                            </td>
+
                                             <td>{{ User::find($venda->primeiro_vendedor_id)->name }}</td>
                                             <td>
                                                 @if ($venda->segundo_vendedor_id)
                                                     {{ User::find($venda->segundo_vendedor_id)->name }}
                                                 @endif
                                             </td>
+
                                             <td>{{ \Carbon\Carbon::parse($venda['data_fechamento'])->format('d/m/Y') }}
                                             </td>
                                             <td>{{ \Carbon\Carbon::parse($venda['data_primeira_assembleia'])->format('d/m/Y') }}
                                             </td>
                                             <td>R$ {{ number_format((float) $venda->valor, 2, ',', '.') }}</td>
-                                            <td>{{ $venda['parcelas_embutidas'] }}</td>
-                                            <td>{{ $venda['lead_id'] }}</td>
+
+                                            <?php
+                                            
+                                            ?>
+                                            <td>
+
+                                                <?php
+                                                
+                                                $style = '';
+                                                
+                                                if ($venda->status == VendaStatus::FECHADA) {
+                                                    $style = 'primary';
+                                                    $vendas_fechadas = $vendas_fechadas + (float) $venda['valor'];
+                                                } elseif ($venda->status == VendaStatus::CHECADA) {
+                                                    $style = 'success';
+                                                    $vendas_checadas = $vendas_checadas + (float) $venda['valor'];
+                                                } elseif ($venda->status == VendaStatus::CANCELADA) {
+                                                    $style = 'danger';
+                                                    $vendas_canceladas = $vendas_canceladas + (float) $venda['valor'];
+                                                }
+                                                
+                                                ?>
+                                                <span class="badge bg-{{ $style }}">{{ $venda->status }} </span>
+
+
+                                            </td>
+
 
                                         </tr>
 
                                         <?php
-                                        $valor_vendido_total = $valor_vendido_total + (float) $venda['valor'];
                                         
                                         ?>
                                     @endforeach
                                 @endif
                             </tbody>
                         </table>
-                        <h3 class="text-success">Total Vendidos: R$ {{ number_format($valor_vendido_total, 2, ',', '.') }}
+
+
+                        <h2 class="text-info">Total Vendido: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h2>
+
+                        <br>
+                        <h3 class="text-success">Checadas: R$ {{ number_format($vendas_checadas, 2, ',', '.') }}
+                        </h3>
+
+                        <h3 class="text-danger">Canceladas: R$
+                            {{ number_format($vendas_canceladas, 2, ',', '.') }}
                         </h3>
                     </div>
                     <!-- end card-body -->
@@ -153,7 +196,6 @@ use App\Models\User;
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('specific_scripts')
@@ -162,10 +204,19 @@ use App\Models\User;
     <script>
         $(document).ready(function() {
 
+
+
+
+
             let example = $('#example').DataTable({
                 scrollX: true,
                 scrollY: true,
+                "columnDefs": [{
+                    "width": "10%",
+                    "targets": 0
+                }],
                 pageLength: 100
+
             });
 
             let selectall = false;

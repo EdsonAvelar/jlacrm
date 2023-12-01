@@ -25,7 +25,7 @@
                     <br>
                     <div class="text-start">
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" id="check_protocolo">
+                            <input class="form-check-input" type="checkbox" id="check_protocolo" checked>
                             <label class="form-label form-check-label" for="flexSwitchCheckDefault">Gerar
                                 Protocolo</label>
                         </div>

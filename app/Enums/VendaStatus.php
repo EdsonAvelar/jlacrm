@@ -16,6 +16,7 @@ final class VendaStatus extends Enum
     const TROCA_CONTRATO = 'TROCA_CONTRATO';
     const CANCELADA = 'CANCELADA';
     const BORDERO = 'BORDERO';
+    const CHECADA = 'CHECADA';
 
     public static function all(){
         return array('FECHADA', 'ENVIADA', 'TROCA_CONTRATO', 'CANCELADA', 'CHECADA', 'BORDERO');

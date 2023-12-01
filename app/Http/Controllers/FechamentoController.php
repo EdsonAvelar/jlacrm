@@ -102,6 +102,8 @@ class FechamentoController extends Controller
         $venda->segundo_vendedor_id = $input['segundo_vendedor_id'];
         $venda->terceiro_vendedor_id = $input['terceiro_vendedor_id'];
 
+        $venda->status = $input['status'];;
+
         $venda->save();
 
         if ($negocio->conjuge_id){

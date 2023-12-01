@@ -83,23 +83,26 @@ use App\Models\User;
                 </div>
             </div>
 
-            <div class="col-2">
-                <label for="task-title" class="form-label">Produção</label>
+            <div class="col-sm-2">
                 <input class="form-control btn btn-primary" type="text" name="daterange"
                     value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
 
             </div>
 
-            <div class="col-sm-10">
-                <div class="text-center mt-sm-0 mt-3 text-sm-end">
+            <div class="col-sm-2">
+                <a href="{{ route('agendamento.lista', ['data_inicio' => \Carbon\Carbon::now()->format('d/m/Y'), 'data_fim' => \Carbon\Carbon::now()->format('d/m/Y')]) }}"
+                    type="button" class="btn btn-success">HOJE</a>
 
-                    <div class="btn-group mt-sm-0 mt-3 text-sm-end">
-                        <a type="button" class="btn btn-primary" onclick="PrintElement()" href="#"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-printer"></i><span></span></a>
-                    </div>
+                <a href="{{ route('agendamento.lista', ['data_inicio' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y'),'data_fim' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y')]) }}"
+                    type="button" class="btn btn-info">AMANHÃ</a>
 
+            </div>
 
+            <div class="col-sm-12">
+                <div class="text-center mt-sm-1 mt-3 text-sm-end">
+                    <a type="button" class="btn btn-primary" onclick="PrintElement()" href="#" aria-haspopup="true"
+                        aria-expanded="false">
+                        <i class="mdi mdi-printer"></i><span></span></a>
                 </div>
             </div> <!-- end col-->
 
@@ -119,7 +122,7 @@ use App\Models\User;
                                     <th>Data Agendado</th>
                                     <th>Hora Agendamento</th>
                                     <th>Status</th>
-
+                                    <th>Ações</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -152,13 +155,20 @@ use App\Models\User;
                                                 $last_update = $date->diffInDays($now);
                                                 
                                                 if ($last_update == 0) {
-                                                    echo "<td><span class=\"badge bg-warning\"> <a href='#' class='faltou' data-userid=" . $agendamento->negocio->user->id . ' data-name=' . $agendamento->negocio->lead->nome . ' data-id=' . $agendamento->negocio->id . '>REUNIÃO HOJE</a></span></td>';
+                                                    echo "<td><span class=\"badge bg-warning\">REUNIÃO HOJE</a></span></td>";
                                                 } else {
-                                                    echo "<td><span class=\"badge bg-danger\"> <a href='#' class='faltou' data-userid=" . $agendamento->negocio->user->id . ' data-name=' . $agendamento->negocio->lead->nome . ' data-id=' . $agendamento->negocio->id . '>FALTOU</a></span></td>';
+                                                    echo "<td><span class=\"badge bg-danger\"> FALTOU </span></td>";
                                                 }
                                                 
                                                 ?>
                                             @endif
+
+                                            <td>
+                                                <a href='#' class='btn btn-warning faltou'
+                                                    data-userid="{{ $agendamento->negocio->user->id }}"
+                                                    data-name='{{ $agendamento->negocio->lead->nome }}'
+                                                    data-id='{{ $agendamento->negocio->id }}'>REAGENDAR</a>
+                                            </td>
 
                                         </tr>
                                     @endforeach
@@ -230,7 +240,12 @@ use App\Models\User;
             let example = $('#example').DataTable({
                 scrollX: true,
                 scrollY: true,
+                "columnDefs": [{
+                    "width": "20%",
+                    "targets": 0
+                }],
                 pageLength: 100
+
             });
 
 
@@ -296,7 +311,14 @@ use App\Models\User;
                 data: form.serialize(), // serializes the form's elements.
                 success: function(data) {
 
-                    window.location.reload()
+                    if (document.getElementById('check_protocolo').checked) {
+                        ptcl_dia.textContent = data[0];
+                        ptcl_hora.textContent = data[1];
+
+                        $('#agendamento-protocolo').modal('show');
+                    }
+
+
                 },
                 error: function(res) {
                     showAlert({

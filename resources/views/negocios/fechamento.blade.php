@@ -7,6 +7,8 @@ use Carbon\Carbon;
 use App\Enums\SimNao;
 use App\Enums\Tabela;
 
+use App\Enums\VendaStatus;
+
 function to_data($data)
 {
     try {
@@ -64,6 +66,8 @@ function to_data($data)
                                             </p>
 
                                         </div>
+
+
                                     </div>
 
 
@@ -94,8 +98,10 @@ function to_data($data)
                                         </div>
 
 
-
                                     </div>
+
+
+
                                 </div>
                             </div> <!-- end col-->
 
@@ -913,6 +919,26 @@ function to_data($data)
                                 </div>
                                 <input name="negocio_id" value="{{ app('request')->id }}" hidden>
                                 <div class="text-end">
+
+
+                                    <div class="btn-group mt-2">
+                                        <select class="form-select primary" name="status">
+
+                                            @foreach (VendaStatus::all() as $res)
+                                                @if ($fechamento->status == $res)
+                                                    <option value="{{ $res }}" selected>{{ $res }}
+                                                    </option>
+                                                @else
+                                                    <option value="{{ $res }}">{{ $res }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+
+
+                                        </select>
+                                    </div>
+
+
                                     <button type="text"class="btn btn-info mt-2" id="gerar_protocolo"><i
                                             class="mdi mdi-content-save"></i> Gerar Protocolo</button>
 
@@ -942,16 +968,18 @@ function to_data($data)
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-12" class="divtext">
-                                <p id="txt_protocolo" rows="22" cols="50">_*SEJA BEM VINDO*_<br>
+                                <p id="txt_protocolo" rows="22" cols="50">_*SEJA BEM VINDO A JLA*_<br>
                                     Estimado Cliente {{ $negocio->lead->nome }}. Passando aqui para parabenizar você pela
                                     *COTA DE CONSÓRCIO* que você aderiu!!
                                     👏🎉🎊<br>
                                     Informações do seu contrato de Consórcio: <br>
                                     📄 Contrato: *{{ $fechamento->numero_contrato }}* <br>
-                                    👥Grupo/Cota: *{{ $fechamento->grupo }}/{{ $fechamento->cota }}* <br>
+                                    👥Grupo: *{{ $fechamento->grupo }}<br>
+                                    👥Cota: *{{ $fechamento->cota }}* <br>
                                     💰Crédito: *R$ {{ $fechamento->valor }}* <br>
                                     ✅Adesão: *R$ {{ $fechamento->adesao }}* <br>
                                     🟢Parcelas: *R$ {{ $fechamento->parcela }}* <br>
+                                    🧰Renda Declarada: *R$ {{ $negocio->lead->renda_liquida }}* <br>
                                     <br>
                                     Lembrando que no Consórcio não existe data de garantia de contemplação, você concorrerá
                                     tanto por sorteio quanto por lance. Qualquer dúvida estarei a disposição!

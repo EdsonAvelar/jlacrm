@@ -175,7 +175,7 @@ class AgendamentoController extends Controller
 
             Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para ".$agendamento->data_agendamento, $negocio_id );
 
-            return [ Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y') , $hora];
+            
         }else {
 
             
@@ -187,9 +187,20 @@ class AgendamentoController extends Controller
             $agendamento->save();
 
             Atividade::add_atividade(\Auth::user()->id, "Reagendamento feito para ".$agendamento->data_agendamento, $negocio_id );
-
-            return [Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y'), $hora];
         }
 
+        $weekMap = [
+            0 => 'Domingo',
+            1 => 'Segunda',
+            2 => 'Terça',
+            3 => 'Quarta',
+            4 => 'Quinta',
+            5 => 'Sexta',
+            6 => 'Sábado',
+        ];
+        $dayOfTheWeek = Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->dayOfWeek;
+        $weekday = $weekMap[$dayOfTheWeek];
+        
+        return [ Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y') , $hora,  $weekday, $agendamento->negocio->lead->nome];
     }
 }

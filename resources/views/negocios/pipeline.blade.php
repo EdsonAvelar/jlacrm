@@ -729,6 +729,9 @@ $protocolo_hora = 0;
             var form = $(this);
             var actionUrl = form.attr('action');
 
+
+
+
             $.ajax({
                 type: "POST",
                 url: actionUrl,
@@ -761,8 +764,12 @@ $protocolo_hora = 0;
                             $("#spinner-div").hide();
 
                             if (document.getElementById('check_protocolo').checked) {
-                                ptcl_dia.textContent = data[0];
+                                ptcl_dia.textContent = data[0] + ' (' + data[2] + ')';
                                 ptcl_hora.textContent = data[1];
+                                ptcl_cliente.textContent = data[3][0].toUpperCase() + data[
+                                    3].substring(1);
+
+
 
                                 $('#agendamento-protocolo').modal('show');
                             }
