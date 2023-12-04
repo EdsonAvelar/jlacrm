@@ -57,11 +57,6 @@ use App\Models\User;
         .ui-timepicker-wrapper .ui-timepicker-list li {
             width: 100px;
         }
-
-        .badge>a {
-            background-color: transparent;
-            color: white;
-        }
     </style>
 @endsection
 @section('main_content')
@@ -119,8 +114,9 @@ use App\Models\User;
                                     <th>Proprietario</th>
                                     <th>Cliente </th>
                                     <th>Telefone</th>
-                                    <th>Data Agendado</th>
+                                    <th>Agendado Para:</th>
                                     <th>Hora Agendamento</th>
+                                    <th>Agendadado Em:</th>
                                     <th>Status</th>
                                     <th>Ações</th>
                                 </tr>
@@ -144,6 +140,8 @@ use App\Models\User;
                                             <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado)->format('d/m/Y') }}
                                             </td>
                                             <td>{{ $agendamento->hora }}</td>
+                                            <td>{{ Carbon\Carbon::createFromFormat('Y-m-d', $agendamento->data_agendamento)->format('d/m/Y') }}
+                                            </td>
 
                                             @if ($agendamento->reuniao)
                                                 <td><span class="badge bg-success">REUNIÃO REALIZADA</span></td>
@@ -152,12 +150,16 @@ use App\Models\User;
                                                 
                                                 $date = Carbon\Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
                                                 $now = \Carbon\Carbon::now('America/Sao_Paulo');
-                                                $last_update = $date->diffInDays($now);
+                                                $last_update = $date->diffInDays($now, false);
                                                 
                                                 if ($last_update == 0) {
                                                     echo "<td><span class=\"badge bg-warning\">REUNIÃO HOJE</a></span></td>";
-                                                } else {
+                                                } elseif ($last_update > 0) {
                                                     echo "<td><span class=\"badge bg-danger\"> FALTOU </span></td>";
+                                                } elseif ($last_update == 1) {
+                                                    echo "<td><span class=\"badge bg-danger\"> AMANHÃ </span></td>";
+                                                } else {
+                                                    echo "<td><span class=\"badge bg-success\"> AGENDADO (" . abs($last_update) . ' DIAS)</span></td>';
                                                 }
                                                 
                                                 ?>

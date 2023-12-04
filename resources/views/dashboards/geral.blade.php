@@ -28,17 +28,6 @@
                                     value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
 
 
-                                {{-- @if (app('request')->input('custom_date') == true)
-                                    <input class="form-control btn btn-primary" type="text" name="daterange"
-                                        id="datapicker_dash"
-                                        value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
-                                @else
-                                    @if (config('data_inicio'))
-                                        <input class="form-control btn btn-primary" type="text" name="daterange"
-                                            id="datapicker_dash"
-                                            value=" {{ config('data_inicio') }} - {{ config('data_fim') }}" />
-                                    @endif
-                                @endif --}}
 
 
                                 <span class="input-group-text bg-primary border-primary text-white">
@@ -49,12 +38,7 @@
                             <a href="{{ route('home', ['data_inicio' => \Carbon\Carbon::now()->format('d/m/Y'), 'data_fim' => \Carbon\Carbon::now()->format('d/m/Y')]) }}"
                                 type="button" style="margin-left: 10px;" class="btn btn-success">HOJE</a>
 
-                            {{-- <a href="javascript: void(0);" class="btn btn-primary ms-2">
-                                <i class="mdi mdi-autorenew"></i>
-                            </a>
-                            <a href="javascript: void(0);" class="btn btn-primary ms-1">
-                                <i class="mdi mdi-filter-variant"></i>
-                            </a> --}}
+
                         </form>
                     </div>
                     <h4 class="page-title">Dashboard - Geral</h4>
@@ -135,6 +119,15 @@
                 'name' => 'Vendas Porcentagem',
                 'plots' => [$output['vendedores'], $output['vendas']],
             ])
+
+
+
+            @include('dashboards.views.donuts', [
+                'name' => 'Faltas em Agendamentos',
+                'plots' => [$output['vendedores'], $output['agendamentos_faltou']],
+            ])
+
+
 
 
 

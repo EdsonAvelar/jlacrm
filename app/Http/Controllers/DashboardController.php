@@ -313,6 +313,13 @@ class DashboardController extends Controller
             return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
         }
 
+        
+      
+  
+
+
+
+
         if ( Auth::user()->hasRole('admin')){
 
             $output = array();
@@ -321,6 +328,36 @@ class DashboardController extends Controller
 
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
+
+
+            $query = [
+                ['data_agendamento', '>=', $from ],
+                ['data_agendamento', '<=', $to],
+            ];
+            
+            $agendamentos = Agendamento::where($query)->get();
+            foreach ($agendamentos as $agendamento)
+            if ($agendamento->reuniao){
+                $agendamentos['status'] = 'REUNIÃO REALIZADA';
+            } else{
+  
+                $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
+                $now = Carbon::now('America/Sao_Paulo');
+                $last_update = $date->diffInDays($now, false);
+                
+                if ($last_update == 0) {
+                    $agendamentos['status'] = 'REUNIÃO HOJE';
+                } elseif ($last_update > 0) {
+                    $agendamentos['status'] = 'FALTOU';
+                } elseif ($last_update == 1) {
+                    $agendamentos['status'] = 'AMANHÃ';
+                } else {
+                    $agendamentos['status'] = 'AGENDADA'; 
+                }
+            }
+
+
+
 
             $stats['total_vendido'] = Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
@@ -336,13 +373,10 @@ class DashboardController extends Controller
             $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
             $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo] )->get();
 
-            $output['vendedores'] = array();
-            $output['oportunidades'] = array();
-            $output['agendamentos'] = array();
-            $output['reunioes'] = array();
-            $output['aprovacoes'] = array();
-            $output['vendas'] = array();
-            $output['propostas'] = array();
+            $metricas = ['vendedores','oportunidades','agendamentos','reunioes','aprovacoes','vendas','propostas','agendamentos_faltou'];
+            foreach ($metricas as $metrica) {
+                $output[$metrica] = array();
+            }
 
             foreach ($users as $vendedor){
                 array_push($output['vendedores'], $vendedor->name);
@@ -359,6 +393,10 @@ class DashboardController extends Controller
 
                 $stats['sum_oportunidades'] = $stats['sum_oportunidades'] + $count;
 
+
+                $count = $agendamentos->where( ['user_id', '=', $vendedor->id, 'status','=','FALTOU'])->count();
+                
+                array_push($output['agendamentos_faltou'], $count);
 
                 $query = [
                     ['data_agendamento', '>=', $from ],
@@ -450,9 +488,6 @@ class DashboardController extends Controller
             $stats['sum_propostas'] = 0;
             $stats['sum_vendas'] = 0;
 
-            
-
-            
             
             $users = User::whereIn('id', $ids)->where(['status' => UserStatus::ativo] )->get();
             

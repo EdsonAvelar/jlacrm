@@ -11,31 +11,40 @@
         flex: 1 1 auto;
         padding: 0.6rem 0.6rem !important;
     }
+
+    .border1 {
+        border: 0px solid #d0d0d0;
+    }
+
+    .border1:hover {
+        border: 3px solid rgb(78, 0, 146);
+    }
 </style>
 <?php
 $styles = '';
 $compact = false;
 $mb = 'mt-2 mb-2';
 if (app('request')->view_card == 'compact') {
-    $styles = 'height: 6rem;';
+    $styles = 'height: 7rem;';
     $compact = true;
     $mb = 'mt-1 mb-1';
 }
+
 ?>
 
-<div class="card mb-1 mt-1" id={{ $negocio_id }} style="{{ $styles }}">
+<div class="card mb-1 mt-1 border1" id={{ $negocio_id }} style="{{ $styles }}">
     <div class="card-body p-3" <?php
     
     if (config('card_colorido') == 'true') {
         if ($negocio->status == 'ATIVO') {
             if ($last_update < 1) {
-                echo "style='background-color: #ebfaed;'";
+                echo "style='background-color: #ebfaedcc;'";
             } elseif ($last_update < 3) {
                 echo "style='background-color: #ffffff;'";
             } elseif ($last_update < 5) {
-                echo "style='background-color: #f5f9cc;'";
+                echo "style='background-color: #f5f9cc69;'";
             } else {
-                echo "style='background-color: #f8c9c9;'";
+                echo "style='background-color: #f8c9c96e;'";
             }
         }
     
