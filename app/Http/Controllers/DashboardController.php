@@ -401,7 +401,7 @@ class DashboardController extends Controller
                     ['data_agendado', '>=', $from ],
                     ['data_agendado', '<=', $to],
                     [ 'status',  '=', 'FALTOU' ],
-                    ['user_id', '=', 1]
+                    ['user_id', '=',  $vendedor->id]
                 ];
 
                 $count = Agendamento::where($query)->count();
