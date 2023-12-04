@@ -428,8 +428,8 @@ branco - dentro da janela de 2 dias
 amarelo - de 3 a  5 dias parados
 vermelho mais do que 5 dias parados
                                                 ">
-                                                <label for="inputEmail3" class="col-form-label">Cards
-                                                    Coloridos <span class="mdi mdi-information"></span>
+                                                <label for="inputEmail3" class="col-form-label">Cards Coloridos <span
+                                                        class="mdi mdi-information"></span>
                                                 </label> </span>
 
                                             <input class="toggle-event" type="checkbox" <?php
@@ -443,6 +443,28 @@ vermelho mais do que 5 dias parados
                                                 data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
                                                 data-off="sem cor" data-onstyle="success" data-offstyle="danger">
                                         </div>
+
+                                        <div class="mb-3">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                title="">
+                                                <label for="inputEmail3" class="col-form-label">Gráficos Cor Aleatória
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php
+                                            
+                                            if (array_key_exists('grafico_cor_aleatoria', $empresa)) {
+                                                if ($empresa['grafico_cor_aleatoria'] == 'true') {
+                                                    echo 'checked';
+                                                }
+                                            }
+                                            ?>
+                                                data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
+                                                data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
+                                                data-offstyle="danger">
+                                        </div>
+
+
                                     </div>
                                 </div>
                             </div> <!-- end tab-pane -->

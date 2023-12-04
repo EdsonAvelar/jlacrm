@@ -30,7 +30,6 @@ class LeadSeeder extends Seeder
 
         for ($i=1; $i<50; $i++) {
 
-
             $lead = new Lead();
             $lead->nome =  $faker->name;
             $lead->telefone = 11123123121;

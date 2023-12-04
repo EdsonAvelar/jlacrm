@@ -58,8 +58,35 @@ $name = strtolower($name);
     </div>
 </div>
 
+<div id="config" value="{{ config('grafico_cor_aleatoria') }}" hidden></div>
+
 <script>
+    function generateColor(size_n) {
+
+        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#191970', '#800000', '#FA8072', '#FF0000',
+            '#008000', '#7FFF00', '#BDB76B', '#FFD700', '#00FFFF', '#2F4F4F', '#BC8F8F', '#FFDEAD', '#7B68EE',
+            '#4B0082', '#8B008B', '#FFB6C1', '#DC143C',
+            '#FAF0E6', '#FFDAB9', '#D8BFD8', '#B0E0E6', '#6A5ACD',
+        ];
+
+
+
+        if (document.getElementById('config').getAttribute('value') == 'true') {
+            var result = [];
+            for (let i = 0; i < size_n; i += 1) {
+
+                result.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'))
+            }
+        }
+
+
+        return result;
+    }
+
+
+
     var options = {
+        colors: generateColor(5),
         theme: {
             mode: 'light',
             palette: 'palette7',

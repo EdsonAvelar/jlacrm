@@ -331,33 +331,36 @@ class DashboardController extends Controller
 
 
             $query = [
-                ['data_agendamento', '>=', $from ],
-                ['data_agendamento', '<=', $to],
+                ['data_agendado', '>=', $from ],
+                ['data_agendado', '<=', $to],
             ];
             
             $agendamentos = Agendamento::where($query)->get();
-            foreach ($agendamentos as $agendamento)
-            if ($agendamento->reuniao){
-                $agendamentos['status'] = 'REUNIÃO REALIZADA';
-            } else{
-  
-                $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
-                $now = Carbon::now('America/Sao_Paulo');
-                $last_update = $date->diffInDays($now, false);
-                
-                if ($last_update == 0) {
-                    $agendamentos['status'] = 'REUNIÃO HOJE';
-                } elseif ($last_update > 0) {
-                    $agendamentos['status'] = 'FALTOU';
-                } elseif ($last_update == 1) {
-                    $agendamentos['status'] = 'AMANHÃ';
-                } else {
-                    $agendamentos['status'] = 'AGENDADA'; 
+            foreach ($agendamentos as $agendamento){
+                if ($agendamento->reuniao){
+                    $agendamentos['status'] = 'REUNIÃO REALIZADA';
+                } else{
+    
+                    $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
+                    $now = Carbon::now('America/Sao_Paulo');
+                    $last_update = $date->diffInDays($now, false);
+                    
+                    if ($last_update == 0) {
+                        $agendamento['status'] = 'REUNIÃO HOJE';
+                    } elseif ($last_update > 0) {
+                        $agendamento['status'] = 'FALTOU';
+                    } elseif ($last_update == 1) {
+                        $agendamento['status'] = 'AMANHÃ';
+                    } else {
+                        $agendamento['status'] = 'AGENDADA'; 
+                    }
+                   
                 }
+                $agendamento->save();
             }
+                
 
-
-
+     
 
             $stats['total_vendido'] = Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
@@ -394,10 +397,17 @@ class DashboardController extends Controller
                 $stats['sum_oportunidades'] = $stats['sum_oportunidades'] + $count;
 
 
-                $count = $agendamentos->where( ['user_id', '=', $vendedor->id, 'status','=','FALTOU'])->count();
-                
+                $query = [
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
+                    [ 'status',  '=', 'FALTOU' ],
+                    ['user_id', '=', 1]
+                ];
+
+                $count = Agendamento::where($query)->count();
                 array_push($output['agendamentos_faltou'], $count);
 
+      
                 $query = [
                     ['data_agendamento', '>=', $from ],
                     ['data_agendamento', '<=', $to],
