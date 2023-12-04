@@ -159,7 +159,7 @@ use App\Models\User;
                                                 } elseif ($last_update == 1) {
                                                     echo "<td><span class=\"badge bg-danger\"> AMANHÃ </span></td>";
                                                 } else {
-                                                    echo "<td><span class=\"badge bg-success\"> AGENDADO (" . abs($last_update) . ' DIAS)</span></td>';
+                                                    echo "<td><span class=\"badge bg-info\"> AGENDADO (" . abs($last_update) . ' DIAS)</span></td>';
                                                 }
                                                 
                                                 ?>
