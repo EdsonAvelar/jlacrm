@@ -63,7 +63,7 @@ $name = strtolower($name);
 <script>
     function generateColor(size_n) {
 
-        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#191970', '#800000', '#FA8072', '#FF0000',
+        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#800000', '#FA8072', '#FF0000',
             '#008000', '#7FFF00', '#BDB76B', '#FFD700', '#00FFFF', '#2F4F4F', '#BC8F8F', '#FFDEAD', '#7B68EE',
             '#4B0082', '#8B008B', '#FFB6C1', '#DC143C',
             '#FAF0E6', '#FFDAB9', '#D8BFD8', '#B0E0E6', '#6A5ACD',

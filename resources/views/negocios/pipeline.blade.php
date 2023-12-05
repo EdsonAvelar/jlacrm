@@ -20,11 +20,6 @@ $protocolo_hora = 0;
         }
 
 
-
-        .body {
-            style="overflow-y: hidden;"
-        }
-
         #spinner-div {
             position: fixed;
             display: none;
@@ -67,6 +62,29 @@ $protocolo_hora = 0;
             width: 1rem;
         }
     </style>
+
+    <style>
+        .nolink {
+
+            text-decoration: none;
+            color: black;
+        }
+
+        .card-body {
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            padding: 0rem 0.6rem !important;
+        }
+
+        .border1 {
+            border: 0px solid #d0d0d0;
+        }
+
+        .border1:hover {
+            border: 3px solid rgb(78, 0, 146);
+        }
+    </style>
 @endsection
 
 @section('main_content')
@@ -77,7 +95,7 @@ $protocolo_hora = 0;
         <!-- start page title -->
         <div class="row ">
             <div class="col-12">
-                <div class="page-title-box" style="margin-top: -40px;">
+                <div class="page-title-box" style="margin-top: -33px;">
                     <div class="page-title-right">
                         <ul class="list-unstyled topbar-menu float-end mb-0">
                             <li class="dropdown notification-list d-none d-sm-inline-block">
@@ -624,8 +642,6 @@ $protocolo_hora = 0;
 
 
     <script>
-  
-
         var cont = [];
         var arr = Array($('.container-drag').data('containers'))[0];
         arr.forEach(function(n) {
@@ -649,12 +665,12 @@ $protocolo_hora = 0;
 
         /** Quando a página for carregada, ajusta o tamanho máximo da div principal para aparecer o scroll */
         document.addEventListener("DOMContentLoaded", function() {
-            var height__ = parseInt(document.documentElement.clientHeight) - 210;
-
+            var height__ = parseInt(document.documentElement.clientHeight) - 100;
+            console.log(height__)
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (isMobile) {
                 $('.board').css({
-                    "max-height": height__ + 100
+                    "max-height": height__ + 5
                 })
             } else {
                 $('.board').css({

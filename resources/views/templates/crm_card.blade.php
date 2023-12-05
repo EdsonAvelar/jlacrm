@@ -1,31 +1,9 @@
-<style>
-    .nolink {
-
-        text-decoration: none;
-        color: black;
-    }
-
-    .card-body {
-        -webkit-box-flex: 1;
-        -ms-flex: 1 1 auto;
-        flex: 1 1 auto;
-        padding: 0.6rem 0.6rem !important;
-    }
-
-    .border1 {
-        border: 0px solid #d0d0d0;
-    }
-
-    .border1:hover {
-        border: 3px solid rgb(78, 0, 146);
-    }
-</style>
 <?php
 $styles = '';
 $compact = false;
 $mb = 'mt-2 mb-2';
 if (app('request')->view_card == 'compact') {
-    $styles = 'height: 7rem;';
+    $styles = 'height: 90px';
     $compact = true;
     $mb = 'mt-1 mb-1';
 }

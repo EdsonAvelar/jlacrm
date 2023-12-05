@@ -413,12 +413,13 @@
         };
 
         function change_max_height() {
-            var height__ = parseInt(document.documentElement.clientHeight) - 210;
+            var height__ = parseInt(document.documentElement.clientHeight) - 100;
+            console.log(height__)
 
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (isMobile) {
                 $('.container_exp').css({
-                    "max-height": height__ + 100
+                    "max-height": height__ + 5
                 })
             } else {
                 $('.container_exp').css({

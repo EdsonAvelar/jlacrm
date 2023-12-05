@@ -45,6 +45,20 @@ use Carbon\Carbon;
     @yield('headers')
 
 
+    <style>
+        ::-webkit-scrollbar {
+            background-color: #f5f5f501;
+            cursor: grab;
+            border-radius: 10px;
+            width: 7px;
+            height: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #454444;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 
 <?php
@@ -67,7 +81,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                 <i class="mdi mdi-menu"></i>
             </a>
 
-            <a class="logo text-center logo-light open-left">
+            <a class="logo_consensed logo text-center logo-light open-left">
                 <span class="logo-lg">
                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
                         height="32">
@@ -78,7 +92,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                 </span>
             </a>
 
-            <a class="logo text-center logo-dark open-left">
+            <a class="logo_consensed logo text-center logo-dark open-left">
                 <span class="logo-lg">
                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
                         height="32">
@@ -289,7 +303,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             <div class="content" id="content">
                 <!-- Topbar Start -->
 
-                <div class="navbar-custom">
+                {{-- <div class="navbar-custom">
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list d-lg-none">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#"
@@ -447,7 +461,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     <button class="button-menu-mobile open-left">
                         <i class="mdi mdi-menu"></i>
                     </button>
-                </div>
+                </div> --}}
 
 
 
@@ -459,7 +473,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             </div>
             <!-- content -->
 
-            <!-- Footer Start -->
+            {{-- <!-- Footer Start -->
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
@@ -475,7 +489,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> --}}
 
         </div>
     </div>
@@ -671,7 +685,29 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         "showMethod": "fadeIn",
         "hideMethod": "fadeOut"
     }
-</script>
 
+    $('.logo_consensed').on('click', function() {
+
+        if ($("body").attr("data-leftbar-compact-mode")) {
+            $("body").attr("data-leftbar-compact-mode", "not_condensed");
+        } else {
+            $("body").attr("data-leftbar-compact-mode", "condensed");
+        }
+
+    });
+</script>
+@if (Session::has('status'))
+    <script>
+        showAlert({
+            class: 'success',
+            message: "{{ session('status') }}"
+        })
+    </script>
+
+    {{-- <div class="alert alert-success" role="alert">
+           
+             <strong>Success!</strong> {{ session('status') }} 
+        </div> --}}
+@endif
 
 </html>

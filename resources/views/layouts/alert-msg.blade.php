@@ -1,5 +1,5 @@
 <section class="Alert-Message">
-    <style type="text/css">
+    {{-- <style type="text/css">
         .close {
             float: right;
             display: inline-block;
@@ -39,6 +39,6 @@
         <div class="alert alert-success" role="alert">
             <strong>Success!</strong> {{ session('status') }}
         </div>
-    @endif
+    @endif --}}
 
 </section>
