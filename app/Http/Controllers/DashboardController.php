@@ -336,9 +336,13 @@ class DashboardController extends Controller
             ];
             
             $agendamentos = Agendamento::where($query)->get();
+
+            
             foreach ($agendamentos as $agendamento){
                 if ($agendamento->reuniao){
-                    $agendamentos['status'] = 'REUNIÃO REALIZADA';
+
+                    $agendamento['status'] = 'REUNIAO_REALIZADA';
+
                 } else{
     
                     $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
@@ -354,13 +358,10 @@ class DashboardController extends Controller
                     } else {
                         $agendamento['status'] = 'AGENDADA'; 
                     }
-                   
                 }
-                $agendamento->save();
-            }
-                
 
-     
+                $agendamento->save();
+            }  
 
             $stats['total_vendido'] = Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
@@ -376,7 +377,10 @@ class DashboardController extends Controller
             $cargos = Cargo::where(  ['nome' => 'Vendedor' ])->orWhere(['nome'=>'Coordenador'])->pluck('id');
             $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo] )->get();
 
-            $metricas = ['vendedores','oportunidades','agendamentos','reunioes','aprovacoes','vendas','propostas','agendamentos_faltou'];
+            $metricas = ['vendedores','oportunidades','agendamentos','reunioes',
+                        'aprovacoes','vendas','propostas','agendamentos_faltou_perc',
+                        'agendamentos_faltou','agendamentos_realizado'];
+
             foreach ($metricas as $metrica) {
                 $output[$metrica] = array();
             }
@@ -404,8 +408,26 @@ class DashboardController extends Controller
                     ['user_id', '=',  $vendedor->id]
                 ];
 
-                $count = Agendamento::where($query)->count();
-                array_push($output['agendamentos_faltou'], $count);
+                $count_faltou = Agendamento::where($query)->count();
+
+                $query = [
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
+                    [ 'status',  '=', 'REUNIAO_REALIZADA' ],
+                    ['user_id', '=',  $vendedor->id]
+                ];
+
+                $count_realizados = Agendamento::where($query)->count();
+
+                if ( ($count_realizados +  $count_faltou) > 0){
+                    array_push($output['agendamentos_faltou_perc'], ($count_faltou/($count_realizados +  $count_faltou)) * 100);
+                }else {
+                    array_push($output['agendamentos_faltou_perc'],0);
+                }
+
+
+                 array_push($output['agendamentos_faltou'], $count_faltou);
+                 array_push($output['agendamentos_realizado'], $count_realizados);
 
       
                 $query = [

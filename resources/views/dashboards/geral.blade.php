@@ -123,8 +123,14 @@
 
             @include('dashboards.views.donuts', [
                 'name' => 'Faltas em Agendamentos',
-                'plots' => [$output['vendedores'], $output['agendamentos_faltou']],
+                'plots' => [$output['vendedores'], $output['agendamentos_faltou_perc']],
             ])
+
+            @include('dashboards.views.donuts', [
+                'name' => 'Agendamentos Realizados',
+                'plots' => [$output['vendedores'], $output['agendamentos_realizado']],
+            ])
+
 
 
 

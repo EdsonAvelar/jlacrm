@@ -2,10 +2,6 @@
     .modal-content {
         width: auto;
     }
-
-    .apexcharts-legend-series {
-        align-self: flex-start;
-    }
 </style>
 
 <?php
@@ -13,6 +9,7 @@ $fullname = $name;
 
 $name = str_replace(' ', '_', $name);
 $name = strtolower($name);
+
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
@@ -33,9 +30,11 @@ $name = strtolower($name);
                         </div>
                     </div>
                 </a>
-            </div>
-        </div>
-    </div>
+            </div> <!-- end row-->
+
+        </div> <!-- end card-body -->
+
+    </div> <!-- end card -->
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
@@ -58,6 +57,8 @@ $name = strtolower($name);
         </div>
     </div>
 </div>
+
+<div id="config" value="{{ config('grafico_cor_aleatoria') }}" hidden></div>
 
 <script>
     function generateColor(size_n) {
@@ -82,130 +83,110 @@ $name = strtolower($name);
         return result;
     }
 
-    function formatter(num) {
-        const digits = 2;
-        const lookup = [{
-                value: 1,
-                symbol: ""
-            },
-            {
-                value: 1e3,
-                symbol: "K"
-            },
-            {
-                value: 1e6,
-                symbol: "M"
-            },
-            {
-                value: 1e9,
-                symbol: "G"
-            },
-            {
-                value: 1e12,
-                symbol: "T"
-            },
-            {
-                value: 1e15,
-                symbol: "P"
-            },
-            {
-                value: 1e18,
-                symbol: "E"
-            }
-        ];
-
-
-
-        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-        var item = lookup.slice().reverse().find(function(item) {
-            return num >= item.value;
-        });
-        return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-
-
-        return nFormatter(val, 0);
-    }
-
 
     var a = <?php echo json_encode($plots[1]); ?>;
-    var labels = <?php echo json_encode($plots[0]); ?>;
+
 
     var options = {
         colors: generateColor(a.length),
-        dataLabels: {
-            enabled: true,
-            style: {
-                fontSize: "16px",
-                fontFamily: "Helvetica, Arial, sans-serif",
-                colors: ['#fff'],
-                dropShadow: {
-                    enabled: true,
-                    top: 1,
-                    left: 3,
-                    blur: 1,
-                    color: '#000',
-                    opacity: 0.1
-                }
+        theme: {
+            mode: 'light',
+            palette: 'palette7',
+            monochrome: {
+                enabled: false,
+                color: '#111111',
+                shadeTo: 'light',
+                shadeIntensity: 0.65
             },
-            dropShadow: {
-                enabled: true,
-                top: 1,
-                left: 1,
-                blur: 1,
-                color: '#000',
-                opacity: 0.7
-            },
-            formatter: function(val, opts) {
-
-                val = parseFloat(val).toFixed(2);
-
-                var texto = opts.w.globals.seriesNames[opts.seriesIndex] + " " +
-                    " (" + formatter(opts.w.globals.series[opts.seriesIndex]) + '-' + val + "%)";
-
-                var texto = opts.w.globals.seriesNames[opts.seriesIndex] + " " +
-                    " (" + val + "%)";
-
-                return texto;
-            }
-        },
-
-        series: a,
-        plotOptions: {
-            pie: {
-                expandOnClick: false
-            }
         },
         chart: {
-            type: 'donut',
+            toolbar: {
+                show: false,
+                offsetX: 0,
+                offsetY: 0,
+                tools: {
 
+                },
+
+            },
+            type: 'bar'
         },
-        labels: labels,
-        responsive: [{
-            breakpoint: 480,
-            options: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
+        series: [{
+            name: '{{ $name }}',
+            data: <?php echo json_encode($plots[1]); ?>,
+
         }],
-        tooltip: {
+
+        xaxis: {
+            labels: {
+                rotate: -30
+            },
+            categories: <?php echo json_encode($plots[0]); ?>
+        },
+        plotOptions: {
+            bar: {
+                distributed: true,
+                borderRadius: 10,
+                dataLabels: {
+                    position: 'top', // top, center, bottom
+
+                },
+            }
+        },
+        dataLabels: {
             enabled: true,
+            formatter: function(num) {
+                const digits = 2;
+                const lookup = [{
+                        value: 1,
+                        symbol: ""
+                    },
+                    {
+                        value: 1e3,
+                        symbol: "K"
+                    },
+                    {
+                        value: 1e6,
+                        symbol: "M"
+                    },
+                    {
+                        value: 1e9,
+                        symbol: "G"
+                    },
+                    {
+                        value: 1e12,
+                        symbol: "T"
+                    },
+                    {
+                        value: 1e15,
+                        symbol: "P"
+                    },
+                    {
+                        value: 1e18,
+                        symbol: "E"
+                    }
+                ];
 
-            y: {
-                formatter: function(value, series) {
-                    return formatter(value);
-                }
+
+
+                const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+                var item = lookup.slice().reverse().find(function(item) {
+
+                    return num >= item.value;
+                });
+
+                return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+
+
+                return nFormatter(val, 0);
+            },
+            offsetY: -20,
+            style: {
+                fontSize: '16px',
+                colors: ['#338888']
             }
-        },
-
-        legend: {
-            horizontalAlign: 'right',
-            formatter: function(val, opts) {
-                return val + " - " + formatter(opts.w.globals.series[opts.seriesIndex]);
-            }
-        },
-
-    };
+        }
+    }
 
     try {
         var chart_option = chart_option || [];
