@@ -135,13 +135,21 @@ $name = strtolower($name);
         dataLabels: {
             enabled: true,
             style: {
-                fontSize: "20px",
+                fontSize: "16px",
                 fontFamily: "Helvetica, Arial, sans-serif",
-                fontWeight: "bold"
+
             },
             formatter: function(val, opts) {
+
                 val = parseFloat(val).toFixed(2);
-                return formatter(opts.w.globals.series[opts.seriesIndex]) + " (" + val + "%)";
+
+                var texto = opts.w.globals.seriesNames[opts.seriesIndex] + " " +
+                    " (" + formatter(opts.w.globals.series[opts.seriesIndex]) + '-' + val + "%)";
+
+                var texto = opts.w.globals.seriesNames[opts.seriesIndex] + " " +
+                    " (" + val + "%)";
+
+                return texto;
             }
         },
         series: a,
@@ -183,7 +191,6 @@ $name = strtolower($name);
     }
 
     chart_option["{{ $name }}"] = options;
-    console.log(chart_option)
 
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
