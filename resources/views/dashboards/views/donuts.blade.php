@@ -140,6 +140,7 @@ $name = strtolower($name);
                 fontWeight: "bold"
             },
             formatter: function(val, opts) {
+                val = parseFloat(val).toFixed(2);
                 return formatter(opts.w.globals.series[opts.seriesIndex]) + " (" + val + "%)";
             }
         },
