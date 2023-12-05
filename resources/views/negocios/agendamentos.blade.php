@@ -333,33 +333,6 @@ use App\Models\User;
         });
 
 
-        // $("#confirmar_agendamento").on('click', function() {
-
-        //     $("#spinner-div").show();
-        //     $.ajax({
-        //         url: "{{ url('negocios/add_reuniao') }}",
-        //         type: 'post',
-        //         data: {
-        //             "negocio_id": info[0]
-        //         },
-        //         Type: 'json',
-        //         success: function(res) {
-        //             showAlert({
-        //                 message: res,
-        //                 class: "success"
-        //             });
-        //         },
-        //         error: function(res) {
-        //             showAlert({
-        //                 message: "erro ao agendar reunião:" + res,
-        //                 class: "danger"
-        //             });
-        //         },
-        //         complete: function() {
-        //             $("#spinner-div").hide(); //Request is complete so hide spinner
-
-        //         }
-        //     });
-        // })
+     
     </script>
 @endsection

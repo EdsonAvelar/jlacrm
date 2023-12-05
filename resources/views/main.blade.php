@@ -13,6 +13,8 @@ use Carbon\Carbon;
     <meta name="facebook-domain-verification" content="2v42l4jph9cgfkrorr6gejjod4bqx6" />
 
     <title>{{ config('nome') }}</title>
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
@@ -35,7 +37,14 @@ use Carbon\Carbon;
 
 
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+        integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     @yield('headers')
+
+
 </head>
 
 <?php
@@ -485,6 +494,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- end demo js-->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
         window.setTimeout(function() {
@@ -532,15 +544,15 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             $("#menuCentral").addClass("col-md-12");
             $("#menuCentral").fadeIn(1500); //reaparece com estilo ^_~
 
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            }
+            // if (document.exitFullscreen) {
+            //     document.exitFullscreen();
+            // } else if (document.msExitFullscreen) {
+            //     document.msExitFullscreen();
+            // } else if (document.mozCancelFullScreen) {
+            //     document.mozCancelFullScreen();
+            // } else if (document.webkitExitFullscreen) {
+            //     document.webkitExitFullscreen();
+            // }
         }
 
         $(document).ready(function() {
@@ -571,17 +583,19 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
         }
 
-
         function showAlert(obj) {
-            var html = '<div class="alert alert-' + obj.class + ' alert-dismissible" role="alert">' +
-                '   <strong>' + obj.message + '</strong>' +
-                '   </div>';
-            $('#alert').append(html);
-            window.setTimeout(function() {
-                $(".alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 4000);
+
+            if (obj.class == "success") {
+                toastr.success(obj.message);
+            } else if (obj.class == "danger") {
+                toastr.error(obj.message);
+            } else if (obj.class == "warning") {
+                toastr.warning(obj.message);
+            } else {
+                toastr.info(obj.message);
+            }
+
+
         }
 
         function nFormatter(num, digits) {
@@ -638,5 +652,26 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
 </body>
+
+<script>
+    toastr.options = {
+        "closeButton": true,
+        "debug": false,
+        "newestOnTop": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+</script>
+
 
 </html>
