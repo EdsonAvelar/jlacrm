@@ -60,6 +60,28 @@ $name = strtolower($name);
 </div>
 
 <script>
+    function generateColor(size_n) {
+
+        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#191970', '#800000', '#FA8072', '#FF0000',
+            '#008000', '#7FFF00', '#BDB76B', '#FFD700', '#00FFFF', '#2F4F4F', '#BC8F8F', '#FFDEAD', '#7B68EE',
+            '#4B0082', '#8B008B', '#FFB6C1', '#DC143C',
+            '#FAF0E6', '#FFDAB9', '#D8BFD8', '#B0E0E6', '#6A5ACD',
+        ];
+
+
+
+        if (document.getElementById('config').getAttribute('value') == 'true') {
+            var result = [];
+            for (let i = 0; i < size_n; i += 1) {
+
+                result.push('#' + (Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0'))
+            }
+        }
+
+
+        return result;
+    }
+
     function formatter(num) {
         const digits = 2;
         const lookup = [{
@@ -105,26 +127,22 @@ $name = strtolower($name);
     }
 
 
-    var options = {
-
-
-        chart: {
-
-            type: 'donut',
-        },
-        series: [{
-            name: '{{ $name }}',
-            data: <?php echo json_encode($plots[1]); ?>,
-
-        }],
-
-
-    }
-
     var a = <?php echo json_encode($plots[1]); ?>;
     var labels = <?php echo json_encode($plots[0]); ?>;
 
     var options = {
+        colors: generateColor(a.length),
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: "20px",
+                fontFamily: "Helvetica, Arial, sans-serif",
+                fontWeight: "bold"
+            },
+            formatter: function(val, opts) {
+                return formatter(opts.w.globals.series[opts.seriesIndex]) + " (" + val + "%)";
+            }
+        },
         series: a,
         chart: {
             type: 'donut',

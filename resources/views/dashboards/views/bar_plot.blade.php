@@ -84,9 +84,11 @@ $name = strtolower($name);
     }
 
 
+    var a = <?php echo json_encode($plots[1]); ?>;
+
 
     var options = {
-        colors: generateColor(5),
+        colors: generateColor(a.length),
         theme: {
             mode: 'light',
             palette: 'palette7',
