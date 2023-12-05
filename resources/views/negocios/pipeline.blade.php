@@ -77,13 +77,13 @@ $protocolo_hora = 0;
             padding: 0rem 0.6rem !important;
         }
 
-        .border1 {
-            border: 0px solid #d0d0d0;
-        }
+        /* .border1 {
+                border: 0px solid #d0d0d0;
+            }
 
-        .border1:hover {
-            border: 3px solid rgb(78, 0, 146);
-        }
+            .border1:hover {
+                border: 3px solid rgb(78, 0, 146);
+            } */
     </style>
 @endsection
 
