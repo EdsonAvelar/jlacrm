@@ -137,7 +137,23 @@ $name = strtolower($name);
             style: {
                 fontSize: "16px",
                 fontFamily: "Helvetica, Arial, sans-serif",
-
+                colors: ['#fff'],
+                dropShadow: {
+                    enabled: true,
+                    top: 1,
+                    left: 3,
+                    blur: 1,
+                    color: '#000',
+                    opacity: 0.1
+                }
+            },
+            dropShadow: {
+                enabled: true,
+                top: 1,
+                left: 1,
+                blur: 1,
+                color: '#000',
+                opacity: 0.7
             },
             formatter: function(val, opts) {
 
@@ -152,6 +168,7 @@ $name = strtolower($name);
                 return texto;
             }
         },
+
         series: a,
         chart: {
             type: 'donut',
