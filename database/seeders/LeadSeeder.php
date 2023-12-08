@@ -28,7 +28,7 @@ class LeadSeeder extends Seeder
         
         $faker = \Faker\Factory::create('pt_BR');
 
-        for ($i=1; $i<50; $i++) {
+        for ($i=1; $i< 1000; $i++) {
 
             $lead = new Lead();
             $lead->nome =  $faker->name;

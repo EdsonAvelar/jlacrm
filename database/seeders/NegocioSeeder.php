@@ -10,6 +10,8 @@ use App\Models\Funil;
 use App\Models\NegocioComentario;
 use App\Enums\NegocioTipo;
 use App\Enums\NegocioStatus;
+use Carbon\Carbon;
+
 class NegocioSeeder extends Seeder
 {
     /**
@@ -22,13 +24,14 @@ class NegocioSeeder extends Seeder
 
         $faker = \Faker\Factory::create('pt_BR');
 
-        for ($i = 1; $i < 50; $i++) {
+        for ($i = 1; $i < 1000; $i++) {
 
             $negocio = new Negocio();
             $negocio->titulo = "Casa 100k " . $faker->name;
             $negocio->valor = $i * 100000;
             $negocio->tipo = 1;
             $negocio->funil_id = 1;
+            $negocio->data_criacao =Carbon::now();
             $negocio->fechamento = "18/12/2022";
 
             /**

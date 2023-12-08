@@ -91,6 +91,8 @@ class PageController extends Controller
             }
             
         }
+
+        $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
         
         //criando o negócio
         $negocio = Negocio::create($deal_input);
@@ -99,6 +101,9 @@ class PageController extends Controller
         $neg_com->comentario = "ValorCredito:".$input['valor_credito']."\nEntrada:".$input['entrada'];
         $neg_com->negocio_id = $negocio->id;
         $neg_com->user_id = User::find(1)->id;
+        
+        
+
         $neg_com->save();
 
         $texto = "Lead Cadastrado pelo Site. Campanha: ".$input['campanha']." \nFonte:".$input['fonte'].'\WhatsApp: '.$consultor;

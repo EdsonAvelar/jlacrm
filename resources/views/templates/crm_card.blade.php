@@ -87,6 +87,10 @@ if (app('request')->view_card == 'compact') {
             </div>
         </div>
 
+
+
+        
+
         <a class="float-end text-muted" href="tel:{{ $telefone }}">{{ $telefone }}</a>
 
         <?php
@@ -128,7 +132,7 @@ if (app('request')->view_card == 'compact') {
                 <i class="mdi mdi-briefcase-outline text-muted"></i>
                 {{ $tipo }}
             </span>
-            <span class="text-nowrap mb-1 d-inline-block">
+            <span class="text-nowrap mb-1 d-inline-block"></span>
                 <i class="mdi mdi-cash text-muted"></i>
                 <b>R$ {{ number_format((float) $valor, 2, ',', '.') }}</b>
             </span>
