@@ -313,11 +313,42 @@ class DashboardController extends Controller
             return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
         }
 
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
+
+        $query = [
+            ['data_agendado', '>=', $from ],
+            ['data_agendado', '<=', $to],
+        ];
         
-      
-  
+        $agendamentos = Agendamento::where($query)->get();
 
+        
+        foreach ($agendamentos as $agendamento){
+            if ($agendamento->reuniao){
 
+                $agendamento['status'] = 'REUNIAO_REALIZADA';
+
+            } else{
+
+                $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
+                $now = Carbon::now('America/Sao_Paulo');
+                $last_update = $date->diffInDays($now, false);
+
+                if ($date->isToday()) {
+                    $agendamento['status'] = 'REUNIAO_HOJE';
+                } elseif ($date->isTomorrow()) {
+                    $agendamento['status'] = 'AMANHA';
+                } elseif ($last_update > 0) {
+                    $agendamento['status'] = 'FALTOU';
+                } else {
+                    $agendamento['status'] = 'AGENDADA'; 
+                }
+            }
+
+            $agendamento->save();
+        }  
 
 
         if ( Auth::user()->hasRole('admin')){
@@ -326,45 +357,7 @@ class DashboardController extends Controller
 
             $stats = [];
 
-            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
-
-
-            $query = [
-                ['data_agendado', '>=', $from ],
-                ['data_agendado', '<=', $to],
-            ];
-            
-            $agendamentos = Agendamento::where($query)->get();
-
-            
-            foreach ($agendamentos as $agendamento){
-                if ($agendamento->reuniao){
-
-                    $agendamento['status'] = 'REUNIAO_REALIZADA';
-
-                } else{
     
-                    $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
-                    $now = Carbon::now('America/Sao_Paulo');
-                    $last_update = $date->diffInDays($now, false);
-
-                    if ($date->isToday()) {
-                        $agendamento['status'] = 'REUNIAO_HOJE';
-                    } elseif ($date->isTomorrow()) {
-                        $agendamento['status'] = 'AMANHA';
-                    } elseif ($last_update > 0) {
-                        $agendamento['status'] = 'FALTOU';
-                    } else {
-                        $agendamento['status'] = 'AGENDADA'; 
-                    }
-
-                    
-           
-                }
-
-                $agendamento->save();
-            }  
 
             $stats['total_vendido'] = Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
             $stats['leads_ativos'] = Negocio::where('status',NegocioStatus::ATIVO)->count();
@@ -526,13 +519,14 @@ class DashboardController extends Controller
             
             $users = User::whereIn('id', $ids)->where(['status' => UserStatus::ativo] )->get();
             
-            $output['vendedores'] = array();
-            $output['oportunidades'] = array();
-            $output['agendamentos'] = array();
-            $output['reunioes'] = array();
-            $output['aprovacoes'] = array();
-            $output['vendas'] = array();
-            $output['propostas'] = array();
+            $output = array();
+            $metricas = ['vendedores','oportunidades','agendamentos','reunioes',
+                        'aprovacoes','vendas','propostas','agendamentos_faltou_perc',
+                        'agendamentos_faltou','agendamentos_realizado'];
+
+            foreach ($metricas as $metrica) {
+                $output[$metrica] = array();
+            }
 
             foreach ($users as $vendedor){
                 
@@ -548,6 +542,39 @@ class DashboardController extends Controller
                 $count = Negocio::where($query)->count();
                 array_push($output['oportunidades'], $count);
                 $stats['sum_oportunidades'] = $stats['sum_oportunidades'] + $count;
+
+
+
+                $query = [
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
+                    [ 'status',  '=', 'FALTOU' ],
+                    ['user_id', '=',  $vendedor->id]
+                ];
+
+                $count_faltou = Agendamento::where($query)->count();
+
+                $query = [
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
+                    [ 'status',  '=', 'REUNIAO_REALIZADA' ],
+                    ['user_id', '=',  $vendedor->id]
+                ];
+
+                $count_realizados = Agendamento::where($query)->count();
+
+                if ( ($count_realizados +  $count_faltou) > 0){
+                    array_push($output['agendamentos_faltou_perc'], ($count_faltou/($count_realizados +  $count_faltou)) * 100);
+                }else {
+                    array_push($output['agendamentos_faltou_perc'],0);
+                }
+
+
+                 array_push($output['agendamentos_faltou'], $count_faltou);
+                 array_push($output['agendamentos_realizado'], $count_realizados);
+
+
+
 
                 $query = [
                     ['data_agendamento', '>=', $from ],

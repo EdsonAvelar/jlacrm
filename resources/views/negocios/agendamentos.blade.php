@@ -232,6 +232,7 @@ use App\Models\User;
                     class: "success"
                 });
                 $('#agendamento-protocolo').modal('hide');
+                
             }
 
 
