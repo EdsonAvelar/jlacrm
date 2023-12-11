@@ -70,7 +70,6 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
-    Route::group(['middleware' => ['auth', 'role:admin']], function () {
          Route::group(
         ['prefix' => 'agendamento'],
         function () {
@@ -81,8 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         }
     );
-
-    });
+    
 
    
 

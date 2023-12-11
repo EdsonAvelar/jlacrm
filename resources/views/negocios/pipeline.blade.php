@@ -78,12 +78,12 @@ $protocolo_hora = 0;
         }
 
         /* .border1 {
-                border: 0px solid #d0d0d0;
-            }
+                    border: 0px solid #d0d0d0;
+                }
 
-            .border1:hover {
-                border: 3px solid rgb(78, 0, 146);
-            } */
+                .border1:hover {
+                    border: 3px solid rgb(78, 0, 146);
+                } */
     </style>
 @endsection
 
@@ -735,9 +735,6 @@ $protocolo_hora = 0;
             var form = $(this);
             var actionUrl = form.attr('action');
 
-
-
-
             $.ajax({
                 type: "POST",
                 url: actionUrl,
@@ -774,8 +771,6 @@ $protocolo_hora = 0;
                                 ptcl_cliente.textContent = data[3][0].toUpperCase() + data[
                                     3].substring(1);
 
-
-
                                 $('#agendamento-protocolo').modal('show');
                             }
 
@@ -783,8 +778,9 @@ $protocolo_hora = 0;
                     });
                 },
                 error: function(res) {
+                    console.log(res)
                     showAlert({
-                        message: " Erro no agendamento",
+                        message: " Erro no agendamento (" + res + ")",
                         class: "danger"
                     });
                     $("#spinner-div").hide();
