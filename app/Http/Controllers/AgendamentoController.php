@@ -44,18 +44,16 @@ class AgendamentoController extends Controller
         $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
         
 
-        $query = [];
+        $query = [
+            ['data_agendado', '>=', $from ],
+            ['data_agendado', '<=', $to],
+        ];
 
         if (  $agendado ){
             if ( $agendado == "em"){
                 $query = [
                     ['data_agendamento', '>=', $from ],
                     ['data_agendamento', '<=', $to],
-                ];
-            }else {
-                $query = [
-                    ['data_agendado', '>=', $from ],
-                    ['data_agendado', '<=', $to],
                 ];
             }
         }
