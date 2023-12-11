@@ -348,16 +348,19 @@ class DashboardController extends Controller
                     $date = Carbon::createFromFormat('Y-m-d', $agendamento->data_agendado);
                     $now = Carbon::now('America/Sao_Paulo');
                     $last_update = $date->diffInDays($now, false);
-                    
-                    if ($last_update == 0) {
-                        $agendamento['status'] = 'REUNIÃO HOJE';
+
+                    if ($date->isToday()) {
+                        $agendamento['status'] = 'REUNIAO_HOJE';
+                    } elseif ($date->isTomorrow()) {
+                        $agendamento['status'] = 'AMANHA';
                     } elseif ($last_update > 0) {
                         $agendamento['status'] = 'FALTOU';
-                    } elseif ($last_update == 1) {
-                        $agendamento['status'] = 'AMANHÃ';
                     } else {
                         $agendamento['status'] = 'AGENDADA'; 
                     }
+
+                    
+           
                 }
 
                 $agendamento->save();

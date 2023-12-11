@@ -84,12 +84,25 @@ use App\Models\User;
 
             </div>
 
-            <div class="col-sm-2">
-                <a href="{{ route('agendamento.lista', ['data_inicio' => \Carbon\Carbon::now()->format('d/m/Y'), 'data_fim' => \Carbon\Carbon::now()->format('d/m/Y')]) }}"
+            <div class="col-sm-6">
+                <input class="toggle-event" type="checkbox" <?php
+                if (app('request')->query('agendado') == 'para') {
+                    echo 'checked';
+                }
+                ?> data-config_info="card_colorido"
+                    data-toggle="toggle" data-on="Para" data-off="Em" data-onstyle="success" data-offstyle="danger">
+
+                <a href="{{ route('agendamento.lista', [
+                    'data_inicio' => \Carbon\Carbon::now()->format('d/m/Y'),
+                    'data_fim' => \Carbon\Carbon::now()->format('d/m/Y'),
+                    'agendado' => app('request')->query('agendado'),
+                ]) }}"
                     type="button" class="btn btn-success">HOJE</a>
 
-                <a href="{{ route('agendamento.lista', ['data_inicio' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y'),'data_fim' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y')]) }}"
+                <a href="{{ route('agendamento.lista', ['data_inicio' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y'),'data_fim' => \Carbon\Carbon::now()->addDays(1)->format('d/m/Y'),'agendado' => app('request')->query('agendado')]) }}"
                     type="button" class="btn btn-info">AMANHÃ</a>
+
+
 
             </div>
 
@@ -152,16 +165,15 @@ use App\Models\User;
                                                 $now = \Carbon\Carbon::now('America/Sao_Paulo');
                                                 $last_update = $date->diffInDays($now, false);
                                                 
-                                                if ($last_update == 0) {
-                                                    echo "<td><span class=\"badge bg-warning\">REUNIÃO HOJE</a></span></td>";
+                                                if ($date->isToday()) {
+                                                    echo "<td><span class=\"badge bg-warning\">REUNIÃO HOJE" . '</a></span></td>';
+                                                } elseif ($date->isTomorrow()) {
+                                                    echo "<td><span class=\"badge bg-primary\"> AMANHÃ </span></td>";
                                                 } elseif ($last_update > 0) {
                                                     echo "<td><span class=\"badge bg-danger\"> FALTOU </span></td>";
-                                                } elseif ($last_update == 1) {
-                                                    echo "<td><span class=\"badge bg-danger\"> AMANHÃ </span></td>";
                                                 } else {
-                                                    echo "<td><span class=\"badge bg-info\"> AGENDADO (" . abs($last_update) . ' DIAS)</span></td>';
+                                                    echo "<td><span class=\"badge bg-info\"> AGENDADO (" . abs($last_update - 1) . ' DIAS)</span></td>';
                                                 }
-                                                
                                                 ?>
                                             @endif
 
@@ -255,18 +267,59 @@ use App\Models\User;
 
         });
 
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = window.location.search.substring(1),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+                }
+            }
+            return false;
+        };
+
         $('input[name="daterange"]').daterangepicker({
                 locale: {
                     format: 'DD-MM-YYYY'
                 }
             },
             function(start, end, label) {
+
+                var param = getUrlParameter('agendado');
+
                 //alert("A new date range was chosen: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
                 window.location.href = "{{ url('agendamento/lista?') }}" + "data_inicio=" + start.format(
                         'DD/MM/YYYY') +
-                    "&" + "data_fim=" + end.format('DD/MM/YYYY');
+                    "&" + "data_fim=" + end.format('DD/MM/YYYY') + "&agendado=" + param;
 
             });
+
+        $('.toggle-event').change(function($this) {
+
+
+
+            var start = getUrlParameter('data_inicio');
+            var end = getUrlParameter('data_fim');
+
+            var config_value = $(this).prop('checked');
+
+            var param = 'em'
+            if (config_value == true) {
+                param = "para"
+            }
+
+            console.log(start, end, config_value, param)
+
+            window.location.href = "{{ url('agendamento/lista?') }}" + "data_inicio=" + start +
+                "&" + "data_fim=" + end + "&agendado=" + param;
+
+
+        });
 
         function PrintElement() {
 
@@ -319,8 +372,6 @@ use App\Models\User;
 
                         $('#agendamento-protocolo').modal('show');
                     }
-
-
                 },
                 error: function(res) {
                     showAlert({
@@ -331,8 +382,5 @@ use App\Models\User;
                 },
             });
         });
-
-
-     
     </script>
 @endsection

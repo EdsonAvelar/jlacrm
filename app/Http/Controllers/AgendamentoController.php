@@ -22,7 +22,9 @@ class AgendamentoController extends Controller
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
 
-      
+        
+
+        $agendado = $request->query('agendado');
 
         if ( is_null($data_inicio) and is_null($data_fim) ){
 
@@ -41,10 +43,24 @@ class AgendamentoController extends Controller
         $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
         $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
         
-        $query = [
-            ['data_agendamento', '>=', $from ],
-            ['data_agendamento', '<=', $to],
-        ];
+
+        $query = [];
+
+        if (  $agendado ){
+            if ( $agendado == "em"){
+                $query = [
+                    ['data_agendamento', '>=', $from ],
+                    ['data_agendamento', '<=', $to],
+                ];
+            }else {
+                $query = [
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
+                ];
+            }
+        }
+
+       
         
         $agendamentos = Agendamento::where($query)->get();
         return view('negocios.agendamentos', compact('agendamentos'));
