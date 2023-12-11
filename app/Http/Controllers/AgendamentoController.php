@@ -42,8 +42,6 @@ class AgendamentoController extends Controller
         $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
         
 
-       
-
         $query = [
             ['data_agendamento', '>=', $from ],
             ['data_agendamento', '<=', $to],

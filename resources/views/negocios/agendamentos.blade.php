@@ -179,9 +179,9 @@ use App\Models\User;
 
                                             <td>
                                                 <a href='#' class='btn btn-warning faltou'
-                                                    data-userid="{{ $agendamento->negocio->user->id }}"
+                                                    {{-- data-userid="{{ $agendamento->negocio->user->id }}"
                                                     data-name='{{ $agendamento->negocio->lead->nome }}'
-                                                    data-id='{{ $agendamento->negocio->id }}'>REAGENDAR</a>
+                                                    data-id='{{ $agendamento->negocio->id }}'>REAGENDAR</a> --}}>REAGENDAR</a>
                                             </td>
 
                                         </tr>
