@@ -22,8 +22,6 @@ class AgendamentoController extends Controller
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
 
-        
-
         $agendado = $request->query('agendado');
 
         if ( is_null($data_inicio) and is_null($data_fim) ){
@@ -44,16 +42,18 @@ class AgendamentoController extends Controller
         $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
         
 
+       
+
         $query = [
-            ['data_agendado', '>=', $from ],
-            ['data_agendado', '<=', $to],
+            ['data_agendamento', '>=', $from ],
+            ['data_agendamento', '<=', $to],
         ];
 
         if (  $agendado ){
-            if ( $agendado == "em"){
+            if ( $agendado == "para"){
                 $query = [
-                    ['data_agendamento', '>=', $from ],
-                    ['data_agendamento', '<=', $to],
+                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '<=', $to],
                 ];
             }
         }
