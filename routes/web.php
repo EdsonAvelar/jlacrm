@@ -70,7 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
-    Route::group(
+    Route::group(['middleware' => ['auth', 'role:admin']], function () {
+         Route::group(
         ['prefix' => 'agendamento'],
         function () {
             Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
@@ -81,6 +82,9 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
+    });
+
+   
 
     Route::group(
         ['prefix' => 'vendas'],
