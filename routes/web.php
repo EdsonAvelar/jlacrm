@@ -75,14 +75,20 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
             Route::get('/calendario', [AgendamentoController::class, 'calendario'])->name('agendamento.calendario');
-            Route::get('/lista', [AgendamentoController::class, 'lista'])->name('agendamento.lista');
             Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');         
 
         }
     );
-    
 
-   
+    Route::group(['middleware' => ['auth', 'role:admin']], function () {
+        Route::group(
+        ['prefix' => 'agendamento'],
+        function () {
+            Route::get('/lista', [AgendamentoController::class, 'lista'])->name('agendamento.lista');
+        }
+        );    
+    });
+  
 
     Route::group(
         ['prefix' => 'vendas'],

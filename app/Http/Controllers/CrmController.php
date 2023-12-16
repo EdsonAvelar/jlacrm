@@ -448,8 +448,6 @@ class CrmController extends Controller
 
             $negocios = Negocio::whereIn('id', $negocios)->get();
 
-            
-
             $novo_proprietario = NULL;
 
             $nome_destino = "Não Atribuido";

@@ -70,7 +70,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false, "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false,
+    "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
@@ -83,23 +84,19 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
             <a class="logo_consensed logo text-center logo-light open-left">
                 <span class="logo-lg">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
-                        height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
                 </span>
                 <span class="logo-sm">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
-                        height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
                 </span>
             </a>
 
             <a class="logo_consensed logo text-center logo-dark open-left">
                 <span class="logo-lg">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt=""
-                        height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
                 </span>
                 <span class="logo-sm">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png" alt=""
-                        height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png" alt="" height="32">
                 </span>
             </a>
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
@@ -150,14 +147,14 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
 
                                 @if (\Auth::user()->hasRole('admin'))
-                                    <li>
-                                        <a
-                                            href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanas</a>
-                                    </li>
+                                <li>
+                                    <a
+                                        href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanas</a>
+                                </li>
                                 @endif
                             </ul>
                         </div>
@@ -185,19 +182,24 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('agendamento.calendario', ['proprietario' => \Auth::user()->id]) }}">Calendário</a>
                                 </li>
+
+                                @if (Auth::user()->hasAnyRole(['admin']))
                                 <li>
                                     <a
                                         href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
                                 </li>
+                                @endif
 
                                 @if (Auth::user()->hasAnyRole(['importar_leads']))
-                                    <li>
-                                        <a href="{{ route('importar.negocios.index') }}">Importar</a>
-                                    </li>
+                                <li>
+                                    <a href="{{ route('importar.negocios.index') }}">Importar</a>
+                                </li>
                                 @endif
                             </ul>
                         </div>
                     </li>
+
+                    @if (Auth::user()->hasAnyRole(['admin']))
 
 
                     <li class="side-nav-item">
@@ -213,30 +215,31 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             <ul class="side-nav-second-level">
 
                                 @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
-                                    <li>
-                                        <a href="{{ route('users.funcionarios') }}">Funcionários</a>
-                                    </li>
+                                <li>
+                                    <a href="{{ route('users.funcionarios') }}">Funcionários</a>
+                                </li>
                                 @endif
 
                                 @if (Auth::user()->hasAnyRole(['gerenciar_vendas']))
-                                    <li>
+                                <li>
 
-                                        <a
-                                            href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
-                                            Realizadas</a>
-                                    </li>
+                                    <a
+                                        href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
+                                        Realizadas</a>
+                                </li>
                                 @endif
 
                                 @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
-                                    <li>
-                                        <a href="{{ route('equipes.index') }}">Equipes</a>
-                                    </li>
+                                <li>
+                                    <a href="{{ route('equipes.index') }}">Equipes</a>
+                                </li>
                                 @endif
                             </ul>
                         </div>
 
 
                     </li>
+                    @endif
 
 
                     <li class="side-nav-item">
@@ -255,10 +258,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
 
                                 @if (\Auth::user()->hasRole('admin'))
-                                    <li>
-                                        <a
-                                            href="{{ route('empresa_profile', ['id' => \Auth::user()->id]) }}">Empresa</a>
-                                    </li>
+                                <li>
+                                    <a href="{{ route('empresa_profile', ['id' => \Auth::user()->id]) }}">Empresa</a>
+                                </li>
                                 @endif
 
                                 <li>
@@ -473,7 +475,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             </div>
             <!-- content -->
 
-            {{-- <!-- Footer Start -->
+            {{--
+            <!-- Footer Start -->
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
@@ -697,17 +700,17 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     });
 </script>
 @if (Session::has('status'))
-    <script>
-        showAlert({
+<script>
+    showAlert({
             class: 'success',
             message: "{{ session('status') }}"
         })
-    </script>
+</script>
 
-    {{-- <div class="alert alert-success" role="alert">
-           
-             <strong>Success!</strong> {{ session('status') }} 
-        </div> --}}
+{{-- <div class="alert alert-success" role="alert">
+
+    <strong>Success!</strong> {{ session('status') }}
+</div> --}}
 @endif
 
 </html>
