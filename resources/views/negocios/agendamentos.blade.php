@@ -121,7 +121,7 @@ $users = User::where('status', UserStatus::ativo)->get();
         @csrf
         <div class="row" id="printarea">
 
-            
+
             <div class="col-12">
 
                 <div class="card">
@@ -144,7 +144,7 @@ $users = User::where('status', UserStatus::ativo)->get();
                         <table id="example" class="table table-striped" class="display" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="hideshow">
                                         <input type="checkbox" id="selectall">
                                     </th>
                                     <th>Proprietario</th>
@@ -162,9 +162,17 @@ $users = User::where('status', UserStatus::ativo)->get();
                                 @if (isset($agendamentos))
                                 @foreach ($agendamentos as $agendamento)
                                 <tr>
-                                    <td><input type="checkbox" name="negocios[]" value="{{ $agendamento->negocio->id }}"
-                                            class="select-checkbox"></td>
-                                    <td>{{ $agendamento->negocio->user->name }} </td>
+                                    <td class="hideshow"><input type="checkbox" name="negocios[]"
+                                            value="{{ $agendamento->negocio->id }}" class="select-checkbox"></td>
+                                    <td>
+
+                                        @if ($agendamento->negocio->user)
+                                        {{ $agendamento->negocio->user->name }}
+                                        @else
+                                        <span class="badge bg-secondary">SEM DONO</span>
+                                        @endif
+
+                                    </td>
                                     <td>
                                         <a href="{{ route('negocio_edit', ['id' => $agendamento->negocio->id]) }}">
                                             {{ $agendamento->negocio->lead->nome }}</a>
