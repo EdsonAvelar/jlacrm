@@ -141,7 +141,7 @@ function convert($frase)
 
             @if ($simulacao->tipo != 'IMOVEL')
             <h4>Fabricante/Modelo: <span style="font-weight: bold;">
-                    if(!isset($_POST[$x[$i]]))
+
 
                     <?php 
                         
@@ -154,7 +154,7 @@ function convert($frase)
                         if (isset ($_POST['ano'])){
                             $strg = $strg.' - Ano: ' . $_POST['ano'];;
                         }
-                        
+                        echo $strg;
                         ?>
                 </span>
             </h4>
