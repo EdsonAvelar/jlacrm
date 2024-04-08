@@ -126,28 +126,48 @@ function convert($frase)
                         echo $simulacao->negocio->lead->cpf;
                     }
                     
-                    ?></span>
+                    ?>
+                </span>
             </h4>
             <h4>Protocolo: <span style="font-weight: bold;">
-                    <?php echo date('Y') . '/' . $simulacao->id; ?></span>
+                    <?php echo date('Y') . '/' . $simulacao->id; ?>
+                </span>
             </h4>
 
             <h4>Tipo do Bem: <span style="font-weight: bold;">
-                    <?php echo ucfirst($simulacao->tipo); ?></span>
+                    <?php echo ucfirst($simulacao->tipo); ?>
+                </span>
             </h4>
 
             @if ($simulacao->tipo != 'IMOVEL')
-                <h4>Fabricante/Modelo: <span style="font-weight: bold;">
-                        <?php echo $_POST['modelo'] . ' - Ano: ' . $_POST['ano']; ?></span>
-                </h4>
+            <h4>Fabricante/Modelo: <span style="font-weight: bold;">
+                    if(!isset($_POST[$x[$i]]))
+
+                    <?php 
+                        
+                        $strg = "";
+                        
+                        if (isset ($_POST['modelo'])){
+                            $strg = $_POST['modelo'];
+                        }
+
+                        if (isset ($_POST['ano'])){
+                            $strg = $strg.' - Ano: ' . $_POST['ano'];;
+                        }
+                        
+                        ?>
+                </span>
+            </h4>
             @endif
 
 
             <h4>Data da Criação: <span style="font-weight: bold;">
-                    <?php echo \Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y - H:m'); ?></span>
+                    <?php echo \Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y - H:m'); ?>
+                </span>
             </h4>
             <h4>Validade da Proposta: <span style="font-weight: bold;">
-                    <?php echo date('d/m/Y', strtotime('+3 days')); ?></span>
+                    <?php echo date('d/m/Y', strtotime('+3 days')); ?>
+                </span>
             </h4>
 
 
@@ -160,134 +180,139 @@ function convert($frase)
             @if ($simulacao->financiamentos)
 
 
-                @foreach ($simulacao->financiamentos as $financiamento)
-                    <hr class="proposta">
-                    <?php $propostas = $propostas + 1; ?>
-                    <h3 style="text-align: center">PROPOSTA {{ $propostas }}:
-                        {{ $financiamento['fin-titulo'] }} </h3>
-                    <table width="100%">
-                        <tr>
-                            <td align="left">
+            @foreach ($simulacao->financiamentos as $financiamento)
+            <hr class="proposta">
+            <?php $propostas = $propostas + 1; ?>
+            <h3 style="text-align: center">PROPOSTA {{ $propostas }}:
+                {{ $financiamento['fin-titulo'] }} </h3>
+            <table width="100%">
+                <tr>
+                    <td align="left">
 
-                                <h4>Modalidade de Crédito: FINANCIAMENTO BANCÁRIO</h4>
-                                <h4>Empresa: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-empresa'] }}</span>
-                                </h4>
-                                <h4>Valor do Bem: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-credito'] }}</span>
-                                </h4>
-                                <h4>Entrada: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-entrada'] }}</span>
-                                </h4>
-                                <h4>Parcela: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-parcelas'] }}</span>
-                                </h4>
-                                <h4>Prazo: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-prazo'] }} Meses ( <?php echo round($financiamento['fin-prazo'] / 12); ?> Anos ) </span>
-                                </h4>
+                        <h4>Modalidade de Crédito: FINANCIAMENTO BANCÁRIO</h4>
+                        <h4>Empresa: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-empresa'] }}</span>
+                        </h4>
+                        <h4>Valor do Bem: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-credito'] }}</span>
+                        </h4>
+                        <h4>Entrada: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-entrada'] }}</span>
+                        </h4>
+                        <h4>Parcela: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-parcelas'] }}</span>
+                        </h4>
+                        <h4>Prazo: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-prazo'] }} Meses (
+                                <?php echo round($financiamento['fin-prazo'] / 12); ?> Anos )
+                            </span>
+                        </h4>
 
 
-                            </td>
-                            <td align="left">
-                                @if ($simulacao->tipo == 'IMOVEL')
-                                    <h4>Despesas Cartoriais/ITBI: <span
-                                            style="font-weight: bold;">{{ $financiamento['cartorio'] }} </span></h4>
-                                    <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$
-                                            2.400,00</span> </h4>
-                                @endif
+                    </td>
+                    <td align="left">
+                        @if ($simulacao->tipo == 'IMOVEL')
+                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">{{ $financiamento['cartorio'] }}
+                            </span></h4>
+                        <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$
+                                2.400,00</span> </h4>
+                        @endif
 
-                                <h4>Renda líquida mínima exigida: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-rendaexigida'] }} </span>
-                                </h4>
+                        <h4>Renda líquida mínima exigida: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-rendaexigida'] }} </span>
+                        </h4>
 
-                                <h4>Total de Juros: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-juros-pagos'] }}</span>
-                                </h4>
+                        <h4>Total de Juros: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-juros-pagos'] }}</span>
+                        </h4>
 
-                                <h4>Valor Final do Bem: <span style="font-weight: bold;">
-                                        {{ $financiamento['fin-val-pago-total'] }}</span>
-                                </h4>
+                        <h4>Valor Final do Bem: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-val-pago-total'] }}</span>
+                        </h4>
 
-                                <h4>Sistema de Amortização: <span style="font-weight: bold;">
-                                        <?php echo strtoupper($financiamento['fin-amortizacao']); ?></span>
-                                </h4>
-                            </td>
-                        </tr>
-                    </table>
-                @endforeach
+                        <h4>Sistema de Amortização: <span style="font-weight: bold;">
+                                <?php echo strtoupper($financiamento['fin-amortizacao']); ?>
+                            </span>
+                        </h4>
+                    </td>
+                </tr>
+            </table>
+            @endforeach
             @endif
 
             @if ($simulacao->consorcios)
 
-                @foreach ($simulacao->consorcios as $consorcio)
-                    <hr class="proposta">
-                    <?php $propostas = $propostas + 1; ?>
-                    <h3 style="text-align: center">PROPOSTA {{ $propostas }}:
-                        {{ $consorcio['con-titulo'] }} </h3>
+            @foreach ($simulacao->consorcios as $consorcio)
+            <hr class="proposta">
+            <?php $propostas = $propostas + 1; ?>
+            <h3 style="text-align: center">PROPOSTA {{ $propostas }}:
+                {{ $consorcio['con-titulo'] }} </h3>
 
-                    <table width="100%">
-                        <tr>
-                            <td align="left">
+            <table width="100%">
+                <tr>
+                    <td align="left">
 
-                                <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
-                                <h4>Empresa: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-empresa'] }}</span></span>
-                                </h4>
+                        <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
+                        <h4>Empresa: <span style="font-weight: bold;">
+                                {{ $consorcio['con-empresa'] }}</span></span>
+                        </h4>
 
-                                <h4>Valor do Bem: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-credito'] }}</span>
-                                </h4>
+                        <h4>Valor do Bem: <span style="font-weight: bold;">
+                                {{ $consorcio['con-credito'] }}</span>
+                        </h4>
 
-                                <h4>Adesão: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-entrada'] }}</span>
-                                </h4>
-                                <h4>Parcela: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-parcela-cheia'] }}</span>
-                                </h4>
-                                <h4>*Parcela Reduzida: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-parcela-reduzida'] }}</span>
-                                </h4>
-                                <h4>Prazo: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-prazo'] }} Meses ( <?php echo round($consorcio['con-prazo'] / 12); ?> Anos ) </span>
-                                </h4>
-                            </td>
-                            <td align="left">
+                        <h4>Adesão: <span style="font-weight: bold;">
+                                {{ $consorcio['con-entrada'] }}</span>
+                        </h4>
+                        <h4>Parcela: <span style="font-weight: bold;">
+                                {{ $consorcio['con-parcela-cheia'] }}</span>
+                        </h4>
+                        <h4>*Parcela Reduzida: <span style="font-weight: bold;">
+                                {{ $consorcio['con-parcela-reduzida'] }}</span>
+                        </h4>
+                        <h4>Prazo: <span style="font-weight: bold;">
+                                {{ $consorcio['con-prazo'] }} Meses (
+                                <?php echo round($consorcio['con-prazo'] / 12); ?> Anos )
+                            </span>
+                        </h4>
+                    </td>
+                    <td align="left">
 
-                                @if ($consorcio['con-lance'])
-                                    <h3> *Lance: <span style="font-weight: bold;">
-                                            {{ $consorcio['con-lance'] }}
-                                        </span>
-                                    </h3>
-                                    <br><br>
-                                @else
-                                @endif
+                        @if ($consorcio['con-lance'])
+                        <h3> *Lance: <span style="font-weight: bold;">
+                                {{ $consorcio['con-lance'] }}
+                            </span>
+                        </h3>
+                        <br><br>
+                        @else
+                        @endif
 
 
-                                @if ($simulacao->tipo == 'IMOVEL')
-                                    <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito
-                                    </h4>
-                                @endif
-                                <h4> Renda Mínima Exigida: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-rendaexigida'] }} </span>
-                                </h4>
-                                <h4>Total de Taxas: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-juros-pagos'] }}</span>
-                                </h4>
-                                <h4>Valor Final do Bem: <span style="font-weight: bold;">
-                                        {{ $consorcio['con-valor-pago'] }}</span>
-                                </h4>
+                        @if ($simulacao->tipo == 'IMOVEL')
+                        <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito
+                        </h4>
+                        @endif
+                        <h4> Renda Mínima Exigida: <span style="font-weight: bold;">
+                                {{ $consorcio['con-rendaexigida'] }} </span>
+                        </h4>
+                        <h4>Total de Taxas: <span style="font-weight: bold;">
+                                {{ $consorcio['con-juros-pagos'] }}</span>
+                        </h4>
+                        <h4>Valor Final do Bem: <span style="font-weight: bold;">
+                                {{ $consorcio['con-valor-pago'] }}</span>
+                        </h4>
 
-                            </td>
+                    </td>
 
-                        </tr>
-                    </table>
-                @endforeach
+                </tr>
+            </table>
+            @endforeach
             @endif
 
-            {{--            
+            {{--
             <h3>PROPOSTA 1:</h3>
 
-           
+
 
             <hr class="proposta">
             <h3>PROPOSTA 2:</h3>
@@ -298,11 +323,13 @@ function convert($frase)
 
                         <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
                         <h4>Simulação: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-administradora']; ?></span></span>
+                                <?php echo $_POST['con-administradora']; ?>
+                            </span></span>
                         </h4>
 
                         <h4>Valor do Bem: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-credito']; ?></span>
+                                <?php echo $_POST['con-credito']; ?>
+                            </span>
                         </h4>
 
                         <h4>Entrada: <span style="font-weight: bold;">
@@ -312,12 +339,14 @@ function convert($frase)
                                 {{ $_POST['con-parcelas'] }}</span>
                         </h4>
                         <h4>Prazo: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-prazo']; ?> Meses ( <?php echo round($_POST['con-prazo'] / 12); ?> Anos ) </span>
+                                <?php echo $_POST['con-prazo']; ?> Meses (
+                                <?php echo round($_POST['con-prazo'] / 12); ?> Anos )
+                            </span>
                         </h4>
 
                     </td>
                     <td align="left">
-                       
+
                         <?php if ($_POST['tipo'] == "IMOVEL") {
 			        ?>
                         <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito</h4>
@@ -326,14 +355,17 @@ function convert($frase)
 			    }?>
 
                         <h4> Renda Mínima Exigida: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-rendaexigida']; ?> </span>
+                                <?php echo $_POST['con-rendaexigida']; ?>
+                            </span>
                         </h4>
 
                         <h4>Total de Taxas: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-juros-pagos']; ?></span>
+                                <?php echo $_POST['con-juros-pagos']; ?>
+                            </span>
                         </h4>
                         <h4>Valor Final do Bem: <span style="font-weight: bold;">
-                                <?php echo $_POST['con-valor-pago']; ?></span>
+                                <?php echo $_POST['con-valor-pago']; ?>
+                            </span>
                         </h4>
 
                     </td>
