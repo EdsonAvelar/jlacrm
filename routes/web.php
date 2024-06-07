@@ -13,6 +13,7 @@ use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -68,25 +69,17 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
-         Route::group(
+    Route::group(
         ['prefix' => 'agendamento'],
         function () {
             Route::get('/index', [AgendamentoController::class, 'index'])->name('agendamento.index');
             Route::get('/calendario', [AgendamentoController::class, 'calendario'])->name('agendamento.calendario');
-            Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');         
+            Route::post('/add', [AgendamentoController::class, 'add'])->name('agendamento.add');
+            Route::get('/lista', [AgendamentoController::class, 'lista'])->name('agendamento.lista');
 
         }
     );
 
-    Route::group(['middleware' => ['auth', 'role:admin']], function () {
-        Route::group(
-        ['prefix' => 'agendamento'],
-        function () {
-            Route::get('/lista', [AgendamentoController::class, 'lista'])->name('agendamento.lista');
-        }
-        );    
-    });
-  
 
     Route::group(
         ['prefix' => 'vendas'],
@@ -128,7 +121,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/importar', [NegocioController::class, 'importar_index'])->name('importar.negocios.index');
             Route::post('/importar', [NegocioController::class, 'importar_upload'])->name('importar.negocios.upload');
             Route::post('/importar/salvar', [NegocioController::class, 'importar_store'])->name('importar.negocios.store');
-            
+
             Route::get('/simulacao', [NegocioController::class, 'simulacao'])->name('negocios.simulacao');
 
             Route::post('/criar_proposta', [NegocioController::class, 'criar_proposta'])->name('negocios.criar_proposta');
@@ -146,7 +139,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'users'],
         function () {
             Route::get('/profile', [AdminController::class, 'profile'])->name('users_profile');
-            
+
             Route::post('/edit/avatar', [AdminController::class, 'avatar_edit']);
             Route::post('/add/permissao', [AdminController::class, 'add_permissao'])->name('add_permissao');
             Route::post('/del/permissao', [AdminController::class, 'del_permissao'])->name('del_permissao');
@@ -185,9 +178,9 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
         function () {
             Route::get('/index', [EquipeController::class, 'index'])->name('equipes.index');
             Route::post('/drag_update', [EquipeController::class, 'drag_update']);
-            Route::post('/excluir', [EquipeController::class, 'excluir']);           
-            Route::post('/create', [EquipeController::class, 'create']);           
-            Route::post('/change_equipe', [EquipeController::class, 'change_equipe'])->name('change_equipe');           
+            Route::post('/excluir', [EquipeController::class, 'excluir']);
+            Route::post('/create', [EquipeController::class, 'create']);
+            Route::post('/change_equipe', [EquipeController::class, 'change_equipe'])->name('change_equipe');
 
 
             Route::get('/get', [EquipeController::class, 'equipe_get'])->name('equipe_get');

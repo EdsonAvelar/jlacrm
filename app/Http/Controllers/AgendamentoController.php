@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Equipe;
 use Auth;
 use App\Enums\UserStatus;
+
 class AgendamentoController extends Controller
 {
     public function index(Request $request)
@@ -24,41 +25,70 @@ class AgendamentoController extends Controller
 
         $agendado = $request->query('agendado');
 
-        if ( is_null($data_inicio) and is_null($data_fim) ){
+        if (is_null($data_inicio) and is_null($data_fim)) {
 
-            $dia = intval ( Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d') );
-            if ( $dia <= 20){
-                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
-            }else {
-                $data_inicio = "20/".(Carbon::now('America/Sao_Paulo')->format('m/Y'));
+            $dia = intval(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d'));
+            if ($dia <= 20) {
+                $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+            } else {
+                $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->format('m/Y'));
             }
-            
+
             $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
             return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
         }
 
-    
+
         $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
-        $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
-        
+        $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
 
         $query = [
-            ['data_agendamento', '>=', $from ],
+            ['data_agendamento', '>=', $from],
             ['data_agendamento', '<=', $to],
         ];
 
-        if (  $agendado ){
-            if ( $agendado == "para"){
+        if ($agendado) {
+            if ($agendado == "para") {
                 $query = [
-                    ['data_agendado', '>=', $from ],
+                    ['data_agendado', '>=', $from],
                     ['data_agendado', '<=', $to],
                 ];
             }
         }
 
-       
         
-        $agendamentos = Agendamento::where($query)->get();
+
+
+        if (Auth::user()->hasRole("admin")) {
+
+            $agendamentos = Agendamento::where($query)->get();
+
+        } else if (Auth::user()->hasRole("gerenciar_equipe")) {
+
+            $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+            $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+            ##dd($ids);
+
+            $agendamentos = Agendamento::whereIn('user_id', $ids)->where($query)->get();
+        }else {
+
+            $agendamentos = Agendamento::whereIn('user_id', [Auth::user()->id])->where($query)->get();
+
+        }
+
+
+
+
+
+        // $negocios = Negocio::whereIn('user_id', $ids)->where($query)->get();
+
+
+
+
+
+
         return view('negocios.agendamentos', compact('agendamentos'));
     }
 
@@ -66,8 +96,8 @@ class AgendamentoController extends Controller
     {
 
 
-        $curr_funil_id = intval( $request->query('id')) ;
-        $proprietario_id = intval( $request->query('proprietario'));
+        $curr_funil_id = intval($request->query('id'));
+        $proprietario_id = intval($request->query('proprietario'));
 
 
         $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
@@ -76,18 +106,18 @@ class AgendamentoController extends Controller
         $equipe_proprietario = NULL;
 
         $equipe_exists = 1;
-        if ( !empty($proprietario)){
+        if (!empty($proprietario)) {
             $equipe_proprietario = $proprietario->equipe()->first();
-        }else{
+        } else {
             $proprietario = NULL;
 
-            if ( $proprietario_id == -2){
+            if ($proprietario_id == -2) {
                 $equipe_exists = -1;
                 $equipe_proprietario = -1;
             }
-            
+
         }
-        
+
         $auth_user_id = Auth::user()->id;
         /**
          * Valida se é um usuário autorizado a ter essa visao
@@ -102,58 +132,58 @@ class AgendamentoController extends Controller
                 } else if ($equipe_exists > 0 and $equipe->id != $equipe_proprietario->id) {
                     return abort(401);
                 }
-            }else{
+            } else {
                 $equipe_exists = 1;
             }
         }
 
-        if ( $proprietario_id == -2 and $equipe_exists == 1 ){
+        if ($proprietario_id == -2 and $equipe_exists == 1) {
             $agendamentos = Agendamento::all();
-        }else if ($proprietario_id == -2 and $equipe_exists == -1){
+        } else if ($proprietario_id == -2 and $equipe_exists == -1) {
             $ids = $equipe->integrantes()->pluck('id')->toArray();
             $agendamentos = Agendamento::whereIn('user_id', $ids)->get();
-        }else {
-            $agendamentos = Agendamento::where('user_id',$proprietario_id)->get();
+        } else {
+            $agendamentos = Agendamento::where('user_id', $proprietario_id)->get();
         }
-        
+
         $calendario = array();
         foreach ($agendamentos as $agendamento) {
-            
+
             $cal = array();
-            $cal['title'] = "Reunião com ".$agendamento->negocio->lead->nome.' ('.$agendamento->negocio->titulo.')';
-            $cal['start'] = $agendamento['data_agendado']."T".$agendamento['hora'].":00";
-            
-            if ( $proprietario_id == -2 ){
+            $cal['title'] = "Reunião com " . $agendamento->negocio->lead->nome . ' (' . $agendamento->negocio->titulo . ')';
+            $cal['start'] = $agendamento['data_agendado'] . "T" . $agendamento['hora'] . ":00";
+
+            if ($proprietario_id == -2) {
                 $start = $cal['title'];
-                $cal['title'] = "[".$agendamento->negocio->user->name."]".$start;
+                $cal['title'] = "[" . $agendamento->negocio->user->name . "]" . $start;
             }
 
             $cal['negocio'] = $agendamento->negocio->lead->nome;
-            $now =  Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+            $now = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $agendado = $agendamento['data_agendado'];
 
-            if ( $agendado < $now ){
+            if ($agendado < $now) {
                 $cal['className'] = "bg-danger";
-            }elseif ($now == $agendado){
+            } elseif ($now == $agendado) {
                 $cal['className'] = "bg-warning";
-            }else {
+            } else {
                 $cal['className'] = "bg-success";
             }
-            
-           
-            $cal['href'] = route('negocio_edit', array('id' => $agendamento->negocio->id ) );
 
-            array_push( $calendario, $cal );
+
+            $cal['href'] = route('negocio_edit', array('id' => $agendamento->negocio->id));
+
+            array_push($calendario, $cal);
         }
 
         $proprietarios = NULL;
-        if ( Auth::user()->hasRole('admin')){
-            $proprietarios = User::where('status',UserStatus::ativo)->pluck('name', 'id');
-        }else if (Auth::user()->hasRole('gerenciar_equipe')){
-            $proprietarios = User::where(['equipe_id'=> $equipe->id, 'status'=>UserStatus::ativo])->pluck('name', 'id');
+        if (Auth::user()->hasRole('admin')) {
+            $proprietarios = User::where('status', UserStatus::ativo)->pluck('name', 'id');
+        } else if (Auth::user()->hasRole('gerenciar_equipe')) {
+            $proprietarios = User::where(['equipe_id' => $equipe->id, 'status' => UserStatus::ativo])->pluck('name', 'id');
         }
 
-        return view('negocios.calendario', compact('calendario','proprietarios','proprietario'));
+        return view('negocios.calendario', compact('calendario', 'proprietarios', 'proprietario'));
     }
 
 
@@ -161,21 +191,21 @@ class AgendamentoController extends Controller
     {
         $input = $request->all();
 
-        $data_agendado = Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('Y-m-d');
+        $data_agendado = Carbon::createFromFormat('d/m/Y', $input['data_agendado'])->format('Y-m-d');
         $data_agendamento = Carbon::now()->format('Y-m-d');
         $hora = $input['hora_agendado'];
 
         $negocio_id = $input['negocio_id'];
         $proprietario_id = $input['proprietario_id'];
-        
+
         $query = [
-            ['negocio_id', '=', $negocio_id ],
+            ['negocio_id', '=', $negocio_id],
             ['user_id', '=', $proprietario_id],
         ];
 
         $agendamento = Agendamento::where($query)->first();
 
-        if ( !$agendamento ){
+        if (!$agendamento) {
 
             $agendamento = new Agendamento();
             $agendamento->data_agendado = $data_agendado;
@@ -185,12 +215,12 @@ class AgendamentoController extends Controller
             $agendamento->user_id = $proprietario_id;
             $agendamento->save();
 
-            Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para ".$agendamento->data_agendamento, $negocio_id );
+            Atividade::add_atividade(\Auth::user()->id, "Agendamento adicionado para " . $agendamento->data_agendamento, $negocio_id);
 
-            
-        }else {
 
-            
+        } else {
+
+
             $agendamento->data_agendado = $data_agendado;
             $agendamento->data_agendamento = $data_agendamento;
             $agendamento->hora = $hora;
@@ -198,7 +228,7 @@ class AgendamentoController extends Controller
             $agendamento->user_id = $proprietario_id;
             $agendamento->save();
 
-            Atividade::add_atividade(\Auth::user()->id, "Reagendamento feito para ".$agendamento->data_agendamento, $negocio_id );
+            Atividade::add_atividade(\Auth::user()->id, "Reagendamento feito para " . $agendamento->data_agendamento, $negocio_id);
         }
 
         $weekMap = [
@@ -210,9 +240,9 @@ class AgendamentoController extends Controller
             5 => 'Sexta',
             6 => 'Sábado',
         ];
-        $dayOfTheWeek = Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->dayOfWeek;
+        $dayOfTheWeek = Carbon::createFromFormat('d/m/Y', $input['data_agendado'])->dayOfWeek;
         $weekday = $weekMap[$dayOfTheWeek];
-        
-        return [ Carbon::createFromFormat('d/m/Y',$input['data_agendado'])->format('d/m/Y') , $hora,  $weekday, $agendamento->negocio->lead->nome];
+
+        return [Carbon::createFromFormat('d/m/Y', $input['data_agendado'])->format('d/m/Y'), $hora, $weekday, $agendamento->negocio->lead->nome];
     }
 }
