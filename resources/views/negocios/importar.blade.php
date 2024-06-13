@@ -171,7 +171,6 @@
                             <div class="mb-1 nowrap w-100">
                                 <select class="form-select form-control-light" id="task-priority"
                                     name="novo_proprietario_id">
-                                    <option selected="true">NOVO PROPRIETÁRIO</option>
 
                                     @foreach ($users as $user_id => $name)
                                         <option value="{{ $user_id }}">{{ $name }}</option>
