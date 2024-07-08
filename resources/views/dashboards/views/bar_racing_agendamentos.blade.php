@@ -12,7 +12,7 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #fbcf6f;
+            background-color: #f3b734;
         }
 
         .controls {
@@ -138,7 +138,7 @@
             <h1 class="header">
                 CORRIDA DOS AGENDAMENTOS
             </h1>
-            <h7>Inicio: {{config('data_inicio')}} Fim:{{config('data_fim')}}</h7>
+            
 
         </div>
     </div>
