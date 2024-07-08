@@ -174,7 +174,6 @@ class BarChartRacingController extends Controller
         }
         
 
-        dd($output);
         return $output;
     }
 }

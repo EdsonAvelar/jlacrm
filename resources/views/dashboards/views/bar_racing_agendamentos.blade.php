@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Corrida Agendamentos</title>
+    <title>Horse Race</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #facb98;
+            background-color: #dbdbdb;
         }
 
         .controls {
@@ -23,7 +23,7 @@
             position: relative;
             width: 100%;
             height: 90vh;
-            background-color: rgb(229, 109, 115);
+            background-color: green;
             /* overflow: hidden; */
             border: 2px solid black;
         }
@@ -136,7 +136,7 @@
         </div>
         <div class="col-lg-8">
             <h1 class="header">
-                CORRIDA DOS AGENDAMENTOS
+                CORRIDA DAS VENDAS
             </h1>
             <h7>Inicio: {{config('data_inicio')}} Fim:{{config('data_fim')}}</h7>
 
@@ -158,13 +158,14 @@
         let interval;
     const stepDuration = 500;
 
-    let maxSales = 15; // 4 million in sales
-    const vendas_max = "{{ config('racing_agendamento_max') }}"
+    let maxSales = 4000000; // 4 million in sales
+    const vendas_max = "{{ config('racing_vendas_max') }}"
 
     if (vendas_max){
         maxSales = vendas_max;
     }
-   
+
+    
 
     const queryString = window.location.search;
     
@@ -180,7 +181,7 @@
 
     async function fetchParticipants() {
         try {
-            const response = await fetch("{{ url('corrida/agendamentos/get') }}" ); // Replace with your API endpoint
+            const response = await fetch('http://localhost:8000/corrida/agendamentos/get'); // Replace with your API endpoint
             const data = await response.json();
             participants = data;
 
@@ -206,11 +207,11 @@
         //participants.sort((a, b) => b.sales - a.sales);
 
         // Add milestone lines
-        for (let sales = 0; sales <= maxSales; sales +=1) { const milestoneLine=document.createElement('div');
-            milestoneLine.className='milestone-line' ; milestoneLine.style.left=`${(sales / maxSales) * 100}%`;
-            raceTrack.appendChild(milestoneLine); const milestoneLabel=document.createElement('div');
-            milestoneLabel.className='milestone-label' ; milestoneLabel.style.left=`${(sales / maxSales) * 100}%`;
-            milestoneLabel.textContent=`${sales / 1}`; raceTrack.appendChild(milestoneLabel); }
+        // for (let sales = 500000; sales <= maxSales; sales +=500000) { const milestoneLine=document.createElement('div');
+        //     milestoneLine.className='milestone-line' ; milestoneLine.style.left=`${(sales / maxSales) * 100}%`;
+        //     raceTrack.appendChild(milestoneLine); const milestoneLabel=document.createElement('div');
+        //     milestoneLabel.className='milestone-label' ; milestoneLabel.style.left=`${(sales / maxSales) * 100}%`;
+        //     milestoneLabel.textContent=`${sales / 1000000}M`; raceTrack.appendChild(milestoneLabel); }
 
             
         // Calculate positions based on sales
@@ -286,7 +287,7 @@
                 currentSales = targetSales;
                 clearInterval(interval);
             }
-            salesValueElement.textContent = `${Math.round(currentSales)}`;
+            salesValueElement.textContent = `R$ ${Math.round(currentSales)}`;
         }, stepDuration);
     }
 
