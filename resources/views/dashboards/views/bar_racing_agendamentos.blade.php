@@ -180,7 +180,7 @@
 
     async function fetchParticipants() {
         try {
-            const response = await fetch('http://localhost:8000/corrida/agendamentos/get'); // Replace with your API endpoint
+            const response = await fetch("{{ url('corrida/agendamentos/get') }}" ); // Replace with your API endpoint
             const data = await response.json();
             participants = data;
 
