@@ -180,13 +180,11 @@ class NegocioController extends Controller
             if ( \Auth::user()->hasRole('gerenciar_vendas') ){
                 return true;
             }
-            
         }
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
         $proprietario_id = $negocio->user_id;
-
 
         $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
 
@@ -407,8 +405,6 @@ class NegocioController extends Controller
 
 
     public function import_atribuir(Request $request)    {
-
-
 
         $input = request()->all();
         $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();

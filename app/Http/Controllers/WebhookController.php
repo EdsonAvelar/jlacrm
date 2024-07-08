@@ -3,54 +3,79 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Negocio;
+use App\Models\Lead;
+
+use App\Models\Atividade;
+use Carbon\Carbon;
 
 class WebhookController extends Controller
 {
-    public function index(Request $request) {
 
-        
-        $mode = $request->query('hub_mode');
-        $challenger = $request->query('hub_challenge');
-        $verify_token = $request->query('hub_verify_token');
+    public function create_lead($dados)
+    {
 
-        if ($verify_token ==  "da39a3ee5e6b4b0d3255bfef95601890afd80709"){
-            if ($mode == "subscribe"){
-                return $challenger; 
-            }else {
-                return "mode validation failed";
+
+        /*
+
+        curl -X POST http://localhost:8000/api/webhook/newlead -H "Authorization: 58a9fc133aa878e7434459c59868dfc4" -d '{"nome":"test1","tipo_credito":"IMOVEL","telefone":"123","whatsapp":"123","id":"-1"}'
+
+        */
+        $deal_input = array();
+
+        $deal_input['titulo'] = "Negócio " . $dados['nome'] . "-" . $dados['tipo_credito'];
+
+        $deal_input['funil_id'] = 1;
+        $deal_input['etapa_funil_id'] = 1;
+        $deal_input['tipo'] = $dados['tipo_credito'];
+
+        $lead = new Lead();
+        $lead->nome = $dados['nome'];
+        $lead->telefone = $dados['telefone'];
+        $lead->whatsapp = $dados['whatsapp'];
+        $lead->save();
+
+        // associando lead ao negócio
+        $deal_input['lead_id'] = $lead->id;
+
+
+        $deal_input['user_id'] = (int) ($dados['id']);
+
+        $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
+        //criando o negócio
+        $negocio = Negocio::create($deal_input);
+
+        Atividade::add_atividade($deal_input['user_id'], "Cliente criado via webhook", $negocio->id);
+
+        return "Negocio " . $dados['nome'] . " Criado com sucesso";
+    }
+    public function handle(Request $request)
+    {
+
+        $token = $request->header('Authorization');
+
+        $token_webhook = config('token_webhook');
+
+        if ($token_webhook) {
+
+            if ($token !== $token_webhook) {
+                return response()->json(['message' => 'Unauthorized'], 401);
             }
-        }else {
-            return "token validation failed";
+
+            $data = $request->json()->all();
+
+            $this->create_lead($data);
+
+
+            // Retorna uma resposta de sucesso
+            return response()->json(['message' => $this->create_lead($data)]);
+        } else {
+            return response()->json(['message' => 'Sistema sem Token Cadastrado'], 500);
         }
 
-       
-       
+
     }
 
-    
 
-    
-    public function post_index(Request $request) {
-
-        $input = $request->all();    
-
-
-        $mode = $input['hub_mode'];
-
-        $challenger = $input['hub_challenge'];
-        $verify_token = $input['hub_verify_token'];
-
-        if ($verify_token ==  "da39a3ee5e6b4b0d3255bfef95601890afd80709"){
-            if ($mode == "subscribe"){
-                return $challenger; 
-            }else {
-                return "mode validation failed";
-            }
-        }else {
-            return "token validation failed";
-        }
-
-       
-       
-    }
 }

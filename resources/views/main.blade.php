@@ -155,6 +155,13 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanas</a>
                                 </li>
+                                <li>
+                                    <a href="{{ route('dashboard_bar_race_vendas') }}">Corrida de Vendas</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
+                                </li>
                                 @endif
                             </ul>
                         </div>
@@ -187,7 +194,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
                                 </li>
-                                
+
                                 @if (Auth::user()->hasAnyRole(['importar_leads']))
                                 <li>
                                     <a href="{{ route('importar.negocios.index') }}">Importar</a>

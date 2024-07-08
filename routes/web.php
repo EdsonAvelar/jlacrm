@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\SimulacaoController;
-use App\Http\Controllers\WebhookController;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\BarChartRacingController;
 use App\Http\Controllers\CrmController;
 use App\Http\Controllers\NegocioController;
 use App\Http\Controllers\FuncionarioController;
@@ -36,11 +37,6 @@ Route::get('/obrigado', [PageController::class, 'obrigado'])->name('obrigado');
 
 Route::get('/consultor/{slug}', [AdminController::class, 'consultor'])->name('consultor');
 
-Route::get('/webhooks', [WebhookController::class, 'index'])->name('webhook.index');
-
-Route::post('/webhooks', [WebhookController::class, 'post_index']);
-
-
 Route::group(
     ['prefix' => 'simulacao'],
     function () {
@@ -51,6 +47,14 @@ Route::group(
 );
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/corrida/vendas', [BarChartRacingController::class, 'vendas'])->name('dashboard_bar_race_vendas');
+    Route::get('/corrida/vendas/get', [BarChartRacingController::class, 'vendas_get']);
+
+
+    Route::get('/corrida/agendamentos', [BarChartRacingController::class, 'agendamentos'])->name('dashboard_bar_race_agendamentos');
+    Route::get('/corrida/agendamentos/get', [BarChartRacingController::class, 'agendamentos_get']);
+
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/equipes', [DashboardController::class, 'dashboard_equipes'])->name('dashboard_equipes');
     Route::get('/semanas', [DashboardController::class, 'dashboard_semanas'])->name('dashboard_semanas');
