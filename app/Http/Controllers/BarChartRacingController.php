@@ -148,28 +148,6 @@ class BarChartRacingController extends Controller
     {
         $output = array();
 
-
-        $data_inicio = config('data_inicio');
-        $data_fim = config('data_fim');
-
-
-        // $data_inicio = $request->query('data_inicio');
-        // $data_fim = $request->query('data_fim');
-
-        // if (is_null($data_inicio) and is_null($data_fim)) {
-
-        //     $dia = intval(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d'));
-        //     if ($dia <= 20) {
-        //         $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
-        //     } else {
-        //         $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->format('m/Y'));
-        //     }
-
-        //     $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
-        //     return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
-        // }
-
-        #$from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
         $today = Carbon::now()->format('Y-m-d');
 
         $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
@@ -194,7 +172,9 @@ class BarChartRacingController extends Controller
 
             array_push($output, $user_info);
         }
+        
 
+        dd($output);
         return $output;
     }
 }

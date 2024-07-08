@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Horse Race</title>
+    <title>Corrida Agendamentos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -158,7 +158,7 @@
         let interval;
     const stepDuration = 500;
 
-    let maxSales = 4000000; // 4 million in sales
+    let maxSales = 15; // 4 million in sales
     const vendas_max = "{{ config('racing_agendamento_max') }}"
 
     if (vendas_max){
