@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Horse Race</title>
+    <title>Corrida dos Agendamentos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #dbdbdb;
+            background-color: #fbcf6f;
         }
 
         .controls {
@@ -23,7 +23,7 @@
             position: relative;
             width: 100%;
             height: 90vh;
-            background-color: green;
+            background-color: rgb(251, 127, 32);
             /* overflow: hidden; */
             border: 2px solid black;
         }
@@ -136,7 +136,7 @@
         </div>
         <div class="col-lg-8">
             <h1 class="header">
-                CORRIDA DAS VENDAS
+                CORRIDA DOS AGENDAMENTOS
             </h1>
             <h7>Inicio: {{config('data_inicio')}} Fim:{{config('data_fim')}}</h7>
 
@@ -158,23 +158,20 @@
         let interval;
     const stepDuration = 500;
 
-    let maxSales = 4000000; // 4 million in sales
-    const vendas_max = "{{ config('racing_vendas_max') }}"
+    let maxSales = 15; // 4 million in sales
+    const vendas_max = "{{ config('racing_agendamento_max') }}"
 
     if (vendas_max){
         maxSales = vendas_max;
     }
 
-    
+    console.log(vendas_max);
 
     const queryString = window.location.search;
     
     // Criando um objeto URLSearchParams a partir da string de consulta
     const urlParams = new URLSearchParams(queryString);
     
-
-
-
     let participants = [];
     const moveDuration = 10000; // Duration in milliseconds for horse movement
     const crownImageUrl = 'https://centralblogs.com.br/wp-content/uploads/2018/11/coroa-png-fundo-transparente.png';
@@ -192,7 +189,6 @@
             div.style.height = 120*participants.length+'px';
 
 
-
             updateRace(participants);
         } catch (error) {
             console.error('Error fetching participants:', error);
@@ -207,11 +203,11 @@
         //participants.sort((a, b) => b.sales - a.sales);
 
         // Add milestone lines
-        // for (let sales = 500000; sales <= maxSales; sales +=500000) { const milestoneLine=document.createElement('div');
-        //     milestoneLine.className='milestone-line' ; milestoneLine.style.left=`${(sales / maxSales) * 100}%`;
-        //     raceTrack.appendChild(milestoneLine); const milestoneLabel=document.createElement('div');
-        //     milestoneLabel.className='milestone-label' ; milestoneLabel.style.left=`${(sales / maxSales) * 100}%`;
-        //     milestoneLabel.textContent=`${sales / 1000000}M`; raceTrack.appendChild(milestoneLabel); }
+        for (let sales = 0; sales <= maxSales; sales +=1) { const milestoneLine=document.createElement('div');
+            milestoneLine.className='milestone-line' ; milestoneLine.style.left=`${(sales / maxSales) * 100}%`;
+            raceTrack.appendChild(milestoneLine); const milestoneLabel=document.createElement('div');
+            milestoneLabel.className='milestone-label' ; milestoneLabel.style.left=`${(sales / maxSales) * 100}%`;
+            milestoneLabel.textContent=`${sales / 1}`; raceTrack.appendChild(milestoneLabel); }
 
             
         // Calculate positions based on sales
@@ -287,7 +283,7 @@
                 currentSales = targetSales;
                 clearInterval(interval);
             }
-            salesValueElement.textContent = `R$ ${Math.round(currentSales)}`;
+            salesValueElement.textContent = `${Math.round(currentSales)}`;
         }, stepDuration);
     }
 
