@@ -21,11 +21,11 @@
 
         .race-track {
             position: relative;
-            width: 100%;
-            height: 90vh;
+            width: 98%;
             background-color: green;
             /* overflow: hidden; */
             border: 2px solid black;
+            margin-left: 10px;
         }
 
         .lane {
@@ -123,20 +123,109 @@
             font-size: 12px;
             transform: translateX(-50%);
         }
+
+
+
+        @media (max-width: 1000px) {
+
+            .h1,
+            h1 {
+                font-size: 170% !important;
+            }
+
+            .scoreboard {
+                display: flex;
+                align-items: center;
+                background: #ffffff;
+                padding: 5px;
+                /* border-radius: 5px; */
+                border: 1px solid black;
+                z-index: 999;
+            }
+
+            .scoreboard span {
+                margin: 0 5px;
+                font-size: 10px;
+                font-weight: bold;
+                z-index: 999;
+            }
+
+            .horse img {
+                border: 3px solid white;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                border-radius: 50%;
+                margin-right: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+
+            .lane {
+                /* position: absolute; */
+                width: 100%;
+                height: 60px;
+                border-bottom: 2px solid white;
+            }
+
+            .finish-line1 {
+                position: absolute;
+                right: 0;
+                width: 20px;
+                height: 60px;
+                background: linear-gradient(to bottom, black 50%, white 50%);
+                background-size: 100px 60px;
+            }
+
+            .finish-line2 {
+                position: absolute;
+                right: 20px;
+                width: 20px;
+                height: 60px;
+                background: linear-gradient(to bottom, white 50%, black 50%);
+                background-size: 100px 60px;
+            }
+
+            .milestone-line {
+                position: absolute;
+                width: 2px;
+                height: 100%;
+                background: black;
+            }
+
+            .milestone-label {
+                position: absolute;
+                background: white;
+                padding: 2px 5px;
+                font-size: 6px;
+                transform: translateX(-50%);
+            }
+
+            .crown {
+                border: 0px !important;
+                position: absolute;
+                width: 50px;
+                height: 50px;
+                top: -35px;
+                left: 10px;
+                box-shadow: 0 00px rgba(0, 0, 0, 0.5) !important;
+                transform: rotate(17deg);
+            }
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="row" style="height: 100px;padding: 20px;">
-        <div class="col-lg-3">
-            <a href="{{url('')}}/crm"> <img style="width:300px"
+    <div class="row" style="padding: 20px;">
+        <div class="col-md-4">
+            <a href="{{url('')}}/crm"> <img style="width:200px"
                     src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
         </div>
-        <div class="col-lg-8">
+        <div class="col-md-8">
             <h1 class="header">
-                CORRIDA DAS VENDAS
+                RANKING VENDAS
             </h1>
             <h7>Inicio: {{config('data_inicio')}} Fim:{{config('data_fim')}}</h7>
 
@@ -165,8 +254,6 @@
         maxSales = vendas_max;
     }
 
-    
-
     const queryString = window.location.search;
     
     // Criando um objeto URLSearchParams a partir da string de consulta
@@ -185,11 +272,20 @@
             const data = await response.json();
             participants = data;
 
-            console.log(participants.length)
-
             var div = document.querySelector('.race-track');
             // Altera a altura da div
-            div.style.height = 120*participants.length+'px';
+
+            const raceTrack = document.getElementById('raceTrack');
+
+
+            if (raceTrack.clientWidth < 1000){
+                div.style.height = 60*participants.length+'px';
+
+            }else {
+                div.style.height = 120*participants.length+'px';
+            }
+
+            
 
 
 
@@ -274,6 +370,13 @@
     }
 
     
+    function formatarParaReal(valor) {
+    return valor.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+    });
+    }
+
 
     function animateSales(horse) {
         const salesValueElement = horse.querySelector('.sales-value');
@@ -287,7 +390,10 @@
                 currentSales = targetSales;
                 clearInterval(interval);
             }
-            salesValueElement.textContent = `R$ ${Math.round(currentSales)}`;
+
+            const valorFormatado = formatarParaReal(Math.round(currentSales));
+
+            salesValueElement.textContent = valorFormatado;
         }, stepDuration);
     }
 

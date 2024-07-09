@@ -2,89 +2,89 @@
 
 
 @section('headers')
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Include Date Range Picker -->
+<!-- Include Date Range Picker -->
 
-    <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+<link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('main_content')
-    <!-- Start Content-->
-    <div class="container-fluid" id="dashboard">
+<!-- Start Content-->
+<div class="container-fluid" id="dashboard">
 
 
-        @include('layouts.alert-msg')
-        <div class="row">
-            <div class="col-12">
-                <div class="page-title-box">
-                    <div class="page-title-right">
-                        <form class="d-flex">
+    @include('layouts.alert-msg')
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="page-title-right">
+                    <form class="d-flex">
 
 
-                            <div class="input-group">
-                                <input class="form-control btn btn-primary" type="text" name="daterange"
-                                    id="datapicker_dash"
-                                    value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
+                        <div class="input-group">
+                            <input class="form-control btn btn-primary" type="text" name="daterange"
+                                id="datapicker_dash"
+                                value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
 
-                                <span class="input-group-text bg-primary border-primary text-white">
-                                    <i class="mdi mdi-calendar-range font-13"></i>
-                                </span>
-                            </div>
-                            <a href="javascript: void(0);" class="btn btn-primary ms-2">
-                                <i class="mdi mdi-autorenew"></i>
-                            </a>
-                            <a href="javascript: void(0);" class="btn btn-primary ms-1">
-                                <i class="mdi mdi-filter-variant"></i>
-                            </a>
-                        </form>
-                    </div>
-                    <h4 class="page-title">Dashboard - Semanas</h4>
+                            <span class="input-group-text bg-primary border-primary text-white">
+                                <i class="mdi mdi-calendar-range font-13"></i>
+                            </span>
+                        </div>
+                        <a href="javascript: void(0);" class="btn btn-primary ms-2">
+                            <i class="mdi mdi-autorenew"></i>
+                        </a>
+                        <a href="javascript: void(0);" class="btn btn-primary ms-1">
+                            <i class="mdi mdi-filter-variant"></i>
+                        </a>
+                    </form>
                 </div>
+                <h4 class="page-title">Dashboard - Semanas</h4>
             </div>
-
         </div>
 
-        <!-- end page title -->
+    </div>
 
-        <div class="row">
+    <!-- end page title -->
 
-
-
-            @include('dashboards.views.bar_plot', [
-                'name' => 'Agendamentos',
-                'plots' => [$output['weeks'], $output['agendamentos']],
-            ])
-
-            @include('dashboards.views.bar_plot', [
-                'name' => 'Reuniões',
-                'plots' => [$output['weeks'], $output['reunioes']],
-            ])
-
-            @include('dashboards.views.bar_plot', [
-                'name' => 'Propostas',
-                'plots' => [$output['weeks'], $output['propostas']],
-            ])
-
-            @include('dashboards.views.bar_plot', [
-                'name' => 'Aprovações',
-                'plots' => [$output['weeks'], $output['aprovacoes']],
-            ])
-
-            @include('dashboards.views.bar_plot', [
-                'name' => 'Vendas',
-                'plots' => [$output['weeks'], $output['vendas']],
-            ])
+    <div class="row">
 
 
-        </div>
 
-    </div> <!-- container -->
+        @include('dashboards.views.bar_plot', [
+        'name' => 'Agendamentos',
+        'plots' => [$output['weeks'], $output['agendamentos']],
+        ])
+
+        @include('dashboards.views.bar_plot', [
+        'name' => 'Reuniões',
+        'plots' => [$output['weeks'], $output['reunioes']],
+        ])
+
+        @include('dashboards.views.bar_plot', [
+        'name' => 'Propostas',
+        'plots' => [$output['weeks'], $output['propostas']],
+        ])
+
+        @include('dashboards.views.bar_plot', [
+        'name' => 'Aprovações',
+        'plots' => [$output['weeks'], $output['aprovacoes']],
+        ])
+
+        @include('dashboards.views.bar_plot', [
+        'name' => 'Vendas',
+        'plots' => [$output['weeks'], $output['vendas']],
+        ])
+
+
+    </div>
+
+</div> <!-- container -->
 @endsection
 
 @section('specific_scripts')
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
 
 
             $('#datapicker_dash').daterangepicker({
@@ -102,5 +102,5 @@
 
 
         });
-    </script>
+</script>
 @endsection

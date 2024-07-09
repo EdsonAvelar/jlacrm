@@ -26,10 +26,6 @@
                                 <input class="form-control btn btn-primary" type="text" name="daterange"
                                     id="datapicker_dash"
                                     value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
-
-
-
-
                                 <span class="input-group-text bg-primary border-primary text-white">
                                     <i class="mdi mdi-calendar-range font-13"></i>
                                 </span>
