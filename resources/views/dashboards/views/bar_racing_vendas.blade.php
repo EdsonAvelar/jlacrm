@@ -266,7 +266,11 @@
 
 
     let participants = [];
-    const moveDuration = 10000; // Duration in milliseconds for horse movement
+    const moveDurationMin = 5000; // Duration in milliseconds for horse movement
+    const moveDurationMax = 10000;// Duration in milliseconds for horse movement
+
+    
+
     const crownImageUrl = 'https://centralblogs.com.br/wp-content/uploads/2018/11/coroa-png-fundo-transparente.png';
 
     async function fetchParticipants() {
@@ -298,16 +302,29 @@
         }
     }
 
+    let contador = 0;
+    function gerarNumeroAleatorio(min, max) {
+        function seedRandom(seed) {
+            let x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+
+        let seed = new Date().getTime()+ (contador++); // Obtém o timestamp atual em milissegundos
+        let rng = seedRandom(seed);
+        return Math.floor(rng * (max - min + 1)) + min;
+    }
+
     function updateRace(participants) {
         // Clear previous race data
         const raceTrack = document.getElementById('raceTrack');
         raceTrack.innerHTML = '<div class="milestone-line"></div>';
         // Sort participants by sales
 
-        console.log("sort_participantes: "+sort_participantes)
+    
         if (sort_participantes == 'true'){
             participants.sort((a, b) => b.sales - a.sales);
-            console.log("sorted_participantes")
+         
         }
         
 
@@ -333,8 +350,11 @@
 
             const horse = document.createElement('div');
             horse.className = 'horse';
+            
             horse.style.left = '0px'; // Start position
-            horse.style.transition = `left ${moveDuration}ms linear`;
+            //horse.style.transition = `left ${horse.move}ms linear`; 
+            horse.move = gerarNumeroAleatorio(moveDurationMin,moveDurationMax);
+            horse.style.transition = `left ${horse.move}ms ease-in-out`;
             horse.dataset.sales = participant.sales;
             horse.dataset.initialSales = participant.sales; // Save initial sales value
             lane.appendChild(horse);
@@ -371,11 +391,12 @@
             const targetPosition = (sales / maxSales) * raceTrack.clientWidth;
             horse.style.left = `${targetPosition}px`;
             animateSales(horse);
+      
         });
 
         setTimeout(() => {
             displayCrown();
-        }, moveDuration);
+        }, moveDurationMax);
     }
 
     
@@ -390,7 +411,7 @@
     function animateSales(horse) {
         const salesValueElement = horse.querySelector('.sales-value');
         const targetSales = parseInt(salesValueElement.dataset.targetSales, 10);
-        const increment = targetSales / (moveDuration / stepDuration);
+        const increment = targetSales / (horse.move / stepDuration);
         let currentSales = 0;
 
         const interval = setInterval(() => {
