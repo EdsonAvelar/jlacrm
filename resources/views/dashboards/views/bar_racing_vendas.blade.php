@@ -59,6 +59,7 @@
             padding: 5px;
             border-radius: 5px;
             border: 1px solid black;
+            z-index: 999;
         }
 
         .scoreboard span {
