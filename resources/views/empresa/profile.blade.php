@@ -392,64 +392,6 @@
 
                             </div> --}}
 
-
-                        </div> <!-- end tab-pane -->
-
-
-                        <div class="tab-pane" id="config">
-
-                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                CONFIGURAÇÕES DE CRM</h5>
-                            <div class="row">
-
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="lastname" class="form-label">Produção</label>
-                                        <input class="form-control btn btn-primary" type="text" name="daterange"
-                                            id="datapicker_config" value="
-                                                @if (config('data_inicio')) {{ config('data_inicio') }} - {{ config('data_fim') }} @endif
-                                                " />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="
-verde - criado hoje
-branco - dentro da janela de 2 dias
-amarelo - de 3 a  5 dias parados
-vermelho mais do que 5 dias parados
-                                                ">
-                                            <label for="inputEmail3" class="col-form-label">Cards Coloridos <span
-                                                    class="mdi mdi-information"></span>
-                                            </label> </span>
-
-                                        <input class="toggle-event" type="checkbox" <?php if
-                                            (array_key_exists('card_colorido', $empresa)) { if
-                                            ($empresa['card_colorido']=='true' ) { echo 'checked' ; } } ?>
-                                        data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
-                                        data-off="sem cor" data-onstyle="success" data-offstyle="danger">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
-                                            <label for="inputEmail3" class="col-form-label">Gráficos Cor Aleatória
-                                                <span class="mdi mdi-information"></span>
-                                            </label> </span>
-
-                                        <input class="toggle-event" type="checkbox" <?php if
-                                            (array_key_exists('grafico_cor_aleatoria', $empresa)) { if
-                                            ($empresa['grafico_cor_aleatoria']=='true' ) { echo 'checked' ; } } ?>
-                                        data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
-                                        data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
-                                        data-offstyle="danger">
-                                    </div>
-
-
-                                </div>
-                            </div>
-
                             <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                 TOKEN WEBHOOK</h5>
                             <div class="row">
@@ -470,30 +412,148 @@ vermelho mais do que 5 dias parados
                             </div>
 
 
-                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                CONFIGURAÇÕES CORRIDA</h5>
+                        </div> <!-- end tab-pane -->
+
+
+                        <div class="tab-pane" id="config">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="lastname" class="form-label">Valor Máximo de Vendas</label>
-                                        <input class="form-control" type="number" name="racing_vendas_max"
-                                            id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
+
+                                {{-- COLUNA DA ESQUERDA --}}
+                                <div class="col-md-6">
+
+
+                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                        CONFIGURAÇÕES DE CRM</h5>
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <label for="lastname" class="form-label">Produção</label>
+                                                <input class="form-control btn btn-primary" type="text" name="daterange"
+                                                    id="datapicker_config" value="
+                                                @if (config('data_inicio')) {{ config('data_inicio') }} - {{ config('data_fim') }} @endif
+                                                " />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="
+verde - criado hoje
+branco - dentro da janela de 2 dias
+amarelo - de 3 a  5 dias parados
+vermelho mais do que 5 dias parados
+                                                ">
+                                                    <label for="inputEmail3" class="col-form-label">Cards Coloridos
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('card_colorido', $empresa)) { if
+                                                    ($empresa['card_colorido']=='true' ) { echo 'checked' ; } } ?>
+                                                data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
+                                                data-off="sem cor" data-onstyle="success" data-offstyle="danger">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="inputEmail3" class="col-form-label">Gráficos Cor
+                                                        Aleatória
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('grafico_cor_aleatoria', $empresa)) { if
+                                                    ($empresa['grafico_cor_aleatoria']=='true' ) { echo 'checked' ; } }
+                                                    ?>
+                                                data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
+                                                data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
+                                                data-offstyle="danger">
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                {{-- COLUNA DA DIREITA --}}
+                                <div class="col-md-6">
+
+
+                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                        CONFIGURAÇÕES CORRIDA</h5>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Valor Máximo de
+                                                        Vendas</label>
+                                                    </label> </span>
+                                                <input class="form-control" type="number" name="racing_vendas_max"
+                                                    id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="inputEmail3" class="col-form-label">Ordenar Participantes
+                                                    Vendas
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php if
+                                                (array_key_exists('vendas_ordenar', $empresa)) { if
+                                                ($empresa['vendas_ordenar']=='true' ) { echo 'checked' ; } } ?>
+                                            data-config_info="vendas_ordenar" data-toggle="toggle"
+                                            data-on="ordenado" data-off="não ordenado" data-onstyle="success"
+                                            data-offstyle="danger">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Valor Máximo de
+                                                        Agendamentos Diários</label>
+                                                    </label> </span>
+
+
+                                                <input class="form-control" type="number" name="racing_agendamento_max"
+                                                    id="racing_agendamento_max"
+                                                    value="{{config('racing_agendamento_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="inputEmail3" class="col-form-label">Ordenar Participantes
+                                                    Agendamentos
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php if
+                                                (array_key_exists('agendamento_ordenar', $empresa)) { if
+                                                ($empresa['agendamento_ordenar']=='true' ) { echo 'checked' ; } } ?>
+                                            data-config_info="agendamento_ordenar" data-toggle="toggle"
+                                            data-on="ordenado" data-off="não ordenado" data-onstyle="success"
+                                            data-offstyle="danger">
+                                        </div>
+
                                     </div>
                                 </div>
+
+                                {{-- TERCEIRA COLUNA VAZIA --}}
+                                {{-- <div class="col-md-3">
+
+                                </div> --}}
+
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="lastname" class="form-label">Valor Máximo de Agendamentos Diários</label>
-                                        <input class="form-control" type="number" name="racing_agendamento_max" id="racing_agendamento_max"
-                                            value="{{config('racing_agendamento_max')}}" />
-                                    </div>
-                                </div>
-                            </div>
-
-
-
 
                         </div> <!-- end tab-pane -->
                     </div> <!-- end tab-content -->
@@ -623,11 +683,6 @@ vermelho mais do que 5 dias parados
                 },
             });
         }
-
-
-
-
-
 
         $('.toggle-event').change(function($this) {
 

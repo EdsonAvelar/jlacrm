@@ -255,6 +255,8 @@
         maxSales = vendas_max;
     }
 
+    const sort_participantes = "{{ config('vendas_ordenar') }}";
+
     const queryString = window.location.search;
     
     // Criando um objeto URLSearchParams a partir da string de consulta
@@ -301,7 +303,13 @@
         const raceTrack = document.getElementById('raceTrack');
         raceTrack.innerHTML = '<div class="milestone-line"></div>';
         // Sort participants by sales
-        //participants.sort((a, b) => b.sales - a.sales);
+
+        console.log("sort_participantes: "+sort_participantes)
+        if (sort_participantes == 'true'){
+            participants.sort((a, b) => b.sales - a.sales);
+            console.log("sorted_participantes")
+        }
+        
 
         // Add milestone lines
         for (let sales = 500000; sales <= maxSales; sales +=500000) { const milestoneLine=document.createElement('div');

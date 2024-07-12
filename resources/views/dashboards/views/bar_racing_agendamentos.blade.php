@@ -247,11 +247,13 @@
     const stepDuration = 500;
 
     let maxSales = 15; // 4 million in sales
-    const vendas_max = "{{ config('racing_agendamento_max') }}"
+    const vendas_max = "{{ config('racing_agendamento_max') }}";
 
     if (vendas_max){
         maxSales = vendas_max;
     }
+
+    const sort_participantes = "{{ config('agendamento_ordenar') }}";
 
     console.log(vendas_max);
 
@@ -290,8 +292,15 @@
         // Clear previous race data
         const raceTrack = document.getElementById('raceTrack');
         raceTrack.innerHTML = '<div class="milestone-line"></div>';
+
         // Sort participants by sales
-        //participants.sort((a, b) => b.sales - a.sales);
+
+
+        console.log("sort_participantes: "+sort_participantes)
+        if (sort_participantes == 'true'){
+            participants.sort((a, b) => b.sales - a.sales);
+            console.log("sorted_participantes")
+        }
 
         // Add milestone lines
         for (let sales = 0; sales <= maxSales; sales +=1) { const milestoneLine=document.createElement('div');
