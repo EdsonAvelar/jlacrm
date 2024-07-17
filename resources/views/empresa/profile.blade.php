@@ -474,6 +474,25 @@ vermelho mais do que 5 dias parados
                                             </div>
 
 
+                                            <div class="mb-3">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="inputEmail3" class="col-form-label">Notificação de Nova
+                                                        Venda
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('broadcast_fechamento', $empresa)) { if
+                                                    ($empresa['broadcast_fechamento']=='true' ) { echo 'checked' ; } }
+                                                    ?>
+                                                data-config_info="broadcast_fechamento" data-toggle="toggle"
+                                                data-on="broadcast ligado" data-off="broadcast desligado"
+                                                data-onstyle="success"
+                                                data-offstyle="danger">
+                                            </div>
+
+
                                         </div>
                                     </div>
 

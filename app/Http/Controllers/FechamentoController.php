@@ -10,19 +10,21 @@ use App\Models\Fechamento;
 use App\Enums\VendaStatus;
 use App\Enums\NegocioStatus;
 use App\Models\Atividade;
-
+use App\Events\NewSaleEvent;
+use App\Models\User;
 
 class FechamentoController extends Controller
 {
     public function index(Request $request)
     {
+
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
 
         $vendas = null;
-        if ( !is_null($data_inicio) and !is_null($data_fim) ){
+        if (!is_null($data_inicio) and !is_null($data_fim)) {
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d/m/Y',$data_fim)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
 
             $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])->get();
         }
@@ -30,27 +32,65 @@ class FechamentoController extends Controller
         return view('vendas.index', compact('vendas'));
     }
 
-    
+    public function notificacao(Request $request)
+    {
+        $input = $request->input();
+
+        $id_negocio = $input['info'][0];
+        $id_vendedor = $input['info'][1];
+
+        $negocio = Negocio::find($id_negocio);
+        $vendedor = User::find($id_vendedor);
+
+
+        $data = [
+            'vendedor' => $vendedor->name,
+            'id' => $vendedor->id,
+            'avatar' => $vendedor->avatar,
+            'equipe' => '',
+            'cliente' => $negocio->lead->nome,
+            'credito' => $negocio->valor,
+        ];
+
+        if ($vendedor->equipe) {
+            $data['equipe_nome'] = $vendedor->equipe->nome;
+            $data['equipe_id'] = $vendedor->equipe->id;
+            $data['equipe_logo'] = $vendedor->equipe->logo;
+        }
+
+        $broadcast_fechamento = config("broadcast_fechamento");
+        if ($broadcast_fechamento == "true") {
+            event(new NewSaleEvent($data));
+        }
+        return back()->with('status', "Venda notificada com sucesso");
+    }
+
+
     public function nova_venda(Request $request)
     {
 
         $input = $request->all();
-        $valor = str_replace('.','',$input['valor'] );
+        $valor = str_replace('.', '', $input['valor']);
         $negocio_id = $input['negocio_id'];
         $negocio = Negocio::find($negocio_id);
 
-        if ($negocio->fechamento_id){
+        if ($negocio->fechamento_id) {
             $venda = Fechamento::find($negocio->fechamento_id);
-        }else {
+        } else {
             $venda = new Fechamento();
         }
-        
-        $docs = ['data_fechamento','data_assembleia',
-        'conj_data_nasc','data_nasc','data_exp'];
+
+        $docs = [
+            'data_fechamento',
+            'data_assembleia',
+            'conj_data_nasc',
+            'data_nasc',
+            'data_exp'
+        ];
         foreach ($docs as $doc) {
-            if ( $input[$doc] ){
-                $input[$doc] = Carbon::createFromFormat('d/m/Y',$input[$doc])->format('Y-m-d');
-            }   
+            if ($input[$doc]) {
+                $input[$doc] = Carbon::createFromFormat('d/m/Y', $input[$doc])->format('Y-m-d');
+            }
         }
 
         $venda->valor = $valor;
@@ -88,12 +128,21 @@ class FechamentoController extends Controller
         $venda['total_pago'] = $input['total_pago'];
 
         $venda['forma_pagamento'] = $input['forma_pagamento'];
-        
-         // CHECAGEM DO ADMINISTRATIVO
-        $docs = ['doc_consorciado','doc_conjuge','comp_pagamento','comp_endereco',
-        'comp_venda','self_declaracao','controle_qualidade','video','comentarios'];
+
+        // CHECAGEM DO ADMINISTRATIVO
+        $docs = [
+            'doc_consorciado',
+            'doc_conjuge',
+            'comp_pagamento',
+            'comp_endereco',
+            'comp_venda',
+            'self_declaracao',
+            'controle_qualidade',
+            'video',
+            'comentarios'
+        ];
         foreach ($docs as $doc) {
-            if ( $request->has( $doc) ){
+            if ($request->has($doc)) {
                 $venda[$doc] = $input[$doc];
             }
         }
@@ -102,24 +151,25 @@ class FechamentoController extends Controller
         $venda->segundo_vendedor_id = $input['segundo_vendedor_id'];
         $venda->terceiro_vendedor_id = $input['terceiro_vendedor_id'];
 
-        $venda->status = $input['status'];;
+        $venda->status = $input['status'];
+        ;
 
         $venda->save();
 
-        if ($negocio->conjuge_id){
+        if ($negocio->conjuge_id) {
             $conjuge = Lead::find($negocio->conjuge_id);
-        }else {
+        } else {
             $conjuge = new Lead();
         }
 
-        if (!$input['conj_nome']){
+        if (!$input['conj_nome']) {
             $input['conj_nome'] = "";
         }
 
-        if (!$input['conf_telefone']){
+        if (!$input['conf_telefone']) {
             $input['conf_telefone'] = "";
         }
-        
+
         $conjuge['nome'] = strtoupper($input['conj_nome']);
         $conjuge['telefone'] = $input['conf_telefone'];
         $conjuge['data_nasc'] = $input['conj_data_nasc'];
@@ -136,9 +186,9 @@ class FechamentoController extends Controller
         $conjuge['renda_liquida'] = $input['conj_renda_liquida'];
         $conjuge->save();
 
-        if ($negocio->lead_id){
+        if ($negocio->lead_id) {
             $lead = Lead::find($negocio->lead_id);
-        }else {
+        } else {
             $lead = new Lead();
         }
 
@@ -158,7 +208,7 @@ class FechamentoController extends Controller
         $lead['formacao'] = $input['formacao'];
         $lead['profissao'] = $input['profissao'];
         $lead['renda_liquida'] = $input['renda_liquida'];
-        
+
         $lead['email'] = $input['email'];
         $lead['cep'] = $input['cep'];
         $lead['endereco'] = $input['endereco'];
@@ -166,17 +216,18 @@ class FechamentoController extends Controller
         $lead['bairro'] = $input['bairro'];
         $lead['cidade'] = $input['cidade'];
         $lead['estado'] = $input['estado'];
- 
+
         $lead->save();
-        
+
         # Atualizar tipo de negociacao
-        Negocio::where('id',$negocio_id)->update([
-        'valor'=>$valor,
-        'fechamento_id' => $venda->id,
-        'conjuge_id' => $conjuge->id,
-        'lead_id' => $lead->id,
-        #'tipo'=>$tipo_credito,
-        'status'=> NegocioStatus::VENDIDO]);
+        Negocio::where('id', $negocio_id)->update([
+            'valor' => $valor,
+            'fechamento_id' => $venda->id,
+            'conjuge_id' => $conjuge->id,
+            'lead_id' => $lead->id,
+            #'tipo'=>$tipo_credito,
+            'status' => NegocioStatus::VENDIDO
+        ]);
 
         Atividade::add_atividade(\Auth::user()->id, "Fechamento Concluido", $negocio_id);
 
@@ -187,7 +238,7 @@ class FechamentoController extends Controller
     {
         $input = $request->all();
         $negocio_id = $input['negocio_id'];
-        Negocio::where('id',$negocio_id)->update(['status' => NegocioStatus::PERDIDO]);
+        Negocio::where('id', $negocio_id)->update(['status' => NegocioStatus::PERDIDO]);
 
         Atividade::add_atividade(\Auth::user()->id, "Negócio PERDIDO", $negocio_id);
 

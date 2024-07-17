@@ -90,6 +90,7 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::post('/nova', [FechamentoController::class, 'nova_venda'])->name('nova_venda');
             Route::post('/fechamento', [FechamentoController::class, 'nova_venda'])->name('vendas.fechamento');
+            Route::post('/notificacao', [FechamentoController::class, 'notificacao'])->name('vendas.notificacao');
             Route::get('/index', [FechamentoController::class, 'index'])->name('vendas.lista');
             Route::post('/perdida', [FechamentoController::class, 'venda_perdida'])->name('vendas.perdida');
 
@@ -192,4 +193,13 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
         }
     );
 });
+
+Route::get('/pusher', function () {
+    return view('pusher');
+});
+
+Route::get('/pull', function () {
+    return view('pull');
+});
+
 

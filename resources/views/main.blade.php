@@ -58,7 +58,68 @@ use Carbon\Carbon;
             background-color: #454444;
             border-radius: 10px;
         }
+
+        .notificacao_venda {
+
+            /* Oculto por padrão */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            /* Fundo semitransparente */
+            color: white;
+            font-size: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            background: url('{{ asset("images/gifs/confetti.gif")}}') no-repeat center center;
+            background-size: cover;
+        }
+
+        .card-vendedor {
+            width: 600px;
+            height: 600px;
+            border: 2px solid black;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            text-align: center;
+            padding: 20px;
+            color: #d51414;
+            background-color: #f4ffef;
+        }
+
+        .card-vendedor img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            border: 2px solid black;
+            object-fit: cover;
+        }
+
+        .card-vendedor .texto-cima {
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .card-vendedor .texto-cima2 {
+            font-weight: bold;
+            font-size: 0.8em;
+            color: #281111b5;
+        }
+
+        .card-vendedor .texto-baixo {
+            font-weight: bold;
+            font-size: 1.2em;
+        }
     </style>
+
+    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 
 <?php
@@ -74,6 +135,23 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
+
+    <div id="notification" class="notificacao_venda" style="display: none;">
+        <div class="card-vendedor">
+            <div class="texto-cima">É VENDA</div>
+            <div class="texto-cima2"><span id="venda_valor"></span></div>
+            <div class="texto-cima2"><span id="nome_cliente"></span></div>
+            <img id="imagem_vendedor" src="" alt="Foto do Vendedor">
+
+            <div class="texto-baixo">
+                <div>-= PARABÉNS =-</div>
+                <div><span id="nome_vendedor"></span></div>
+                <div><span id="nome_equipe"></span></div>
+
+            </div>
+        </div>
+    </div>
+
 
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
@@ -703,7 +781,54 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }
 
     });
+
+    
+    // Função para simular uma nova venda (você pode remover isso quando integrar com Laravel)
+    //setTimeout(showNotification, 2000);
 </script>
+
+<script>
+    function showNotification() {
+        const notification = document.getElementById('notification');
+        notification.style.display = 'flex'; // Mostrar a notificação
+        setTimeout(() => {
+            notification.style.display = 'none'; // Ocultar a notificação após 5 segundos
+            }, 20000);
+        }     
+
+    // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+    
+        var pusher = new Pusher('ae35a6a0e6cd96def27f', {
+          cluster: 'sa1'
+        });
+    
+        var channel = pusher.subscribe('my-channel');
+        channel.bind('my-event', function(data) {
+            console.log( JSON.stringify(data));
+
+            http://127.0.0.1:8000/images/equipes/1/logo.jpg
+
+            document.getElementById('venda_valor').innerText = "Crédito: " +nFormatter( data.data.credito, 2);
+            document.getElementById('nome_cliente').innerText = "Cliente: "+data.data.cliente;
+            document.getElementById('nome_vendedor').innerText = data.data.vendedor;
+            document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
+           
+            document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
+
+            // var img_equipe = "{{ url('') }}/images/equipes/"+data.data.equipe_id+"/"+data.data.equipe_logo ;
+ 
+            // console.log(img_equipe);
+            // $('#notification').css('background', `url('${img_equipe}') no-repeat center center`);
+            // $('#notificationr').css('background-size', 'cover');
+   
+            showNotification();
+
+        });
+</script>
+
+
+
 @if (Session::has('status'))
 <script>
     showAlert({
@@ -711,6 +836,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             message: "{{ session('status') }}"
         })
 </script>
+
+
 
 {{-- <div class="alert alert-success" role="alert">
 

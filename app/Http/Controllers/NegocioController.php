@@ -19,7 +19,7 @@ use App\Models\Atividade;
 use App\Models\Equipe;
 use App\Enums\UserStatus;
 use App\Models\Levantamento;
-
+use App\Events\NewSaleEvent;
 
 use Carbon\Carbon;
 
@@ -256,11 +256,13 @@ class NegocioController extends Controller
     {
 
 
+
         $this->check_if_active();
         $this->check_authorization($request, 'fechamento');
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
+
         $conjuge = null;
         if ($negocio->lead->conjuge_id) {
             $conjuge = Lead::find($negocio->lead->conjuge_id);
@@ -580,22 +582,6 @@ class NegocioController extends Controller
 
 
         $con_entrada = $proposta['con-entrada'];
-
-        //$embutidas = intval($proposta['parcelas_embutidas']);
-        // if ($embutidas > 0) {
-
-
-        //     $subs = array("R", "$", ".");
-        //     $valor_entrada = floatval(str_replace($subs, "", $proposta['con-entrada']));
-
-        //     if ($proposta['con-reduzido'] == 's') {
-        //         $valor_parcela = (floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas) / 0.7;
-        //     } else {
-        //         $valor_parcela = floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas;
-        //     }
-
-        //     $con_entrada = "R$ " . number_format($valor_entrada + $valor_parcela, 2, ',', '.');
-        // }
 
         return view('negocios.proposta_id', compact('proposta', 'con_entrada'));
     }

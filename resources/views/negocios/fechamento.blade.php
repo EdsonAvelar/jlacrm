@@ -18,7 +18,10 @@ function to_data($data)
     }
 }
 ?>
+@section('headers')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
+@endsection
 @section('main_content')
 <style>
     .mb-3 {
@@ -938,8 +941,15 @@ function to_data($data)
                                 </div>
 
 
+                                <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
+                                        class="mdi mdi-content-save"></i> Notificar Venda
+                                </button>
+
+
                                 <button type="text" class="btn btn-info mt-2" id="gerar_protocolo"><i
                                         class="mdi mdi-content-save"></i> Gerar Protocolo</button>
+
+
 
                                 <button type="submit" class="btn btn-success mt-2"><i class="mdi mdi-content-save"></i>
                                     Salvar</button>
@@ -993,16 +1003,28 @@ function to_data($data)
                 <div class="text-end">
                     <button onclick="copyProtocolo()" class="btn btn-success">Copiar</button>
                 </div>
+
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
 @endsection
 
 
 @section('specific_scripts')
 <script>
-    function copyProtocolo() {
+    $.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+
+    function notificarFechamento(){
+
+}
+         function copyProtocolo() {
 
             console.log("Copy Protocolo");
 
@@ -1020,6 +1042,7 @@ function to_data($data)
             });
             $('#agendamento-protocolo').modal('hide');
         }
+
 
 
         $('.pfechamento').datepicker({
@@ -1044,7 +1067,30 @@ function to_data($data)
                 $('#fechamento-protocolo').modal('show');
                 event.preventDefault();
             });
+        
+        document.getElementById('gerar_broadcast').addEventListener('click',
+        function(event) {
 
+            event.preventDefault();
+            //$('#broadcast').modal('show');
+
+            info = [];
+            info[0] = {{$negocio->id}};
+            info[1] = {{$fechamento->primeiro_vendedor_id}};
+            
+            $.ajax({
+                url: "{{ url('vendas/notificacao') }}",
+                type: 'post',
+                data: {
+                    info: info
+                },
+                Type: 'json',
+            });
+
+           
+        });
+
+        
         function PrintElement() {
 
             print();
