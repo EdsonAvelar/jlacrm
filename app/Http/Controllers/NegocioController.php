@@ -580,21 +580,22 @@ class NegocioController extends Controller
 
 
         $con_entrada = $proposta['con-entrada'];
-        $embutidas = intval($proposta['parcelas_embutidas']);
-        if ($embutidas > 0) {
+
+        //$embutidas = intval($proposta['parcelas_embutidas']);
+        // if ($embutidas > 0) {
 
 
-            $subs = array("R", "$", ".");
-            $valor_entrada = floatval(str_replace($subs, "", $proposta['con-entrada']));
+        //     $subs = array("R", "$", ".");
+        //     $valor_entrada = floatval(str_replace($subs, "", $proposta['con-entrada']));
 
-            if ($proposta['con-reduzido'] == 's') {
-                $valor_parcela = (floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas) / 0.7;
-            } else {
-                $valor_parcela = floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas;
-            }
+        //     if ($proposta['con-reduzido'] == 's') {
+        //         $valor_parcela = (floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas) / 0.7;
+        //     } else {
+        //         $valor_parcela = floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas;
+        //     }
 
-            $con_entrada = "R$ " . number_format($valor_entrada + $valor_parcela, 2, ',', '.');
-        }
+        //     $con_entrada = "R$ " . number_format($valor_entrada + $valor_parcela, 2, ',', '.');
+        // }
 
         return view('negocios.proposta_id', compact('proposta', 'con_entrada'));
     }
