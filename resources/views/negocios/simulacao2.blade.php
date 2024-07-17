@@ -191,8 +191,8 @@ use App\Enums\NegocioTipo;
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Prazo</label>
                     <div class="col-sm-6">
-                        <input value="360" type="text" name="fin-prazo[]"
-                            class="form-control input-auto fin-prazo" id="finPrazo" placeholder="Prazo" required>
+                        <input value="360" type="text" name="fin-prazo[]" class="form-control input-auto fin-prazo"
+                            id="finPrazo" placeholder="Prazo" required>
                     </div>
                 </div>
 
@@ -214,8 +214,8 @@ use App\Enums\NegocioTipo;
                 <div class="form-group row financiamento" id="itbiDiv">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">ITBI/RGI</label>
                     <div class="col-sm-6">
-                        <input data-mask='R$ #.##0,00' type="text" name="fin-cartorio[]" class="form-control"
-                            id="vITBI" placeholder="Valor">
+                        <input data-mask='R$ #.##0,00' type="text" name="fin-cartorio[]" class="form-control" id="vITBI"
+                            placeholder="Valor">
                     </div>
                 </div>
 
@@ -249,8 +249,8 @@ use App\Enums\NegocioTipo;
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Titulo</label>
                     <div class="col-sm-6">
-                        <input type="text" name="con-titulo[]" class="form-control"
-                            placeholder="Titulo Consórcio" value="CONSÓRCIO">
+                        <input type="text" name="con-titulo[]" class="form-control" placeholder="Titulo Consórcio"
+                            value="CONSÓRCIO">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -264,16 +264,16 @@ use App\Enums\NegocioTipo;
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Crédito</label>
                     <div class="col-sm-6">
-                        <input data-mask='R$ #.##0,00' type="text" name="con-credito[]"
-                            class="form-control con-credito" id="vConCredito" placeholder="Valor" required>
+                        <input data-mask='R$ #.##0,00' type="text" name="con-credito[]" class="form-control con-credito"
+                            id="vConCredito" placeholder="Valor" required>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Adesão</label>
                     <div class="col-sm-6">
-                        <input data-mask='R$ #.##0,00' type="text" name="con-adesao[]"
-                            class="form-control con-adesao" id="vConAdesao" placeholder="Adesão" required>
+                        <input data-mask='R$ #.##0,00' type="text" name="con-adesao[]" class="form-control con-adesao"
+                            id="vConAdesao" placeholder="Adesão" required>
                     </div>
                 </div>
 
@@ -281,8 +281,7 @@ use App\Enums\NegocioTipo;
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Valor Parcela (Cheia)</label>
                     <div class="col-sm-6">
                         <input data-mask='R$ #.##0,00' type="text" class="form-control con-parcela-cheia"
-                            name="con-parcela-cheia[]" id="vConParcela"
-                            placeholder="Parcela Cheia" required>
+                            name="con-parcela-cheia[]" id="vConParcela" placeholder="Parcela Cheia" required>
                     </div>
                 </div>
 
@@ -303,11 +302,10 @@ use App\Enums\NegocioTipo;
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label"
-                        style="padding-top: 10px;">Embutir</label>
+                    <label for="inputEmail3" class="col-sm-3 col-form-label" style="padding-top: 10px;">Embutir</label>
                     <div class="col-sm-6">
-                        <select class="form-select select-items con-parcelas_embutidas"
-                            name="con-parcelas_embutidas[]" id="vConEmbutidas" aria-label="Default select example">
+                        <select class="form-select select-items con-parcelas_embutidas" name="con-parcelas_embutidas[]"
+                            id="vConEmbutidas" aria-label="Default select example">
                             <option selected value="0">Embutir Parcelas?</option>
                             <option value="0">Embutir 0</option>
                             <option value="1">Embutir 1</option>
@@ -356,8 +354,8 @@ use App\Enums\NegocioTipo;
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Prazo</label>
                     <div class="col-sm-6">
-                        <input type="text" name="con-prazo[]" class="form-control input-auto con-prazo"
-                            id="vConPrazo" placeholder="Prazo" required>
+                        <input type="number" name="con-prazo[]" class="form-control input-auto con-prazo" id="vConPrazo"
+                            placeholder="Prazo" required>
                     </div>
                 </div>
 
@@ -424,8 +422,8 @@ use App\Enums\NegocioTipo;
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Cliente</label>
             <div class="col-sm-5">
-                <input type="text" name="cliente" class="form-control" id="inputCredito"
-                    placeholder="Nome do Cliente" value="{{ $negocio->lead->nome }}" readonly>
+                <input type="text" name="cliente" class="form-control" id="inputCredito" placeholder="Nome do Cliente"
+                    value="{{ $negocio->lead->nome }}" readonly>
             </div>
         </div>
 
@@ -452,12 +450,11 @@ use App\Enums\NegocioTipo;
             <div class="col-sm-5">
 
 
-                <select class="form-select form-select-lg mb-3 select-items"name="tipo" id="tipoCredito">
+                <select class="form-select form-select-lg mb-3 select-items" name="tipo" id="tipoCredito">
 
                     @foreach (NegocioTipo::all() as $neg)
-                        <option value={{ $neg }}
-                            @if ($negocio->tipo == $neg) {{ 'selected="selected"' }} @endif>
-                            {{ $neg }}</option>
+                    <option value={{ $neg }} @if ($negocio->tipo == $neg) {{ 'selected="selected"' }} @endif>
+                        {{ $neg }}</option>
                     @endforeach
 
                 </select>
@@ -477,8 +474,7 @@ use App\Enums\NegocioTipo;
         <div class="form-group row" id="veiculoAno" style="display: none">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Ano</label>
             <div class="col-sm-3">
-                <input type="text" data-mask='yyyy' name="ano" class="form-control"
-                    placeholder="Ano do Veiculo">
+                <input type="text" data-mask='yyyy' name="ano" class="form-control" placeholder="Ano do Veiculo">
             </div>
         </div>
 

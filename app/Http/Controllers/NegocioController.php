@@ -7,27 +7,22 @@ use App\Models\EtapaFunil;
 use App\Models\Fechamento;
 use Illuminate\Http\Request;
 use Validator;
-use App\Enums\NegocioStatus;
 use App\Models\NegocioImportado;
 use App\Models\Negocio;
 use App\Models\User;
 use App\Models\Lead;
-use Illuminate\Support\Facades\DB;
 use App\Models\Proposta;
 use App\Models\Reuniao;
 use App\Models\Agendamento;
 use App\Models\Aprovacao;
-
 use App\Models\Atividade;
 use App\Models\Equipe;
-
 use App\Enums\UserStatus;
-use App\Enums\NegocioTipo;
-
 use App\Models\Levantamento;
 
 
 use Carbon\Carbon;
+
 class NegocioController extends Controller
 {
     public function importar_index()
@@ -36,20 +31,21 @@ class NegocioController extends Controller
 
         //$users = User::all();
 
-        $users = User::where('status',UserStatus::ativo)->pluck('name', 'id');
+        $users = User::where('status', UserStatus::ativo)->pluck('name', 'id');
 
-        return view('negocios/importar', compact('negocios_importados','users'));       
+        return view('negocios/importar', compact('negocios_importados', 'users'));
     }
 
-    public function negocio_levantamento(Request $request){
+    public function negocio_levantamento(Request $request)
+    {
 
         $input = $request->except('token');
 
-        $negocio = Negocio::find( $input['negocio_id']);
+        $negocio = Negocio::find($input['negocio_id']);
 
-        $levantamento = Levantamento::where('negocio_id',$negocio->id)->first();
+        $levantamento = Levantamento::where('negocio_id', $negocio->id)->first();
 
-        if (empty($levantamento)){
+        if (empty($levantamento)) {
             $levantamento = new Levantamento();
         }
 
@@ -129,17 +125,17 @@ class NegocioController extends Controller
             $fonte = $sheet->getCell("E{$row}")->getValue();
             $create_time = Carbon::now()->format('Y-m-d');
 
-            
-            $lead = Lead::where(['telefone'=>$telefone,'nome' => $nome ] )->first();
 
-            if ( !empty($lead) ){
+            $lead = Lead::where(['telefone' => $telefone, 'nome' => $nome])->first();
+
+            if (!empty($lead)) {
                 $negocios_rejeitados = $negocios_rejeitados + 1;
                 continue;
             }
 
-            $negimp = NegocioImportado::where(['telefone'=>$telefone])->first();
+            $negimp = NegocioImportado::where(['telefone' => $telefone])->first();
 
-            if ( !empty($negimp) ){
+            if (!empty($negimp)) {
                 $negocios_rejeitados = $negocios_rejeitados + 1;
                 continue;
             }
@@ -148,13 +144,13 @@ class NegocioController extends Controller
             $negocio->nome = $nome;
             $negocio->telefone = $telefone;
             $negocio->email = $email;
-            $negocio->campanha =  $campanha;
+            $negocio->campanha = $campanha;
             $negocio->fonte = $fonte;
             $negocio->data_conversao = $create_time;
 
             try {
                 $negocio->save();
-            }catch(QueryException  $e){
+            } catch (QueryException $e) {
                 $negocios_rejeitados = $negocios_rejeitados + 1;
                 continue;
             }
@@ -162,22 +158,23 @@ class NegocioController extends Controller
             $imported = $imported + 1;
         }
 
-        if ($imported > 0){
-            return back()->with('status', $imported.' negocios importados com sucesso. '.$negocios_rejeitados.' rejeitados por duplicidade');
-        }else {
-            if ($negocios_rejeitados > 0){
+        if ($imported > 0) {
+            return back()->with('status', $imported . ' negocios importados com sucesso. ' . $negocios_rejeitados . ' rejeitados por duplicidade');
+        } else {
+            if ($negocios_rejeitados > 0) {
                 return back()->withErrors('Todos foram rejeitados por duplicidade');
-            }else {
+            } else {
                 return back()->withErrors('Erro ao ler o csv. Cheque se estava no formato correto');
             }
         }
     }
 
-    public function check_authorization($request, $action){
+    public function check_authorization($request, $action)
+    {
 
-        if ($action == "fechamento"){
+        if ($action == "fechamento") {
             //Autorizado
-            if ( \Auth::user()->hasRole('gerenciar_vendas') ){
+            if (\Auth::user()->hasRole('gerenciar_vendas')) {
                 return true;
             }
         }
@@ -192,20 +189,20 @@ class NegocioController extends Controller
         $equipe_proprietario = NULL;
 
         $equipe_exists = 1;
-        if ( !empty($proprietario)){
+        if (!empty($proprietario)) {
             $equipe_proprietario = $proprietario->equipe()->first();
-        }else{
+        } else {
             $proprietario = NULL;
 
-            if ( $proprietario_id == -2){
+            if ($proprietario_id == -2) {
                 $equipe_exists = -1;
                 $equipe_proprietario = -1;
             }
-            
+
         }
 
         $auth_user_id = \Auth::user()->id;
-        
+
 
         if ($auth_user_id != $proprietario_id) {
             if (!(\Auth::user()->hasRole('admin'))) {
@@ -217,66 +214,69 @@ class NegocioController extends Controller
                 } else if ($equipe_exists > 0 and $equipe->id != $equipe_proprietario->id) {
                     return abort(401);
                 }
-            }else{
+            } else {
                 $equipe_exists = 1;
             }
         }
 
     }
 
-    public function check_if_active(){
+    public function check_if_active()
+    {
 
-        if ( \Auth::user()->status == UserStatus::inativo){
+        if (\Auth::user()->status == UserStatus::inativo) {
 
             \Auth::logout();
             return route('login');
         }
     }
 
-    public function negocio_edit(Request $request) {
+    public function negocio_edit(Request $request)
+    {
 
 
-        $this->check_if_active();      
+        $this->check_if_active();
 
-        $this->check_authorization($request,'edit');      
+        $this->check_authorization($request, 'edit');
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
 
-        $levantamento = Levantamento::where('negocio_id',$negocio->id)->first();
+        $levantamento = Levantamento::where('negocio_id', $negocio->id)->first();
 
-        if (empty($levantamento)){
+        if (empty($levantamento)) {
             $levantamento = new Levantamento();
         }
 
 
-        return view('negocios.edit', compact('negocio','levantamento') );
+        return view('negocios.edit', compact('negocio', 'levantamento'));
     }
 
-    public function negocio_fechamento(Request $request) {
+    public function negocio_fechamento(Request $request)
+    {
 
 
         $this->check_if_active();
-        $this->check_authorization($request, 'fechamento');      
+        $this->check_authorization($request, 'fechamento');
 
         $id = $request->query('id');
         $negocio = Negocio::find($id);
         $conjuge = null;
-        if ( $negocio->lead->conjuge_id ){
+        if ($negocio->lead->conjuge_id) {
             $conjuge = Lead::find($negocio->lead->conjuge_id);
-        }else {
-           
+        } else {
+
             $conjuge = new Lead();
             $conjuge->nome = "";
             $conjuge->telefone = "";
             $conjuge->save();
         }
-        
+
         $id = $conjuge->conjuge_id;
 
-        if ($negocio->fechamento_id ){
-            $fechamento = Fechamento::find( $negocio->fechamento_id);
-        }else {
+        if ($negocio->fechamento_id) {
+            $fechamento = Fechamento::find($negocio->fechamento_id);
+        } else {
             $fechamento = new Fechamento();
             $fechamento->data_fechamento = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $fechamento->valor = $negocio->valor;
@@ -285,42 +285,44 @@ class NegocioController extends Controller
         }
 
 
-        return view('negocios.fechamento', compact('negocio','fechamento') );
+        return view('negocios.fechamento', compact('negocio', 'fechamento'));
     }
 
-    public function negocio_get(Request $request) {
+    public function negocio_get(Request $request)
+    {
 
         $id = $request->query('id');
-        $negocio = Negocio::where('id',$id)->get();
+        $negocio = Negocio::where('id', $id)->get();
 
-        $lead = Negocio::where('id',$id)->first()->lead()->get();
+        $lead = Negocio::where('id', $id)->first()->lead()->get();
 
 
         return [$negocio[0], $lead[0]];
     }
 
 
-    public function import_massivo(Request $request){
+    public function import_massivo(Request $request)
+    {
 
         $input = request()->all();
-        
-        $curr_funil_id = intval( $input['curr_funil_id']) ;
+
+        $curr_funil_id = intval($input['curr_funil_id']);
         $pipeline = Funil::where('id', $curr_funil_id)->get();
 
         $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
         ksort($etapa_funils);
 
 
-        if ( $input['modo'] == "atribuir" ){
+        if ($input['modo'] == "atribuir") {
             return $this->import_atribuir($request);
 
-        }elseif ($input['modo'] == "distribuir"){
+        } elseif ($input['modo'] == "distribuir") {
 
             $usuarios = $input['usuarios'];
             $user_count = count($usuarios);
             $negocio_count = count($input['negocios_importados']);
 
-            $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
+            $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'])->get();
 
             $import_data = array();
             $negocios_criados = 0;
@@ -334,12 +336,12 @@ class NegocioController extends Controller
                 // $negocio->etapa_funil_id = $etapa_funils[1];
                 // $negocio->save();
 
-                
-                $lead = Lead::where(['telefone'=>$neg->telefone,'nome' =>$neg->nome ] )->first();
 
-                if ( !empty($lead) ){
+                $lead = Lead::where(['telefone' => $neg->telefone, 'nome' => $neg->nome])->first();
 
-                    NegocioImportado::where('id',$neg->id)->delete();
+                if (!empty($lead)) {
+
+                    NegocioImportado::where('id', $neg->id)->delete();
                     $negocios_rejeitados = $negocios_rejeitados + 1;
                     continue;
                 }
@@ -350,76 +352,77 @@ class NegocioController extends Controller
                 $lead->telefone = $neg->telefone;
                 $lead->email = $neg->email;
                 $lead->fonte = $neg->fonte;
-                
+
                 $lead->data_conversao = $neg->data_conversao;
                 $lead->save();
 
                 $deal_input = array();
-                $deal_input['titulo'] = "Negócio com ".$neg->nome;
+                $deal_input['titulo'] = "Negócio com " . $neg->nome;
                 $deal_input['valor'] = 0;
                 $deal_input['funil_id'] = $input['funil_id'];
                 $deal_input['etapa_funil_id'] = $etapa_funils[1];
                 $deal_input['tipo'] = $neg->campanha;
                 $deal_input['lead_id'] = $lead->id;
                 $deal_input['user_id'] = $usuarios[$user_count_dist];
-                
+
                 $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
 
                 $negocio = Negocio::create($deal_input);
 
-                NegocioImportado::where('id',$neg->id)->delete();
+                NegocioImportado::where('id', $neg->id)->delete();
                 $negocios_criados = $negocios_criados + 1;
 
-                Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
+                Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->campanha . " importado via arquivo", $negocio->id);
 
-                $user = User::find( $deal_input['user_id'] );
-                
-                
-                Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".\Auth::user()->name, $negocio->id );
+                $user = User::find($deal_input['user_id']);
 
-                if ($user_count_dist + 1 == $user_count){
+
+                Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a " . $user->name . " por " . \Auth::user()->name, $negocio->id);
+
+                if ($user_count_dist + 1 == $user_count) {
                     $user_count_dist = 0;
-                }else{
+                } else {
                     $user_count_dist = $user_count_dist + 1;
                 }
 
             }
-            return back()->with('status', "Distribuidos ".$negocio_count." negócios para ".$user_count." usuários.");
-       
-        }elseif($input['modo'] == "desativar"){
+            return back()->with('status', "Distribuidos " . $negocio_count . " negócios para " . $user_count . " usuários.");
+
+        } elseif ($input['modo'] == "desativar") {
 
             $negocios = $input['negocios_importados'];
-            $negocios = NegocioImportado::whereIn('id', $negocios)->get();    
+            $negocios = NegocioImportado::whereIn('id', $negocios)->get();
             $user_count_dist = 0;
-            foreach ($negocios as $negocio){
+            foreach ($negocios as $negocio) {
                 $negocio->delete();
- 
+
                 $user_count_dist = $user_count_dist + 1;
             }
-            return back()->with('status', "Deletados ".$user_count_dist." negócios.");
+            return back()->with('status', "Deletados " . $user_count_dist . " negócios.");
 
         }
 
     }
 
 
-    public function import_atribuir(Request $request)    {
+    public function import_atribuir(Request $request)
+    {
 
         $input = request()->all();
-        $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'] )->get();
+        $neg_importados = NegocioImportado::whereIn('id', $input['negocios_importados'])->get();
 
         $import_data = array();
         $negocios_criados = 0;
         $negocios_rejeitados = 0;
-        
+
         foreach ($neg_importados as $neg) {
 
-            $lead = Lead::where(['telefone'=>$neg->telefone,'nome' =>$neg->nome ] )->first();
+            $lead = Lead::where(['telefone' => $neg->telefone, 'nome' => $neg->nome])->first();
 
-            if ( !empty($lead) ){
+            if (!empty($lead)) {
 
-                NegocioImportado::where('id',$neg->id)->delete();
+                NegocioImportado::where('id', $neg->id)->delete();
                 $negocios_rejeitados = $negocios_rejeitados + 1;
                 continue;
             }
@@ -430,71 +433,73 @@ class NegocioController extends Controller
             $lead->telefone = $neg->telefone;
             $lead->email = $neg->email;
             $lead->fonte = $neg->fonte;
-            
+
             $lead->data_conversao = $neg->data_conversao;
             $lead->save();
 
             $deal_input = array();
-            $deal_input['titulo'] = "Negócio com ".$neg->nome;
+            $deal_input['titulo'] = "Negócio com " . $neg->nome;
             $deal_input['valor'] = 0;
             $deal_input['funil_id'] = $input['funil_id'];
             $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
             $deal_input['tipo'] = $neg->campanha;
             $deal_input['lead_id'] = $lead->id;
             $deal_input['user_id'] = $input['novo_proprietario_id'];
-            
+
             $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
 
             $negocio = Negocio::create($deal_input);
 
-            NegocioImportado::where('id',$neg->id)->delete();
+            NegocioImportado::where('id', $neg->id)->delete();
             $negocios_criados = $negocios_criados + 1;
 
-            Atividade::add_atividade(\Auth::user()->id, "Cliente do ".$lead->fonte." de ".$neg->campanha." importado via arquivo", $negocio->id );
+            Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->campanha . " importado via arquivo", $negocio->id);
 
             $user = User::find($input['novo_proprietario_id']);
-            
-            
-            Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a ".$user->name." por ".\Auth::user()->name, $negocio->id );
+
+
+            Atividade::add_atividade(\Auth::user()->id, "Cliente atribui a " . $user->name . " por " . \Auth::user()->name, $negocio->id);
         }
 
-        if ($negocios_criados > 0 ){
-            return back()->with('status',  $negocios_criados." negocios atribuidos com sucesso.\n".$negocios_rejeitados." negocios rejeitados por duplicidade.");
-        }else {
-            if ($negocios_rejeitados> 0){
-                return back()->withErrors($negocios_rejeitados. " rejeitado por duplicidade");
+        if ($negocios_criados > 0) {
+            return back()->with('status', $negocios_criados . " negocios atribuidos com sucesso.\n" . $negocios_rejeitados . " negocios rejeitados por duplicidade.");
+        } else {
+            if ($negocios_rejeitados > 0) {
+                return back()->withErrors($negocios_rejeitados . " rejeitado por duplicidade");
             }
             return back()->withErrors("Erro desconhecido");
         }
 
     }
 
-    public function simulacao(Request $request){
-       
+    public function simulacao(Request $request)
+    {
+
         $negocio_id = $request->query('negocio_id');
-        $negocio = Negocio::where('id',$negocio_id)->first();
-        
+        $negocio = Negocio::where('id', $negocio_id)->first();
+
         $etapa = EtapaFunil::find($negocio->etapa_funil_id)->nome;
 
 
-        if ($etapa == "REUNIAO"){
+        if ($etapa == "REUNIAO") {
 
-            return view('negocios.simulacao',compact('negocio'));
-        }else {
+            return view('negocios.simulacao', compact('negocio'));
+        } else {
             return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
         }
-        
-    }
-    public function criar_proposta(Request $request){
 
-        $input = $request->all();      
+    }
+    public function criar_proposta(Request $request)
+    {
+
+        $input = $request->all();
         $tipo = $input["tipo"];
-  
-        if ($request->has('reduzido')){
+
+        if ($request->has('reduzido')) {
 
             $input['reduzido'] = 's';
-        }else{
+        } else {
             $input['reduzido'] = 'n';
         }
 
@@ -521,10 +526,11 @@ class NegocioController extends Controller
         $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
         $proposta['user_id'] = \Auth::user()->id;
+
         $proposta['negocio_id'] = $input['negocio_id'];
 
         $neg = Negocio::find($input['negocio_id']);
-        $lead = Lead::find($neg->lead->id );
+        $lead = Lead::find($neg->lead->id);
         $lead->cpf = $input['cpf'];
         $lead->save();
 
@@ -532,137 +538,148 @@ class NegocioController extends Controller
         $proposta['con-credito'] = $input['con-credito'];
         $proposta['con-adesao'] = $input['con-adesao'];
         $proposta['con-juros-pagos'] = $input['con-juros-pagos'];
-        $proposta['modelo'] = $input['modelo']; 
+        $proposta['modelo'] = $input['modelo'];
         $proposta['ano'] = $input['ano'];
 
-        $proposta['con-administradora'] = strtoupper( $input['con-administradora'] );
+        $proposta['con-administradora'] = strtoupper($input['con-administradora']);
 
         $amortizacao = 'sac';
         if ($request->filled('amortizacao')) {
             $amortizacao = 'sac';
             $proposta['amortizacao'] = 'sac';
             $input['amortizacao'] = 'sac';
-        }else {
+        } else {
             $amortizacao = 'price';
             $proposta['amortizacao'] = 'price';
             $input['amortizacao'] = 'price';
         }
-       
+
 
         $proposta->save();
 
         $proposta_id = $proposta->id;
-        Atividade::add_atividade(\Auth::user()->id, "Nova proposta criada id: ".$proposta->id, $input['negocio_id'] );
-        
-        return view('negocios.proposta', compact('tipo','con_entrada','proposta_id', 'amortizacao'));
+        Atividade::add_atividade(\Auth::user()->id, "Nova proposta criada id: " . $proposta->id, $input['negocio_id']);
+
+        return view('negocios.proposta', compact('tipo', 'con_entrada', 'proposta_id', 'amortizacao'));
     }
 
-    public function view_proposta($id){
+    public function view_proposta($id)
+    {
 
         $proposta = Proposta::find($id);
 
 
-        $subs = array("R","$",".");
-        $valor_entrada = floatval( str_replace($subs,"",$proposta['con-entrada']));
-        $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas']));
-        $credito = floatval( str_replace($subs,"",$proposta['credito']));
-        $prazo = intval( $proposta['con-prazo']);
-        
+        $subs = array("R", "$", ".");
+        $valor_entrada = floatval(str_replace($subs, "", $proposta['con-entrada']));
+        $valor_parcela = floatval(str_replace($subs, "", $proposta['con-parcelas']));
+        $credito = floatval(str_replace($subs, "", $proposta['credito']));
+        $prazo = intval($proposta['con-prazo']);
+
         $vtotal = ($prazo * $valor_parcela) + $valor_entrada;
-        $proposta['con-juros-pagos'] = $valor_parcela = "R$ ".number_format($vtotal - $credito,2, ',', '.'); 
+        $proposta['con-juros-pagos'] = $valor_parcela = "R$ " . number_format($vtotal - $credito, 2, ',', '.');
 
-        
+
         $con_entrada = $proposta['con-entrada'];
-        $embutidas = intval( $proposta['parcelas_embutidas']);
-        if ( $embutidas > 0 ){
-            
-            
-            $subs = array("R","$",".");
-            $valor_entrada = floatval( str_replace($subs,"",$proposta['con-entrada']));
+        $embutidas = intval($proposta['parcelas_embutidas']);
+        if ($embutidas > 0) {
 
-            if($proposta['con-reduzido'] == 's'){
-                $valor_parcela = (floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas )/0.7;
-            }else {
-                $valor_parcela = floatval( str_replace($subs,"",$proposta['con-parcelas'])) * $embutidas ;
-            }          
 
-            $con_entrada = "R$ ".number_format($valor_entrada+ $valor_parcela,2, ',', '.');
+            $subs = array("R", "$", ".");
+            $valor_entrada = floatval(str_replace($subs, "", $proposta['con-entrada']));
+
+            if ($proposta['con-reduzido'] == 's') {
+                $valor_parcela = (floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas) / 0.7;
+            } else {
+                $valor_parcela = floatval(str_replace($subs, "", $proposta['con-parcelas'])) * $embutidas;
+            }
+
+            $con_entrada = "R$ " . number_format($valor_entrada + $valor_parcela, 2, ',', '.');
         }
 
         return view('negocios.proposta_id', compact('proposta', 'con_entrada'));
     }
-    
 
-    
-    public function drag_update(Request $res)    {
+
+
+    public function drag_update(Request $res)
+    {
 
         $input = $res->input();
         $id_negocio = $input['info'][0];
         $id_origem = $input['info'][1];
         $id_destino = $input['info'][2];
 
-        Atividade::add_atividade(\Auth::user()->id, "Cliente movido para ".EtapaFunil::find($id_destino)->nome, $id_negocio);
+        Atividade::add_atividade(\Auth::user()->id, "Cliente movido para " . EtapaFunil::find($id_destino)->nome, $id_negocio);
 
-        if ($id_destino > 0){
-            Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
-        }else {
-            Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+        if ($id_destino > 0) {
+            Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => $id_destino]);
+        } else {
+            Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => NULL]);
         }
     }
 
-    public function add_reuniao(Request $res)    {
+    public function add_reuniao(Request $res)
+    {
         $input = $res->input();
         $id_negocio = $input['info'][0];
         $id_destino = $input['info'][2];
-        
-        $agendamento = Agendamento::where('negocio_id',$id_negocio)->first();
-        
-        if ( $agendamento){
-             
+
+        $agendamento = Agendamento::where('negocio_id', $id_negocio)->first();
+
+        $negocio = Negocio::find($id_negocio);
+        $proprietario_id = $negocio->user_id;
+
+
+        if ($agendamento) {
+
             $query = [
-                ['agendamento_id', '=', $agendamento->id ],
+                ['agendamento_id', '=', $agendamento->id],
             ];
 
             $reuniao = Reuniao::where($query)->first();
 
-            if (!$reuniao){
+
+            if (!$reuniao) {
                 $reuniao = new Reuniao();
                 $reuniao->agendamento_id = $agendamento->id;
-                $reuniao->user_id = \Auth::user()->id;
+                $reuniao->user_id = $proprietario_id; //\Auth::user()->id;
                 $reuniao->data_reuniao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-                $reuniao->save(); 
-                Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio );
+                $reuniao->save();
+                Atividade::add_atividade(\Auth::user()->id, "Cliente participou da Reunião", $id_negocio);
 
-                if ($id_destino > 0){
-                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
-                }else {
-                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+                if ($id_destino > 0) {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => $id_destino]);
+                } else {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => NULL]);
                 }
 
                 return "Cliente participou da Reunião";
-            }else {
+            } else {
 
-                if ($id_destino > 0){
-                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
-                }else {
-                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+                if ($id_destino > 0) {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => $id_destino]);
+                } else {
+                    Negocio::where('id', $id_negocio)->update(['etapa_funil_id' => NULL]);
                 }
 
                 return "Reunião já aconteceu anteriormente";
-            }      
+            }
         }
 
         return "Agendamento não foi encontrado";
     }
 
-    public function add_aprovacao(Request $res){
+    public function add_aprovacao(Request $res)
+    {
         $input = $res->input();
         $id_negocio = $input['info'][0];
         $id_destino = $input['info'][2];
-        
+
         $negocio = Negocio::find($id_negocio);
 
-        if ( $negocio ){
+        $proprietario_id = $negocio->user_id;
+
+        if ($negocio) {
 
             $query = [
                 ['negocio_id', '=', $negocio->id],
@@ -675,37 +692,38 @@ class NegocioController extends Controller
 
                 $aprovacao = new Aprovacao();
                 $aprovacao->data_aprovacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-                $aprovacao->negocio_id =  $negocio->id;
-                $aprovacao->user_id = \Auth::user()->id;
-    
+                $aprovacao->negocio_id = $negocio->id;
+                $aprovacao->user_id = $proprietario_id;#\Auth::user()->id;
+
                 $aprovacao->save();
-    
+
                 Atividade::add_atividade(\Auth::user()->id, "Cliente Aprovado", $id_negocio);
             }
-           
-            if ($id_destino > 0){
-                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> $id_destino]);
-            }else {
-                $negocio::where('id', $id_negocio)->update(['etapa_funil_id'=> NULL]);
+
+            if ($id_destino > 0) {
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id' => $id_destino]);
+            } else {
+                $negocio::where('id', $id_negocio)->update(['etapa_funil_id' => NULL]);
             }
         }
     }
 
-    public function negocio_update(Request $res)    {
+    public function negocio_update(Request $res)
+    {
         $input = $res->input();
-        
+
         $id_negocio = $input['id_negocio'];
         $neg = Negocio::find($id_negocio);
 
         $neg_fields = array();
-        $neg_fields['valor'] = str_replace('.','',$input['valor'] ) ;//$input['valor'];
+        $neg_fields['valor'] = str_replace('.', '', $input['valor']);//$input['valor'];
         $neg_fields['titulo'] = $input['titulo'];
         $neg_fields['grupo'] = $input['grupo'];
         $neg_fields['cota'] = $input['cota'];
         $neg_fields['data_assembleia'] = $input['data_assembleia'];
         $neg_fields['contrato'] = $input['contrato'];
 
-        Negocio::where('id',$id_negocio)->update($neg_fields);
+        Negocio::where('id', $id_negocio)->update($neg_fields);
 
         $lead_fields = array();
         $lead_fields['nome'] = $input['nome'];
@@ -716,12 +734,12 @@ class NegocioController extends Controller
         $lead_fields['complemento'] = $input['complemento'];
         $lead_fields['cep'] = $input['cep'];
 
-        Lead::where( 'id', $neg->lead->id)->update($lead_fields);
+        Lead::where('id', $neg->lead->id)->update($lead_fields);
 
-        Atividade::add_atividade(\Auth::user()->id, "Atualização de campos", $id_negocio );
+        Atividade::add_atividade(\Auth::user()->id, "Atualização de campos", $id_negocio);
 
-        return back()->with('status','Negócio atualizado com sucesso!');
+        return back()->with('status', 'Negócio atualizado com sucesso!');
     }
 
-    
+
 }

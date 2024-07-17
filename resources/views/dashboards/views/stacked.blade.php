@@ -32,7 +32,7 @@ $name = strtolower($name);
                 </a>
             </div>
         </div>
-    </div> 
+    </div>
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
@@ -55,8 +55,6 @@ $name = strtolower($name);
         </div>
     </div>
 </div>
-
-<div id="config" value="{{ config('grafico_cor_aleatoria') }}" hidden></div>
 
 <script>
     function generateColor(size_n) {
@@ -81,110 +79,117 @@ $name = strtolower($name);
         return result;
     }
 
-
-    var a = <?php echo json_encode($plots[1]); ?>;
-
-
-    var options = {
-        colors: generateColor(a.length),
-        theme: {
-            mode: 'light',
-            palette: 'palette7',
-            monochrome: {
-                enabled: false,
-                color: '#111111',
-                shadeTo: 'light',
-                shadeIntensity: 0.65
+    function formatter(num) {
+        const digits = 2;
+        const lookup = [{
+                value: 1,
+                symbol: ""
             },
+            {
+                value: 1e3,
+                symbol: "K"
+            },
+            {
+                value: 1e6,
+                symbol: "M"
+            },
+            {
+                value: 1e9,
+                symbol: "G"
+            },
+            {
+                value: 1e12,
+                symbol: "T"
+            },
+            {
+                value: 1e15,
+                symbol: "P"
+            },
+            {
+                value: 1e18,
+                symbol: "E"
+            }
+        ];
+
+
+
+        const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+        var item = lookup.slice().reverse().find(function(item) {
+            return num >= item.value;
+        });
+        return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+
+
+        return nFormatter(val, 0);
+    }
+
+
+    var faltaram = <?php echo json_encode($plots[1]); ?>;
+    var vendedores = <?php echo json_encode($plots[0]); ?>;
+    var concretizados =
+    <?php echo json_encode($plots[2]); ?>;
+
+
+        var options = {
+        colors: ['#00AA00','#FF0000'],
+        dataLabels: {
+        enabled: true,
+        style: {
+        fontSize: "12px",
+        fontFamily: "Helvetica, Arial, sans-serif",
+        colors: ['#fff'],
+   
         },
-        chart: {
-            toolbar: {
+  
+
+        },
+        series: [{
+            name: 'Comparecimento',
+             data: concretizados
+            }, {
+                name: 'Falta',
+                data: faltaram
+            }],
+            chart: {
+                type: 'bar',
+                toolbar: {
                 show: false,
                 offsetX: 0,
                 offsetY: 0,
                 tools: {
-
+                
                 },
-
-            },
-            type: 'bar'
-        },
-        series: [{
-            name: '{{ $name }}',
-            data: <?php echo json_encode($plots[1]); ?>,
-
-        }],
-
-        xaxis: {
-            labels: {
-                rotate: -30
-            },
-            categories: <?php echo json_encode($plots[0]); ?>
-        },
-        plotOptions: {
-            bar: {
-                distributed: true,
-                borderRadius: 10,
-                dataLabels: {
-                    position: 'top', // top, center, bottom
-
+                
                 },
-            }
-        },
-        dataLabels: {
-            enabled: true,
-            formatter: function(num) {
-                const digits = 2;
-                const lookup = [{
-                        value: 1,
-                        symbol: ""
-                    },
-                    {
-                        value: 1e3,
-                        symbol: "K"
-                    },
-                    {
-                        value: 1e6,
-                        symbol: "M"
-                    },
-                    {
-                        value: 1e9,
-                        symbol: "G"
-                    },
-                    {
-                        value: 1e12,
-                        symbol: "T"
-                    },
-                    {
-                        value: 1e15,
-                        symbol: "P"
-                    },
-                    {
-                        value: 1e18,
-                        symbol: "E"
+          
+                stacked: true,
+                stackType: '100%'
+                },
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        legend: {
+                            position: 'bottom',
+                            offsetX: -10,
+                            offsetY: 0
                     }
-                ];
-
-
-
-                const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-                var item = lookup.slice().reverse().find(function(item) {
-
-                    return num >= item.value;
-                });
-
-                return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-
-
-                return nFormatter(val, 0);
-            },
-            offsetY: -20,
-            style: {
-                fontSize: '16px',
-                colors: ['#338888']
             }
-        }
-    }
+        }],
+        
+        xaxis: {
+            categories: vendedores,
+        },
+        fill: {
+            opacity: 1
+        },
+        legend: {
+            position: 'right',
+            offsetX: 0,
+            offsetY: 50
+        },
+    };
+
+    
 
     try {
         var chart_option = chart_option || [];

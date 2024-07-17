@@ -117,18 +117,18 @@
             ])
 
 
-            @include('dashboards.views.donuts', [
-                'name' => 'Faltas em Agendamentos',
-                'plots' => [$output['vendedores'], $output['agendamentos_faltou_perc']],
+            @include('dashboards.views.stacked', [
+                'name' => 'Conversão de Agendamentos',
+                'plots' => [$output['vendedores'], $output['agendamentos_faltou'],$output['agendamentos_realizado']],
+                'symbol' => "%"
             ])
+
+            
 
             @include('dashboards.views.donuts', [
                 'name' => 'Reuniões Concretizadas',
                 'plots' => [$output['vendedores'], $output['agendamentos_realizado']],
             ])
-
-
-
 
 
 

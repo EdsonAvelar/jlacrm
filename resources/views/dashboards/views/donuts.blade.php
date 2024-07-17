@@ -207,6 +207,8 @@ $name = strtolower($name);
 
     };
 
+    
+
     try {
         var chart_option = chart_option || [];
     } catch (error) {

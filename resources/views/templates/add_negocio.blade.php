@@ -19,9 +19,8 @@
                                     <div class="mb-12">
                                         <label for="task-title" class="form-label">Nome Contato<span
                                                 class="text-danger"> *</label>
-                                        <input type="text" class="form-control form-control-light"
-                                            id="add_nome_contato" placeholder="Digite nome" required value=""
-                                            name="nome_lead">
+                                        <input type="text" class="form-control form-control-light" id="add_nome_contato"
+                                            placeholder="Digite nome" required value="" name="nome_lead">
                                     </div>
                                 </div>
 
@@ -86,6 +85,8 @@
                                         </div>
                                     </div-->
                                 <input name="etapa_funil_id" value="1" hidden>
+                                <input name="proprietario_id" id="negocio_id_perdido" hidden
+                                    value="{{ app('request')->proprietario }}">
 
                                 <!--div class="col-md-12">
                                         <div class="mb-12">
@@ -104,8 +105,8 @@
                                         <label for="task-title" class="form-label">Titulo<span class="text-danger">
                                         </label>
                                         <input type="text" class="form-control form-control-light" id="add_titulo"
-                                            name="titulo" placeholder="Digite o titulo do negocio" required
-                                            value="" maxlength="30">
+                                            name="titulo" placeholder="Digite o titulo do negocio" required value=""
+                                            maxlength="30">
                                     </div>
                                 </div>
 
@@ -131,12 +132,12 @@
                                         <select class="form-select form-control-light" id="task-priority"
                                             name="funil_id" onchange="this.value = 'VENDAS'">
                                             @foreach ($funils as $key => $value)
-                                                @if ($key == 1)
-                                                    <option value="{{ $key }}" selected="true">
-                                                        {{ $value }}</option>
-                                                @else
-                                                    <option value="{{ $key }}">{{ $value }}</option>
-                                                @endif
+                                            @if ($key == 1)
+                                            <option value="{{ $key }}" selected="true">
+                                                {{ $value }}</option>
+                                            @else
+                                            <option value="{{ $key }}">{{ $value }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>

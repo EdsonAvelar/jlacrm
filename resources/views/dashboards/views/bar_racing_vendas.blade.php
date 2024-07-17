@@ -399,14 +399,12 @@
         }, moveDurationMax);
     }
 
-    
     function formatarParaReal(valor) {
-    return valor.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL'
-    });
+        return valor.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        });
     }
-
 
     function animateSales(horse) {
         const salesValueElement = horse.querySelector('.sales-value');

@@ -386,6 +386,7 @@ $protocolo_hora = 0;
 
                 <input name="etapa_funil_id" value="1" hidden>
                 <input name="funil_id" value="1" hidden>
+                <input name="proprietario_id" id="negocio_id_perdido" hidden value="{{ app('request')->proprietario }}">
 
 
                 <div class="modal-footer">
@@ -803,6 +804,7 @@ $protocolo_hora = 0;
             info[2] = target.getAttribute('data');
 
 
+
             if (target.getAttribute('data-etapa') == "REUNIAO_AGENDADA") {
 
                 $('#negocio_id_agen').val(info[0]);
@@ -827,6 +829,8 @@ $protocolo_hora = 0;
                                 message: res,
                                 class: "success"
                             });
+                            console.log("teste"+info[0])
+                          
                         },
                         error: function(res) {
                             showAlert({
