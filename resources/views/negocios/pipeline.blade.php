@@ -571,7 +571,7 @@ $protocolo_hora = 0;
                     <div class="text-end">
                         <button type="submit" class="btn btn-success">Confirmar</button>
                     </div>
-                    <input name="negocio_id" id="negocio_id_perdido" hidden value="">
+                    <input name="negocio_id" id="negocio_perdido_confirmacao" hidden value="">
                 </form>
             </div>
         </div><!-- /.modal-content -->
@@ -666,7 +666,7 @@ $protocolo_hora = 0;
         /** Quando a página for carregada, ajusta o tamanho máximo da div principal para aparecer o scroll */
         document.addEventListener("DOMContentLoaded", function() {
             var height__ = parseInt(document.documentElement.clientHeight) - 100;
-            console.log(height__)
+           
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (isMobile) {
                 $('.board').css({
@@ -685,7 +685,7 @@ $protocolo_hora = 0;
         /** Quando o tamanho da página é reajustado, muda o tamanho máximo da div para aparecer o scroll */
         window.addEventListener('resize', function(event) {
             var height__ = parseInt(document.documentElement.clientHeight) - 210;
-            //console.log('height screen: '+height__)
+           
 
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (isMobile) {
@@ -778,7 +778,7 @@ $protocolo_hora = 0;
                     });
                 },
                 error: function(res) {
-                    console.log(res)
+                    
                     showAlert({
                         message: " Erro no agendamento (" + res + ")",
                         class: "danger"
@@ -829,7 +829,7 @@ $protocolo_hora = 0;
                                 message: res,
                                 class: "success"
                             });
-                            console.log("teste"+info[0])
+                          
                           
                         },
                         error: function(res) {
@@ -925,15 +925,18 @@ $protocolo_hora = 0;
 
         $('.perdeu_button').on('click', function() {
             var id = $(this).data('id');
-
+  
             $.ajax({
                 url: "{{ url('negocios/get?id=') }}" + id,
                 type: "GET",
                 dataType: "json",
                 success: function(response) {
 
-                    document.getElementById("negocio_id_perdido").value = response[0]['id'];
-                    $('#negocio-perdeu').modal('show');
+
+                    
+                    document.getElementById("negocio_perdido_confirmacao").value = id;//response[0]['id'];
+
+                    $('#negocio-perdeu').modal('show'); 
 
                 }
             });
