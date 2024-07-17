@@ -32,7 +32,7 @@ class NewSaleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['my-channel'];
+        return [env('APP_SHORT_NAME')];
     }
 
     public function broadcastAs()

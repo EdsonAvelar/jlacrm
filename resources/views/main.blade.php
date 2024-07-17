@@ -803,7 +803,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
           cluster: 'sa1'
         });
     
-        var channel = pusher.subscribe('my-channel');
+        var channel = pusher.subscribe( "{{ env('APP_SHORT_NAME') }}" );
         channel.bind('my-event', function(data) {
             console.log( JSON.stringify(data));
 
