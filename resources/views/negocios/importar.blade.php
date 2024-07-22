@@ -177,12 +177,23 @@
                                 @endforeach
                             </select>
                         </div>
+
+                        <h5 class="mt-2">Etapa do Funil</h5>
+                        <div class="mb-1 nowrap w-100">
+                            <select class="form-select form-control-light" id="task-priority" name="etapa_funil_id">
+                        
+                                @foreach ($etapa_funils as $etapa_funil_id => $funil_name)
+                                <option value="{{ $etapa_funil_id }}">{{ $funil_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                      
                     </div>
                     <div class="modal-footer">
 
                         <input type="text" name="id" hidden value="{{ app('request')->id }}">
                         <input type="text" name="funil_id" hidden value="1">
-                        <input type="text" name="etapa_funil_id" hidden value="1">
                         <input type="submit" class="btn btn-success mt-2" value="Enviar">
                         <input type="button" class="btn btn-danger mt-2" data-bs-dismiss="modal" value="Cancelar">
 

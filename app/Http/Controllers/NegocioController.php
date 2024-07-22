@@ -33,7 +33,14 @@ class NegocioController extends Controller
 
         $users = User::where('status', UserStatus::ativo)->pluck('name', 'id');
 
-        return view('negocios/importar', compact('negocios_importados', 'users'));
+        #TODO Se um dia tiver mais de um funil
+        $curr_funil_id = 1;#intval($request->query('id'));
+        $pipeline = Funil::where('id', $curr_funil_id)->get();
+
+        $etapa_funils = $pipeline->first()->etapa_funils()->pluck('nome', 'ordem')->toArray();
+        ksort($etapa_funils);
+
+        return view('negocios/importar', compact('negocios_importados', 'etapa_funils', 'users'));
     }
 
     public function negocio_levantamento(Request $request)
@@ -123,6 +130,8 @@ class NegocioController extends Controller
             $email = $sheet->getCell("C{$row}")->getValue();
             $campanha = $sheet->getCell("D{$row}")->getValue();
             $fonte = $sheet->getCell("E{$row}")->getValue();
+            $etapafunil = $sheet->getCell("F{$row}")->getValue();
+
             $create_time = Carbon::now()->format('Y-m-d');
 
 
@@ -311,8 +320,15 @@ class NegocioController extends Controller
         $curr_funil_id = intval($input['curr_funil_id']);
         $pipeline = Funil::where('id', $curr_funil_id)->get();
 
-        $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
-        ksort($etapa_funils);
+        $etapa_funils = [];
+
+        if (array_key_exists('etapa_funil_id', $input)) {
+            $etapa_funil_id = $input['etapa_funil_id'];
+            $etapa_funils = [0, $etapa_funil_id];
+        } else {
+            $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
+            ksort($etapa_funils);
+        }
 
 
         if ($input['modo'] == "atribuir") {

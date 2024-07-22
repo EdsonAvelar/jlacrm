@@ -452,8 +452,17 @@ class CrmController extends Controller
         $curr_funil_id = intval($input['id']);
         $pipeline = Funil::where('id', $curr_funil_id)->get();
 
-        $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
-        ksort($etapa_funils);
+        $etapa_funils = [];
+
+        if (array_key_exists('etapa_funil_id', $input)) {
+            $etapa_funil_id = $input['etapa_funil_id'];
+            $etapa_funils = [0, $etapa_funil_id];
+        } else {
+            $etapa_funils = $pipeline->first()->etapa_funils()->pluck('ordem', 'id')->toArray();
+            ksort($etapa_funils);
+        }
+
+
 
         if ($input['modo'] == "atribuir") {
 
