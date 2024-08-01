@@ -672,6 +672,8 @@ vermelho mais do que 5 dias parados
                                                     _*Endereço:*_<br>
                                                     📍<span
                                                         id="span_protocolo_agendamento_endereco">{{config('span_protocolo_agendamento_endereco')}}</span><br>
+                                                    <span id="span_protocolo_agendamento_site">{{
+                                                        config('protocolo_agendamento_site')}}</span><br>
 
                                                     <br>
                                                     _*Na Recepção procurar por:*_ <br>
@@ -684,8 +686,6 @@ vermelho mais do que 5 dias parados
                                                     <br>
                                                     <span id="span_protocolo_agendamento_empresa">{{
                                                         config('protocolo_agendamento_empresa')}}</span><br>
-                                                    <span id="span_protocolo_agendamento_site">{{
-                                                        config('protocolo_agendamento_site')}}</span><br>
                                                     <span id="span_protocolo_agendamento_cnpj">{{
                                                         config('protocolo_agendamento_cnpj')}}</span><br>
                                                     <br>
@@ -1007,7 +1007,7 @@ vermelho mais do que 5 dias parados
                 if (element) {
                     element.addEventListener('blur', function(e) {
                     var value = e.target.value;
-                    
+
                     save_config(id, value);
               
                     });

@@ -27,6 +27,7 @@
                                 <br>
                                 _*Endereço:*_<br>
                                 📍{{config('protocolo_agendamento_endereco')}}<br>
+                                {{config('protocolo_agendamento_site')}}<br>
 
                                 <br>
                                 _*Na Recepção procurar por:*_ <br>
@@ -37,7 +38,7 @@
 
                                 {{config('protocolo_agendamento_final')}}<br>
                                 {{config('protocolo_agendamento_empresa')}}<br>
-                                {{config('protocolo_agendamento_site')}}<br>
+
                                 {{config('protocolo_agendamento_cnpj')}}<br>
                                 <br>
                                 {{config('protocolo_agendamento_xau')}}<br>
