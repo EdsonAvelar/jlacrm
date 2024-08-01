@@ -69,12 +69,12 @@ class AgendamentoController extends Controller
             $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
 
             $ids = [];
-            array_push($ids, \Auth::user()->id);
 
-            if ($equipe != null) {
-
-                array_push($ids, $equipe->integrantes()->pluck('id')->toArray());
+            if ($equipe) {
+                $ids = $equipe->integrantes()->pluck('id')->toArray();
             }
+
+            array_push($ids, \Auth::user()->id);
 
 
 
