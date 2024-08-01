@@ -940,10 +940,11 @@ function to_data($data)
                                     </select>
                                 </div>
 
-
+                                @if( config('broadcast_fechamento') == "true")
                                 <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
                                         class="mdi mdi-content-save"></i> Notificar Venda
                                 </button>
+                                @endif
 
 
                                 <button type="text" class="btn btn-info mt-2" id="gerar_protocolo"><i
@@ -1066,27 +1067,31 @@ function to_data($data)
                 event.preventDefault();
             });
         
-        document.getElementById('gerar_broadcast').addEventListener('click',
-        function(event) {
-
-            event.preventDefault();
-            //$('#broadcast').modal('show');
-
-            info = [];
-            info[0] = {{$negocio->id}};
-            info[1] = {{$fechamento->primeiro_vendedor_id}};
-            
-            $.ajax({
-                url: "{{ url('vendas/notificacao') }}",
-                type: 'post',
-                data: {
-                    info: info
-                },
-                Type: 'json',
-            });
-
-           
-        });
+        
+        var gerar_broadcast = document.getElementById('gerar_broadcast');
+        if (gerar_broadcast){
+            gerar_broadcast.addEventListener('click',
+            function(event) {
+                
+                event.preventDefault();
+                
+                info = [];
+                info[0] = {{$negocio->id}};
+                info[1] = {{$fechamento->primeiro_vendedor_id}};
+                
+                $.ajax({
+                    url: "{{ url('vendas/notificacao') }}",
+                    type: 'post',
+                    data: {
+                        info: info
+                    },
+                    Type: 'json',
+                });
+                
+                
+                });
+        }
+        
 
         
         function PrintElement() {

@@ -797,13 +797,14 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }     
 
     // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = false;
+        Pusher.logToConsole = true;
     
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
           cluster: 'sa1'
         });
     
-        var channel = pusher.subscribe( "{{ env('APP_SHORT_NAME') }}" );
+        var channel = pusher.subscribe( "{{ config('pusher_channel') }}" );
+        console.log('pusher'+channel);
         channel.bind('my-event', function(data) {
             console.log( JSON.stringify(data));
 
