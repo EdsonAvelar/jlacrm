@@ -36,6 +36,11 @@ class Negocio extends Model
         return $this->belongsTo("App\Models\Agendamento");
     }
 
+    public function agendamentos()
+    {
+        return $this->hasMany(Agendamento::class);
+    }
+
     public function levantamento()
     {
         return $this->belongsTo("App\Models\Levantamento");
@@ -45,7 +50,11 @@ class Negocio extends Model
     {
         return $this->belongsTo("App\Models\Fechamento");
     }
- 
+
+    public function aprovacoes()
+    {
+        return $this->hasMany("App\Models\Aprovacao");
+    }
 
     public function propostas()
     {
@@ -68,7 +77,7 @@ class Negocio extends Model
     }
     public function conjuge()
     {
-        return $this->belongsTo("App\Models\Lead","conjuge_id");
+        return $this->belongsTo("App\Models\Lead", "conjuge_id");
     }
 
 

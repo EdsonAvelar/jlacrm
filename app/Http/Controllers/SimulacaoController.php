@@ -28,7 +28,7 @@ class SimulacaoController extends Controller
 
             return view('negocios.simulacao2', compact('negocio'));
         } else {
-            return back()->withErrors("Cliente precisa estar na etapa REUNIAO para gerar propostas");
+            return back()->with('status_error', "Cliente precisa estar na etapa REUNIAO para gerar propostas");
         }
 
     }

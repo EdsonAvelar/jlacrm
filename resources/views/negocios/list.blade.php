@@ -99,7 +99,10 @@
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list', 'status' => 'perdido']) }}">Perdidos</a>
 
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'ativo']) }}">Todos</a>
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'ativo']) }}">Ativos</a>
+                                            
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list']) }}">Todos</a>
                                             @endif
 
                                         </div>
@@ -125,7 +128,7 @@
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model" id="add_button"
                                     class="btn btn-info btn-sm ms-3">+ Add</a>
 
-                                <a type="button" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive"
+                                <a type="button" class="btn btn-success btn-sm ms-3 checkbox_sensitive"
                                     id="atribuir_btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                     Atribuir</a>
 
@@ -134,16 +137,22 @@
                                     Distribuir</a>
 
                                 @if (Auth::user()->hasRole('admin'))
-                                <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive"
+                                <a type="button" class="btn btn-warning btn-sm ms-3 checkbox_sensitive"
                                     id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
                                     Desativar</a>
-                                @endif
 
-                                @if (Auth::user()->hasRole('gerenciar_equipe'))
+
                                 <a type="button" class="btn btn-success btn-sm ms-3 checkbox_sensitive" id="ativar_btn"
                                     data-bs-toggle="modal" data-bs-target="#ativarModal">
                                     Ativar</a>
                                 @endif
+
+                                @if (Auth::user()->hasRole('admin'))
+                                <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive" id="deletar_btn"
+                                    data-bs-toggle="modal" data-bs-target="#deletarModal">
+                                    Deletar</a>
+                                @endif
+
 
                             </h4>
                         </div>
@@ -295,6 +304,41 @@
         </div>
     </div>
 
+    <div class="modal fade" id="deletarModal" tabindex="-1" aria-labelledby="deletarModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Deletar Negócios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+
+                        <div class="col-12">
+                            <h4>Deletar um negócio apaga <span class="bg-danger text-white">TODOS</span> os rastros do
+                                negócio, incluindo agendamento, aprovações, propostas etc
+                            </h4>
+                            <h7 class="text-danger">*Essa operação não pode ser desfeita</h7>
+                            <br>
+                            <h3>Se desejar continuar escreva DELETAR abaixo</h3>
+                            <br>
+
+                            <input type="text" class="form-control form-control-light" name="deletar_challenger"
+                                placeholder="DIGITE DELETAR">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="distribuir-div">
+                    <input type="text" name="id" hidden value="{{ app('request')->id }}">
+                    <input type="submit" class="btn btn-success mt-2" value="SIM">
+                    <input type="button" class="btn btn-danger mt-2 distribuir" data-bs-dismiss="modal"
+                        value="Cancelar">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="ativarModal" tabindex="-1" aria-labelledby="ativarModal" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -385,6 +429,12 @@
             $("#desativar_btn").on("click", function() {
                 document.getElementById('modo').value = 'desativar';
             });
+
+            $("#deletar_btn").on("click", function() {
+            document.getElementById('modo').value = 'deletar';
+            });
+
+
             $("#ativar_btn").on("click", function() {
                 document.getElementById('modo').value = 'ativar';
             });
@@ -426,6 +476,8 @@
                 } else {
                     $('.checkbox_sensitive').hide();
                     $('#ativar_btn').show();
+                    
+                    $('#deletar_btn').show();
                     $('#atribuir_btn').show();
                 }
 

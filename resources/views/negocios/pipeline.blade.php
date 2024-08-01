@@ -340,48 +340,61 @@ $protocolo_hora = 0;
                 <div class="modal-body">
 
                     <div class="row">
+                        <div class="col-md-2">
+                            <label for="email" class="form-label"><strong>TIPO DE CRÉDITO:</strong></label>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="IMOVEL"
+                                        checked>
+                                    <label class="form-check-label">IMOVEL</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="CARRO">
+                                    <label class="form-check-label">CARRO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="MOTO">
+                                    <label class="form-check-label">MOTO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="TERRENO">
+                                    <label class="form-check-label">TERRENO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="MAQUINARIO">
+                                    <label class="form-check-label">MAQUINARIO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="CAMINHAO">
+                                    <label class="form-check-label">CAMINHAO</label>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="tipo_credito" value="SERVICO">
+                                    <label class="form-check-label">SERVICO</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <textarea style="width:  100% !important; height: 100%;font-size: 16px;" name="negocios"
+                                rows=20></textarea>
+                        </div>
 
-                        <label for="email" class="form-label"><strong>TIPO DE CRÉDITO:</strong></label>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="IMOVEL" checked>
-                                <label class="form-check-label">IMOVEL</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="CARRO">
-                                <label class="form-check-label">CARRO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="MOTO">
-                                <label class="form-check-label">MOTO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="MAQUINARIO">
-                                <label class="form-check-label">MAQUINARIO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="CAMINHAO">
-                                <label class="form-check-label">CAMINHAO</label>
-                            </div>
-                        </div>
-                        <div class="col-md-2">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="tipo_credito" value="SERVICO">
-                                <label class="form-check-label">SERVICO</label>
-                            </div>
-                        </div>
+
 
                     </div>
-                    <textarea style="width:  100% !important; height: 100%;font-size: 16px;" name="negocios"
-                        rows=5></textarea>
+
                 </div>
 
                 <input name="etapa_funil_id" value="1" hidden>

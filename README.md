@@ -15,8 +15,101 @@
 ## Hospedagem
 
 
+## Habilitar SSH
+Pedir para habilitar o SSH
 
 
+## Senha CPanel
+Pedir paratrocar a senha docpanel ou
+Fazer a criação da chave publica/privada de SSH no CPANEL
+
+## Criar um banco de dados 
+Criar o banco de dados no cpanel, guardar o nome do usario, nome do banco 
+e senha
+
+
+## Acessar via Putty
+Acesse o ssh do site com o ip publico do cpanel e usuário do cpanel
+
+https://www.youtube.com/watch?v=CoofUC9sr_o
+
+clonar na pasta public_html o clone do git
+Pegar o url do clone
+
+Primeiramente remova tudo que tem dentro de public_html
+depois.
+
+`git clone https://github.com/EdsonAvelar/jlacrm.git .`
+
+## Criando htacces 
+Vamos criar um htaccess para ignorar a pasta public
+
+Cuidado ao copiar, as vezes come letras na copia
+
+$vi .htaccess$
+
+
+```
+<IfModule mod_rewrite.c>
+ RewriteEngine On
+ RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the □~@~\ea-php82□~@~] package as the default □~@~\PHP□~@~] programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php82___lsphp .php .php8 .phtml
+</IfModule>
+
+```
+
+## Instalação Laravel
+
+https://suporte.hostgator.com.br/hc/pt-br/articles/30814116483987-Como-instalar-o-Laravel#composer
+
+1. curl -sS https://getcomposer.org/installer | php
+
+2. php composer.phar
+
+Instalar Dependências: Use o Composer para instalar as dependências do Laravel.
+
+3. composer install --no-dev --optimize-autoloader
+
+Configuração do Ambiente: Copie o arquivo .env.example para .env e configure as variáveis de ambiente (banco de dados, chave de aplicativo, etc.).
+4. cp .env.example .env
+
+5. vi .env
+
+APP_SHORT_NAME="jla.com"
+
+DB_DATABASE=jlacrm
+DB_USERNAME=root
+DB_PASSWORD=
+
+
+BROADCAST_DRIVER=pusher
+
+PUSHER_APP_ID=1234
+PUSHER_APP_KEY=asdfdf
+PUSHER_APP_SECRET=asdfd
+PUSHER_HOST=
+PUSHER_PORT=443
+PUSHER_SCHEME=https
+PUSHER_APP_CLUSTER=sa1
+
+Gera as keys da aplicação
+6. php artisan key:generate
+
+Fazer a aplicação reler o cache novamente
+7. php artisan config:clear
+
+# Migrate
+php artisan migrate --force
+
+# Configuração de Cache: Otimize a configuração e o roteamento.
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 
 ## JLA CRM

@@ -1043,8 +1043,6 @@ function to_data($data)
             $('#agendamento-protocolo').modal('hide');
         }
 
-
-
         $('.pfechamento').datepicker({
             orientation: 'top',
             todayHighlight: true,

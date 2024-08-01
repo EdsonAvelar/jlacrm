@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Funil;
+use App\Models\Levantamento;
 use Illuminate\Http\Request;
 use App\Models\Lead;
 use App\Models\Negocio;
@@ -10,6 +11,8 @@ use App\Models\EtapaFunil;
 use App\Models\User;
 use App\Models\Equipe;
 use App\Models\MotivoPerda;
+
+
 use App\Enums\UserStatus;
 use App\Enums\NegocioStatus;
 use \App\Models\NegocioComentario;
@@ -18,6 +21,16 @@ use Validator;
 use Carbon\Carbon;
 
 use App\Models\Atividade;
+use App\Models\Agendamento;
+use App\Models\Reuniao;
+use App\Models\Proposta;
+use App\Models\Simulacao;
+use App\Models\Perda;
+use App\Models\Fechamento;
+use App\Models\Auditoria;
+use App\Models\Aprovacao;
+
+#use App\Models\Lead;
 
 class CrmController extends Controller
 {
@@ -541,7 +554,7 @@ class CrmController extends Controller
                 Atividade::add_atividade(\Auth::user()->id, "Negocio Desativado", $negocio->id);
                 $user_count_dist = $user_count_dist + 1;
             }
-            return back()->with('status', "Deletados " . $user_count_dist . " negócios.");
+            return back()->with('status', "Foram desativados " . $user_count_dist . " negócios.");
 
         } elseif ($input['modo'] == "ativar") {
             $negocios = $input['negocios'];
@@ -558,8 +571,82 @@ class CrmController extends Controller
             return back()->with('status', "Ativados " . $user_count_dist . " negócios.");
 
 
+        } elseif ($input['modo'] == "deletar") {
+
+            if (config("permitir_deletar_negocio") == "true") {
+
+                if ($input['deletar_challenger'] != 'DELETAR') {
+                    return back()->with('status_error', "Palavra DELETAR Escrita incorretamente");
+                }
+
+                $negocios = $input['negocios'];
+                $negocios = Negocio::whereIn('id', $negocios)->get();
+                $user_count_dist = 0;
+                foreach ($negocios as $negocio) {
+                    $negocio_id = $negocio->id;
+
+                    #TODO remover reunião também
+                    Atividade::where('negocio_id', $negocio_id)->delete(); #ok
+                    $negocio->agendamentos()->each(function ($agendamento) {
+                        if ($agendamento->reuniao) {
+                            $agendamento->reuniao->delete();
+                        }
+                        $agendamento->delete();
+                    });
+
+                    $negocio->propostas()->each(function ($proposta) {
+                        $proposta->delete();
+                    });
+
+                    $negocio->aprovacoes()->each(function ($aprovacao) {
+                        $aprovacao->delete();
+                    });
+
+                    $lead = $negocio->lead;
+
+                    Levantamento::where('negocio_id', $negocio_id)->delete();
+                    NegocioComentario::where('negocio_id', $negocio_id)->delete();
+                    Perda::where('negocio_id', $negocio_id)->delete();
+
+                    Simulacao::where('negocio_id', $negocio_id)->each(function ($simulacao) {
+
+                        $simulacao->financiamentos->each(function ($simulacao) {
+                            $simulacao->delete();
+                        });
+
+                        $simulacao->consorcios->each(function ($simulacao) {
+                            $simulacao->delete();
+                        });
+
+
+                        $simulacao->delete();
+                    });
+
+                    $fechamento = $negocio->fechamento();
+
+                    $negocio->delete();
+
+                    if ($fechamento) {
+                        $fechamento->delete();
+                    }
+
+
+                    $lead->delete();
+
+
+
+                    $user_count_dist = $user_count_dist + 1;
+                }
+                return back()->with('status', "Foram Deletados " . $user_count_dist . " negócios.");
+
+            } else {
+                return back()->with('status_error', "Não é permitido deletar negócios, contate o adminstrador");
+            }
+
+
+
         } else {
-            return back()->withErrors("modo de distribuição invalido: " . $input['modo']);
+            return back()->with('status_error', "modo de distribuição invalido: " . $input['modo']);
         }
     }
 }

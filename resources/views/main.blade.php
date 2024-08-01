@@ -836,13 +836,21 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             message: "{{ session('status') }}"
         })
 </script>
+@endif
 
-
+@if (Session::has('status_error'))
+<script>
+    showAlert({
+            class: 'danger',
+            message: "{{ session('status_error') }}"
+        })
+</script>
+@endif
 
 {{-- <div class="alert alert-success" role="alert">
 
     <strong>Success!</strong> {{ session('status') }}
 </div> --}}
-@endif
+
 
 </html>

@@ -90,6 +90,14 @@
         max-width: 200px;
         height: auto;
     }
+
+    .protocol_result {
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        -webkit-box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+        box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+        padding: 10px;
+    }
 </style>
 @endsection
 
@@ -529,11 +537,166 @@ vermelho mais do que 5 dias parados
                                                 data-offstyle="danger">
                                             </div>
 
+                                            <div class="mb-3">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                    <label for="inputEmail3" class="col-form-label">Permitir Deletar Negócio
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+                                            
+                                                <input class="toggle-event" type="checkbox" <?php if (array_key_exists('permitir_deletar_negocio', $empresa)) { if
+                                                    ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked' ; } } ?>
+                                                data-config_info="permitir_deletar_negocio" data-toggle="toggle"
+                                                data-on="deleção ligado" data-off="deleção desligado"
+                                                data-onstyle="success"
+                                                data-offstyle="danger">
+                                            </div>
+
 
                                         </div>
                                     </div>
 
+
+
+                                    {{-- COLUNA DA ESQUERDA --}}
+                                    <div class="row">
+                                        <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                            PERSONALIZAÇÃO DO PROTOCOLO DE AGENDAMENTO</h5>
+
+                                        <div class="col-md-6">
+
+
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Inicio</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_inicio"
+                                                id="protocolo_agendamento_inicio"
+                                                value="{{config('protocolo_agendamento_inicio')}}"
+                                                placeholder="Parabéns " />
+
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Após Nome</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text"
+                                                name="protocolo_agendamento_pos_inicio"
+                                                id="protocolo_agendamento_pos_inicio"
+                                                value="{{config('protocolo_agendamento_pos_inicio')}}" placeholder=",esse é o primeiro passo
+                                                    para realização do seu sonho" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Titulo Agendamento</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_titulo"
+                                                id="protocolo_agendamento_titulo"
+                                                value="{{config('protocolo_agendamento_titulo')}}"
+                                                placeholder="-= Reunião Agendada =-" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Final</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_final"
+                                                id="protocolo_agendamento_final"
+                                                value="{{config('protocolo_agendamento_final')}}"
+                                                placeholder="🏡🚗🏍✅ Estacionamento Gratuito" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Nome Empresa</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_empresa"
+                                                id="protocolo_agendamento_empresa"
+                                                value="{{config('protocolo_agendamento_empresa')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Endereço</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text"
+                                                name="protocolo_agendamento_endereco"
+                                                id="protocolo_agendamento_endereco"
+                                                value="{{config('protocolo_agendamento_endereco')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Site</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_site"
+                                                id="protocolo_agendamento_site"
+                                                value="{{config('protocolo_agendamento_site')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">CNPJ</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_cnpj"
+                                                id="protocolo_agendamento_cnpj"
+                                                value="{{config('protocolo_agendamento_cnpj')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Saudação Final</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_xau"
+                                                id="protocolo_agendamento_xau"
+                                                value="{{config('protocolo_agendamento_xau')}}"
+                                                placeholder="Aguardo você✅" />
+
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Protocolo de
+                                                    Agendamento</label>
+                                                </label> </span>
+                                            <div class="protocol_result">
+                                                <p id="txt_protocolo" rows="22" cols="50">
+                                                    <span
+                                                        id="span_protocolo_agendamento_inicio">{{config('protocolo_agendamento_inicio')}}</span><span
+                                                        id="ptcl_cliente">"NOME_DO_CLIENTE"
+                                                    </span><span
+                                                        id="span_protocolo_agendamento_pos_inicio">{{config('protocolo_agendamento_pos_inicio')}}</span><br><br>
+                                                    <span
+                                                        id="span_protocolo_agendamento_titulo">{{config('protocolo_agendamento_titulo')}}</span><br>
+                                                    Protocolo:
+                                                    *{{ random_int(999, 999999) }}/{{
+                                                    Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
+                                                    <br>
+                                                    📅<span> </span>Data: *<span id="ptcl_dia"></span>*<br>
+                                                    ⏰<span> </span>Hora: *<span id="ptcl_hora"></span>* <br>
+                                                    <br>
+                                                    _*Documentos necessários:*_<br>
+                                                    ➡RG<br>
+                                                    ➡CPF<br>
+                                                    ➡Comprovante de Residência Atual<br>
+                                                    <br>
+                                                    _*Endereço:*_<br>
+                                                    📍<span
+                                                        id="span_protocolo_agendamento_endereco">{{config('span_protocolo_agendamento_endereco')}}</span><br>
+
+                                                    <br>
+                                                    _*Na Recepção procurar por:*_ <br>
+                                                    @if (app('request')->proprietario > 0)
+                                                    NOME_VENDEDOR<br>
+                                                    @endif
+
+                                                    <span id="span_protocolo_agendamento_final">{{
+                                                        config('protocolo_agendamento_final')}}</span><br>
+                                                    <br>
+                                                    <span id="span_protocolo_agendamento_empresa">{{
+                                                        config('protocolo_agendamento_empresa')}}</span><br>
+                                                    <span id="span_protocolo_agendamento_site">{{
+                                                        config('protocolo_agendamento_site')}}</span><br>
+                                                    <span id="span_protocolo_agendamento_cnpj">{{
+                                                        config('protocolo_agendamento_cnpj')}}</span><br>
+                                                    <br>
+                                                    <span
+                                                        id="span_protocolo_agendamento_xau">{{config('protocolo_agendamento_xau')}}</span>
+                                                    <br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </div>
+
+
 
                                 {{-- COLUNA DA DIREITA --}}
                                 <div class="col-md-6">
@@ -801,19 +964,51 @@ vermelho mais do que 5 dias parados
                 });
 
 
-                // Salvando Configurações de INPUT
-                 document.getElementById('token_webhook').addEventListener('blur', function(e){ 
-                     save_config('token_webhook', e.target.value)
-                 });
-                 
-                 document.getElementById('racing_agendamento_max').addEventListener('blur', function(e){ 
-                     save_config('racing_agendamento_max', e.target.value)
-                 });
 
+            var ids = [
+                'protocolo_agendamento_inicio',
+                'protocolo_agendamento_pos_inicio',
+                'protocolo_agendamento_titulo',
+                'protocolo_agendamento_final',
+                'protocolo_agendamento_empresa',
+                'protocolo_agendamento_site',
+                'protocolo_agendamento_cnpj',
+                'protocolo_agendamento_xau',
+                'protocolo_agendamento_endereco',
+                
+            ];
 
-                document.getElementById('racing_vendas_max').addEventListener('blur', function(e){
-                    save_config('racing_vendas_max', e.target.value)
+            ids.forEach(function(id) {
+                var element = document.getElementById(id);
+                var span = document.getElementById('span_' + id);
+                if (element && span) {
+                    element.addEventListener('blur', function(e) {
+                    var value = e.target.value;
+                    save_config(id, value);
+                    span.innerHTML = value;
                 });
+                }
+            });
+
+
+            var ids_toggle = [
+                'token_webhook',
+                'racing_agendamento_max',
+                'racing_vendas_max',
+                'permitir_deletar_negocio'           
+            ];
+            
+            ids_toggle.forEach(function(id) {
+                var element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('blur', function(e) {
+                    var value = e.target.value;
+                    save_config(id, value);
+              
+                    });
+                }
+            });
+
             
         });
 </script>

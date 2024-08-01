@@ -21,15 +21,49 @@ class FechamentoController extends Controller
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
 
+        // $vendas = null;
+        // if (!is_null($data_inicio) and !is_null($data_fim)) {
+        //     $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        //     $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+        //     $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])->get();
+        // }
+
         $vendas = null;
         if (!is_null($data_inicio) and !is_null($data_fim)) {
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
 
-            $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])->get();
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '<>', 'CANCELADA']
+            ];
+
+
+            $vendas = Fechamento::where($query)->get();
+
+            #$vendas_canceladas = Fechamento::whereBetween('data_fechamento', [$from, $to])->query()->get();
         }
 
-        return view('vendas.index', compact('vendas'));
+        $vendas_canceladas = null;
+        if (!is_null($data_inicio) and !is_null($data_fim)) {
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'CANCELADA']
+            ];
+
+
+            $vendas_canceladas = Fechamento::where($query)->get();
+
+            #$vendas_canceladas = Fechamento::whereBetween('data_fechamento', [$from, $to])->query()->get();
+        }
+
+        return view('vendas.index', compact('vendas', 'vendas_canceladas'));
     }
 
     public function notificacao(Request $request)

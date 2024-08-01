@@ -37,7 +37,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( separador= ';' )</h4>
+                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Obs: Vírgula como Separador=
+                        ',' )</h4>
                     <p class="text-muted font-14">
                         <strong>Passo 1: </strong>Coloque os leads no formado da planilha do link: <a
                             href="https://docs.google.com/spreadsheets/d/1xOgu3MoZhYFgwy3Zd0n_DPe1Hbc731ceNL5dY6DBzf0/edit?usp=sharing"
@@ -181,14 +182,14 @@
                         <h5 class="mt-2">Etapa do Funil</h5>
                         <div class="mb-1 nowrap w-100">
                             <select class="form-select form-control-light" id="task-priority" name="etapa_funil_id">
-                        
+
                                 @foreach ($etapa_funils as $etapa_funil_id => $funil_name)
                                 <option value="{{ $etapa_funil_id }}">{{ $funil_name }}</option>
                                 @endforeach
                             </select>
                         </div>
 
-                      
+
                     </div>
                     <div class="modal-footer">
 

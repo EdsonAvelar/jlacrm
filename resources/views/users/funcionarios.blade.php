@@ -65,7 +65,7 @@ i.icon-danger {
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Cargo</th>
-                                <th>Permissioes</th>
+                                <th>Permissões</th>
                                 <th>Telefone</th>
                                 <th>Resetada?</th>
                                 <th>Data Contratacao</th>
@@ -156,7 +156,7 @@ i.icon-danger {
                         <th>Nome</th>
                         <th>E-mail</th>
                         <th>Cargo</th>
-                        <th>Permissioes</th>
+                        <th>Permissões</th>
                         <th>Telefone</th>
                         <th>Resetada?</th>
                         <th>Data Contratacao</th>

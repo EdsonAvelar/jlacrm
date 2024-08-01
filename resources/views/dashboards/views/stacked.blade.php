@@ -130,66 +130,87 @@ $name = strtolower($name);
     <?php echo json_encode($plots[2]); ?>;
 
 
-        var options = {
-        colors: ['#00AA00','#FF0000'],
-        dataLabels: {
-        enabled: true,
-        style: {
-        fontSize: "12px",
-        fontFamily: "Helvetica, Arial, sans-serif",
-        colors: ['#fff'],
-   
-        },
-  
+    function normalizeData(concretizados, faltaram) {
+    let total = concretizados + faltaram;
+    let concretizadosPercent = (concretizados / total) * 100;
+    let faltaramPercent = (faltaram / total) * 100;
+    return [concretizadosPercent, faltaramPercent];
+    }
+    
+    // Normalizando os dados
+    let concretizadosData = [];
+    let faltaramData = [];
+    for (let i = 0; i < vendedores.length; i++) { let normalized=normalizeData(concretizados[i], faltaram[i]);
+        concretizadosData.push(normalized[0]); faltaramData.push(normalized[1]); }
 
+    // Configuração do gráfico
+    var options = {
+      series: [{
+        name: 'Comparecimento',
+        data: concretizadosData
+      }, {
+        name: 'Falta',
+        data: faltaramData
+      }],
+      chart: {
+        type: 'bar',
+        height: 350,
+        stacked: true,
+        toolbar: {
+          show: true
         },
-        series: [{
-            name: 'Comparecimento',
-             data: concretizados
-            }, {
-                name: 'Falta',
-                data: faltaram
-            }],
-            chart: {
-                type: 'bar',
-                toolbar: {
-                show: false,
-                offsetX: 0,
-                offsetY: 0,
-                tools: {
-                
-                },
-                
-                },
-          
-                stacked: true,
-                stackType: '100%'
-                },
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        legend: {
-                            position: 'bottom',
-                            offsetX: -10,
-                            offsetY: 0
-                    }
-            }
-        }],
-        
-        xaxis: {
-            categories: vendedores,
+        zoom: {
+          enabled: true
+        }
+      },
+      plotOptions: {
+        bar: {
+          horizontal: false,
         },
-        fill: {
-            opacity: 1
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val.toFixed(2) + "%";
         },
-        legend: {
-            position: 'right',
-            offsetX: 0,
-            offsetY: 50
+        style: {
+          colors: ['#fff']
+        }
+      },
+      xaxis: {
+        categories: vendedores,
+      },
+      yaxis: {
+        max: 100,
+        labels: {
+          formatter: function (val) {
+            return val.toFixed(0) + "%";
+          }
         },
+        title: {
+          text: 'Porcentagem'
+        }
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return val.toFixed(2) + "%";
+          }
+        }
+      },
+      fill: {
+        opacity: 1
+      },
+      legend: {
+        position: 'bottom',
+        horizontalAlign: 'center',
+        offsetX: 0
+      },
+      colors: ['#00E396', '#FF4560'],
     };
 
-    
+
+
 
     try {
         var chart_option = chart_option || [];

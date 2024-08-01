@@ -33,4 +33,5 @@ class Agendamento extends Model
         return $this->hasOne("App\Models\Reuniao");
     }
 
+
 }

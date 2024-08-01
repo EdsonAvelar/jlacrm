@@ -10,10 +10,8 @@
                     <div class="col-md-12">
                         <div class="mb-12" class="divtext">
                             <p id="txt_protocolo" rows="22" cols="50">
-                                Parabéns *<span id="ptcl_cliente"></span>*, esse é o primeiro passo para realização do
-                                seu
-                                sonho!<br><br>
-                                *-= Reunião Agendada =-*<br>
+                                {{config('protocolo_agendamento_inicio')}}<span id="ptcl_cliente"></span>{{config('protocolo_agendamento_pos_inicio')}}<br><br>
+                                {{config('protocolo_agendamento_titulo')}}<br>
                                 Protocolo:
                                 *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
                                 <br>
@@ -26,21 +24,21 @@
                                 ➡Comprovante de Residência Atual<br>
                                 <br>
                                 _*Endereço:*_<br>
-                                📍{{ config('endereco') }}<br>
+                                📍{{config('protocolo_agendamento_endereco')}}<br>
 
                                 <br>
                                 _*Na Recepção procurar por:*_ <br>
                                 @if (app('request')->proprietario > 0)
                                     {{ App\Models\User::find(app('request')->proprietario)->name }}<br>
                                 @endif
-                                🏡🚗🏍✅<br>
                                 <br>
-                                Estacionamento Gratuito<br>
-                                {{ config('nome') }}<br>
-                                <!--SITE: {{ config('site') }}<br> -->
-                                <!-- CNPJ: {{ config('cnpj') }}<br> -->
+
+                                {{config('protocolo_agendamento_final')}}<br>
+                                {{config('protocolo_agendamento_empresa')}}<br>
+                                {{config('protocolo_agendamento_site')}}<br>
+                                {{config('protocolo_agendamento_cnpj')}}<br>
                                 <br>
-                                Aguardo você✅<br>
+                                {{config('protocolo_agendamento_xau')}}<br>
                             </p>
                         </div>
                     </div>

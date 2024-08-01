@@ -171,9 +171,9 @@ class NegocioController extends Controller
             return back()->with('status', $imported . ' negocios importados com sucesso. ' . $negocios_rejeitados . ' rejeitados por duplicidade');
         } else {
             if ($negocios_rejeitados > 0) {
-                return back()->withErrors('Todos foram rejeitados por duplicidade');
+                return back()->with('status_error','Todos foram rejeitados por duplicidade');
             } else {
-                return back()->withErrors('Erro ao ler o csv. Cheque se estava no formato correto');
+                return back()->with('status_error','Erro ao ler o csv. Cheque se estava no formato correto');
             }
         }
     }
@@ -306,7 +306,6 @@ class NegocioController extends Controller
         $negocio = Negocio::where('id', $id)->get();
 
         $lead = Negocio::where('id', $id)->first()->lead()->get();
-
 
         return [$negocio[0], $lead[0]];
     }
