@@ -652,7 +652,7 @@ vermelho mais do que 5 dias parados
                                                 <p id="txt_protocolo" rows="22" cols="50">
                                                     <span
                                                         id="span_protocolo_agendamento_inicio">{{config('protocolo_agendamento_inicio')}}</span><span
-                                                        id="ptcl_cliente">"NOME_DO_CLIENTE"
+                                                        id="ptcl_cliente">*NOME_DO_CLIENTE*
                                                     </span><span
                                                         id="span_protocolo_agendamento_pos_inicio">{{config('protocolo_agendamento_pos_inicio')}}</span><br><br>
                                                     <span
@@ -671,16 +671,13 @@ vermelho mais do que 5 dias parados
                                                     <br>
                                                     _*Endereço:*_<br>
                                                     📍<span
-                                                        id="span_protocolo_agendamento_endereco">{{config('span_protocolo_agendamento_endereco')}}</span><br>
+                                                        id="span_protocolo_agendamento_endereco">{{config('protocolo_agendamento_endereco')}}</span><br>
                                                     <span id="span_protocolo_agendamento_site">{{
                                                         config('protocolo_agendamento_site')}}</span><br>
 
                                                     <br>
                                                     _*Na Recepção procurar por:*_ <br>
-                                                    @if (app('request')->proprietario > 0)
-                                                    NOME_VENDEDOR<br>
-                                                    @endif
-
+                                                    {{\Auth::user()->name}}<br>
                                                     <span id="span_protocolo_agendamento_final">{{
                                                         config('protocolo_agendamento_final')}}</span><br>
                                                     <br>
