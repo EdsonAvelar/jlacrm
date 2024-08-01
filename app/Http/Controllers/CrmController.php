@@ -182,7 +182,7 @@ class CrmController extends Controller
 
             $proprietarios = User::where('status', UserStatus::ativo)->pluck('name', 'id');
 
-        } else if (Auth::user()->hasRole('gerenciar_equipe')) {
+        } else if (Auth::user()->hasRole('gerenciar_equipe') && $equipe) {
             $proprietarios = User::where(['equipe_id' => $equipe->id, 'status' => UserStatus::ativo])->pluck('name', 'id');
         }
 

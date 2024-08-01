@@ -150,6 +150,7 @@ $users = User::where('status', UserStatus::ativo)->get();
                                     <th>Proprietario</th>
                                     <th>Cliente </th>
                                     <th>Telefone</th>
+                                    <th>Tipo</th>
                                     <th>Agendado Para:</th>
                                     <th>Hora Agendamento</th>
                                     <th>Agendadado Em:</th>
@@ -181,6 +182,12 @@ $users = User::where('status', UserStatus::ativo)->get();
                                         <a href="tel: {{ $agendamento->negocio->lead->telefone }}">
                                             {{ $agendamento->negocio->lead->telefone }}
                                         </a>
+
+                                    </td>
+                                    <td>
+
+                                        {{ $agendamento->negocio->tipo }}
+
 
                                     </td>
                                     <td>{{ Carbon\Carbon::createFromFormat('Y-m-d',

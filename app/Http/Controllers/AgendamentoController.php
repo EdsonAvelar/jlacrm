@@ -57,7 +57,7 @@ class AgendamentoController extends Controller
             }
         }
 
-        
+
 
 
         if (Auth::user()->hasRole("admin")) {
@@ -67,12 +67,21 @@ class AgendamentoController extends Controller
         } else if (Auth::user()->hasRole("gerenciar_equipe")) {
 
             $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
-            $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+            $ids = [];
+            array_push($ids, \Auth::user()->id);
+
+            if ($equipe != null) {
+
+                array_push($ids, $equipe->integrantes()->pluck('id')->toArray());
+            }
+
+
 
             ##dd($ids);
 
             $agendamentos = Agendamento::whereIn('user_id', $ids)->where($query)->get();
-        }else {
+        } else {
 
             $agendamentos = Agendamento::whereIn('user_id', [Auth::user()->id])->where($query)->get();
 
@@ -179,7 +188,7 @@ class AgendamentoController extends Controller
         $proprietarios = NULL;
         if (Auth::user()->hasRole('admin')) {
             $proprietarios = User::where('status', UserStatus::ativo)->pluck('name', 'id');
-        } else if (Auth::user()->hasRole('gerenciar_equipe')) {
+        } else if (Auth::user()->hasRole('gerenciar_equipe') && $equipe) {
             $proprietarios = User::where(['equipe_id' => $equipe->id, 'status' => UserStatus::ativo])->pluck('name', 'id');
         }
 

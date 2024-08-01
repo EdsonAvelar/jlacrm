@@ -534,7 +534,17 @@ class DashboardController extends Controller
         } else if (Auth::user()->hasRole('gerenciar_equipe')) {
 
             $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
-            $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+       
+
+            $ids = [];
+            array_push($ids, \Auth::user()->id);
+
+            if ($equipe != null) {
+
+                array_push($ids, $equipe->integrantes()->pluck('id')->toArray());
+            }
+
 
             $output = array();
             $stats = [];
@@ -619,8 +629,6 @@ class DashboardController extends Controller
 
                 array_push($output['agendamentos_faltou'], $count_faltou);
                 array_push($output['agendamentos_realizado'], $count_realizados);
-
-
 
 
                 $query = [
