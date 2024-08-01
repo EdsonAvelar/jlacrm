@@ -535,16 +535,7 @@ class DashboardController extends Controller
 
             $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
 
-       
-
-            $ids = [];
-            array_push($ids, \Auth::user()->id);
-
-            if ($equipe != null) {
-
-                array_push($ids, $equipe->integrantes()->pluck('id')->toArray());
-            }
-
+            $ids = $equipe->integrantes()->pluck('id')->toArray();
 
             $output = array();
             $stats = [];
