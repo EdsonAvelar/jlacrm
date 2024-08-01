@@ -123,7 +123,7 @@ $name = strtolower($name);
             }
             }
         },
-        colors: ['#775DD0', '#00E396'],
+        colors: [ '#00E396', '#ef2936'],
         legend: {
             position: 'bottom'
         }

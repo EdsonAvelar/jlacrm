@@ -713,6 +713,9 @@ $protocolo_hora = 0;
             set_columns_height();
         }, true);
 
+        // Variáveis para armazenar o estado original
+        var originalParent, originalNextSibling, currentEl;
+
         var dragek = dragula(cont, {
             revertOnSpill: true
         });
@@ -729,12 +732,27 @@ $protocolo_hora = 0;
         });
 
         dragek.on('drag', function(el, source) {
+        
+
+            originalParent = el.parentNode;
+            originalNextSibling = el.nextSibling;
             scrollable = false;
         });
 
         dragek.on('dragend', function(el, source) {
             scrollable = true;
         });
+
+        var modal_agendamento = $("#agendamento-add");
+        $(window).click(function(event) {
+            if ($(event.target).is(modal_agendamento)) {
+            modal_agendamento.hide();
+
+            originalParent.insertBefore(currentEl, originalNextSibling);
+            //drake.cancel(true);
+        }
+        });
+
 
 
         $('#agendamento_para').submit(function(e) {
@@ -803,6 +821,8 @@ $protocolo_hora = 0;
 
         dragek.on('drop', function(el, target, source, sibling) {
 
+           
+
             scrollable = true;
             $.ajaxSetup({
                 headers: {
@@ -820,11 +840,14 @@ $protocolo_hora = 0;
 
             if (target.getAttribute('data-etapa') == "REUNIAO_AGENDADA") {
 
+
+                currentEl = el;
                 $('#negocio_id_agen').val(info[0]);
                 $('#agendamento-add').modal('show');
                 $('#database').attr('data-el', info[0]);
                 $('#database').attr('data-source', info[1]);
                 $('#database').attr('data-target', info[2]);
+
 
             } else if (target.getAttribute('data-etapa') == "REUNIAO") {
 

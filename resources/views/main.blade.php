@@ -797,7 +797,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }     
 
     // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        Pusher.logToConsole = false;
     
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
           cluster: 'sa1'
