@@ -1,7 +1,8 @@
 <style>
-    .modal-content {
-        width: auto;
-    }
+  .modal-content {
+    width: auto;
+    height: 100%;
+  }
 </style>
 
 <?php
@@ -13,51 +14,51 @@ $name = strtolower($name);
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
-    <div class="card">
-        <div class="card-body">
+  <div class="card">
+    <div class="card-body">
 
-            <div class="row align-items-center">
-                <a href="#" onclick="showmodal('{{ $name }}')" id="click_{{ $name }}">
-                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $fullname }}">{{ $fullname }}
-                    </h5>
+      <div class="row align-items-center">
+        <a href="#" onclick="showmodal('{{ $name }}')" id="click_{{ $name }}">
+          <h5 class="text-muted fw-normal mt-0 text-truncate" title="{{ $fullname }}">{{ $fullname }}
+          </h5>
 
-                    <div class="col-12">
-                        <div class="text-end">
+          <div class="col-12">
+            <div class="text-end">
 
-                            <div id="chart_{{ $name }}">
-                            </div>
+              <div id="chart_{{ $name }}">
+              </div>
 
-                        </div>
-                    </div>
-                </a>
             </div>
-        </div>
+          </div>
+        </a>
+      </div>
     </div>
+  </div>
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
-    aria-labelledby="modal_{{ $name }}" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="row">
-            <div class="col-lg-12 col-xl-12 col-md-12">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ $fullname }}</h5>
+  aria-labelledby="modal_{{ $name }}" aria-hidden="true" data-mdb-backdrop="true" data-mdb-keyboard="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="row">
+      <div class="col-lg-12 col-xl-12 col-md-12">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">{{ $fullname }}</h5>
 
-                    </div>
-                    <div class="modal-body">
+          </div>
+          <div class="modal-body">
 
-                        <div id="modal_chart_{{ $name }}" style="margin: 0; padding: 0; height: 100%;">
-                        </div>
-                    </div>
-                </div>
+            <div id="modal_chart_{{ $name }}" style="margin: 0; padding: 0; height: 100%;">
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>
 
 <script>
-    function generateColor(size_n) {
+  function generateColor(size_n) {
 
         var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#800000', '#FA8072', '#FF0000',
             '#008000', '#7FFF00', '#BDB76B', '#FFD700', '#00FFFF', '#2F4F4F', '#BC8F8F', '#FFDEAD', '#7B68EE',
@@ -130,6 +131,9 @@ $name = strtolower($name);
     <?php echo json_encode($plots[2]); ?>;
 
 
+      
+
+    
     function normalizeData(concretizados, faltaram) {
     let total = concretizados + faltaram;
     let concretizadosPercent = (concretizados / total) * 100;
@@ -154,7 +158,7 @@ $name = strtolower($name);
       }],
       chart: {
         type: 'bar',
-        height: 350,
+        //height: 350,
         stacked: true,
         toolbar: {
           show: true

@@ -2,6 +2,10 @@
     .modal-content {
         width: auto;
     }
+
+    .apexcharts-legend-series {
+        align-self: flex-start;
+    }
 </style>
 
 <?php
@@ -85,7 +89,7 @@ $name = strtolower($name);
             bar: {
             horizontal: false,
             columnWidth: '55%',
-            endingShape: 'rounded'
+       
             },
         },
         dataLabels: {
