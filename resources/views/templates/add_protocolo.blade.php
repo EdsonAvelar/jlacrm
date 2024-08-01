@@ -11,7 +11,7 @@
                         <div class="mb-12" class="divtext">
                             <p id="txt_protocolo" rows="22" cols="50">
                                 {{config('protocolo_agendamento_inicio')}} &nbsp<span id="ptcl_cliente">
-                                </span> &nbsp{{config('protocolo_agendamento_pos_inicio')}} <br><br>
+                                </span>{{config('protocolo_agendamento_pos_inicio')}} <br><br>
                                 {{config('protocolo_agendamento_titulo')}}<br>
                                 Protocolo:
                                 *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y')

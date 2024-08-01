@@ -538,13 +538,17 @@ vermelho mais do que 5 dias parados
                                             </div>
 
                                             <div class="mb-3">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
-                                                    <label for="inputEmail3" class="col-form-label">Permitir Deletar Negócio
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="inputEmail3" class="col-form-label">Permitir Deletar
+                                                        Negócio
                                                         <span class="mdi mdi-information"></span>
                                                     </label> </span>
-                                            
-                                                <input class="toggle-event" type="checkbox" <?php if (array_key_exists('permitir_deletar_negocio', $empresa)) { if
-                                                    ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked' ; } } ?>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('permitir_deletar_negocio', $empresa)) { if
+                                                    ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked' ; }
+                                                    } ?>
                                                 data-config_info="permitir_deletar_negocio" data-toggle="toggle"
                                                 data-on="deleção ligado" data-off="deleção desligado"
                                                 data-onstyle="success"
@@ -581,7 +585,8 @@ vermelho mais do que 5 dias parados
                                             <input class="form-control" type="text"
                                                 name="protocolo_agendamento_pos_inicio"
                                                 id="protocolo_agendamento_pos_inicio"
-                                                value="{{config('protocolo_agendamento_pos_inicio')}}" placeholder=",esse é o primeiro passo para realização do seu sonho" />
+                                                value="{{config('protocolo_agendamento_pos_inicio')}}"
+                                                placeholder=",esse é o primeiro passo para realização do seu sonho" />
 
                                             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                                                 <label for="lastname" class="form-label">Titulo Agendamento</label>
@@ -1002,6 +1007,7 @@ vermelho mais do que 5 dias parados
                 if (element) {
                     element.addEventListener('blur', function(e) {
                     var value = e.target.value;
+                    
                     save_config(id, value);
               
                     });

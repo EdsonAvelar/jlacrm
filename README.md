@@ -112,6 +112,15 @@ php artisan route:cache
 php artisan view:cache
 
 
+
+
+# Mudanças em Colunas
+composer require doctrine/dbal
+
+
+
+
+
 ## JLA CRM
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
