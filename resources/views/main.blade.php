@@ -134,6 +134,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false,
     "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
 
+    <!-- Player de música HTML5 -->
+    <audio id="musicPlayer">
+        <source src="{{ asset('music/aplausos.mp3') }}" type="audio/mpeg">
+    </audio>
+
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
     <div id="notification" class="notificacao_venda" style="display: none;">
@@ -803,9 +808,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
           cluster: 'sa1'
         });
     
-        var channel = pusher.subscribe( "{{ config('pusher_channel') }}" );
+        var channel = pusher.subscribe( "{{ config('broadcast_canal') }}" );
         console.log('pusher'+channel);
-        channel.bind('my-event', function(data) {
+        channel.bind('nova-venda', function(data) {
             console.log( JSON.stringify(data));
 
             http://127.0.0.1:8000/images/equipes/1/logo.jpg
@@ -824,6 +829,23 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             // $('#notificationr').css('background-size', 'cover');
    
             showNotification();
+
+            var aplausos = "{{ config('broadcast_audio') }}"
+
+            console.log("aplausos: "+aplausos);
+            if (aplausos == "true"){
+
+                var musicPlayer = document.getElementById('musicPlayer');
+                musicPlayer.play();
+
+                setTimeout(function() {
+                musicPlayer.pause();
+                musicPlayer.currentTime = 0; // Retorna a música ao início
+                }, 20000);
+            }
+           
+
+
 
         });
 </script>

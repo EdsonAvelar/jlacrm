@@ -32,12 +32,12 @@ class NewSaleEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return [config('pusher_channel')];
+        return [config('broadcast_canal')];
     }
 
     public function broadcastAs()
     {
-        return 'my-event';
+        return 'nova-venda';
     }
 
 }

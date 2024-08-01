@@ -518,357 +518,362 @@ vermelho mais do que 5 dias parados
                                                 data-offstyle="danger">
                                             </div>
 
+
                                             <div class="mb-3">
-
+                                                <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                                    NOTIFICAÇÃO DE NOVA VENDA</h5>
                                                 <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <span class="d-inline-block" tabindex="0"
-                                                                data-toggle="tooltip" title="">
-                                                                <label for="inputEmail3"
-                                                                    class="col-form-label">Notificação de
-                                                                    Nova
-                                                                    Venda
-                                                                    <span class="mdi mdi-information"></span>
-                                                                </label> </span>
 
-                                                            <input class="toggle-event" type="checkbox" <?php if
-                                                                (array_key_exists('broadcast_fechamento', $empresa)) {
-                                                                if ($empresa['broadcast_fechamento']=='true' ) {
-                                                                echo 'checked' ; } } ?>
-                                                            data-config_info="broadcast_fechamento" data-toggle="toggle"
-                                                            data-on="broadcast ligado" data-off="broadcast desligado"
-                                                            data-onstyle="success"
-                                                            data-offstyle="danger">
-                                                        </div>
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="lastname"
+                                                                class="form-label">Ligar/Desligar</label>
+                                                            </label> </span>
+
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('broadcast_fechamento', $empresa)) { if
+                                                            ($empresa['broadcast_fechamento']=='true' ) { echo 'checked'
+                                                            ; } } ?>
+                                                        data-config_info="broadcast_fechamento"
+                                                        data-toggle="toggle"
+                                                        data-on="Notificação Ligada" data-off="Notificação
+                                                        Desligada"
+                                                        data-onstyle="success"
+                                                        data-offstyle="danger">
+
                                                     </div>
-                                                    <div class="col-md-6">
-                                                        <div class="mb-3">
-                                                            <span class="d-inline-block" tabindex="0"
-                                                                data-toggle="tooltip" title="">
-                                                                <label for="lastname" class="form-label">Nome do
-                                                                    Canal</label>
-                                                                </label> </span>
-                                                            <input class="form-control" type="text"
-                                                                name="pusher_channel" id="pusher_channel"
-                                                                value="{{config('pusher_channel')}}" />
-                                                        </div>
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="lastname" class="form-label">Som de
+                                                                Aplauso</label>
+                                                            </label> </span>
+
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('broadcast_audio', $empresa)) { if
+                                                            ($empresa['broadcast_audio']=='true' ) { echo 'checked' ; }
+                                                            } ?>
+                                                        data-config_info="broadcast_audio"
+                                                        data-toggle="toggle"
+                                                        data-on="Aplauso ligado" data-off="Aplauso
+                                                        desligado"
+                                                        data-onstyle="success"
+                                                        data-offstyle="danger">
+
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="lastname" class="form-label">Nome do
+                                                                Canal</label>
+                                                            </label> </span>
+                                                        <input class="form-control" type="text" name="broadcast_canal"
+                                                            id="broadcast_canal"
+                                                            value="{{config('broadcast_canal')}}" />
+
                                                     </div>
                                                 </div>
-
-
-
-
-                                                <div class="mb-3">
-                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                        title="">
-                                                        <label for="inputEmail3" class="col-form-label">Permitir Deletar
-                                                            Negócio
-                                                            <span class="mdi mdi-information"></span>
-                                                        </label> </span>
-
-                                                    <input class="toggle-event" type="checkbox" <?php if
-                                                        (array_key_exists('permitir_deletar_negocio', $empresa)) { if
-                                                        ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked'
-                                                        ; } } ?>
-                                                    data-config_info="permitir_deletar_negocio" data-toggle="toggle"
-                                                    data-on="deleção ligado" data-off="deleção desligado"
-                                                    data-onstyle="success"
-                                                    data-offstyle="danger">
-                                                </div>
-
-
                                             </div>
+
+
+                                            <div class="mb-3">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="inputEmail3" class="col-form-label">Permitir Deletar
+                                                        Negócio
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('permitir_deletar_negocio', $empresa)) { if
+                                                    ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked' ; }
+                                                    } ?>
+                                                data-config_info="permitir_deletar_negocio" data-toggle="toggle"
+                                                data-on="deleção ligado" data-off="deleção desligado"
+                                                data-onstyle="success"
+                                                data-offstyle="danger">
+                                            </div>
+
+
                                         </div>
-
-
-
-                                        {{-- COLUNA DA ESQUERDA --}}
-                                        <div class="row">
-                                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                                PERSONALIZAÇÃO DO PROTOCOLO DE AGENDAMENTO</h5>
-
-                                            <div class="col-md-6">
-
-
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Inicio</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_inicio"
-                                                    id="protocolo_agendamento_inicio"
-                                                    value="{{config('protocolo_agendamento_inicio')}}"
-                                                    placeholder="Parabéns " />
-
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Após Nome</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_pos_inicio"
-                                                    id="protocolo_agendamento_pos_inicio"
-                                                    value="{{config('protocolo_agendamento_pos_inicio')}}"
-                                                    placeholder=",esse é o primeiro passo para realização do seu sonho" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Titulo Agendamento</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_titulo"
-                                                    id="protocolo_agendamento_titulo"
-                                                    value="{{config('protocolo_agendamento_titulo')}}"
-                                                    placeholder="-= Reunião Agendada =-" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Final</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_final" id="protocolo_agendamento_final"
-                                                    value="{{config('protocolo_agendamento_final')}}"
-                                                    placeholder="🏡🚗🏍✅ Estacionamento Gratuito" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Nome Empresa</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_empresa"
-                                                    id="protocolo_agendamento_empresa"
-                                                    value="{{config('protocolo_agendamento_empresa')}}"
-                                                    placeholder="" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Endereço</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_endereco"
-                                                    id="protocolo_agendamento_endereco"
-                                                    value="{{config('protocolo_agendamento_endereco')}}"
-                                                    placeholder="" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Site</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_site" id="protocolo_agendamento_site"
-                                                    value="{{config('protocolo_agendamento_site')}}" placeholder="" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">CNPJ</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text"
-                                                    name="protocolo_agendamento_cnpj" id="protocolo_agendamento_cnpj"
-                                                    value="{{config('protocolo_agendamento_cnpj')}}" placeholder="" />
-
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Saudação Final</label>
-                                                    </label> </span>
-                                                <input class="form-control" type="text" name="protocolo_agendamento_xau"
-                                                    id="protocolo_agendamento_xau"
-                                                    value="{{config('protocolo_agendamento_xau')}}"
-                                                    placeholder="Aguardo você✅" />
-
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="lastname" class="form-label">Protocolo de
-                                                        Agendamento</label>
-                                                    </label> </span>
-                                                <div class="protocol_result">
-                                                    <p id="txt_protocolo" rows="22" cols="50">
-                                                        <span
-                                                            id="span_protocolo_agendamento_inicio">{{config('protocolo_agendamento_inicio')}}</span><span
-                                                            id="ptcl_cliente">*NOME_DO_CLIENTE*
-                                                        </span><span
-                                                            id="span_protocolo_agendamento_pos_inicio">{{config('protocolo_agendamento_pos_inicio')}}</span><br><br>
-                                                        <span
-                                                            id="span_protocolo_agendamento_titulo">{{config('protocolo_agendamento_titulo')}}</span><br>
-                                                        Protocolo:
-                                                        *{{ random_int(999, 999999) }}/{{
-                                                        Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
-                                                        <br>
-                                                        📅<span> </span>Data: *<span id="ptcl_dia"></span>*<br>
-                                                        ⏰<span> </span>Hora: *<span id="ptcl_hora"></span>* <br>
-                                                        <br>
-                                                        _*Documentos necessários:*_<br>
-                                                        ➡RG<br>
-                                                        ➡CPF<br>
-                                                        ➡Comprovante de Residência Atual<br>
-                                                        <br>
-                                                        _*Endereço:*_<br>
-                                                        📍<span
-                                                            id="span_protocolo_agendamento_endereco">{{config('protocolo_agendamento_endereco')}}</span><br>
-                                                        <span id="span_protocolo_agendamento_site">{{
-                                                            config('protocolo_agendamento_site')}}</span><br>
-
-                                                        <br>
-                                                        _*Na Recepção procurar por:*_ <br>
-                                                        {{\Auth::user()->name}}<br>
-                                                        <span id="span_protocolo_agendamento_final">{{
-                                                            config('protocolo_agendamento_final')}}</span><br>
-                                                        <br>
-                                                        <span id="span_protocolo_agendamento_empresa">{{
-                                                            config('protocolo_agendamento_empresa')}}</span><br>
-                                                        <span id="span_protocolo_agendamento_cnpj">{{
-                                                            config('protocolo_agendamento_cnpj')}}</span><br>
-                                                        <br>
-                                                        <span
-                                                            id="span_protocolo_agendamento_xau">{{config('protocolo_agendamento_xau')}}</span>
-                                                        <br>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-
                                     </div>
 
 
 
-                                    {{-- COLUNA DA DIREITA --}}
-                                    <div class="col-md-6">
+                                    {{-- COLUNA DA ESQUERDA --}}
 
-
+                                    <div class="row">
                                         <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                            CONFIGURAÇÕES CORRIDA</h5>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mb-12">
-                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                        title="">
-                                                        <label for="lastname" class="form-label">Valor Máximo de
-                                                            Vendas</label>
-                                                        </label> </span>
-                                                    <input class="form-control" type="number" name="racing_vendas_max"
-                                                        id="racing_vendas_max"
-                                                        value="{{config('racing_vendas_max')}}" />
-                                                </div>
-                                            </div>
+                                            PERSONALIZAÇÃO DO PROTOCOLO DE AGENDAMENTO</h5>
 
-                                            <div class="col-md-12">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="inputEmail3" class="col-form-label">Ordenar
-                                                        Participantes
-                                                        Vendas
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
+                                        <div class="col-md-6">
 
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('vendas_ordenar', $empresa)) { if
-                                                    ($empresa['vendas_ordenar']=='true' ) { echo 'checked' ; } } ?>
-                                                data-config_info="vendas_ordenar" data-toggle="toggle"
-                                                data-on="ordenado" data-off="não ordenado" data-onstyle="success"
-                                                data-offstyle="danger">
-                                            </div>
+
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Inicio</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_inicio"
+                                                id="protocolo_agendamento_inicio"
+                                                value="{{config('protocolo_agendamento_inicio')}}"
+                                                placeholder="Parabéns " />
+
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Após Nome</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text"
+                                                name="protocolo_agendamento_pos_inicio"
+                                                id="protocolo_agendamento_pos_inicio"
+                                                value="{{config('protocolo_agendamento_pos_inicio')}}"
+                                                placeholder=",esse é o primeiro passo para realização do seu sonho" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Titulo Agendamento</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_titulo"
+                                                id="protocolo_agendamento_titulo"
+                                                value="{{config('protocolo_agendamento_titulo')}}"
+                                                placeholder="-= Reunião Agendada =-" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Final</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_final"
+                                                id="protocolo_agendamento_final"
+                                                value="{{config('protocolo_agendamento_final')}}"
+                                                placeholder="🏡🚗🏍✅ Estacionamento Gratuito" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Nome Empresa</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_empresa"
+                                                id="protocolo_agendamento_empresa"
+                                                value="{{config('protocolo_agendamento_empresa')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Endereço</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text"
+                                                name="protocolo_agendamento_endereco"
+                                                id="protocolo_agendamento_endereco"
+                                                value="{{config('protocolo_agendamento_endereco')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Site</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_site"
+                                                id="protocolo_agendamento_site"
+                                                value="{{config('protocolo_agendamento_site')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">CNPJ</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_cnpj"
+                                                id="protocolo_agendamento_cnpj"
+                                                value="{{config('protocolo_agendamento_cnpj')}}" placeholder="" />
+
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Saudação Final</label>
+                                                </label> </span>
+                                            <input class="form-control" type="text" name="protocolo_agendamento_xau"
+                                                id="protocolo_agendamento_xau"
+                                                value="{{config('protocolo_agendamento_xau')}}"
+                                                placeholder="Aguardo você✅" />
+
                                         </div>
 
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="mb-12">
-                                                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                        title="">
-                                                        <label for="lastname" class="form-label">Valor Máximo de
-                                                            Agendamentos Diários</label>
-                                                        </label> </span>
+                                        <div class="col-md-6">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="lastname" class="form-label">Protocolo de
+                                                    Agendamento</label>
+                                                </label> </span>
+                                            <div class="protocol_result">
+                                                <p id="txt_protocolo" rows="22" cols="50">
+                                                    <span
+                                                        id="span_protocolo_agendamento_inicio">{{config('protocolo_agendamento_inicio')}}</span><span
+                                                        id="ptcl_cliente">*NOME_DO_CLIENTE*
+                                                    </span><span
+                                                        id="span_protocolo_agendamento_pos_inicio">{{config('protocolo_agendamento_pos_inicio')}}</span><br><br>
+                                                    <span
+                                                        id="span_protocolo_agendamento_titulo">{{config('protocolo_agendamento_titulo')}}</span><br>
+                                                    Protocolo:
+                                                    *{{ random_int(999, 999999) }}/{{
+                                                    Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
+                                                    <br>
+                                                    📅<span> </span>Data: *<span id="ptcl_dia"></span>*<br>
+                                                    ⏰<span> </span>Hora: *<span id="ptcl_hora"></span>* <br>
+                                                    <br>
+                                                    _*Documentos necessários:*_<br>
+                                                    ➡RG<br>
+                                                    ➡CPF<br>
+                                                    ➡Comprovante de Residência Atual<br>
+                                                    <br>
+                                                    _*Endereço:*_<br>
+                                                    📍<span
+                                                        id="span_protocolo_agendamento_endereco">{{config('protocolo_agendamento_endereco')}}</span><br>
+                                                    <span id="span_protocolo_agendamento_site">{{
+                                                        config('protocolo_agendamento_site')}}</span><br>
 
-
-                                                    <input class="form-control" type="number"
-                                                        name="racing_agendamento_max" id="racing_agendamento_max"
-                                                        value="{{config('racing_agendamento_max')}}" />
-                                                </div>
+                                                    <br>
+                                                    _*Na Recepção procurar por:*_ <br>
+                                                    {{\Auth::user()->name}}<br>
+                                                    <span id="span_protocolo_agendamento_final">{{
+                                                        config('protocolo_agendamento_final')}}</span><br>
+                                                    <br>
+                                                    <span id="span_protocolo_agendamento_empresa">{{
+                                                        config('protocolo_agendamento_empresa')}}</span><br>
+                                                    <span id="span_protocolo_agendamento_cnpj">{{
+                                                        config('protocolo_agendamento_cnpj')}}</span><br>
+                                                    <br>
+                                                    <span
+                                                        id="span_protocolo_agendamento_xau">{{config('protocolo_agendamento_xau')}}</span>
+                                                    <br>
+                                                </p>
                                             </div>
-
-                                            <div class="col-md-12">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="inputEmail3" class="col-form-label">Ordenar
-                                                        Participantes
-                                                        Agendamentos
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
-
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('agendamento_ordenar', $empresa)) { if
-                                                    ($empresa['agendamento_ordenar']=='true' ) { echo 'checked' ; } } ?>
-                                                data-config_info="agendamento_ordenar" data-toggle="toggle"
-                                                data-on="ordenado" data-off="não ordenado" data-onstyle="success"
-                                                data-offstyle="danger">
-                                            </div>
-
                                         </div>
                                     </div>
 
-                                    {{-- TERCEIRA COLUNA VAZIA --}}
-                                    {{-- <div class="col-md-3">
-
-                                    </div> --}}
 
                                 </div>
 
-                            </div> <!-- end tab-pane -->
-                        </div> <!-- end tab-content -->
-                    </div> <!-- end card body -->
-                </div> <!-- end card -->
-            </div> <!-- end col -->
-        </div>
-    </div> <!-- container -->
 
 
-    <div class="modal fade" id="change_logo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Editar Foto de Perfil</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
+                                {{-- COLUNA DA DIREITA --}}
+                                <div class="col-md-6">
 
-                    <form class="p-2" action="{{ route('empresa_images') }}" method="POST"
-                        enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-12">
 
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-12">
-                                            <label for="task-title" class="form-label">Faça o Upload da Sua
-                                                Imagem<span class="text-danger">
-                                                    *</label>
-                                            <input type="file" name="image" id="inputImage"
-                                                class="form-control @error('image') is-invalid @enderror">
-                                            <input name="user_id" hidden value={{ app('request')->id }}>
-                                            <br>
-                                            <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#">
-                                            <input name="pasta_imagem" id="pasta_imagem" hidden />
-                                            <input name="imagem_name" id="imagem_name" hidden />
+                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                        CONFIGURAÇÕES CORRIDA</h5>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Valor Máximo de
+                                                        Vendas</label>
+                                                    </label> </span>
+                                                <input class="form-control" type="number" name="racing_vendas_max"
+                                                    id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="inputEmail3" class="col-form-label">Ordenar
+                                                    Participantes
+                                                    Vendas
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php if
+                                                (array_key_exists('vendas_ordenar', $empresa)) { if
+                                                ($empresa['vendas_ordenar']=='true' ) { echo 'checked' ; } } ?>
+                                            data-config_info="vendas_ordenar" data-toggle="toggle"
+                                            data-on="ordenado" data-off="não ordenado" data-onstyle="success"
+                                            data-offstyle="danger">
                                         </div>
                                     </div>
 
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Valor Máximo de
+                                                        Agendamentos Diários</label>
+                                                    </label> </span>
+
+
+                                                <input class="form-control" type="number" name="racing_agendamento_max"
+                                                    id="racing_agendamento_max"
+                                                    value="{{config('racing_agendamento_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="inputEmail3" class="col-form-label">Ordenar
+                                                    Participantes
+                                                    Agendamentos
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php if
+                                                (array_key_exists('agendamento_ordenar', $empresa)) { if
+                                                ($empresa['agendamento_ordenar']=='true' ) { echo 'checked' ; } } ?>
+                                            data-config_info="agendamento_ordenar" data-toggle="toggle"
+                                            data-on="ordenado" data-off="não ordenado" data-onstyle="success"
+                                            data-offstyle="danger">
+                                        </div>
+
+                                    </div>
                                 </div>
+
+                                {{-- TERCEIRA COLUNA VAZIA --}}
+                                {{-- <div class="col-md-3">
+
+                                </div> --}}
+
+                            </div>
+
+                        </div> <!-- end tab-pane -->
+                    </div> <!-- end tab-content -->
+                </div> <!-- end card body -->
+            </div> <!-- end card -->
+        </div> <!-- end col -->
+    </div>
+</div> <!-- container -->
+
+
+<div class="modal fade" id="change_logo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Foto de Perfil</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form class="p-2" action="{{ route('empresa_images') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="mb-12">
+                                        <label for="task-title" class="form-label">Faça o Upload da Sua
+                                            Imagem<span class="text-danger">
+                                                *</label>
+                                        <input type="file" name="image" id="inputImage"
+                                            class="form-control @error('image') is-invalid @enderror">
+                                        <input name="user_id" hidden value={{ app('request')->id }}>
+                                        <br>
+                                        <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#">
+                                        <input name="pasta_imagem" id="pasta_imagem" hidden />
+                                        <input name="imagem_name" id="imagem_name" hidden />
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
-                                Salvar</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save"></i>
+                            Salvar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 @endsection
 
@@ -1040,7 +1045,8 @@ vermelho mais do que 5 dias parados
                 'racing_agendamento_max',
                 'racing_vendas_max',
                 'permitir_deletar_negocio',
-                'pusher_channel'           
+                'broadcast_canal',
+                'broadcast_audio'           
             ];
             
             ids_toggle.forEach(function(id) {
