@@ -10,10 +10,12 @@
                     <div class="col-md-12">
                         <div class="mb-12" class="divtext">
                             <p id="txt_protocolo" rows="22" cols="50">
-                                {{config('protocolo_agendamento_inicio')}}<span id="ptcl_cliente"></span>{{config('protocolo_agendamento_pos_inicio')}}<br><br>
+                                {{config('protocolo_agendamento_inicio')}} &nbsp<span id="ptcl_cliente">
+                                </span> &nbsp{{config('protocolo_agendamento_pos_inicio')}} <br><br>
                                 {{config('protocolo_agendamento_titulo')}}<br>
                                 Protocolo:
-                                *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y') }}*
+                                *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y')
+                                }}*
                                 <br>
                                 📅<span> </span>Data: *<span id="ptcl_dia"></span>*<br>
                                 ⏰<span> </span>Hora: *<span id="ptcl_hora"></span>* <br>
@@ -29,7 +31,7 @@
                                 <br>
                                 _*Na Recepção procurar por:*_ <br>
                                 @if (app('request')->proprietario > 0)
-                                    {{ App\Models\User::find(app('request')->proprietario)->name }}<br>
+                                {{ App\Models\User::find(app('request')->proprietario)->name }}<br>
                                 @endif
                                 <br>
 

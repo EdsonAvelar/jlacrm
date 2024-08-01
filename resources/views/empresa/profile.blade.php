@@ -581,8 +581,7 @@ vermelho mais do que 5 dias parados
                                             <input class="form-control" type="text"
                                                 name="protocolo_agendamento_pos_inicio"
                                                 id="protocolo_agendamento_pos_inicio"
-                                                value="{{config('protocolo_agendamento_pos_inicio')}}" placeholder=",esse é o primeiro passo
-                                                    para realização do seu sonho" />
+                                                value="{{config('protocolo_agendamento_pos_inicio')}}" placeholder=",esse é o primeiro passo para realização do seu sonho" />
 
                                             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                                                 <label for="lastname" class="form-label">Titulo Agendamento</label>
