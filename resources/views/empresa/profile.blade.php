@@ -576,7 +576,6 @@ vermelho mais do que 5 dias parados
                                                         <input class="form-control" type="text" name="broadcast_canal"
                                                             id="broadcast_canal"
                                                             value="{{config('broadcast_canal')}}" />
-
                                                     </div>
                                                 </div>
                                             </div>

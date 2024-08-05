@@ -80,16 +80,18 @@ class FechamentoController extends Controller
         $data = [
             'vendedor' => $vendedor->name,
             'id' => $vendedor->id,
-            'avatar' => $vendedor->avatar,
-            'equipe' => '',
+            'avatar' => url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar,
             'cliente' => $negocio->lead->nome,
             'credito' => $negocio->valor,
+            'empresa' => url('') . "/images/empresa/logos/empresa_logo_circular.png"
+
         ];
 
+
         if ($vendedor->equipe) {
-            $data['equipe_nome'] = $vendedor->equipe->nome;
+            $data['equipe_nome'] = $vendedor->equipe->descricao;
             $data['equipe_id'] = $vendedor->equipe->id;
-            $data['equipe_logo'] = $vendedor->equipe->logo;
+            $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; //url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar; //$vendedor->equipe->logo;
         }
 
         $broadcast_fechamento = config("broadcast_fechamento");

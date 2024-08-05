@@ -9,18 +9,20 @@ use Validator;
 
 class EquipeController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         $equipes = Equipe::all();
-        $semequipes =  (new User())->vendedores_sem_equipes();
+        $semequipes = (new User())->vendedores_sem_equipes();
 
         $users = (new User())->vendedores();
 
-        return view('equipes.index', compact('equipes','semequipes','users'));
+        return view('equipes.index', compact('equipes', 'semequipes', 'users'));
     }
 
-    
-    public function equipe_get(Request $request) {
+
+    public function equipe_get(Request $request)
+    {
 
         $id = $request->query('id');
         $equipe = Equipe::find($id);
@@ -33,30 +35,31 @@ class EquipeController extends Controller
     }
 
 
-    public function change_equipe(Request $request){
+    public function change_equipe(Request $request)
+    {
 
         $input = $request->all();
 
         $equipe = Equipe::find($input['editar_equipe_id']);
         $nome_equipe = $input['edit_nome_equipe'];
         $equipe->descricao = $nome_equipe;
-        
+
 
         $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
         $equipe->nome = $nome_equipe;
 
-        if ($request->filled('image')){
+        if ($request->filled('image')) {
             $rules = array(
                 'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
             );
-    
+
             $error_msg = [
                 'image.max' => 'Limite Máximo do Arquivo 3mb',
                 'image.mimes' => 'extensões válidas (jpg,png,jpeg,gif,svg)'
             ];
-    
+
             $validator = Validator::make($input, $rules, $error_msg);
-    
+
             if ($validator->fails()) {
                 return back()
                     ->withErrors($validator)
@@ -64,12 +67,12 @@ class EquipeController extends Controller
             }
 
 
-            $imageName = "logo.".$request->image->extension();
-            $request->image->move(public_path('images')."/equipes/". $equipe->id."/", $imageName);
+            $imageName = "logo." . $request->image->extension();
+            $request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
             $equipe->logo = $imageName;
         }
-        
-             
+
+
         $equipe->save();
 
         return back()->with("status", "Equipe Editada com sucesso");
@@ -102,22 +105,22 @@ class EquipeController extends Controller
         $nome_equipe = $input['nome_equipe'];
 
         $equipe->descricao = $nome_equipe;
-        
+
         $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
 
         $equipe->nome = $nome_equipe;
 
-        $equipe->lider_id =  $input['lider_id'];
+        $equipe->lider_id = $input['lider_id'];
 
-        $imageName = "logo.".$request->image->extension();
-       
+        $imageName = "logo." . $request->image->extension();
+
 
         $equipe->logo = $imageName;
         $equipe->save();
 
-        $request->image->move(public_path('images')."/equipes/".$equipe->id."/", $imageName);
+        $request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
 
-        User::where('id', $input['lider_id'])->update(['equipe_id'=> $equipe->id]);
+        User::where('id', $input['lider_id'])->update(['equipe_id' => $equipe->id]);
 
         return back()->with("status", "Equipe Criada com sucesso");
     }
@@ -128,18 +131,18 @@ class EquipeController extends Controller
         $equipe = Equipe::find($input['excluir_equipe_id']);
 
         $exists_int = false;
-        foreach( $equipe->integrantes()->get() as $integrante ){
-            if ($integrante->id != $equipe->lider_id){
+        foreach ($equipe->integrantes()->get() as $integrante) {
+            if ($integrante->id != $equipe->lider_id) {
                 $exists_int = true;
                 break;
             }
         }
-       
-        if ($exists_int ){
+
+        if ($exists_int) {
             return back()->withErrors("Retire os Integrantes antes de deletar uma equipe");
         }
-        
-        User::where('id',$equipe->lider_id)->update(['equipe_id'=> NULL]);
+
+        User::where('id', $equipe->lider_id)->update(['equipe_id' => NULL]);
         $equipe->delete();
 
         return back()->with("status", "Equipe Excluida com sucesso");
@@ -154,10 +157,10 @@ class EquipeController extends Controller
 
         $funcionario = User::find($id_funcionario);
 
-        if ($id_destino > 0){
-            $funcionario::where('id', $id_funcionario)->update(['equipe_id'=> $id_destino]);
-        }else {
-            $funcionario::where('id', $id_funcionario)->update(['equipe_id'=> NULL]);
+        if ($id_destino > 0) {
+            $funcionario::where('id', $id_funcionario)->update(['equipe_id' => $id_destino]);
+        } else {
+            $funcionario::where('id', $id_funcionario)->update(['equipe_id' => NULL]);
         }
 
     }

@@ -60,29 +60,28 @@ use Carbon\Carbon;
         }
 
         .notificacao_venda {
-
-            /* Oculto por padrão */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-color: rgba(0, 0, 0, 0.7);
-            /* Fundo semitransparente */
             color: white;
             font-size: 2em;
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
-            background: url('{{ asset("images/gifs/confetti.gif")}}') no-repeat center center;
+            background: url('{{ asset("images/gifs/confetti.gif") }}') no-repeat center center;
             background-size: cover;
+            border: 2px solid white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
 
         .card-vendedor {
+            position: relative;
             width: 600px;
-            height: 600px;
-            border: 2px solid black;
+            border: 10px solid #d8eff3;
             border-radius: 20px;
             display: flex;
             flex-direction: column;
@@ -91,14 +90,17 @@ use Carbon\Carbon;
             text-align: center;
             padding: 20px;
             color: #d51414;
-            background-color: #f4ffef;
+            background-color: #eeffff;
+            font-family: sans-serif;
+            box-shadow: 0 8px 14px rgba(0, 0, 0, 0.2);
         }
 
         .card-vendedor img {
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            border: 2px solid black;
+            border: 9px solid #d8eff3;
+            ;
             object-fit: cover;
         }
 
@@ -116,6 +118,32 @@ use Carbon\Carbon;
         .card-vendedor .texto-baixo {
             font-weight: bold;
             font-size: 1.2em;
+        }
+
+        .loggo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid white;
+            object-fit: cover;
+            position: absolute;
+        }
+
+        .loggo.empresa {
+            top: -130px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            z-index: -100;
+            border: 9px solid #c4ecff;
+        }
+
+        .loggo.equipe {
+            bottom: 10px;
+            right: 10px;
+            width: 90px;
+            height: 90px;
         }
     </style>
 
@@ -141,21 +169,23 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
-    <div id="notification" class="notificacao_venda" style="display: none;">
+    <div id="notification" class="notificacao_venda hadow-box" style="display: none;">
         <div class="card-vendedor">
+            <img id="imagem_empresa" class="loggo empresa" src="" alt="Logo da Empresa">
             <div class="texto-cima">É VENDA</div>
             <div class="texto-cima2"><span id="venda_valor"></span></div>
             <div class="texto-cima2"><span id="nome_cliente"></span></div>
             <img id="imagem_vendedor" src="" alt="Foto do Vendedor">
-
             <div class="texto-baixo">
                 <div>-= PARABÉNS =-</div>
                 <div><span id="nome_vendedor"></span></div>
                 <div><span id="nome_equipe"></span></div>
-
             </div>
+            <img id="imagem_equipe" class="loggo equipe" src="" alt="Logo da Equipe">
         </div>
     </div>
+
+
 
 
     <div class="wrapper">
@@ -813,39 +843,50 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         channel.bind('nova-venda', function(data) {
             console.log( JSON.stringify(data));
 
-            http://127.0.0.1:8000/images/equipes/1/logo.jpg
-
             document.getElementById('venda_valor').innerText = "Crédito: " +nFormatter( data.data.credito, 2);
             document.getElementById('nome_cliente').innerText = "Cliente: "+data.data.cliente;
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
            
-            document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
+            //document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
+            document.getElementById('imagem_vendedor').src = data.data.avatar ;
 
-            // var img_equipe = "{{ url('') }}/images/equipes/"+data.data.equipe_id+"/"+data.data.equipe_logo ;
- 
-            // console.log(img_equipe);
-            // $('#notification').css('background', `url('${img_equipe}') no-repeat center center`);
-            // $('#notificationr').css('background-size', 'cover');
-   
-            showNotification();
 
-            var aplausos = "{{ config('broadcast_audio') }}"
-
-            console.log("aplausos: "+aplausos);
-            if (aplausos == "true"){
-
+            if (data.data.equipe_logo){
+                $("#imagem_equipe").show()
+                document.getElementById('imagem_equipe').src = data.data.equipe_logo ;
+            }else {
+                $("#imagem_equipe").hide()
+            }
+           
+            document.getElementById('imagem_empresa').src = data.data.empresa ;
+            
+            showAlert({
+                class: 'info',
+                message: "A Venda Será Notificada em Instantes!"
+            })
+            
+            setTimeout(function() {
+                showNotification();
+                var aplausos = "{{ config('broadcast_audio') }}"
+                
+                if (aplausos == "true"){
+                
                 var musicPlayer = document.getElementById('musicPlayer');
                 musicPlayer.play();
-
+                
                 setTimeout(function() {
                 musicPlayer.pause();
                 musicPlayer.currentTime = 0; // Retorna a música ao início
                 }, 20000);
-            }
+                }
+           
+           }, 5000);
+
+   
            
 
-
+            
 
         });
 </script>

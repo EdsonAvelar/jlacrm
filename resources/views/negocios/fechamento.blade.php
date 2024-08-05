@@ -24,100 +24,206 @@ function to_data($data)
 @endsection
 @section('main_content')
 <style>
+    /* .mb-3 {
+        margin-bottom: 0.25rem !important;
+    } */
+
     .mb-3 {
+        display: flex;
+        align-items: center;
         margin-bottom: 0.25rem !important;
     }
 
+    .form-label {
+        margin-right: 10px;
+        min-width: 150px;
+        /* Ajuste conforme necessário */
+    }
+
+    .form-control {
+        flex: 1;
+    }
+
+    .header-section {
+        margin-top: 30px;
+        /* display: flex; */
+        align-items: center;
+        border-bottom: 2px solid #000;
+        padding: 10px;
+    }
+
+
+    .empresa-logo img {
+        max-width: 100px;
+    }
+
+    .header-content {
+        flex: 4;
+        text-align: center;
+    }
+
+    .header-content h1 {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .header-content p {
+        margin: 5px 0;
+    }
+
+    .info-table {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: collapse;
+    }
+
+    .info-table td {
+        border: none;
+        padding: 5px;
+    }
+
+    .info-table td input {
+        border: none !important;
+
+        width: 100%;
+    }
+
+    .signature-line {
+        width: 100%;
+        border-top: 1px solid black;
+        margin-top: 20px;
+    }
+
+    #areaprint {
+        background: white;
+    }
+
+    h5 {
+        color: black;
+        background-color: lightgrey;
+
+    }
+
     @media print {
-        .myDivToPrint {
-            background-color: white;
-            height: 100%;
-            width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 15px;
-            font-size: 14px;
-            line-height: 18px;
+
+
+
+        input {
+            border: none !important;
         }
+
+        table,
+        td {
+            border: none !important;
+        }
+
+        .signature-line {
+            width: 100%;
+            border-top: 3px solid black;
+            margin-top: 20px;
+        }
+
+        .empresa-logo img {
+            max-width: 100px;
+        }
+
+        .hidden-print {
+            display: none !important;
+            background: black;
+        }
+
+        .no-print {
+            display: none !important;
+        }
+
     }
 </style>
-<div class="container-fluid" id="areaprint">
-    <div class="row">
-        <div class="col-sm-12">
-            <!-- Profile -->
-            <div class="card bg-secondary">
-                <div class="card-body profile-user-box">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="row align-items-center">
-                                <div class="col-auto">
-                                    <div class="avatar-lg">
-                                        <img src="{{ url('') }}/images/users/avatars/user-padrao.png" alt=""
-                                            class="rounded-circle img-thumbnail">
-                                    </div>
-                                </div>
-                                <div class="col-sm-12">
-                                    <div>
-                                        <p class="font-20 text-white-50">FICHA DE CADASTRAMENTO DE VENDA</p>
-                                        <p class="font-20 text-white-50">
+<div class="container-fluid">
 
 
-                                            Cliente: {{ $negocio->lead->nome }}
 
-                                        </p>
+    <div class="row" id="areaprint">
 
-                                    </div>
+        <div class="header-section">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="empresa-logo">
+                        <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="Logo">
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="header-content">
+                        <h1>FICHA CADASTRAL - QUALIFICAÇÃO DO CONSORCIADO</h1>
+                        <p>{{ strtoupper(config('nome')) }} – {{ config('cnpj') }}</p>
+                        <table class="info-table">
+                            <tr>
+                                <td>VENDEDOR(A):</td>
+
+                                <td><input type="text" value="<?php 
+                                if ($fechamento->primeiro_vendedor_id){
+                                    echo App\Models\User::find($fechamento->primeiro_vendedor_id)->name;
+                                }?>">
 
 
-                                </div>
+                                </td>
+                                <td>DATA:</td>
+                                <td><input type="text" value="<?php 
+                                if ($fechamento->data_fechamento){
+                                    echo to_data($fechamento->data_fechamento);
+                                }?>"> </td>
+                            </tr>
+                            <tr>
+                                <td>CONTRATO:</td>
+                                <td><input type="text" value="<?php 
+                                if ($fechamento->numero_contrato){
+                                    echo ($fechamento->numero_contrato);
+                                }?>"></td>
+                                <td>GRUPO:</td>
+                                <td><input type="text" value="<?php 
+                                if ($fechamento->grupo){
+                                    echo ($fechamento->grupo);
+                                }?>"></td>
+                                <td>COTA:</td>
+                                <td><input type="text" value="<?php 
+                                if ($fechamento->cota){
+                                    echo ($fechamento->cota);
+                                }?>"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="text-center mt-sm-0 mt-3 text-sm-end no-print">
+
+                        <div class="btn-group mt-sm-0 mt-3 text-sm-end">
+                            <a type="button" class="btn btn-primary" id="printButton" onclick="PrintElement()" href="#"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-printer"></i><span></span></a>
+                        </div>
+
+                        <div class="btn-group mt-sm-0 mt-3 text-sm-end">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="mdi mdi-apps"></i><span></span>
+                            </button>
+
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item"
+                                    href="{{ route('negocio_edit', ['id' => $negocio->id]) }}">Editar
+                                    Negócio</a>
 
 
                             </div>
-                        </div> <!-- end col-->
-
-                        <div class="col-sm-6">
-                            <div class="text-center mt-sm-0 mt-3 text-sm-end">
-
-                                <div class="btn-group mt-sm-0 mt-3 text-sm-end">
-                                    <a type="button" class="btn btn-primary" onclick="PrintElement()" href="#"
-                                        aria-haspopup="true" aria-expanded="false">
-                                        <i class="mdi mdi-printer"></i><span></span></a>
-                                </div>
-
-                                <div class="btn-group mt-sm-0 mt-3 text-sm-end">
-                                    <button type="button" class="btn btn-primary dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="mdi mdi-apps"></i><span></span>
-                                    </button>
-
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item"
-                                            href="{{ route('negocio_edit', ['id' => $negocio->id]) }}">Editar
-                                            Negócio</a>
 
 
-                                    </div>
-
-
-                                </div>
+                        </div>
 
 
 
-                            </div>
-                        </div> <!-- end col-->
-
-
-                    </div> <!-- end row -->
-
-                </div> <!-- end card-body/ profile-user-box-->
+                    </div>
+                </div>
             </div>
-            <!--end profile/ card -->
-        </div> <!-- end col-->
-    </div>
-
-    <div class="row">
+        </div>
 
         <div class="col-xl-12 col-lg-12">
             <div class="card">
@@ -127,18 +233,18 @@ function to_data($data)
                         <form id="fechamento_vendas" method="POST" action="{{ route('vendas.fechamento') }}">
                             @csrf
 
-                            <h5 class="mb-3 text-uppercase bg-warning p-2"><i class="mdi mdi-office-building me-1"></i>
-                                Informações Pessoais Consorciado</h5>
+                            <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
+                                Informações Pessoais</h5>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-7">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">NOME COMPLETO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->nome }}"
                                             name="nome">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-5">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -146,20 +252,7 @@ function to_data($data)
                                             value="{{ to_data($negocio->lead->data_nasc) }}" name="data_nasc">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">EMAIL</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->email }}"
-                                            name="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">TELEFONE</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
-                                            name="telefone">
-                                    </div>
-                                </div>
+
                             </div>
 
                             <div class="row">
@@ -178,53 +271,6 @@ function to_data($data)
                                     </div>
                                 </div>
                             </div>
-
-                            <div class="row">
-                                <div class="col-md-1">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">CEP</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->cep }}"
-                                            name="cep">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">ENDEREÇO</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->endereco }}"
-                                            name="endereco">
-                                    </div>
-                                </div>
-                                <div class="col-md-1">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">NÚMERO</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->numero }}"
-                                            name="numero">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">BAIRRO</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->bairro }}"
-                                            name="bairro">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">CIDADE</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->cidade }}"
-                                            name="cidade">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">ESTADO</label>
-                                        <input type="text" class="form-control" value="{{ $negocio->lead->estado }}"
-                                            name="estado">
-                                    </div>
-                                </div>
-
-                            </div>
-
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-3">
@@ -251,7 +297,7 @@ function to_data($data)
                             </div>
 
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">DATA DE EXPEDIÇÃO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -267,21 +313,15 @@ function to_data($data)
                                             value="{{ $negocio->lead->nacionalidade }}">
                                     </div>
                                 </div>
+
                                 <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">NATURALIDADE</label>
-                                        <input type="text" class="form-control" name="naturalidade"
-                                            value="{{ $negocio->lead->naturalidade }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">ESTADO CIVIL</label>
                                         <input type="text" class="form-control" name="estado_civil"
                                             value="{{ $negocio->lead->estado_civil }}">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">GÊNERO</label>
                                         <input type="text" class="form-control" name="genero"
@@ -290,40 +330,52 @@ function to_data($data)
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">NATURALIDADE</label>
+                                        <input type="text" class="form-control" name="naturalidade"
+                                            value="{{ $negocio->lead->naturalidade }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">FORMAÇÃO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->formacao }}"
                                             name="formacao">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">PROFISSÃO/CARGO</label>
                                         <input type="text" class="form-control" name="profissao"
                                             value="{{ $negocio->lead->profissao }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">RENDA LIQUIDA MENSAL</label>
                                         <input type="text" class="form-control moeda" name="renda_liquida"
                                             value="{{ $negocio->lead->renda_liquida }}">
                                     </div>
                                 </div>
+
                             </div>
-                            <h5 class="mb-3 text-uppercase bg-warning p-2"><i class="mdi mdi-office-building me-1"></i>
+
+                            <h5 class="mb-3 text-black text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 INFORMAÇÕES PESSOAIS DO CÔNJUDE</h5>
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-7">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">NOME COMPLETO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->conjuge->nome }}"
                                             name="conj_nome">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-5">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -331,13 +383,7 @@ function to_data($data)
                                             value="{{ to_data($negocio->conjuge->data_nasc) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">TELEFONE</label>
-                                        <input type="text" class="form-control"
-                                            value="{{ $negocio->conjuge->telefone }}" name="conf_telefone">
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
@@ -363,7 +409,7 @@ function to_data($data)
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">DATA DE EXPEDIÇÃO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -372,21 +418,15 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">NACIONALIDADE</label>
                                         <input type="text" class="form-control" name="conj_nacionalidade"
                                             value="{{ $negocio->conjuge->nacionalidade }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">NATURALIDADE</label>
-                                        <input type="text" class="form-control" name="conj_naturalidade"
-                                            value="{{ $negocio->conjuge->naturalidade }}">
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
+
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">GÊNERO</label>
                                         <input type="text" class="form-control" name="conj_genero"
@@ -395,7 +435,7 @@ function to_data($data)
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">FORMAÇÃO</label>
                                         <input type="text" class="form-control"
@@ -403,14 +443,26 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">PROFISSÃO/CARGO</label>
                                         <input type="text" class="form-control" name="conj_profissao"
                                             value="{{ $negocio->conjuge->profissao }}">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">NATURALIDADE</label>
+                                        <input type="text" class="form-control" name="conj_naturalidade"
+                                            value="{{ $negocio->conjuge->naturalidade }}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">RENDA LIQUIDA MENSAL</label>
                                         <input type="text" class="form-control money" name="conj_renda_liquida"
@@ -418,104 +470,177 @@ function to_data($data)
                                     </div>
                                 </div>
                             </div>
-                            <h5 class="mb-3 text-uppercase bg-warning p-2"><i class="mdi mdi-office-building me-1"></i>
+
+
+                            <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
+                                ENDEREÇO RESIDENCIAL</h5>
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">CEP</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->cep }}"
+                                            name="cep">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">RUA/AV</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->endereco }}"
+                                            name="endereco">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">NÚMERO</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->numero }}"
+                                            name="numero">
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">BAIRRO</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->bairro }}"
+                                            name="bairro">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">CIDADE</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->cidade }}"
+                                            name="cidade">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">ESTADO</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->estado }}"
+                                            name="estado">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">TELEFONE</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
+                                            name="telefone">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">TELEFONE CôNJUDE </label>
+                                        <input type="text" class="form-control"
+                                            value="{{ $negocio->conjuge->telefone }}" name="conf_telefone">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label">EMAIL</label>
+                                        <input type="text" class="form-control" value="{{ $negocio->lead->email }}"
+                                            name="email">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 DADOS DO PLANO CONTRATADO</h5>
 
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">GRUPO</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->grupo }}"
                                             name="grupo">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">COTA</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->cota }}"
                                             name="cota">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">ESPÉCIE</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->especie }}"
                                             name="especie">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">MARCA</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->marca }}"
                                             name="marca">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">MODELO</label>
                                         <input type="text" class="form-control" name="modelo"
                                             value="{{ $fechamento->modelo }}">
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">CÓDIGO DO BEM</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->codigo_bem }}"
                                             name="codigo_bem">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
+
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">PREÇO DO BEM</label>
                                         <input type="text" class="form-control money"
                                             value="{{ $fechamento->preco_bem }}" name="preco_bem">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">DURAÇÃO DO GRUPO</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->duracao_grupo }}"
                                             name="duracao_grupo">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">DURAÇÃO DO PLANO</label>
                                         <input type="text" class="form-control" name="duracao_plano"
                                             value="{{ $fechamento->duracao_plano }}">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">TIPO DO PLANO</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->tipo_plano }}"
                                             name="tipo_plano">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">PLANO LEVE (LIGHT)</label>
                                         <input type="text" class="form-control" value="{{ $fechamento->plano_leve }}"
                                             name="plano_leve">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">SEGURO PRESTAMISTA</label>
                                         <input type="text" class="form-control" name="seguro_prestamista"
                                             value="{{ $fechamento->seguro_prestamista }}">
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-md-2">
-                                    <div class="mb-2">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
                                         <label for="firstname" class="form-label">GRUPO EM FORMAÇÃO</label>
                                         <select class="form-select" name="grupo_em_formacao">
                                             <option selected value="">Selecione</option>
@@ -533,8 +658,8 @@ function to_data($data)
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="mb-2">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
                                         <label for="firstname" class="form-label">GRUPO EM ANDAMENTO</label>
                                         <select class="form-select" name="grupo_em_andamento">
                                             <option selected value="">Selecione</option>
@@ -550,14 +675,14 @@ function to_data($data)
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">Nº ASSEMBLÉIA DA ADESÃO</label>
                                         <input type="text" class="form-control" name="numero_assembleia_adesao"
                                             value="{{ $fechamento->numero_assembleia_adesao }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">DATA DA ASSEMBLÉIA</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -565,7 +690,7 @@ function to_data($data)
                                             value="{{ to_data($fechamento->data_assembleia) }}">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">DATA DO FECHAMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
@@ -574,9 +699,8 @@ function to_data($data)
 
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-3">
+
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">PAGAMENTO INCORPORADO</label>
                                         <input type="text" class="form-control"
@@ -584,15 +708,16 @@ function to_data($data)
                                             name="pagamento_incorporado">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="firstname" class="form-label">PAGAMENTO ATÉ A CONTEMPLAÇÃO</label>
+                                        <label for="firstname" class="form-label">PAGAMENTO ATÉ A
+                                            CONTEMPLAÇÃO</label>
                                         <input type="text" class="form-control"
                                             value="{{ $fechamento->pagamento_ate_contemplacao }}"
                                             name="pagamento_ate_contemplacao">
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">TABELA</label>
 
@@ -612,18 +737,18 @@ function to_data($data)
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <div class="mb-3">
-                                            <label for="firstname" class="form-label">NUMERO DO CONTRATO</label>
-                                            <input type="text" class="form-control" name="numero_contrato"
-                                                value="{{ $fechamento->numero_contrato }}">
-                                        </div>
+
+                                        <label for="firstname" class="form-label">NUMERO DO CONTRATO</label>
+                                        <input type="text" class="form-control" name="numero_contrato"
+                                            value="{{ $fechamento->numero_contrato }}">
+
                                     </div>
                                 </div>
                             </div>
 
-                            <h5 class="mb-3 text-uppercase bg-warning p-2"><i class="mdi mdi-office-building me-1"></i>
+                            <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 FORMA DE PAGAMENTO INICIAL</h5>
 
                             <div class="row">
@@ -684,7 +809,7 @@ function to_data($data)
 
                             </br>
 
-                            <div class="row">
+                            <div class="row no-print">
                                 <label for="email" class="form-label"><strong>FORMA DE PAGAMENTO DO
                                         PLANO:</strong></label>
                                 <div class="col-md-2">
@@ -721,7 +846,8 @@ function to_data($data)
                                 <div class="col-md-2">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="forma_pagamento"
-                                            id="forma_pagamento" value="fgts" <?php if ($fechamento->forma_pagamento ==
+                                            id="forma_pagamento" value="fgts" <?php if ($fechamento->forma_pagamento
+                                        ==
                                         'debito') {
                                         echo 'fgts';
                                         }
@@ -756,15 +882,15 @@ function to_data($data)
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row no-print">
                                 <label class="form-check-label" for="forma_pagamento">COMENTÁRIOS</label>
                                 <div class="col-md-12">
                                     <textarea class="form-check-input" type="radio" name="comentarios" rows="20"
                                         cols="100"><textarea></textarea>
                                 </div>
                             </div>
-                            <div class="row">
-                                <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i
+                            <div class="row no-print">
+                                <h5 class="mb-3 text-uppercase text-white bg-success p-2"><i
                                         class="mdi mdi-office-building me-1"></i> INFORMAÇÕES DO COMERCIAL</h5>
                                 <div class="col-md-4">
                                     <label for="task-title" class="form-label">Primeiro Vendedor</label>
@@ -812,7 +938,9 @@ function to_data($data)
                                     </select>
                                 </div>
                             </div>
-                            <div class="row" hidden>
+                            {{--
+                            TODO isso será definido na aba de borderô
+                            <div class="row no-print">
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">COMISSÃO VENDEDOR 1</label>
@@ -831,12 +959,14 @@ function to_data($data)
                                         <input type="text" class="form-control" value="">
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             </br>
-                            <h5 class="mb-3 text-uppercase bg-success p-2"><i class="mdi mdi-office-building me-1"></i>
+                            <h5 class="mb-3 text-uppercase text-white bg-success p-2 no-print"><i
+                                    class="mdi mdi-office-building me-1"></i>
                                 CHECAGEM DO ADMINISTRATIVO</h5>
-                            <div class="row">
-                                <label for="email" class="form-label"><strong>:</strong></label>
+
+                            <div class="row hidden-print no-print">
+
                                 <div class="col-md-2">
                                     <div class="form-check form-switch">
                                         <input class="form-check-input" type="checkbox" name="doc_consorciado" <?php if
@@ -844,7 +974,7 @@ function to_data($data)
                                         echo 'checked';
                                         } ?>>
                                         <label class="form-label form-check-label"
-                                            for="flexSwitchCheckDefault">DOCUMENTO CONSÓRCIADO</label>
+                                            for="flexSwitchCheckDefault">DOCUMENTO</label>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
@@ -920,9 +1050,16 @@ function to_data($data)
                                 </br>
                             </div>
                             <input name="negocio_id" value="{{ app('request')->id }}" hidden>
-                            <div class="text-end">
 
+                            <div class="text-center mt-sm-0 mt-3 text-sm-start no-print">
+                                @if( config('broadcast_fechamento') == "true")
+                                <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
+                                        class="mdi mdi-content-save"></i> Notificar Venda
+                                </button>
+                                @endif
+                            </div>
 
+                            <div class="text-end no-print">
                                 <div class="btn-group mt-2">
                                     <select class="form-select primary" name="status">
 
@@ -940,11 +1077,6 @@ function to_data($data)
                                     </select>
                                 </div>
 
-                                @if( config('broadcast_fechamento') == "true")
-                                <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
-                                        class="mdi mdi-content-save"></i> Notificar Venda
-                                </button>
-                                @endif
 
 
                                 <button type="text" class="btn btn-info mt-2" id="gerar_protocolo"><i
@@ -961,7 +1093,21 @@ function to_data($data)
                 </div> <!-- end card body -->
             </div> <!-- end card -->
         </div> <!-- end col -->
+        <div class="row">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4" style="text-align: center;">
+                <div class="signature-line"></div>
+                <h5>ASSINATURA DO CONSORCIADO</h5>
+                <p>({{$negocio->lead->nome;}})</p>
+            </div>
+            <div class="col-md-4">
+            </div>
+        </div>
+
+
     </div>
+
     <!-- end row-->
 
 </div>
@@ -1096,7 +1242,15 @@ function to_data($data)
         
         function PrintElement() {
 
+            //var printContents = document.getElementById('areaprint').innerHTML;
+            //var originalContents = document.body.innerHTML;
+           // var clientName = "{{$negocio->lead->nome;}}"
+       
+            
+            
+            
             print();
+            //document.body.innerHTML = originalContents;
         }
 </script>
 @endsection

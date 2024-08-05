@@ -50,7 +50,7 @@
     <!-- end page title -->
 
     <div class="row container_exp" id="container"
-        data-containers='["semequipe","<?php echo implode('","', $equipes->pluck(' nome')->toArray()); ?>"]'>
+        data-containers='["semequipe","<?php echo implode('","', $equipes->pluck('nome')->toArray()); ?>"]'>
         <div class="col-md-3">
             <div class="row" style="padding-top: 20px;">
                 <div class="col-md-12">
@@ -170,11 +170,11 @@
                             <select class="form-select form-control-light" id="task-priority" name="lider_id">
                                 @foreach ($semequipes as $user)
                                 @if ($user->hasRole('gerenciar_equipe'))
-                                    @if ($user->id == \Auth::user()->id)
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @else
-                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endif
+                                @if ($user->id == \Auth::user()->id)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @else
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endif
                                 @endif
                                 @endforeach
                             </select>
@@ -411,7 +411,7 @@
 
         function change_max_height() {
             var height__ = parseInt(document.documentElement.clientHeight) - 100;
-            console.log(height__)
+          
 
             const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
             if (isMobile) {
