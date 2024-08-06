@@ -117,7 +117,9 @@ class NegocioController extends Controller
             $dados_item = [];
 
             $vendedor = User::find($venda->primeiro_vendedor_id);
-
+            if ($vendedor->status != UserStatus::ativo) {
+                continue;
+            }
 
             $dados_item['vendedor'] = $vendedor->name;
             $dados_item['cliente'] = $venda->negocio->lead->nome;
@@ -138,7 +140,6 @@ class NegocioController extends Controller
         }
 
 
-        $clientes_aprovados = [];
         $query = [
             ['etapa_', '>=', $from],
             ['etapa_funil_id', '<=', $to],
@@ -146,13 +147,18 @@ class NegocioController extends Controller
 
         $negocios = Negocio::where('etapa_funil_id', 5)->get();
 
-        $dados[$equipe]['aprovados'] = [];
+
 
         foreach ($negocios as $negocio) {
             $dados_item = [];
 
 
             $vendedor = User::find($negocio->user_id);//($aprovacao->user_id);
+
+            if ($vendedor->status != UserStatus::ativo) {
+                continue;
+            }
+
 
 
             $dados_item['vendedor'] = $vendedor->name;
