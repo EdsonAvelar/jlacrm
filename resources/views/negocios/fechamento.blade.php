@@ -63,7 +63,7 @@ function to_data($data)
     }
 
     .header-content h1 {
-        font-size: 16px;
+        font-size: 24px;
         margin: 0;
     }
 
