@@ -118,7 +118,7 @@
 
                     @foreach ( $dados as $name => $equipes)
 
-                    @foreach ( $equipes['aprovados'] as $fechados)
+
 
 
 
@@ -217,7 +217,7 @@
                         </div>
                     </div>
 
-                    @endforeach
+
 
                     <br><br><br>
                     @endforeach
