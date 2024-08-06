@@ -101,7 +101,7 @@ function to_data($data)
     h5 {
         color: black;
         background-color: lightgrey;
-
+        border-bottom: 2px solid #000;
     }
 
     @media print {
@@ -236,6 +236,7 @@ function to_data($data)
                             <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 Informações Pessoais</h5>
 
+
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="mb-3">
@@ -367,6 +368,7 @@ function to_data($data)
                             <h5 class="mb-3 text-black text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 INFORMAÇÕES PESSOAIS DO CÔNJUDE</h5>
 
+
                             <div class="row">
                                 <div class="col-md-7">
                                     <div class="mb-3">
@@ -474,6 +476,7 @@ function to_data($data)
 
                             <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 ENDEREÇO RESIDENCIAL</h5>
+
 
                             <div class="row">
                                 <div class="col-md-3">
@@ -750,6 +753,7 @@ function to_data($data)
 
                             <h5 class="mb-3 text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
                                 FORMA DE PAGAMENTO INICIAL</h5>
+
 
                             <div class="row">
                                 <div class="col-md-3">
