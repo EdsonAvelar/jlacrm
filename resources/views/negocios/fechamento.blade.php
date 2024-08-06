@@ -810,10 +810,9 @@ function to_data($data)
                                     </div>
                                 </div>
                             </div>
-
                             </br>
 
-                            <div class="row no-print">
+                            <div class="row">
                                 <label for="email" class="form-label"><strong>FORMA DE PAGAMENTO DO
                                         PLANO:</strong></label>
                                 <div class="col-md-2">
@@ -1103,7 +1102,7 @@ function to_data($data)
             <div class="col-md-4" style="text-align: center;">
                 <div class="signature-line"></div>
                 <h5>ASSINATURA DO CONSORCIADO</h5>
-                <p>({{$negocio->lead->nome;}})</p>
+                <p>{{$negocio->lead->nome;}}</p>
             </div>
             <div class="col-md-4">
             </div>

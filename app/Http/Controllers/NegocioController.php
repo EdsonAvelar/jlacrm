@@ -83,6 +83,100 @@ class NegocioController extends Controller
         return back()->with('status', 'Levantamento Salvo com sucesso');
     }
 
+    public function aprovacoes(Request $request)
+    {
+
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+
+        if (is_null($data_inicio) and is_null($data_fim)) {
+
+            if (config('data_inicio') & config('data_fim')) {
+                $data_inicio = config('data_inicio');
+                $data_fim = config('data_fim');
+            }
+
+        }
+
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+        $query = [
+            ['data_fechamento', '>=', $from],
+            ['data_fechamento', '<=', $to],
+            ['status', '<>', 'CANCELADA']
+        ];
+
+
+        $vendas = Fechamento::where($query)->get();
+
+        $dados = [];
+
+        foreach ($vendas as $venda) {
+            $dados_item = [];
+
+            $vendedor = User::find($venda->primeiro_vendedor_id);
+
+
+            $dados_item['vendedor'] = $vendedor->name;
+            $dados_item['cliente'] = $venda->negocio->lead->nome;
+            $dados_item['credito'] = $venda->valor;
+
+            $equipe = "Sem Equipe";
+            if ($vendedor->equipe) {
+                $equipe = $vendedor->equipe->descricao;
+            }
+
+            if (!array_key_exists($equipe, $dados)) {
+                $dados[$equipe]['fechados'] = [];
+                $dados[$equipe]['aprovados'] = [];
+            }
+
+            array_push($dados[$equipe]['fechados'], $dados_item);
+
+        }
+
+
+        $clientes_aprovados = [];
+        $query = [
+            ['etapa_', '>=', $from],
+            ['etapa_funil_id', '<=', $to],
+        ];
+
+        $negocios = Negocio::where('etapa_funil_id', 5)->get();
+
+        $dados[$equipe]['aprovados'] = [];
+
+        foreach ($negocios as $negocio) {
+            $dados_item = [];
+
+
+            $vendedor = User::find($negocio->user_id);//($aprovacao->user_id);
+
+
+            $dados_item['vendedor'] = $vendedor->name;
+            $dados_item['cliente'] = $negocio->lead->nome;
+            $dados_item['credito'] = $negocio->valor;
+
+            $equipe = "Sem Equipe";
+            if ($vendedor->equipe) {
+                $equipe = $vendedor->equipe->descricao;
+            }
+
+            if (!array_key_exists($equipe, $dados)) {
+                $dados[$equipe]['fechados'] = [];
+                $dados[$equipe]['aprovados'] = [];
+            }
+
+
+            array_push($dados[$equipe]['aprovados'], $dados_item);
+        }
+
+
+        return view('negocios.aprovacoes', compact('dados'));
+    }
+
     public function importar_upload(Request $request)
     {
 
@@ -171,9 +265,9 @@ class NegocioController extends Controller
             return back()->with('status', $imported . ' negocios importados com sucesso. ' . $negocios_rejeitados . ' rejeitados por duplicidade');
         } else {
             if ($negocios_rejeitados > 0) {
-                return back()->with('status_error','Todos foram rejeitados por duplicidade');
+                return back()->with('status_error', 'Todos foram rejeitados por duplicidade');
             } else {
-                return back()->with('status_error','Erro ao ler o csv. Cheque se estava no formato correto');
+                return back()->with('status_error', 'Erro ao ler o csv. Cheque se estava no formato correto');
             }
         }
     }

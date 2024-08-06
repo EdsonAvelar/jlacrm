@@ -8,6 +8,7 @@ use Carbon\Carbon;
 <head>
 
     <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
 
     <meta name="facebook-domain-verification" content="2v42l4jph9cgfkrorr6gejjod4bqx6" />
@@ -159,8 +160,12 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":false,
-    "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'>
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":{{
+    config("menu_condensed_".Auth::User()->id) }},
+    "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'
+
+
+    >
 
     <!-- Player de música HTML5 -->
     <audio id="musicPlayer">
@@ -197,7 +202,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
             <a class="logo_consensed logo text-center logo-light open-left">
                 <span class="logo-lg">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" class="open-left" alt=""
+                        height="32">
                 </span>
                 <span class="logo-sm">
                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
@@ -216,8 +222,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                 <!--- Sidemenu -->
                 <ul class="side-nav">
-
-
 
                     <li class="side-nav-item">
                         <?php
@@ -634,6 +638,12 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script type="text/javascript">
+        $.ajaxSetup({
+            headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        
         window.setTimeout(function() {
             $(".alert").fadeTo(500, 0).slideUp(500, function() {
                 $(this).remove();
@@ -777,7 +787,50 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         $('.money').mask('000.000.000.000.000,00', {
             reverse: true
         });
+
+
+        
+
+        function save_config(config_info, config_value, alert=true) {
+
+            info = [];
+            info[0] = config_info;
+            info[1] = config_value;
+
+            $.ajax({
+                url: "{{ url('empresa/config') }}",
+                type: 'post',
+                data: {
+                    info: info
+                },
+                Type: 'json',
+                success: function(res) {
+
+                if (alert){
+                console.log(res)
+                    showAlert({
+                    message: res,
+                    class: "success"
+                    });
+                }
+                   
+                },
+                error: function(res) {
+
+                if (alert){
+                    console.log(res)
+                    showAlert({
+                        message: res,
+                        class: "danger"
+                    });
+
+                }
+                   
+                },
+            });
+        }
     </script>
+
 
 
 
@@ -807,13 +860,20 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         "hideMethod": "fadeOut"
     }
 
-    $('.logo_consensed').on('click', function() {
+    $('.logo_consensed').on('click', function() { 
 
-        if ($("body").attr("data-leftbar-compact-mode")) {
+
+
+        if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
+
             $("body").attr("data-leftbar-compact-mode", "not_condensed");
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'false', false)
         } else {
             $("body").attr("data-leftbar-compact-mode", "condensed");
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", "true", false)
         }
+
+        
 
     });
 
@@ -832,7 +892,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }     
 
     // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        Pusher.logToConsole = false;
     
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
           cluster: 'sa1'

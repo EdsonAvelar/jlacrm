@@ -907,11 +907,7 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
-    $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+
 
         function image_save($folder, $imgname) {
 
@@ -921,35 +917,7 @@ vermelho mais do que 5 dias parados
             $('#change_logo').modal('show');
         }
 
-        function save_config(config_info, config_value) {
 
-
-            info = [];
-            info[0] = config_info;
-            info[1] = config_value;
-
-            $.ajax({
-                url: "{{ url('empresa/config') }}",
-                type: 'post',
-                data: {
-                    info: info
-                },
-                Type: 'json',
-                success: function(res) {
-                    showAlert({
-                    message: res,
-                    class: "success"
-                    });
-                },
-                error: function(res) {
-                    console.log(res);
-                    showAlert({
-                        message: res,
-                        class: "danger"
-                    });
-                },
-            });
-        }
 
         $('.toggle-event').change(function($this) {
 

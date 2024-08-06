@@ -134,6 +134,11 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/add_reuniao', [NegocioController::class, 'add_reuniao']);
             Route::post('/add_aprovacao', [NegocioController::class, 'add_aprovacao']);
             Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);
+
+            Route::get('/aprovacoes', [NegocioController::class, 'aprovacoes']);
+
+
+
         }
     );
 
