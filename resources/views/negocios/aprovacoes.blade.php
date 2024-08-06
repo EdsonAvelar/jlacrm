@@ -303,7 +303,7 @@
                                         <tr>
                                             <td>{{$aprovados['vendedor']}}</td>
                                             <td>{{$aprovados['cliente']}}</td>
-                                            <td>R$ {{ number_format( $aprovados['credito'], 2, ',', '.') }} </td>
+                                            <td>R$ {{ number_format( (float)$aprovados['credito'], 2, ',', '.') }} </td>
 
                                             <td>Comentario</td>
                                             <?php $total_aprovados = $total_aprovados + (float)$aprovados['credito'];?>
