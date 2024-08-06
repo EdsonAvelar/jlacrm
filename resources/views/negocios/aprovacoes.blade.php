@@ -115,12 +115,7 @@
             <div class="card">
                 <div class="card-body left">
 
-
                     @foreach ( $dados as $name => $equipes)
-
-
-
-
 
                     <div class="row">
                         <div class="col-md-4" style="padding: 0px;">
@@ -143,6 +138,11 @@
                                 <tbody>
                                     <?php 
                                             $total_fechados = 0;
+
+                                            
+                                            $maximo = max(count($equipes['fechados']), count( $equipes['aprovados'] ) );
+                                            $rows = 0;
+
                                             ?>
                                     @foreach ( $equipes['fechados'] as $fechados)
 
@@ -156,13 +156,26 @@
 
                                     </tr>
 
+                                    <?php $rows = $rows + 1; ?>
+
+
                                     @endforeach
 
+                                    @if ($rows < $maximo) @for ($i=1; $i < $maximo; $i++) <tr>
+                                        <td><span></span></td>
+                                        <td><span style="color: white">|</span></td>
+                                        <td><span></span></td>
+                                        </tr>
 
-                                    <tr>
-                                        <th colspan="2">TOTAL FECHADO</th>
-                                        <td colspan="1">R$ {{ number_format($total_fechados, 2, ',', '.') }}</td>
-                                    </tr>
+                                        @endfor
+
+                                        @endif
+
+
+                                        <tr>
+                                            <th colspan="2">TOTAL FECHADO</th>
+                                            <td colspan="1">R$ {{ number_format($total_fechados, 2, ',', '.') }}</td>
+                                        </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -192,6 +205,8 @@
 
                                     <?php 
                                                                                 $total_aprovados = 0;
+                                                                                $maximo = max(count($equipes['fechados']), count( $equipes['aprovados'] ) );
+                                            $rows = 0;
                                                                                 ?>
                                     @foreach ( $equipes['aprovados'] as $aprovados)
 
@@ -203,13 +218,28 @@
                                         <td>Comentario</td>
                                         <?php $total_aprovados = $total_aprovados + (float)$aprovados['credito'];?>
                                     </tr>
-                                    @endforeach
-                                    <tr>
-                                        <th colspan="2" class="warning">TOTAL PLANTADO</th>
-                                        <td colspan="1">R$ {{ number_format($total_aprovados, 2, ',', '.') }}</td>
 
-                                        <td></td>
-                                    </tr>
+                                    <?php $rows = $rows + 1; ?>
+                                    @endforeach
+
+
+                                    @if ($rows < $maximo) @for ($i=1; $i < $maximo; $i++) <tr>
+                                        <td><span></span></td>
+                                        <td><span style="color: white">|</span></td>
+                                        <td><span></span></td>
+                                        </tr>
+
+                                        @endfor
+
+                                        @endif
+
+
+                                        <tr>
+                                            <th colspan="2" class="warning">TOTAL PLANTADO</th>
+                                            <td colspan="1">R$ {{ number_format($total_aprovados, 2, ',', '.') }}</td>
+
+                                            <td></td>
+                                        </tr>
                                 </tbody>
                             </table>
 
