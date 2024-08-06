@@ -116,6 +116,7 @@
                 <div class="card-body left">
 
                     @foreach ( $dados as $name => $equipes)
+                    
 
                     <div class="row">
                         <div class="col-md-4" style="padding: 0px;">
@@ -141,6 +142,7 @@
 
                                             
                                             $maximo = max(count($equipes['fechados']), count( $equipes['aprovados'] ) );
+                                           
                                             $rows = 0;
 
                                             ?>
@@ -151,17 +153,16 @@
                                         <td>{{$fechados['cliente']}}</td>
                                         <td>R$ {{ number_format( (float)$fechados['credito'], 2, ',', '.') }}</td>
                                         <?php 
-                                                    $total_fechados = $total_fechados + (float)$fechados['credito'];
-                                                ?>
-
+                                                        $total_fechados = $total_fechados + (float)$fechados['credito'];
+                                                    ?>
                                     </tr>
 
                                     <?php $rows = $rows + 1; ?>
-
-
                                     @endforeach
 
-                                    @if ($rows < $maximo) @for ($i=1; $i < $maximo; $i++) <tr>
+                                   
+
+                                    @if ($rows < $maximo) @for ($i=0; $i < $maximo - $rows; $i++) <tr>
                                         <td><span></span></td>
                                         <td><span style="color: white">|</span></td>
                                         <td><span></span></td>
@@ -204,8 +205,9 @@
                                 <tbody>
 
                                     <?php 
-                                                                                $total_aprovados = 0;
-                                                                                $maximo = max(count($equipes['fechados']), count( $equipes['aprovados'] ) );
+                                            $total_aprovados = 0;
+                                            $maximo = max(count($equipes['fechados']), count( $equipes['aprovados'] ) );
+                                            
                                             $rows = 0;
                                                                                 ?>
                                     @foreach ( $equipes['aprovados'] as $aprovados)
@@ -223,7 +225,7 @@
                                     @endforeach
 
 
-                                    @if ($rows < $maximo) @for ($i=1; $i < $maximo; $i++) <tr>
+                                    @if ($rows < $maximo) @for ($i=0; $i < $maximo - $rows; $i++) <tr>
                                         <td><span></span></td>
                                         <td><span style="color: white">|</span></td>
                                         <td><span></span></td>
