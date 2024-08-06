@@ -311,6 +311,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
                                 </li>
 
+                                <li>
+                                    <a href="{{ route('negocios.aprovacoes') }}">Aprovações</a>
+                                </li>
+
                                 @if (Auth::user()->hasAnyRole(['importar_leads']))
                                 <li>
                                     <a href="{{ route('importar.negocios.index') }}">Importar</a>
