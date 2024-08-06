@@ -160,12 +160,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":{{
-    config("menu_condensed_".Auth::User()->id) }},
-    "leftSidebarScrollable":false,"darkMode":false, "showRightSidebarOnStart": true}'
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":"{{
+    config('menu_condensed_'.Auth::User()->id) }}","leftSidebarScrollable":false,"darkMode":false,
+    "showRightSidebarOnStart": true}' >
 
 
-    >
 
     <!-- Player de música HTML5 -->
     <audio id="musicPlayer">
