@@ -29,8 +29,6 @@ class NegocioController extends Controller
     {
         $negocios_importados = NegocioImportado::all();
 
-        //$users = User::all();
-
         $users = User::where('status', UserStatus::ativo)->pluck('name', 'id');
 
         #TODO Se um dia tiver mais de um funil
@@ -83,6 +81,31 @@ class NegocioController extends Controller
         return back()->with('status', 'Levantamento Salvo com sucesso');
     }
 
+    public function aprovacoes_update(Request $request)
+    {
+        $input = $request->input();
+        $negocio_id = $input['id'];
+        $field = $input['field'];
+        $valor = $input['value'];
+
+        if ($field == "aprovados") {
+            $negocio = Negocio::find($negocio_id);
+            $negocio->valor = $valor;
+            $negocio->save();
+        } else {
+
+            $negocio = Negocio::find($negocio_id);
+
+            $venda = Fechamento::find($negocio->fechamento_id);
+
+            $venda->valor = $valor;
+            $venda->save();
+        }
+
+
+        return ['Aprovações Atualizadas com Sucesso'];
+
+    }
     public function aprovacoes(Request $request)
     {
 
@@ -124,6 +147,11 @@ class NegocioController extends Controller
             $dados_item['vendedor'] = $vendedor->name;
             $dados_item['cliente'] = $venda->negocio->lead->nome;
             $dados_item['credito'] = $venda->valor;
+            $dados_item['negocio_id'] = $venda->negocio->id;
+
+
+
+
 
             $equipe = "Sem Equipe";
             if ($vendedor->equipe) {
@@ -139,7 +167,6 @@ class NegocioController extends Controller
 
         }
 
-
         $query = [
             ['etapa_', '>=', $from],
             ['etapa_funil_id', '<=', $to],
@@ -148,10 +175,8 @@ class NegocioController extends Controller
         $negocios = Negocio::where('etapa_funil_id', 5)->get();
 
 
-
         foreach ($negocios as $negocio) {
             $dados_item = [];
-
 
             $vendedor = User::find($negocio->user_id);//($aprovacao->user_id);
 
@@ -159,11 +184,29 @@ class NegocioController extends Controller
                 continue;
             }
 
-
-
             $dados_item['vendedor'] = $vendedor->name;
             $dados_item['cliente'] = $negocio->lead->nome;
             $dados_item['credito'] = $negocio->valor;
+            $dados_item['negocio_id'] = $negocio->id;
+
+            $comentario = '';
+
+            if ($negocio->comentarios()) {
+
+                if (!$negocio->comentarios->isEmpty()) {
+
+                    $coment = $negocio->comentarios->sortDesc()->first();
+                    if ($coment) {
+                        $comentario = $coment->comentario;
+                    }
+
+                }
+
+
+            }
+
+            $dados_item['comentario'] = $comentario;
+
 
             $equipe = "Sem Equipe";
             if ($vendedor->equipe) {

@@ -136,6 +136,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/get_agendamento', [NegocioController::class, 'get_agendamento']);
 
             Route::get('/aprovacoes', [NegocioController::class, 'aprovacoes'])->name('negocios.aprovacoes');
+            Route::post('/aprovacoes/update', [NegocioController::class, 'aprovacoes_update']);
             ;
 
 

@@ -246,8 +246,7 @@ $protocolo_hora = 0;
                         </li>
                     </ul>
                 </div>
-                <a class="button-menu-mobile open-left"><span class="uil-scroll-h"></span>
-                </a>
+
                 <h4 class="page-title" style="line-height: 110px">Negócios
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model"
                         class="btn btn-success btn-sm ms-3">+ Add</a>
@@ -288,7 +287,24 @@ $protocolo_hora = 0;
                         @if (isset($negocios))
                         @foreach ($negocios->where('etapa_funil_id', $key) as $negocio)
                         <?php $date = \Carbon\Carbon::parse($negocio->updated_at);
-                                        $last_update = $date->diffInDays(\Carbon\Carbon::now('America/Sao_Paulo')); ?>
+                                        $last_update = $date->diffInDays(\Carbon\Carbon::now('America/Sao_Paulo')); 
+                                    
+
+                                    if (EtapaFunil::where('id', $key)->first()->nome == "FECHAMENTO"){
+                                        $fechamento_visible = '';
+                                    }else {
+                                         $fechamento_visible = 'none';
+                                    }  
+
+                                    if (EtapaFunil::where('id', $key)->first()->nome == "REUNIAO"){
+                                        $proposta_visible = '';
+                                    }else {
+                                        $proposta_visible = 'none';
+                                    }
+                                        
+                                        ?>
+
+
 
                         @include('templates.crm_card', [
                         'titulo' => $negocio->titulo,
@@ -299,6 +315,8 @@ $protocolo_hora = 0;
                         'last_update' => $last_update,
                         'telefone' => $negocio->lead->telefone,
                         'whatsapp' => $negocio->lead->whatsapp,
+                        'fechamento' => "{{ $fechamento_visible }}",
+                        'proposta' => "{{$proposta_visible}}"
                         ])
                         @endforeach
                         @endif
@@ -922,6 +940,25 @@ $protocolo_hora = 0;
                     dragek.cancel(true);
                 }
 
+            } else if (target.getAttribute('data-etapa') == "FECHAMENTO") {
+
+                $.ajax({
+                    url: "{{ url('negocios/drag_update') }}",
+                    type: 'post',
+                    data: {
+                    info: info
+                    },
+                    Type: 'json',
+                    success: function(res) {},
+                    complete: function() {
+                    
+                    }
+                });
+
+                window.location.href = "{{ url('negocios/fechamento?id=') }}"+info[0];
+
+                
+            
             } else {
 
                 $.ajax({

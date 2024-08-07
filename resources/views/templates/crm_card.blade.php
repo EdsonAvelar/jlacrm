@@ -46,15 +46,19 @@ if (app('request')->view_card == 'compact') {
 
                     @if ($negocio->status == 'ATIVO')
 
-                    <a href="{{ route('negocios.simulacao', ['negocio_id' => $negocio->id]) }}" class="dropdown-item"><i
-                            class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
+                    <a href="{{ route('negocios.simulacao', ['negocio_id' => $negocio->id]) }}"
+                        class="dropdown-item"><i class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
+
+                    <a href="{{ route('simulacao.index', ['negocio_id' => $negocio->id]) }}" class="dropdown-item"><i
+                            class="mdi mdi-file-document-multiple me-1"></i>Multi Proposta</a>
 
 
                     @endif
 
                     <hr>
                     @if ($negocio->status == 'ATIVO')
-                    <a href="{{ route('negocio_fechamento', ['id' => $negocio_id]) }}"
+                    <a style="display: {{$fechamento_visible}}"
+                        href="{{ route('negocio_fechamento', ['id' => $negocio_id]) }}"
                         class="dropdown-item ganhou_button"><i class="dripicons-thumbs-up"></i><span
                             class="text-success"> Fechamento</span></a>
 
