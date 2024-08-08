@@ -98,21 +98,6 @@ class BarChartRacingController extends Controller
         $data_fim = config('data_fim');
 
 
-        // $data_inicio = $request->query('data_inicio');
-        // $data_fim = $request->query('data_fim');
-
-        // if (is_null($data_inicio) and is_null($data_fim)) {
-
-        //     $dia = intval(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d'));
-        //     if ($dia <= 20) {
-        //         $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
-        //     } else {
-        //         $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->format('m/Y'));
-        //     }
-
-        //     $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
-        //     return \Redirect::route('home', array('data_inicio' => $data_inicio, 'data_fim' => $data_fim));
-        // }
 
         $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
         $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
@@ -125,7 +110,8 @@ class BarChartRacingController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['primeiro_vendedor_id', '=', $vendedor->id]
+                ['primeiro_vendedor_id', '=', $vendedor->id],
+                ['status', '<>', 'CANCELADA']
             ];
 
             $vendas_totais = Fechamento::where($query)->sum('valor');
@@ -172,7 +158,7 @@ class BarChartRacingController extends Controller
 
             array_push($output, $user_info);
         }
-        
+
 
         return $output;
     }
