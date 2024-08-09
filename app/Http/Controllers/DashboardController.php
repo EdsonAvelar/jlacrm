@@ -406,6 +406,7 @@ class DashboardController extends Controller
             $totalValor = DB::table('negocios')
                 ->join('users', 'negocios.user_id', '=', 'users.id')
                 ->where('negocios.status', NegocioStatus::ATIVO)
+                ->where('negocios.etapa_funil_id', 5)
                 ->where('users.status', UserStatus::ativo) // Certifique-se de que `UsuarioStatus::ATIVO` é o status ativo para o usuário
                 ->sum('negocios.valor');
 
