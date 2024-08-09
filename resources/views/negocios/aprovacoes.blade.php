@@ -185,7 +185,7 @@ function formatString($input) {
                     <div class="row">
                         <div class="col-md-6">
                             <div class="container2">
-                                @if ($dados_equipe[$name])
+                                @if (array_key_exists($name, $dados_equipe))
                                 <img class="equipelogo"
                                     src="{{ url('') }}/images/equipes/{{ $dados_equipe[$name]['id'] }}/{{ $dados_equipe[$name]['logo'] }}"
                                     alt="">
@@ -195,11 +195,6 @@ function formatString($input) {
                             </div>
                         </div>
                         <div class="col-md-2">
-
-
-
-
-
 
                         </div>
                         <div class="col-md-4"></div>
