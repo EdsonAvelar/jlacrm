@@ -404,7 +404,6 @@ class DashboardController extends Controller
             $stats['leads_ativos'] = Negocio::where('status', NegocioStatus::ATIVO)->count();
 
             $totalValor = DB::table('negocios')
-                ->where('negocios.status', NegocioStatus::ATIVO)
                 ->where('negocios.etapa_funil_id', 5)
                 ->sum('negocios.valor');
 
