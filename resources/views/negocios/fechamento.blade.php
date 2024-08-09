@@ -506,42 +506,42 @@ function to_data($data)
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">BAIRRO</label>
+                                        <label for="district" class="form-label">BAIRRO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->bairro }}"
                                             name="bairro">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">CIDADE</label>
+                                        <label for="city" class="form-label">CIDADE</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->cidade }}"
                                             name="cidade">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">ESTADO</label>
+                                        <label for="state" class="form-label">ESTADO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->estado }}"
                                             name="estado">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">TELEFONE</label>
+                                        <label for="phone" class="form-label">TEL 1</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
                                             name="telefone">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">TELEFONE CôNJUGE </label>
+                                        <label for="phone" class="form-label">TEL 2 </label>
                                         <input type="text" class="form-control"
                                             value="{{ $negocio->conjuge->telefone }}" name="conf_telefone">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">EMAIL</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->email }}"
