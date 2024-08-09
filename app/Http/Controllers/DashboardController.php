@@ -159,7 +159,7 @@ class DashboardController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
 
             ];
             $vendas_totais = Fechamento::where($query)->whereIn('primeiro_vendedor_id', $ids)->sum('valor');
@@ -304,7 +304,7 @@ class DashboardController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
 
             ];
             $vendas_totais = Fechamento::where($query)->sum('valor');
@@ -391,7 +391,7 @@ class DashboardController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
             ];
 
             $vendas_totais = Fechamento::where($query)->sum('valor');
@@ -520,7 +520,7 @@ class DashboardController extends Controller
                     ['data_fechamento', '>=', $from],
                     ['data_fechamento', '<=', $to],
                     ['primeiro_vendedor_id', '=', $vendedor->id],
-                    ['status', '<>', 'CANCELADA']
+                    ['status', '=', 'FECHADA']
                 ];
 
                 $vendas_totais = Fechamento::where($query)->sum('valor');
@@ -571,7 +571,7 @@ class DashboardController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
             ];
 
 
@@ -691,7 +691,7 @@ class DashboardController extends Controller
                     ['data_fechamento', '>=', $from],
                     ['data_fechamento', '<=', $to],
                     ['primeiro_vendedor_id', '=', $vendedor->id],
-                    ['status', '<>', 'CANCELADA']
+                    ['status', '=', 'FECHADA']
                 ];
 
                 $vendas_totais = Fechamento::where($query)->sum('valor');

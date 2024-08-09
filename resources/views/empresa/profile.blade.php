@@ -147,7 +147,7 @@
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png"
                                                         class="rounded-circle avatar-lg img-thumbnail"
-                                                        alt="profile-image">
+                                                        alt="Logo Circular">
                                                 </a></p>
 
                                         </div> <!-- end card-body -->
@@ -164,7 +164,7 @@
                                                     onclick="image_save('logos','/empresa_logo_transparente.png')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png"
-                                                        class="avatar-lx img-thumbnail" alt="profile-image">
+                                                        class="avatar-lx img-thumbnail" alt="Logo Horizontal">
                                                 </a></p>
 
                                         </div> <!-- end card-body -->
@@ -179,7 +179,7 @@
                                             <p><a href="#" onclick="image_save('logos','/empresa_logo_horizontal.png')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/logos/empresa_logo_horizontal.png"
-                                                        class="avatar-lx img-thumbnail" alt="profile-image">
+                                                        class="avatar-lx img-thumbnail" alt="Logo Horizontal">
                                                 </a></p>
 
                                         </div> <!-- end card-body -->
@@ -194,8 +194,22 @@
                                             <p><a href="#" onclick="image_save('logos','/favicon.ico')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/logos/favicon.ico"
-                                                        class="rounded-circle avatar-lg img-thumbnail"
-                                                        alt="profile-image">
+                                                        class="rounded-circle avatar-lg img-thumbnail" alt="Logo Icone">
+                                                </a></p>
+
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end card -->
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <h5>Marga D'Agua - 1000px x 1000px (PNG) </h5>
+                                        <div class="card-body">
+
+                                            <p><a href="#" onclick="image_save('logos','/marcadagua.png')"
+                                                    class="text-muted font-14">
+                                                    <img src="{{ url('') }}/images/empresa/logos/marcadagua.png"
+                                                        class="avatar-lx img-thumbnail" alt="Marca D'Agua">
                                                 </a></p>
 
                                         </div> <!-- end card-body -->
@@ -907,9 +921,7 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
-
-
-        function image_save($folder, $imgname) {
+    function image_save($folder, $imgname) {
 
             $('#pasta_imagem').val($folder);
             $('#imagem_name').val($imgname);

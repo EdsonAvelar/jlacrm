@@ -22,6 +22,8 @@ use App\Models\Levantamento;
 use App\Events\NewSaleEvent;
 use Auth;
 use Carbon\Carbon;
+use App\Enums\VendaStatus;
+use App\Enums\NegocioStatus;
 
 class NegocioController extends Controller
 {
@@ -128,7 +130,7 @@ class NegocioController extends Controller
         $query = [
             ['data_fechamento', '>=', $from],
             ['data_fechamento', '<=', $to],
-            ['status', '<>', 'CANCELADA']
+            ['status', '=', 'FECHADA']
         ];
 
 
@@ -152,8 +154,6 @@ class NegocioController extends Controller
             $vendas = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->get();
 
         }
-
-
 
         $dados = [];
         $dados_equipe = [];
@@ -195,7 +195,7 @@ class NegocioController extends Controller
 
         if (Auth::user()->hasRole("admin")) {
 
-            $negocios = Negocio::where('etapa_funil_id', 5)->get();
+            $negocios = Negocio::where('etapa_funil_id', 5)->where('status', NegocioStatus::ATIVO)->get();
 
         } else if (Auth::user()->hasRole("gerenciar_equipe")) {
 
@@ -209,7 +209,7 @@ class NegocioController extends Controller
 
             array_push($ids, \Auth::user()->id);
 
-            $negocios = Negocio::whereIn('user_id', $ids)->where('etapa_funil_id', 5)->get();
+            $negocios = Negocio::whereIn('user_id', $ids)->where('etapa_funil_id', 5)->where('status', NegocioStatus::ATIVO)->get();
         }
 
 
@@ -476,6 +476,8 @@ class NegocioController extends Controller
             $fechamento = new Fechamento();
             $fechamento->data_fechamento = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
             $fechamento->valor = $negocio->valor;
+
+            $fechamento->status = VendaStatus::RASCUNHO;
 
             $negocio->conjuge_id = $conjuge->id;
         }

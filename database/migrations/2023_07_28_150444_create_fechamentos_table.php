@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use App\Enums\VendaStatus;
 
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -19,7 +18,7 @@ return new class extends Migration
             $table->increments('id');
 
             $table->string('data_fechamento')->nullable();
-            $table->enum('status', VendaStatus::all());
+            $table->string('status')->nullable();
 
             //DADOS DO PLANO CONTRATADO
             $table->string('especie')->nullable();
@@ -88,7 +87,7 @@ return new class extends Migration
      */
     public function down()
     {
-        
+
         Schema::dropIfExists('fechamentos');
     }
 };

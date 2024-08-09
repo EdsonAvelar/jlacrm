@@ -94,15 +94,30 @@ function to_data($data)
         margin-top: 20px;
     }
 
-    #areaprint {
-        background: white;
-    }
+
 
     h5 {
         color: black;
         background-color: #bdd3f3;
         border-bottom: 2px solid #000;
     }
+
+    .card-body {
+        position: relative;
+        background-image: url('{{ asset("/images/empresa/logos/marcadagua.png") }}');
+        background-size: cover;
+        background-position: center;
+        background-size: 60% 60%;
+        background-repeat: no-repeat;
+        background-color: white;
+    }
+
+    .form-control {
+        background-color: transparent !important;
+
+    }
+
+
 
     @media print {
 
@@ -143,6 +158,7 @@ function to_data($data)
 
 
     <div class="row" id="areaprint">
+
 
         <div class="header-section">
             <div class="row">
@@ -1059,6 +1075,13 @@ function to_data($data)
                                 <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
                                         class="mdi mdi-content-save"></i> Notificar Venda
                                 </button>
+
+                                <button type="text" class="btn btn-info mt-2" id="btn_notificar_venda"><i
+                                        class="mdi mdi-content-save"></i> Salvar e Notificar
+                                    Venda
+                                </button>
+                                <input type="hidden" id="notificar_venda" name="notificar_venda" value="0">
+
                                 @endif
                             </div>
 
@@ -1101,7 +1124,7 @@ function to_data($data)
             </div>
             <div class="col-md-4" style="text-align: center;">
                 <div class="signature-line"></div>
-                <h5>ASSINATURA DO CONSORCIADO</h5>
+                <h4>ASSINATURA DO CONSORCIADO</h4>
                 <p>{{$negocio->lead->nome;}}</p>
             </div>
             <div class="col-md-4">
@@ -1171,89 +1194,97 @@ function to_data($data)
     }
     });
 
-    function notificarFechamento(){
+    function copyProtocolo() {
 
-}
-         function copyProtocolo() {
+        console.log("Copy Protocolo");
 
-            console.log("Copy Protocolo");
+        var text = document.getElementById('txt_protocolo').innerText;
+        var elem = document.createElement("textarea");
+        document.body.appendChild(elem);
+        elem.value = text;
+        elem.select();
+        document.execCommand("copy");
+        document.body.removeChild(elem);
 
-            var text = document.getElementById('txt_protocolo').innerText;
-            var elem = document.createElement("textarea");
-            document.body.appendChild(elem);
-            elem.value = text;
-            elem.select();
-            document.execCommand("copy");
-            document.body.removeChild(elem);
-
-            showAlert({
-                message: "protocolo copiado",
-                class: "success"
-            });
-            $('#agendamento-protocolo').modal('hide');
-        }
-
-        $('.pfechamento').datepicker({
-            orientation: 'top',
-            todayHighlight: true,
-            format: "dd/mm/yyyy",
-            defaultDate: +7
+        showAlert({
+            message: "protocolo copiado",
+            class: "success"
         });
+        $('#agendamento-protocolo').modal('hide');
+    }
 
-        $(document).ready(function() {
-            $('.moeda').mask('000.000.000.000.000,00', {
-                reverse: true
-            });
+    $('.pfechamento').datepicker({
+        orientation: 'top',
+        todayHighlight: true,
+        format: "dd/mm/yyyy",
+        defaultDate: +7
+    });
+
+    $(document).ready(function() {
+        $('.moeda').mask('000.000.000.000.000,00', {
+            reverse: true
         });
+    });
 
-        function atribuir($negocio_id, $user_id) {
-            console.log("Atribuir " + $negocio_id + "para" + $user_id);
-        }
+    function atribuir($negocio_id, $user_id) {
+        console.log("Atribuir " + $negocio_id + "para" + $user_id);
+    }
 
-        document.getElementById('gerar_protocolo').addEventListener('click',
-            function(event) {
-                $('#fechamento-protocolo').modal('show');
-                event.preventDefault();
+    document.getElementById('gerar_protocolo').addEventListener('click',
+        function(event) {
+            $('#fechamento-protocolo').modal('show');
+            event.preventDefault();
+        });
+    
+    
+    var gerar_broadcast = document.getElementById('gerar_broadcast');
+    if (gerar_broadcast){
+        gerar_broadcast.addEventListener('click',
+        function(event) {
+            
+            event.preventDefault();
+            
+            info = [];
+            info[0] = {{$negocio->id}};
+            info[1] = {{$fechamento->primeiro_vendedor_id}};
+            
+            $.ajax({
+                url: "{{ url('vendas/notificacao') }}",
+                type: 'post',
+                data: {
+                    info: info
+                },
+                Type: 'json',
             });
-        
-        
-        var gerar_broadcast = document.getElementById('gerar_broadcast');
-        if (gerar_broadcast){
-            gerar_broadcast.addEventListener('click',
-            function(event) {
-                
-                event.preventDefault();
-                
-                info = [];
-                info[0] = {{$negocio->id}};
-                info[1] = {{$fechamento->primeiro_vendedor_id}};
-                
-                $.ajax({
-                    url: "{{ url('vendas/notificacao') }}",
-                    type: 'post',
-                    data: {
-                        info: info
-                    },
-                    Type: 'json',
-                });
-                
-                
-                });
-        }
-        
+            
+            
+            });
+    }
 
-        
-        function PrintElement() {
+    // var btn_notificar_venda = document.getElementById('btn_notificar_venda');
+    // if (btn_notificar_venda){
+    //     btn_notificar_venda.addEventListener('click',
+    //     function(event) {
+            
+              
+    //         $('#notificar_venda').val('1');
 
-            //var printContents = document.getElementById('areaprint').innerHTML;
-            //var originalContents = document.body.innerHTML;
-           // var clientName = "{{$negocio->lead->nome;}}"
-       
+    //         // Submete o formulário
+    //         $('#fechamento_vendas').submit();
+    // }
+
+    $(document).ready(function() {
+        $('#btn_notificar_venda').on('click', function() {
+            $('#notificar_venda').attr('value', '1');
             
-            
-            
-            print();
-            //document.body.innerHTML = originalContents;
-        }
+            //$('#fechamento_vendas').submit();
+        });
+    });
+
+
+    
+    function PrintElement() {
+        print();
+    }
 </script>
 @endsection

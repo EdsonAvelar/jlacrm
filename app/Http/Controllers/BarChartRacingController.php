@@ -111,7 +111,7 @@ class BarChartRacingController extends Controller
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
                 ['primeiro_vendedor_id', '=', $vendedor->id],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
             ];
 
             $vendas_totais = Fechamento::where($query)->sum('valor');

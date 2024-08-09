@@ -900,7 +900,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }     
 
     // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = false;
+        Pusher.logToConsole = true;
     
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
           cluster: 'sa1'
@@ -949,12 +949,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                 }, 20000);
                 }
            
-           }, 5000);
+           }, 10000);
 
-   
-           
-
-            
 
         });
 </script>

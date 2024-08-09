@@ -57,8 +57,6 @@ use App\Enums\VendaStatus;
     .badge {
         padding: 0.5em 0.4em !important;
     }
-
-
 </style>
 @endsection
 @section('main_content')
@@ -161,6 +159,73 @@ use App\Enums\VendaStatus;
                         </tbody>
                     </table>
                     <h2 class="text-info">Total Vendido: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h2>
+                </div>
+            </div>
+            @endif
+
+            @if (isset($vendas_rascunho) && !$vendas_rascunho->isEmpty() )
+            <div class="card">
+                <div class="card-body left">
+                    <h2 class="text-warning title">FECHAMENTO NÃO CONCLUIDO</h2>
+
+                    <table id="example" class="table w-100 nowrap">
+                        <thead>
+                            <tr class="table-light">
+                                <th>Cliente </th>
+                                <th>Contrato </th>
+                                <th>Vendedor Principal </th>
+                                <th>Vendedor Secundário</th>
+                                <th>Data Fechamento</th>
+                                <th>Primeira Assembleia</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                                                               
+                                $sum_vendas_rascunho = 0;?>
+
+                            @foreach ($vendas_rascunho as $venda)
+                            <tr>
+                                <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
+                                        $venda->negocio->lead->nome }}</a>
+                                </td>
+                                <td><a href="">{{ $venda->numero_contrato }}</a>
+                                </td>
+
+                                <td>{{ User::find($venda->primeiro_vendedor_id)->name }}</td>
+                                <td>
+                                    @if ($venda->segundo_vendedor_id)
+                                    {{ User::find($venda->segundo_vendedor_id)->name }}
+                                    @endif
+                                </td>
+
+                                <td>{{ \Carbon\Carbon::parse($venda['data_fechamento'])->format('d/m/Y') }}
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($venda['data_primeira_assembleia'])->format('d/m/Y') }}
+                                </td>
+                                <td>R$ {{ number_format((float) $venda->valor, 2, ',', '.') }}</td>
+
+                                <td>
+
+                                    <?php
+                                                                                                        
+                                       $style = 'warning';
+                                                                        
+                                       $sum_vendas_rascunho = $sum_vendas_rascunho + (float) $venda['valor'];
+                                                                        
+                                                                    ?>
+                                    <span class="badge bg-{{ $style }}">{{ $venda->status }} </span>
+                                </td>
+                            </tr>
+                            @endforeach
+
+                        </tbody>
+                    </table>
+                    <h2 class="text-warning">Total Não Finalizadas: R$ {{ number_format($sum_vendas_rascunho, 2, ',', '.') }}
+                    </h2>
                 </div>
             </div>
             @endif

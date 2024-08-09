@@ -30,7 +30,7 @@ class FechamentoController extends Controller
             $query = [
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
-                ['status', '<>', 'CANCELADA']
+                ['status', '=', 'FECHADA']
             ];
 
 
@@ -54,17 +54,35 @@ class FechamentoController extends Controller
 
         }
 
-        return view('vendas.index', compact('vendas', 'vendas_canceladas'));
+        $vendas_rascunho = null;
+        if (!is_null($data_inicio) and !is_null($data_fim)) {
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'RASCUNHO']
+            ];
+
+
+            $vendas_rascunho = Fechamento::where($query)->get();
+
+        }
+
+        return view('vendas.index', compact('vendas', 'vendas_canceladas', 'vendas_rascunho'));
     }
 
-    public function notificacao(Request $request)
+
+    private function gerar_notificacao($input)
     {
-        $input = $request->input();
 
         $id_negocio = $input['info'][0];
         $id_vendedor = $input['info'][1];
 
         $negocio = Negocio::find($id_negocio);
+
+
         $vendedor = User::find($id_vendedor);
 
 
@@ -90,6 +108,12 @@ class FechamentoController extends Controller
             event(new NewSaleEvent($data));
         }
         return back()->with('status', "Venda notificada com sucesso");
+    }
+    public function notificacao(Request $request)
+    {
+        $input = $request->input();
+
+        return $this->gerar_notificacao($input);
     }
 
 
@@ -257,6 +281,36 @@ class FechamentoController extends Controller
         ]);
 
         Atividade::add_atividade(\Auth::user()->id, "Fechamento Concluido", $negocio_id);
+
+
+        if ($input['notificar_venda']) {
+
+            $venda->status = VendaStatus::FECHADA;
+            $venda->save();
+
+            $negocio = Negocio::find($negocio_id);
+            $vendedor = User::find($venda->primeiro_vendedor_id);
+
+            $data = [
+                'vendedor' => $vendedor->name,
+                'id' => $vendedor->id,
+                'avatar' => url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar,
+                'cliente' => $negocio->lead->nome,
+                'credito' => $negocio->valor,
+                'empresa' => url('') . "/images/empresa/logos/empresa_logo_circular.png"
+            ];
+
+            if ($vendedor->equipe) {
+                $data['equipe_nome'] = $vendedor->equipe->descricao;
+                $data['equipe_id'] = $vendedor->equipe->id;
+                $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; //url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar; //$vendedor->equipe->logo;
+            }
+
+            $broadcast_fechamento = config("broadcast_fechamento");
+            if ($broadcast_fechamento == "true") {
+                event(new NewSaleEvent($data));
+            }
+        }
 
         return back()->with('status', "Venda Cadastrada com sucesso");
     }

@@ -12,14 +12,12 @@ use BenSampo\Enum\Enum;
 final class VendaStatus extends Enum
 {
     const FECHADA = 'FECHADA';
-    const ENVIADA = 'ENVIADA';
-    const TROCA_CONTRATO = 'TROCA_CONTRATO';
     const CANCELADA = 'CANCELADA';
-    const BORDERO = 'BORDERO';
-    const CHECADA = 'CHECADA';
+    const RASCUNHO = 'RASCUNHO';
 
-    public static function all(){
-        return array('FECHADA', 'ENVIADA', 'TROCA_CONTRATO', 'CANCELADA', 'CHECADA', 'BORDERO');
+    public static function all()
+    {
+        return array('FECHADA', 'CANCELADA', 'RASCUNHO');
     }
 
 }
