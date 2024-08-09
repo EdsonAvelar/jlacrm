@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row align-items-center">
-            <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">{{$name}}</h5>
+            <h5 class="text-muted fw-normal mt-0 text-truncate" >{{$name}}</h5>
                 <div class="col-12">
                     <div class="text-end">
                         

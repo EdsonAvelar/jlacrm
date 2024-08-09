@@ -113,17 +113,13 @@ function convert($frase)
 
 
             @if ($proposta->tipo == 'IMOVEL')
-                <img align="right" class="mascote-img"
-                    src="{{ url('') }}/images/empresa/proposta/imovel.png"></img>
+            <img align="right" class="mascote-img" src="{{ url('') }}/images/empresa/proposta/imovel.png"></img>
             @elseif ($proposta->tipo == 'veículo')
-                <img align="right" class="mascote-img"
-                    src="{{ url('') }}/images/empresa/proposta/veiculo.png"></img>
+            <img align="right" class="mascote-img" src="{{ url('') }}/images/empresa/proposta/veiculo.png"></img>
             @elseif ($proposta->tipo == 'maquinário')
-                <img align="right" class="mascote-img"
-                    src="{{ url('') }}/images/empresa/proposta/maquinario.png"></img>
+            <img align="right" class="mascote-img" src="{{ url('') }}/images/empresa/proposta/maquinario.png"></img>
             @elseif ($proposta->tipo == 'caminhão')
-                <img align="right" class="mascote-img"
-                    src="{{ url('') }}/images/empresa/proposta/caminhao.png"></img>
+            <img align="right" class="mascote-img" src="{{ url('') }}/images/empresa/proposta/caminhao.png"></img>
             @endif
 
             <h3>CRÉDITO SOLICITADO: <span style="font-weight: bold;">
@@ -148,22 +144,27 @@ function convert($frase)
                         echo 'xxx.xxx.xxx-xx';
                     }
                     
-                    ?></span>
+                    ?>
+                </span>
             </h4>
 
             <h4>Protocolo: <span style="font-weight: bold;">
-                    {{ $proposta->created_at->format('Y') }}<?php echo '/' . $proposta->id; ?></span>
+                    {{ $proposta->created_at->format('Y') }}
+                    <?php echo '/' . $proposta->id; ?>
+                </span>
             </h4>
 
             <h4>Tipo do Bem: <span style="font-weight: bold;">
-                    <?php echo ucfirst($proposta->tipo); ?></span>
+                    <?php echo ucfirst($proposta->tipo); ?>
+                </span>
             </h4>
 
             <?php if ($proposta->tipo != "imóvel") {
 				?>
 
             <h4>Fabricante/Modelo: <span style="font-weight: bold;">
-                    <?php echo $proposta->modelo . ' - Ano: ' . $proposta->ano; ?></span>
+                    <?php echo $proposta->modelo . ' - Ano: ' . $proposta->ano; ?>
+                </span>
             </h4>
 
             <?php
@@ -175,7 +176,8 @@ function convert($frase)
                     {{ $proposta->created_at->format('d/m/Y - H:m') }}</span>
             </h4>
             <h4>Validade da Proposta: <span style="font-weight: bold;">
-                    <?php echo date('d/m/Y', strtotime('+3 days')); ?></span>
+                    <?php echo date('d/m/Y'); ?>
+                </span>
             </h4>
 
 
@@ -228,7 +230,9 @@ function convert($frase)
 						
 						 if ($proposta->tipo == "IMOVEL") {
 			        ?>
-                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;"><?php echo $proposta->cartorio; ?></span></h4>
+                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">
+                                <?php echo $proposta->cartorio; ?>
+                            </span></h4>
                         <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$ 3.400,00</span> </h4>
                         <?php
 					}
@@ -257,7 +261,8 @@ function convert($frase)
                             </span>
                         </h4>
                         <h4>Sistema de Amortização: <span style="font-weight: bold;">
-                                <?php echo strtoupper($proposta['amortizacao']); ?></span>
+                                <?php echo strtoupper($proposta['amortizacao']); ?>
+                            </span>
                         </h4>
 
                     </td>

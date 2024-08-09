@@ -17,6 +17,7 @@ use App\Models\Reuniao;
 use App\Models\Aprovacao;
 use App\Models\Equipe;
 use H;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -398,8 +399,17 @@ class DashboardController extends Controller
 
             $stats['total_vendido'] = $vendas_totais;//Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
 
+
+
             $stats['leads_ativos'] = Negocio::where('status', NegocioStatus::ATIVO)->count();
-            $stats['potencial_venda'] = Negocio::where('status', NegocioStatus::ATIVO)->sum('valor');
+
+            $totalValor = DB::table('negocios')
+                ->join('users', 'negocios.user_id', '=', 'users.id')
+                ->where('negocios.status', NegocioStatus::ATIVO)
+                ->where('users.status', UserStatus::ativo) // Certifique-se de que `UsuarioStatus::ATIVO` é o status ativo para o usuário
+                ->sum('negocios.valor');
+
+            $stats['potencial_venda'] = $totalValor;//Negocio::where('status', NegocioStatus::ATIVO)->sum('valor');
 
             $stats['sum_oportunidades'] = 0;
             $stats['sum_agendamentos'] = 0;

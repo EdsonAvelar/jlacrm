@@ -20,7 +20,7 @@ use App\Models\Equipe;
 use App\Enums\UserStatus;
 use App\Models\Levantamento;
 use App\Events\NewSaleEvent;
-
+use Auth;
 use Carbon\Carbon;
 
 class NegocioController extends Controller
@@ -132,9 +132,32 @@ class NegocioController extends Controller
         ];
 
 
-        $vendas = Fechamento::where($query)->get();
+        if (Auth::user()->hasRole("admin")) {
+
+            $vendas = Fechamento::where($query)->get();
+
+        } else if (Auth::user()->hasRole("gerenciar_equipe")) {
+
+            $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+            $ids = [];
+
+            if ($equipe) {
+                $ids = $equipe->integrantes()->pluck('id')->toArray();
+            }
+
+            array_push($ids, \Auth::user()->id);
+
+
+            $vendas = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->get();
+
+        }
+
+
 
         $dados = [];
+        $dados_equipe = [];
+
 
         foreach ($vendas as $venda) {
             $dados_item = [];
@@ -149,13 +172,11 @@ class NegocioController extends Controller
             $dados_item['credito'] = $venda->valor;
             $dados_item['negocio_id'] = $venda->negocio->id;
 
-
-
-
-
             $equipe = "Sem Equipe";
             if ($vendedor->equipe) {
                 $equipe = $vendedor->equipe->descricao;
+                $dados_equipe[$equipe]['id'] = $vendedor->equipe->id;
+                $dados_equipe[$equipe]['logo'] = $vendedor->equipe->logo;
             }
 
             if (!array_key_exists($equipe, $dados)) {
@@ -164,7 +185,6 @@ class NegocioController extends Controller
             }
 
             array_push($dados[$equipe]['fechados'], $dados_item);
-
         }
 
         $query = [
@@ -172,7 +192,25 @@ class NegocioController extends Controller
             ['etapa_funil_id', '<=', $to],
         ];
 
-        $negocios = Negocio::where('etapa_funil_id', 5)->get();
+
+        if (Auth::user()->hasRole("admin")) {
+
+            $negocios = Negocio::where('etapa_funil_id', 5)->get();
+
+        } else if (Auth::user()->hasRole("gerenciar_equipe")) {
+
+            $equipe = Equipe::where('lider_id', Auth::user()->id)->first();
+
+            $ids = [];
+
+            if ($equipe) {
+                $ids = $equipe->integrantes()->pluck('id')->toArray();
+            }
+
+            array_push($ids, \Auth::user()->id);
+
+            $negocios = Negocio::whereIn('user_id', $ids)->where('etapa_funil_id', 5)->get();
+        }
 
 
         foreach ($negocios as $negocio) {
@@ -211,6 +249,9 @@ class NegocioController extends Controller
             $equipe = "Sem Equipe";
             if ($vendedor->equipe) {
                 $equipe = $vendedor->equipe->descricao;
+                $dados_equipe[$equipe]['id'] = $vendedor->equipe->id;
+                $dados_equipe[$equipe]['logo'] = $vendedor->equipe->logo;
+
             }
 
             if (!array_key_exists($equipe, $dados)) {
@@ -219,11 +260,12 @@ class NegocioController extends Controller
             }
 
 
+
             array_push($dados[$equipe]['aprovados'], $dados_item);
         }
 
 
-        return view('negocios.aprovacoes', compact('dados'));
+        return view('negocios.aprovacoes', compact('dados', 'dados_equipe'));
     }
 
     public function importar_upload(Request $request)

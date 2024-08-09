@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row align-items-center">
                 <div class="col-12">
-                    <h5 class="text-muted fw-normal mt-0 text-truncate" title="Booked Revenue">
+                    <h5 class="text-muted fw-normal mt-0 text-truncate" >
 
                     @if (isset($card_href))
                         <a href="{{$card_href}}">{{$card_name}}</a> 

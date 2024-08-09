@@ -167,7 +167,7 @@ function convert($frase)
                 </span>
             </h4>
             <h4>Validade da Proposta: <span style="font-weight: bold;">
-                    <?php echo date('d/m/Y', strtotime('+0 days')); ?>
+                    <?php echo date('d/m/Y'); ?>
                 </span>
             </h4>
 

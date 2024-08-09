@@ -56,18 +56,20 @@
 
         @include('dashboards.views.card', [
         'card_name' => 'Total Vendido',
+        'card_href' =>route('negocios.aprovacoes'),
         'card_value' => "R$ " . number_format($stats['total_vendido'], 2, ',', '.'),
         'card_porc' => '3%',
         ])
 
         @include('dashboards.views.card', [
         'card_name' => 'Potencial de Venda',
+        'card_href' =>route('negocios.aprovacoes'),
         'card_value' => "R$ " . number_format($stats['potencial_venda'], 2, ',', '.'),
         'card_porc' => '4%',
         ])
 
         @include('dashboards.views.card', [
-        'card_name' => 'Leads Novos',
+        'card_name' => 'Leads Sem Dono',
         'card_value' => $output['lead_novos'],
         'card_porc' => '5%',
         'card_href' => route('pipeline_index', [

@@ -86,18 +86,6 @@ class AgendamentoController extends Controller
             $agendamentos = Agendamento::whereIn('user_id', [Auth::user()->id])->where($query)->get();
 
         }
-
-
-
-
-
-        // $negocios = Negocio::whereIn('user_id', $ids)->where($query)->get();
-
-
-
-
-
-
         return view('negocios.agendamentos', compact('agendamentos'));
     }
 

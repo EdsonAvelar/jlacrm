@@ -117,6 +117,33 @@ function formatString($input) {
         /* Cor levemente esverdeada */
         display: inline-block;
     }
+
+    .container2 {
+        display: flex;
+        align-items: center;
+    }
+
+    .image {
+        width: 150px;
+        /* Defina a largura da imagem */
+        margin-right: 15px;
+    }
+
+    .text {
+        font-size: 24px;
+        padding: 10px;
+        /* Exemplo de estilo para o texto */
+    }
+
+    p {
+        font-family: sans-serif;
+        color: #4CAF50;
+        font-weight: 570;
+    }
+
+    .equipelogo {
+        width: 80px
+    }
 </style>
 @endsection
 @section('main_content')
@@ -148,21 +175,41 @@ function formatString($input) {
 
     <div class="row">
 
- 
+
         <div class="col-12">
             <div class="card">
                 <div class="card-body left">
 
                     @foreach ( $dados as $name => $equipes)
 
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="container2">
+                                @if ($dados_equipe[$name])
+                                <img class="equipelogo"
+                                    src="{{ url('') }}/images/equipes/{{ $dados_equipe[$name]['id'] }}/{{ $dados_equipe[$name]['logo'] }}"
+                                    alt="">
+                                @endif
 
+                                <p class="text">EQUIPE {{ strtoupper($name) }}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+
+
+
+
+
+
+                        </div>
+                        <div class="col-md-4"></div>
+
+                    </div>
                     <div class="row">
                         <div class="col-md-4" style="padding: 0px;">
                             <table id="" class="display" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th colspan="3">EQUIPE {{ strtoupper($name) }}</th>
-                                    </tr>
+
                                     <tr>
                                         <th colspan="3">CLIENTES FECHADOS</th>
                                     </tr>
@@ -230,13 +277,11 @@ function formatString($input) {
 
                             <table id="" class="display" style="width:100%">
                                 <thead>
-                                    <tr>
-                                        <th colspan="3" style="background-color: white;border: 0px;">*</th>
-                                    </tr>
+
 
                                     <tr>
                                         <th colspan="3">CLIENTES PLANTADOS</th>
-                                        <th rowspan="2">OBSERVAÇÃO</th>
+                                        <th rowspan="2">ÚLTIMO COMENTÁRIO</th>
                                     </tr>
 
                                     <tr>

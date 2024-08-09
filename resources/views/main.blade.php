@@ -311,7 +311,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
                                 </li>
 
-                                @if (Auth::user()->hasAnyRole(['admin']))
+                                @if (Auth::user()->hasAnyRole(['admin']) ||
+                                Auth::user()->hasAnyRole(['gerenciar_equipe']))
 
                                 <li>
                                     <a href="{{ route('negocios.aprovacoes') }}">Produção</a>
@@ -854,7 +855,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         "newestOnTop": true,
         "progressBar": true,
         "positionClass": "toast-top-right",
-        "preventDuplicates": false,
+        "preventDuplicates": true,
         "onclick": null,
         "showDuration": "300",
         "hideDuration": "1000",
@@ -873,10 +874,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
 
             $("body").attr("data-leftbar-compact-mode", "not_condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'false', false)
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'false', true)
         } else {
             $("body").attr("data-leftbar-compact-mode", "condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", "true", false)
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", "true", true)
         }
 
         
