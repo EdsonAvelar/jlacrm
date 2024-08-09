@@ -100,7 +100,7 @@ function to_data($data)
 
     h5 {
         color: black;
-        background-color: lightgrey;
+        background-color: #bdd3f3;
         border-bottom: 2px solid #000;
     }
 
@@ -366,7 +366,7 @@ function to_data($data)
                             </div>
 
                             <h5 class="mb-3 text-black text-uppercase p-2"><i class="mdi mdi-office-building me-1"></i>
-                                INFORMAÇÕES PESSOAIS DO CÔNJUDE</h5>
+                                INFORMAÇÕES PESSOAIS DO CÔNJUGE</h5>
 
 
                             <div class="row">
@@ -526,7 +526,7 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">TELEFONE</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
@@ -534,14 +534,14 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
-                                        <label for="email" class="form-label">TELEFONE CôNJUDE </label>
+                                        <label for="email" class="form-label">TELEFONE CôNJUGE </label>
                                         <input type="text" class="form-control"
                                             value="{{ $negocio->conjuge->telefone }}" name="conf_telefone">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="email" class="form-label">EMAIL</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->email }}"
