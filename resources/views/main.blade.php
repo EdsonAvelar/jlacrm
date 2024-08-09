@@ -160,9 +160,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false, "leftSidebarCondensed":"{{
-    config('menu_condensed_'.Auth::User()->id) }}","leftSidebarScrollable":false,"darkMode":false,
-    "showRightSidebarOnStart": true}' >
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
+    "leftSidebarCondensed":false,"leftSidebarScrollable":false,"darkMode":false,
+    "showRightSidebarOnStart": true}'>
 
 
 
@@ -874,15 +874,16 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
 
             $("body").attr("data-leftbar-compact-mode", "not_condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'false', true)
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'not_condensed', true)
         } else {
             $("body").attr("data-leftbar-compact-mode", "condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", "true", true)
+            save_config("menu_condensed_"+"{{Auth::User()->id}}", "condensed", true)
         }
 
         
 
     });
+
 
     
     // Função para simular uma nova venda (você pode remover isso quando integrar com Laravel)
