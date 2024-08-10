@@ -146,6 +146,10 @@ use Carbon\Carbon;
             width: 90px;
             height: 90px;
         }
+
+        /* body[data-leftbar-theme="dark"] .leftside-menu {
+            background: #ffffff;
+        } */
     </style>
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -160,7 +164,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
+    data-layout-config='{"leftSideBarTheme":"light","layoutBoxed":false,
     "leftSidebarCondensed":false,"leftSidebarScrollable":false,"darkMode":false,
     "showRightSidebarOnStart": true}'>
 

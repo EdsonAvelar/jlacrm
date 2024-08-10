@@ -313,7 +313,7 @@ class NegocioController extends Controller
             $nome = $sheet->getCell("A{$row}")->getValue();
             $telefone = $sheet->getCell("B{$row}")->getValue();
             $email = $sheet->getCell("C{$row}")->getValue();
-            $campanha = $sheet->getCell("D{$row}")->getValue();
+            $tipo_do_bem = $sheet->getCell("D{$row}")->getValue();
             $fonte = $sheet->getCell("E{$row}")->getValue();
             $etapafunil = $sheet->getCell("F{$row}")->getValue();
 
@@ -338,7 +338,7 @@ class NegocioController extends Controller
             $negocio->nome = $nome;
             $negocio->telefone = $telefone;
             $negocio->email = $email;
-            $negocio->campanha = $campanha;
+            $negocio->tipo_do_bem = $tipo_do_bem;
             $negocio->fonte = $fonte;
             $negocio->data_conversao = $create_time;
 
@@ -565,7 +565,7 @@ class NegocioController extends Controller
                 $deal_input['valor'] = 0;
                 $deal_input['funil_id'] = $input['funil_id'];
                 $deal_input['etapa_funil_id'] = $etapa_funils[1];
-                $deal_input['tipo'] = $neg->campanha;
+                $deal_input['tipo'] = $neg->tipo_do_bem;
                 $deal_input['lead_id'] = $lead->id;
                 $deal_input['user_id'] = $usuarios[$user_count_dist];
 
@@ -577,7 +577,7 @@ class NegocioController extends Controller
                 NegocioImportado::where('id', $neg->id)->delete();
                 $negocios_criados = $negocios_criados + 1;
 
-                Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->campanha . " importado via arquivo", $negocio->id);
+                Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->tipo_do_bem . " importado via arquivo", $negocio->id);
 
                 $user = User::find($deal_input['user_id']);
 
@@ -646,7 +646,7 @@ class NegocioController extends Controller
             $deal_input['valor'] = 0;
             $deal_input['funil_id'] = $input['funil_id'];
             $deal_input['etapa_funil_id'] = $input['etapa_funil_id'];
-            $deal_input['tipo'] = $neg->campanha;
+            $deal_input['tipo'] = $neg->tipo_do_bem;
             $deal_input['lead_id'] = $lead->id;
             $deal_input['user_id'] = $input['novo_proprietario_id'];
 
@@ -658,7 +658,7 @@ class NegocioController extends Controller
             NegocioImportado::where('id', $neg->id)->delete();
             $negocios_criados = $negocios_criados + 1;
 
-            Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->campanha . " importado via arquivo", $negocio->id);
+            Atividade::add_atividade(\Auth::user()->id, "Cliente do " . $lead->fonte . " de " . $neg->tipo_do_bem . " importado via arquivo", $negocio->id);
 
             $user = User::find($input['novo_proprietario_id']);
 

@@ -8,6 +8,8 @@ use App\Models\Lead;
 
 use App\Models\Atividade;
 use Carbon\Carbon;
+use App\Models\NegocioImportado;
+use Illuminate\Support\Facades\Cache;
 
 class WebhookController extends Controller
 {
@@ -18,42 +20,81 @@ class WebhookController extends Controller
 
         /*
 
-        curl -X POST http://localhost:8000/api/webhook/newlead -H "Authorization: 58a9fc133aa878e7434459c59868dfc4" -d '{"nome":"test1","tipo_credito":"IMOVEL","telefone":"123","whatsapp":"123","id":"-1"}'
+        curl -X POST http://localhost:8000/api/webhook/newlead -H "Authorization: 2e6f9b0d5885b6010f9167787445617f553a735f" -d '{"nome":"test1","telefone":"123", "email":"eam.avelar","campanha":"Imovel Dor","fonte":"facebook","tipo_do_bem":"IMOVEL"}'
 
         */
-        $deal_input = array();
-
-        $deal_input['titulo'] = "Negócio " . $dados['nome'] . "-" . $dados['tipo_credito'];
-
-        $deal_input['funil_id'] = 1;
-        $deal_input['etapa_funil_id'] = 1;
-        $deal_input['tipo'] = $dados['tipo_credito'];
-
-        $lead = new Lead();
-        $lead->nome = $dados['nome'];
-        $lead->telefone = $dados['telefone'];
-        $lead->whatsapp = $dados['whatsapp'];
-        $lead->save();
-
-        // associando lead ao negócio
-        $deal_input['lead_id'] = $lead->id;
+        //$deal_input = array();
 
 
-        $deal_input['user_id'] = (int) ($dados['id']);
 
-        $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+        $negocio = new NegocioImportado();
 
-        //criando o negócio
-        $negocio = Negocio::create($deal_input);
 
-        Atividade::add_atividade($deal_input['user_id'], "Cliente criado via webhook", $negocio->id);
+        if (NegocioImportado::where('telefone', $dados['telefone'])->exists()) {
+            return "Lead duplicado";
+        }
 
-        return "Negocio " . $dados['nome'] . " Criado com sucesso";
+        //Obrigatorios
+        $negocio->nome = $dados['nome'];
+        $negocio->telefone = $dados['telefone'];
+        $negocio->tipo_do_bem = $dados['tipo_do_bem']; //Campanha é o tipo do imovel
+
+        //Opcionais
+        $negocio->email = $dados['email'];
+        $negocio->campanha = $dados['campanha']; //Campanha é o tipo do imovel
+        $negocio->fonte = $dados['fonte'];
+
+        $negocio->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+        try {
+            $negocio->save();
+            return "Negocio " . $dados['nome'] . " Criado com sucesso";
+        } catch (QueryException $e) {
+            return "Erro ao importar Negocio: " . $e->getMessage();
+
+        }
+
+
+
+        // $deal_input['titulo'] = "Negócio " . $dados['nome'] . "-" . $dados['tipo_credito'];
+
+        // $deal_input['funil_id'] = 1;
+        // $deal_input['etapa_funil_id'] = 1;
+        // $deal_input['tipo'] = $dados['tipo_credito'];
+
+        // $lead = new Lead();
+        // $lead->nome = $dados['nome'];
+        // $lead->telefone = $dados['telefone'];
+        // $lead->whatsapp = $dados['whatsapp'];
+        // $lead->save();
+
+        // // associando lead ao negócio
+        // $deal_input['lead_id'] = $lead->id;
+
+
+        // $deal_input['user_id'] = (int) ($dados['id']);
+
+        // $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
+        // //criando o negócio
+        // $negocio = Negocio::create($deal_input);
+
+        // Atividade::add_atividade($deal_input['user_id'], "Cliente criado via webhook", $negocio->id);
+
+        //return "Negocio " . $dados['nome'] . " Criado com sucesso";
     }
     public function handle(Request $request)
     {
 
-        $token = $request->header('Authorization');
+        $key = 'webhook-rate-limit';
+        $rateLimit = 1; // Limite de 1 segundo
+
+        if (Cache::has($key)) {
+            return response()->json(['error' => 'Too many requests. Please wait.'], 429);
+        }
+
+        Cache::put($key, true, $rateLimit);
+
+        $token = $request->bearerToken();
 
         $token_webhook = config('token_webhook');
 
@@ -65,11 +106,12 @@ class WebhookController extends Controller
 
             $data = $request->json()->all();
 
-            $this->create_lead($data);
+
+            $response = $this->create_lead($data);
 
 
             // Retorna uma resposta de sucesso
-            return response()->json(['message' => $this->create_lead($data)]);
+            return response()->json(['message' => $response]);
         } else {
             return response()->json(['message' => 'Sistema sem Token Cadastrado'], 500);
         }

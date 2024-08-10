@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('agendamentos', function (Blueprint $table) {
-            $table->string('status')->nullable();
+        Schema::table('negocio_importados', function (Blueprint $table) {
+            $table->string('tipo_do_bem')->nullable();
         });
     }
 

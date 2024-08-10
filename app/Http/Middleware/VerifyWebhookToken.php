@@ -10,8 +10,9 @@ class VerifyWebhookToken
     public function handle(Request $request, Closure $next)
     {
         $token = $request->header('Authorization');
+        $token_webhook = config('token_webhook');
 
-        if ($token !== '123') {
+        if ($token !== $token_webhook) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
