@@ -164,7 +164,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 ?>
 
 <body class="loading" <?php echo $style; ?>
-    data-layout-config='{"leftSideBarTheme":"light","layoutBoxed":false,
+    data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
     "leftSidebarCondensed":false,"leftSidebarScrollable":false,"darkMode":false,
     "showRightSidebarOnStart": true}'>
 
