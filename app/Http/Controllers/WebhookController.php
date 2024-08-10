@@ -11,6 +11,8 @@ use Carbon\Carbon;
 use App\Models\NegocioImportado;
 use Illuminate\Support\Facades\Cache;
 
+use Illuminate\Support\Facades\Log;
+
 class WebhookController extends Controller
 {
 
@@ -105,6 +107,11 @@ class WebhookController extends Controller
             }
 
             $data = $request->json()->all();
+
+            $jsonString = json_encode($data);
+
+            Log::info('Recebendo Webhook:. ' . $jsonString);
+
 
 
             $response = $this->create_lead($data);
