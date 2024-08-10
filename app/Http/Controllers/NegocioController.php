@@ -268,6 +268,24 @@ class NegocioController extends Controller
         return view('negocios.aprovacoes', compact('dados', 'dados_equipe'));
     }
 
+    private function removePatterns($string)
+    {
+        // Define os padrões a serem removidos
+        $patterns = [
+            '/^\+55/',  // Remove "+55" no início da string
+            '/^p:\+55/', // Remove "p:+55" no início da string
+            '/^p:55/',   // Remove "p:55" no início da string
+            '/^55/'      // Remove "55" no início da string
+        ];
+
+        // Aplica os padrões na string
+        foreach ($patterns as $pattern) {
+            $string = preg_replace($pattern, '', $string);
+        }
+
+        return $string;
+    }
+
     public function importar_upload(Request $request)
     {
 
@@ -318,6 +336,11 @@ class NegocioController extends Controller
             $etapafunil = $sheet->getCell("F{$row}")->getValue();
 
             $create_time = Carbon::now()->format('Y-m-d');
+
+
+            #Remover padrões como 55,p:+55. p:55 e +55 da frent das strings
+            $telefone = $this->removePatterns($telefone);
+
 
 
             $lead = Lead::where(['telefone' => $telefone, 'nome' => $nome])->first();
@@ -496,6 +519,8 @@ class NegocioController extends Controller
 
         return [$negocio[0], $lead[0]];
     }
+
+
 
 
     public function import_massivo(Request $request)

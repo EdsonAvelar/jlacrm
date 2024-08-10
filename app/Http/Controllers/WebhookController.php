@@ -15,6 +15,23 @@ use Illuminate\Support\Facades\Log;
 
 class WebhookController extends Controller
 {
+    private function removePatterns($string)
+    {
+        // Define os padrões a serem removidos
+        $patterns = [
+            '/^\+55/',  // Remove "+55" no início da string
+            '/^p:\+55/', // Remove "p:+55" no início da string
+            '/^p:55/',   // Remove "p:55" no início da string
+            '/^55/'      // Remove "55" no início da string
+        ];
+
+        // Aplica os padrões na string
+        foreach ($patterns as $pattern) {
+            $string = preg_replace($pattern, '', $string);
+        }
+
+        return $string;
+    }
 
     public function create_lead($dados)
     {
@@ -31,14 +48,16 @@ class WebhookController extends Controller
 
         $negocio = new NegocioImportado();
 
+        $telefone = $this->removePatterns($dados['telefone']);
 
-        if (NegocioImportado::where('telefone', $dados['telefone'])->exists()) {
+
+        if (NegocioImportado::where('telefone', $telefone)->exists()) {
             return "Lead duplicado";
         }
 
         //Obrigatorios
         $negocio->nome = $dados['nome'];
-        $negocio->telefone = $dados['telefone'];
+        $negocio->telefone = $telefone;
         $negocio->tipo_do_bem = $dados['tipo_do_bem']; //Campanha é o tipo do imovel
 
         //Opcionais
