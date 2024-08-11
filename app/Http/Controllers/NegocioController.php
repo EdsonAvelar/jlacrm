@@ -332,9 +332,9 @@ class NegocioController extends Controller
             $telefone = $sheet->getCell("B{$row}")->getValue();
             $email = $sheet->getCell("C{$row}")->getValue();
             $tipo_do_bem = $sheet->getCell("D{$row}")->getValue();
-            $fonte = $sheet->getCell("E{$row}")->getValue();
-            $etapafunil = $sheet->getCell("F{$row}")->getValue();
-
+            $campanha = $sheet->getCell("E{$row}")->getValue();
+            $fonte = $sheet->getCell("F{$row}")->getValue();
+            
             $create_time = Carbon::now()->format('Y-m-d');
 
 
@@ -362,6 +362,7 @@ class NegocioController extends Controller
             $negocio->telefone = $telefone;
             $negocio->email = $email;
             $negocio->tipo_do_bem = $tipo_do_bem;
+            $negocio->campanha = $campanha;
             $negocio->fonte = $fonte;
             $negocio->data_conversao = $create_time;
 
