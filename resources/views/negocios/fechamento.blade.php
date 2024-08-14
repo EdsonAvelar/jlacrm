@@ -50,6 +50,7 @@ function to_data($data)
         align-items: center;
         border-bottom: 2px solid #000;
         padding: 10px;
+        background-color: white;
     }
 
 
@@ -175,7 +176,7 @@ function to_data($data)
                             <tr>
                                 <td>VENDEDOR(A):</td>
 
-                                <td><input type="text" value="<?php 
+                                <td><input readonly type="text" value="<?php 
                                 if ($fechamento->primeiro_vendedor_id){
                                     echo App\Models\User::find($fechamento->primeiro_vendedor_id)->name;
                                 }?>">
@@ -183,24 +184,24 @@ function to_data($data)
 
                                 </td>
                                 <td>DATA:</td>
-                                <td><input type="text" value="<?php 
+                                <td><input readonly type="text" value="<?php 
                                 if ($fechamento->data_fechamento){
                                     echo to_data($fechamento->data_fechamento);
                                 }?>"> </td>
                             </tr>
                             <tr>
                                 <td>CONTRATO:</td>
-                                <td><input type="text" value="<?php 
+                                <td><input readonly type="text" value="<?php 
                                 if ($fechamento->numero_contrato){
                                     echo ($fechamento->numero_contrato);
                                 }?>"></td>
                                 <td>GRUPO:</td>
-                                <td><input type="text" value="<?php 
+                                <td><input readonly type="text" value="<?php 
                                 if ($fechamento->grupo){
                                     echo ($fechamento->grupo);
                                 }?>"></td>
                                 <td>COTA:</td>
-                                <td><input type="text" value="<?php 
+                                <td><input readonly type="text" value="<?php 
                                 if ($fechamento->cota){
                                     echo ($fechamento->cota);
                                 }?>"></td>
@@ -831,13 +832,29 @@ function to_data($data)
                             <div class="row">
                                 <label for="email" class="form-label"><strong>FORMA DE PAGAMENTO DO
                                         PLANO:</strong></label>
+
                                 <div class="col-md-2">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="forma_pagamento"
-                                            id="forma_pagamento" value="dinheiro" checked>
+                                            id="forma_pagamento" value="transferencia" checked>
+                                        <label class="form-check-label" for="forma_pagamento">TRANSFERÊNCIA/PIX</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="forma_pagamento"
+                                            id="forma_pagamento" value="dinheiro" <?php if ($fechamento->forma_pagamento
+                                        == 'dinheiro') {
+                                        echo 'checked';
+                                        }
+
+                                        ?>>
                                         <label class="form-check-label" for="forma_pagamento">DINHEIRO</label>
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-2">
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="forma_pagamento"
@@ -887,27 +904,17 @@ function to_data($data)
                                         <label class="form-check-label" for="forma_pagamento">BOLETO</label>
                                     </div>
                                 </div>
-                                <div class="col-md-2">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="forma_pagamento"
-                                            id="forma_pagamento" value="transferencia" <?php if
-                                            ($fechamento->forma_pagamento == 'transferencia') {
-                                        echo 'checked';
-                                        }
 
-                                        ?>>
-                                        <label class="form-check-label" for="forma_pagamento">TRANSFERÊNCIA/PIX</label>
-                                    </div>
-                                </div>
                             </div>
 
-                            <div class="row no-print">
+                            <div class="row no-print" hidden>
                                 <label class="form-check-label" for="forma_pagamento">COMENTÁRIOS</label>
                                 <div class="col-md-12">
-                                    <textarea class="form-check-input" type="radio" name="comentarios" rows="20"
-                                        cols="100"><textarea></textarea>
+                                    <textarea class="w-100" type="radio" name="comentarios" rows="20" cols="100"
+                                        style="border-radius:0"></textarea>
                                 </div>
                             </div>
+                            <br>
                             <div class="row no-print">
                                 <h5 class="mb-3 text-uppercase text-white bg-success p-2"><i
                                         class="mdi mdi-office-building me-1"></i> INFORMAÇÕES DO COMERCIAL</h5>
@@ -1261,23 +1268,12 @@ function to_data($data)
             });
     }
 
-    // var btn_notificar_venda = document.getElementById('btn_notificar_venda');
-    // if (btn_notificar_venda){
-    //     btn_notificar_venda.addEventListener('click',
-    //     function(event) {
-            
-              
-    //         $('#notificar_venda').val('1');
-
-    //         // Submete o formulário
-    //         $('#fechamento_vendas').submit();
-    // }
 
     $(document).ready(function() {
         $('#btn_notificar_venda').on('click', function() {
             $('#notificar_venda').attr('value', '1');
             
-            //$('#fechamento_vendas').submit();
+            $('#fechamento_vendas').submit();
         });
     });
 

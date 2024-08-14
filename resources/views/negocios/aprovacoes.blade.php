@@ -307,7 +307,25 @@ function formatString($input) {
                                             data-name="{{$name}}">R$ {{ number_format( (float)$aprovados['credito'], 2,
                                             ',', '.') }} </td>
 
-                                        <td>{{$aprovados['comentario']}}</td>
+                                        <td>
+
+                                            @if (array_key_exists('status_levantamento',$aprovados ) )
+                                    
+                                            @if($aprovados['status_levantamento'] == "APROVADO")
+                                            <span class="badge bg-success float-begin">APROVADO</span>
+                                            @elseif ($aprovados['status_levantamento'] == "REJEITADO")
+                                            <span class="badge bg-danger float-begin">REJEITADO</span>
+                                            @else
+                                            <span class="badge bg-warning float-begin">EM APROVAÇÂO</span>
+
+                                            @endif
+
+                                            @endif
+
+
+                                            {{$aprovados['comentario']}}
+
+                                        </td>
                                         <?php $total_aprovados = $total_aprovados + (float)$aprovados['credito'];?>
                                     </tr>
 

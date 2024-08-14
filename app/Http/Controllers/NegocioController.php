@@ -74,13 +74,23 @@ class NegocioController extends Controller
         $levantamento->renda_comprovacao = $input['renda_comprovacao'];
         $levantamento->restricao = $input['restricao'];
         $levantamento->negocio_id = $input['negocio_id'];
+
+
+        $levantamento->status = $input['aprovar_cliente'];
+
         $levantamento->save();
 
         $negocio->tipo = $input['tipo_credito'];
         $negocio->valor = $input['valor'];
         $negocio->save();
 
-        return back()->with('status', 'Levantamento Salvo com sucesso');
+        //return back()->with('status', 'Levantamento Salvo com sucesso');
+
+        $aba = '#levantamento';
+
+        // Redireciona de volta com a mensagem de status e a aba especificada
+        return redirect()->back()->with('status', 'Levantamento Salvo com sucesso')->with('aba', $aba);
+
     }
 
     public function aprovacoes_update(Request $request)
@@ -229,13 +239,26 @@ class NegocioController extends Controller
 
             $comentario = '';
 
-            if ($negocio->comentarios()) {
+
+            $levantamento = Levantamento::where('negocio_id', $negocio->id)->first();
+
+            if ($levantamento) {
+
+                if ($levantamento->status) {
+                    $dados_item['status_levantamento'] = $levantamento->status;
+                }
+
+
+            }
+
+             if ($negocio->comentarios) {
 
                 if (!$negocio->comentarios->isEmpty()) {
 
                     $coment = $negocio->comentarios->sortDesc()->first();
                     if ($coment) {
                         $comentario = $coment->comentario;
+
                     }
 
                 }
@@ -334,7 +357,7 @@ class NegocioController extends Controller
             $tipo_do_bem = $sheet->getCell("D{$row}")->getValue();
             $campanha = $sheet->getCell("E{$row}")->getValue();
             $fonte = $sheet->getCell("F{$row}")->getValue();
-            
+
             $create_time = Carbon::now()->format('Y-m-d');
 
 

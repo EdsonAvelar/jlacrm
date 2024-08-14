@@ -12,8 +12,10 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('negocio_importados', function (Blueprint $table) {
-            $table->string('tipo_do_bem')->nullable();
+        Schema::table('levantamentos', function (Blueprint $table) {
+
+            $table->string('status')->nullable();
+            $table->text('comentarios')->nullable();
         });
     }
 
@@ -24,7 +26,7 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('agendamentos', function (Blueprint $table) {
+        Schema::table('levantamentos', function (Blueprint $table) {
             //
         });
     }

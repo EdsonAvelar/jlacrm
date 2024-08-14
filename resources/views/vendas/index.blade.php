@@ -158,7 +158,7 @@ use App\Enums\VendaStatus;
 
                         </tbody>
                     </table>
-                    <h2 class="text-info">Total Vendido: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h2>
+                    <h2 class="text-info">Total: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h2>
                 </div>
             </div>
             @endif
@@ -166,7 +166,7 @@ use App\Enums\VendaStatus;
             @if (isset($vendas_rascunho) && !$vendas_rascunho->isEmpty() )
             <div class="card">
                 <div class="card-body left">
-                    <h2 class="text-warning title">FECHAMENTO NÃO CONCLUIDO</h2>
+                    <h2 class="text-warning title">VENDAS NÃO CONCLUIDAS</h2>
 
                     <table id="example" class="table w-100 nowrap">
                         <thead>
@@ -224,7 +224,7 @@ use App\Enums\VendaStatus;
 
                         </tbody>
                     </table>
-                    <h2 class="text-warning">Total Não Finalizadas: R$ {{ number_format($sum_vendas_rascunho, 2, ',', '.') }}
+                    <h2 class="text-warning">Total: R$ {{ number_format($sum_vendas_rascunho, 2, ',', '.') }}
                     </h2>
                 </div>
             </div>
@@ -296,7 +296,7 @@ use App\Enums\VendaStatus;
 
                         </tbody>
                     </table>
-                    <h2 class="text-danger">Total Cancelado: R$ {{ number_format($sum_vendas_canceladas, 2, ',', '.') }}
+                    <h2 class="text-danger">Total: R$ {{ number_format($sum_vendas_canceladas, 2, ',', '.') }}
                     </h2>
                 </div>
             </div>
