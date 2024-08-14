@@ -310,7 +310,7 @@ function formatString($input) {
                                         <td>
 
                                             @if (array_key_exists('status_levantamento',$aprovados ) )
-                                    
+
                                             @if($aprovados['status_levantamento'] == "APROVADO")
                                             <span class="badge bg-success float-begin">APROVADO</span>
                                             @elseif ($aprovados['status_levantamento'] == "REJEITADO")
@@ -319,7 +319,8 @@ function formatString($input) {
                                             <span class="badge bg-warning float-begin">EM APROVAÇÂO</span>
 
                                             @endif
-
+                                            @else
+                                            <span class="badge bg-warning float-begin">EM APROVAÇÂO</span>
                                             @endif
 
 
