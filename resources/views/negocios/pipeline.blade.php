@@ -907,7 +907,7 @@ $protocolo_hora = 0;
 
             } else if (target.getAttribute('data-etapa') == "APROVACAO") {
 
-                if (source.getAttribute('data-etapa') == "REUNIAO") {
+                if (source.getAttribute('data-etapa') == "REUNIAO" || source.getAttribute('data-etapa') == "ACOMPANHAMENTO") {
                     $("#spinner-div").show();
                     $.ajax({
                         url: "{{ url('negocios/add_aprovacao') }}",
@@ -934,7 +934,7 @@ $protocolo_hora = 0;
                     });
                 } else {
                     showAlert({
-                        message: 'O negócio precisa estar em REUNIÃO antes de APROVACAO',
+                        message: 'O negócio precisa passar da etapa de REUNIÃO antes de APROVACAO',
                         class: "danger"
                     });
                     dragek.cancel(true);
