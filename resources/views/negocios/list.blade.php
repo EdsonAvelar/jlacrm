@@ -5,7 +5,7 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <style>
     input[type=checkbox] {
         /* Double-sized Checkboxes */
@@ -38,6 +38,71 @@
         width: 200px;
         height: 200px;
         overflow-y: scroll;
+    }
+
+    .filter-dropdown {
+        position: absolute;
+        background-color: #f8f9fa;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 10px;
+        z-index: 1000;
+        display: none;
+        width: 220px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .filter-dropdown input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+    }
+
+    .filter-dropdown button {
+        width: 100%;
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 5px;
+    }
+
+    #filter-btn {
+        background-color: #28a745;
+        color: white;
+    }
+
+    #clear-filter-btn {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .filter-applied {
+        color: #28a745;
+        /* Verde, ou qualquer cor de sua escolha */
+    }
+
+    .filter-icon {
+        margin-left: 8px;
+        /* Espaçamento entre o nome da coluna e o ícone */
+        cursor: pointer;
+        /* Cursor de mão para indicar que o ícone é clicável */
+    }
+
+    th.select-checkbox-header {
+        min-width: 100px;
+        /* Ajuste este valor conforme necessário */
+        white-space: nowrap;
+        /* Evita que o texto da coluna quebre em várias linhas */
+    }
+
+    th.short {
+        width: 10px;
+        /* Ajuste este valor conforme necessário */
+        text-align: left;
+        /* Centraliza o conteúdo */
     }
 </style>
 @endsection
@@ -165,22 +230,30 @@
 
                         <label id="info_label"></label>
 
-                        <table id="example" class="table table-striped" class="display" style="width:100%">
+                        <table id="example2" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th>
+                                    <th class="short">
                                         <input type="checkbox" id="selectall" class="select-checkbox">
                                     </th>
-                                    <th>Titulo</th>
-                                    <th>Pessoa de Contato</th>
-                                    <th>Telefone</th>
-                                    <th>Valor</th>
-                                    <th>Etapa</th>
-                                    <th>Proprietário</th>
-                                    <th>Origem</th>
-
-                                    <th>Status</th>
-                                    <th>Criado em</th>
+                                    <th class="select-checkbox-header">Título <i class="fas fa-filter filter-icon"
+                                            data-column="1"></i></th>
+                                    <th class="select-checkbox-header">Cliente <i class="fas fa-filter filter-icon"
+                                            data-column="2"></i></th>
+                                    <th class="select-checkbox-header">Telefone <i class="fas fa-filter filter-icon"
+                                            data-column="3"></i></th>
+                                    <th class="select-checkbox-header">Valor <i class="fas fa-filter filter-icon"
+                                            data-column="4"></i></th>
+                                    <th class="select-checkbox-header">Etapa <i class="fas fa-filter filter-icon"
+                                            data-column="5"></i></th>
+                                    <th class="select-checkbox-header">Proprietário <i class="fas fa-filter filter-icon"
+                                            data-column="6"></i></th>
+                                    <th class="select-checkbox-header">Origem <i class="fas fa-filter filter-icon"
+                                            data-column="7"></i></th>
+                                    <th class="select-checkbox-header">Status <i class="fas fa-filter filter-icon"
+                                            data-column="8"></i></th>
+                                    <th class="select-checkbox-header">Criado em <i class="fas fa-filter filter-icon"
+                                            data-column="9"></i></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -209,29 +282,29 @@
                                     </td>
                                     <td>
                                         <?php
-                                                                        if ($negocio->lead->fonte){
-                                                                            echo "IMPORTACAO";
-                                                                        }else {
-                                                                            echo "MANUAL";
-                                                                        }
-                                                                        
-                                                                        
-                                                                        ?>
+                                                                                                        if ($negocio->lead->fonte){
+                                                                                                            echo "IMPORTACAO";
+                                                                                                        }else {
+                                                                                                            echo "MANUAL";
+                                                                                                        }
+                                                                                                        
+                                                                                                        
+                                                                                                        ?>
                                     </td>
 
                                     <td>
 
                                         <?php
-                                            if ($negocio->status == 'ATIVO') {
-                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
-                                            } elseif ($negocio->status == 'PERDIDO') {
-                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
-                                            } elseif ($negocio->status == 'VENDIDO') {
-                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
-                                            } else {
-                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
-                                            }
-                                            ?>
+                                                                            if ($negocio->status == 'ATIVO') {
+                                                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
+                                                                            } elseif ($negocio->status == 'PERDIDO') {
+                                                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
+                                                                            } elseif ($negocio->status == 'VENDIDO') {
+                                                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
+                                                                            } else {
+                                                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
+                                                                            }
+                                                                            ?>
                                     </td>
                                     <td>{{ $negocio->created_at }}</td>
                                 </tr>
@@ -239,6 +312,11 @@
                                 @endif
                             </tbody>
                         </table>
+
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -269,7 +347,7 @@
                         </select>
                     </div>
 
-                    <h5 class="mt-2">Etapa do Funil</h5>
+                    {{-- <h5 class="mt-2">Etapa do Funil</h5>
                     <div class="mb-1 nowrap w-100">
                         <select class="form-select form-control-light" id="task-priority" name="etapa_funil_id">
 
@@ -277,7 +355,7 @@
                             <option value="{{ $etapa_funil_id }}">{{ $funil_name }}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
 
 
                 </div>
@@ -431,6 +509,7 @@
 <script src="{{ url('') }}/js/vendor/jquery.dataTables.min.js"></script>
 <script src="{{ url('') }}/js/vendor/dataTables.bootstrap5.js"></script>
 
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -453,9 +532,9 @@
                 document.getElementById('modo').value = 'ativar';
             });
             $('.checkbox_sensitive').hide();
-            let example = $('#example').DataTable({
-                pageLength: 100
-            });
+            // let example = $('#example').DataTable({
+            //     pageLength: 100
+            // });
             let selectall = false;
 
             function handleTableClick() {
@@ -534,5 +613,82 @@
                 defaultDate: +7
             });
         });
+
+
+
+$(document).ready(function() {
+    let table = $('#example2').DataTable({
+        pageLength: 100,
+        columnDefs: [
+        { orderable: false, targets: '_all' } // Desativa a ordenação em todas as colunas
+        ]
+    });
+
+    // Criar a estrutura do dropdown de filtro
+   $('body').append(`
+    <div class="filter-dropdown">
+        <input type="text" id="filter-input" placeholder="Digite para filtrar">
+        <button id="filter-btn">Filtrar</button>
+        <button id="clear-filter-btn">Limpar Filtro</button>
+    </div>
+    `);
+
+    let $filterDropdown = $('.filter-dropdown');
+
+    // Abrir o dropdown ao clicar no ícone de filtro
+    $('.filter-icon').on('click', function(e) {
+        let column = $(this).data('column');
+        let position = $(this).offset();
+        $filterDropdown.data('column', column);
+        $filterDropdown.data('icon', $(this));
+        $filterDropdown.css({
+            top: position.top + 30 + 'px',
+            left: position.left + 'px'
+        }).show();
+    });
+
+    // Aplicar o filtro ao clicar no botão de filtrar
+    $('#filter-btn').on('click', function() {
+        let column = $filterDropdown.data('column');
+        let value = $('#filter-input').val();
+        let $icon = $filterDropdown.data('icon');
+
+        table.column(column).search(value).draw();
+
+        // Alterar a cor do ícone se o filtro for aplicado
+        if (value) {
+            $icon.addClass('filter-applied');
+        } else {
+            $icon.removeClass('filter-applied');
+        }
+
+        $filterDropdown.hide();
+    });
+
+    // Limpar o filtro ao clicar no botão de limpar filtro
+    $('#clear-filter-btn').on('click', function() {
+        let column = $filterDropdown.data('column');
+        let $icon = $filterDropdown.data('icon');
+
+        // Limpar o campo de filtro e remover o filtro aplicado
+        $('#filter-input').val('');
+        table.column(column).search('').draw();
+
+        // Remover a cor do ícone
+        $icon.removeClass('filter-applied');
+
+        $filterDropdown.hide();
+    });
+
+
+
+    // Fechar o dropdown se clicar fora dele
+    $(document).on('click', function(e) {
+        if (!$(e.target).closest('.filter-icon, .filter-dropdown').length) {
+            $filterDropdown.hide();
+        }
+    });
+});
+
 </script>
 @endsection
