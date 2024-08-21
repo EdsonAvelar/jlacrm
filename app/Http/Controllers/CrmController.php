@@ -270,6 +270,7 @@ class CrmController extends Controller
                 $lead->nome = $lead_input['nome'];
                 $lead->telefone = $lead_input['telefone'];
                 $lead->whatsapp = $lead_input['whatsapp'];
+                $lead->fonte = "add++";
                 $lead->save();
 
                 // associando lead ao negócio
@@ -354,6 +355,7 @@ class CrmController extends Controller
         $lead->nome = $lead_input['nome'];
         $lead->telefone = $lead_input['telefone'];
         $lead->whatsapp = $lead_input['whatsapp'];
+        $lead->fonte = "add";
         $lead->save();
 
         // associando lead ao negócio

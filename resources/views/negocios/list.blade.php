@@ -100,7 +100,7 @@
 
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'ativo']) }}">Ativos</a>
-                                            
+
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list']) }}">Todos</a>
                                             @endif
@@ -175,9 +175,10 @@
                                     <th>Pessoa de Contato</th>
                                     <th>Telefone</th>
                                     <th>Valor</th>
-                                    <th>Status</th>
                                     <th>Etapa</th>
                                     <th>Proprietário</th>
+                                    <th>Fonte</th>
+                                    <th>Status</th>
                                     <th>Criado em</th>
                                 </tr>
                             </thead>
@@ -194,21 +195,7 @@
                                     <td><a href="tel:{{ $negocio->lead->telefone }}">{{ $negocio->lead->telefone }}</a>
                                     </td>
                                     <td>{{ $negocio->valor }}</td>
-                                    <td>
 
-
-                                        <?php
-                                                    if ($negocio->status == 'ATIVO') {
-                                                        echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
-                                                    } elseif ($negocio->status == 'PERDIDO') {
-                                                        echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
-                                                    } elseif ($negocio->status == 'VENDIDO') {
-                                                        echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
-                                                    } else {
-                                                        echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
-                                                    }
-                                                    ?>
-                                    </td>
                                     <td>{{ $negocio->etapa_funil->nome }}</td>
 
                                     <td>
@@ -218,6 +205,31 @@
                                         {{ $negocio->user->name }}
                                         @endif
 
+                                    </td>
+                                    <td>
+                                        <?php
+                                    if ($negocio->lead->fonte){
+                                        echo strtoupper( $negocio->lead->fonte);
+                                    }else {
+                                        echo "ADD";
+                                    }
+                                    
+                                    
+                                    ?>
+                                    </td>
+                                    <td>
+
+                                        <?php
+                                            if ($negocio->status == 'ATIVO') {
+                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
+                                            } elseif ($negocio->status == 'PERDIDO') {
+                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
+                                            } elseif ($negocio->status == 'VENDIDO') {
+                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
+                                            } else {
+                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
+                                            }
+                                            ?>
                                     </td>
                                     <td>{{ $negocio->created_at }}</td>
                                 </tr>
