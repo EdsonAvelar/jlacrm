@@ -621,8 +621,6 @@ class NegocioController extends Controller
 
                 $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
-                $deal_input['origem'] = 'IMPORTACAO';
-
 
                 $negocio = Negocio::create($deal_input);
 
@@ -703,7 +701,7 @@ class NegocioController extends Controller
             $deal_input['user_id'] = $input['novo_proprietario_id'];
 
             $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-            $deal_input['origem'] = 'IMPORTACAO';
+
 
             $negocio = Negocio::create($deal_input);
 
