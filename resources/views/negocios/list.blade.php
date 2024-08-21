@@ -177,7 +177,8 @@
                                     <th>Valor</th>
                                     <th>Etapa</th>
                                     <th>Proprietário</th>
-                                    <th>Fonte</th>
+                                    <th>Origem</th>
+
                                     <th>Status</th>
                                     <th>Criado em</th>
                                 </tr>
@@ -208,15 +209,16 @@
                                     </td>
                                     <td>
                                         <?php
-                                    if ($negocio->lead->fonte){
-                                        echo strtoupper( $negocio->lead->fonte);
-                                    }else {
-                                        echo "ADD";
-                                    }
-                                    
-                                    
-                                    ?>
+                                                                        if ($negocio->lead->fonte){
+                                                                            echo "IMPORTACAO";
+                                                                        }else {
+                                                                            echo "MANUAL";
+                                                                        }
+                                                                        
+                                                                        
+                                                                        ?>
                                     </td>
+
                                     <td>
 
                                         <?php

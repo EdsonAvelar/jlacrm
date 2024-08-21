@@ -270,7 +270,6 @@ class CrmController extends Controller
                 $lead->nome = $lead_input['nome'];
                 $lead->telefone = $lead_input['telefone'];
                 $lead->whatsapp = $lead_input['whatsapp'];
-                $lead->fonte = "add++";
                 $lead->save();
 
                 // associando lead ao negócio
@@ -283,6 +282,8 @@ class CrmController extends Controller
                 }
 
                 $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
+                $deal_input['origem'] = 'MANUAL';
 
                 //criando o negócio
                 $negocio = Negocio::create($deal_input);
@@ -355,7 +356,6 @@ class CrmController extends Controller
         $lead->nome = $lead_input['nome'];
         $lead->telefone = $lead_input['telefone'];
         $lead->whatsapp = $lead_input['whatsapp'];
-        $lead->fonte = "add";
         $lead->save();
 
         // associando lead ao negócio
@@ -367,7 +367,7 @@ class CrmController extends Controller
             $deal_input['user_id'] = \Auth::user()->id;
         }
 
-
+        $deal_input['origem'] = 'MANUAL';
 
         $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
         //criando o negócio

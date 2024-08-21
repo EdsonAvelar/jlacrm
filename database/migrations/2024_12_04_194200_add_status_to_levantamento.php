@@ -27,7 +27,8 @@ return new class extends Migration {
     public function down()
     {
         Schema::table('levantamentos', function (Blueprint $table) {
-            //
+            $table->dropColumn('status');
+            $table->dropColumn('comentarios');
         });
     }
 };

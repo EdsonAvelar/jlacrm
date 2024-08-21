@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -12,8 +13,8 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::table('negocio_importados', function (Blueprint $table) {
-            $table->string('tipo_do_bem')->nullable();
+        Schema::table('negocios', function (Blueprint $table) {
+            $table->string('origem')->nullable(); // Adiciona a coluna "origem"
         });
     }
 
@@ -24,8 +25,8 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::table('agendamentos', function (Blueprint $table) {
-            $table->dropColumn('tipo_do_bem');
+        Schema::table('negocios', function (Blueprint $table) {
+            $table->dropColumn('origem');
         });
     }
 };

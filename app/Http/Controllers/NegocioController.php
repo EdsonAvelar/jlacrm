@@ -251,7 +251,7 @@ class NegocioController extends Controller
 
             }
 
-             if ($negocio->comentarios) {
+            if ($negocio->comentarios) {
 
                 if (!$negocio->comentarios->isEmpty()) {
 
@@ -388,6 +388,7 @@ class NegocioController extends Controller
             $negocio->campanha = $campanha;
             $negocio->fonte = $fonte;
             $negocio->data_conversao = $create_time;
+
 
             try {
                 $negocio->save();
@@ -620,6 +621,8 @@ class NegocioController extends Controller
 
                 $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
+                $deal_input['origem'] = 'IMPORTACAO';
+
 
                 $negocio = Negocio::create($deal_input);
 
@@ -700,7 +703,7 @@ class NegocioController extends Controller
             $deal_input['user_id'] = $input['novo_proprietario_id'];
 
             $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-
+            $deal_input['origem'] = 'IMPORTACAO';
 
             $negocio = Negocio::create($deal_input);
 
