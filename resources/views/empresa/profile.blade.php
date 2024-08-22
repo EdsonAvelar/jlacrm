@@ -465,7 +465,7 @@
                                                 curl -X POST {{url('')}}/api/webhook/newlead
                                                 -H "Authorization: Bearer {{config('token_webhook')}}" -d
                                                 '{"nome":"Nome Cliente","telefone":"1123456789",
-                                                "email":"client@com.br","campanha":"FaceAds-Cadastro-Imovel","fonte":"FACEBOOK","tipo_do_bem":"IMOVEL"}'
+                                                "email":"client@com.br","campanha":"FaceAds-Cadastro-Imovel","fonte":"FACEBOOK","tipo_do_bem":"IMOVEL","proprietario_id":"-1"}'
                                             </p>
                                         </label>
 

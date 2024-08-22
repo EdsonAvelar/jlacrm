@@ -176,7 +176,7 @@
 
 
                                     </li>
-                                    <button type="button" class="btn btn-light dropdown-toggle"
+                                    {{-- <button type="button" class="btn btn-light dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Funils
                                     </button>
@@ -186,7 +186,7 @@
                                             href="{{ route('pipeline_index', ['pipeline_id' => $id, 'view' => 'list']) }}">{{
                                             $value }}</a>
                                         @endforeach
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <h4 class="page-title">Negócios
@@ -282,29 +282,31 @@
                                     </td>
                                     <td>
                                         <?php
-                                                                                                        if ($negocio->lead->fonte){
-                                                                                                            echo "IMPORTACAO";
-                                                                                                        }else {
-                                                                                                            echo "MANUAL";
-                                                                                                        }
-                                                                                                        
-                                                                                                        
-                                                                                                        ?>
+
+                                        if ( $negocio['origem']){
+                                        
+                                            echo $negocio['origem'];
+                                        }else {
+
+                                            echo "SEM ORIGEM";
+                                            
+                                        }
+                                    ?>
                                     </td>
 
                                     <td>
 
                                         <?php
-                                                                            if ($negocio->status == 'ATIVO') {
-                                                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
-                                                                            } elseif ($negocio->status == 'PERDIDO') {
-                                                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
-                                                                            } elseif ($negocio->status == 'VENDIDO') {
-                                                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
-                                                                            } else {
-                                                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
-                                                                            }
-                                                                            ?>
+                                            if ($negocio->status == 'ATIVO') {
+                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
+                                            } elseif ($negocio->status == 'PERDIDO') {
+                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
+                                            } elseif ($negocio->status == 'VENDIDO') {
+                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
+                                            } else {
+                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
+                                            }
+                                        ?>
                                     </td>
                                     <td>{{ $negocio->created_at }}</td>
                                 </tr>
@@ -347,7 +349,7 @@
                         </select>
                     </div>
 
-                    {{-- <h5 class="mt-2">Etapa do Funil</h5>
+                    <h5 class="mt-2">Etapa do Funil</h5>
                     <div class="mb-1 nowrap w-100">
                         <select class="form-select form-control-light" id="task-priority" name="etapa_funil_id">
 
@@ -355,7 +357,7 @@
                             <option value="{{ $etapa_funil_id }}">{{ $funil_name }}</option>
                             @endforeach
                         </select>
-                    </div> --}}
+                    </div>
 
 
                 </div>

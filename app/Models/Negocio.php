@@ -17,6 +17,7 @@ class Negocio extends Model
         "user_id",
         "tipo",
         "data_criacao",
+        "origem",
         "etapa_funil_id"
     ];
 

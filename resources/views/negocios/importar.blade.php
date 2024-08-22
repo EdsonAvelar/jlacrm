@@ -124,8 +124,9 @@
                                     <th>Telefone</th>
                                     <th>E-mail</th>
                                     <th>Tipo do Bem</th>
+                                    <th>Fonte</th>
                                     <th>Campanha</th>
-                                    <th>Origem do Lead</th>
+                                    <th>Origem</th>
                                     <th>Data Conversao</th>
                                 </tr>
                             </thead>
@@ -139,8 +140,10 @@
                                     <td>{{ $data['telefone'] }}</td>
                                     <td>{{ $data['email'] }}</td>
                                     <td>{{ $data['tipo_do_bem'] }}</td>
-                                    <td>{{ $data['campanha'] }}</td>
+
                                     <td>{{ $data['fonte'] }}</td>
+                                    <td>{{ $data['campanha'] }}</td>
+                                    <td>{{ $data['origem'] }}</td>
                                     <td>{{ $data['data_conversao'] }}</td>
 
                                 </tr>

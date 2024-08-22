@@ -12,6 +12,9 @@ use App\Models\NegocioImportado;
 use Illuminate\Support\Facades\Cache;
 
 use Illuminate\Support\Facades\Log;
+use App\Models\User;
+
+use Exception;
 
 class WebhookController extends Controller
 {
@@ -33,18 +36,70 @@ class WebhookController extends Controller
         return $string;
     }
 
+    public function create_negocio($dados)
+    {
+
+        $user = User::find($dados['proprietario_id']);
+
+        $query = [
+            ['telefone', '=', $dados['telefone']],
+            ['nome', '=', $dados['nome']],
+        ];
+
+        $lead = Lead::where($query)->first();
+
+        if ($user != null & $lead === null) {
+
+            $telefone = $this->removePatterns($dados['telefone']);
+
+            $lead = new Lead();
+            $lead->nome = $dados['nome'];
+            $lead->telefone = $telefone;
+            $lead->email = $dados['email'];
+            $lead->fonte = $dados['fonte'];
+
+            $lead->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+            $lead->save();
+
+            $deal_input = array();
+            $deal_input['titulo'] = "Negócio com " . $dados['nome'];
+            $deal_input['valor'] = 0;
+            $deal_input['funil_id'] = '1';
+            $deal_input['etapa_funil_id'] = '1';
+            $deal_input['tipo'] = $dados['tipo_do_bem'];
+            $deal_input['lead_id'] = $lead->id;
+            $deal_input['user_id'] = $dados['proprietario_id'];
+
+            $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+
+            $deal_input['origem'] = 'WEBHOOK';
+
+            $negocio = Negocio::create($deal_input);
+
+            Atividade::add_atividade($user->id, "Cliente do " . $lead->fonte . " de " . $dados['tipo_do_bem'] . " importado via webhook", $negocio->id);
+
+            Atividade::add_atividade($user->id, "Cliente atribui a " . $user->name . " por " . $user->name, $negocio->id);
+
+            return "[Webhook] Negocio " . $dados['nome'] . " Criado com sucesso";
+
+        } else {
+            throw new Exception("Erro! Id so proprietario não existe ou está duplicado");
+
+        }
+    }
+
     public function create_lead($dados)
     {
 
 
-        /*
+        if (array_key_exists('proprietario_id', $dados)) {
 
-        curl -X POST http://localhost:8000/api/webhook/newlead -H "Authorization: 2e6f9b0d5885b6010f9167787445617f553a735f" -d '{"nome":"test1","telefone":"123", "email":"eam.avelar","campanha":"Imovel Dor","fonte":"facebook","tipo_do_bem":"IMOVEL"}'
+            $proprietaio_id = (int) $dados['proprietario_id'];
 
-        */
-        //$deal_input = array();
-
-
+            if ($proprietaio_id > 0) {
+                return $this->create_negocio($dados);
+            }
+        }
 
         $negocio = new NegocioImportado();
 
@@ -52,8 +107,10 @@ class WebhookController extends Controller
 
 
         if (NegocioImportado::where('telefone', $telefone)->exists()) {
-            return "Lead duplicado";
+
+            throw new Exception("Lead duplicado");
         }
+
 
         //Obrigatorios
         $negocio->nome = $dados['nome'];
@@ -64,11 +121,12 @@ class WebhookController extends Controller
         $negocio->email = $dados['email'];
         $negocio->campanha = $dados['campanha']; //Campanha é o tipo do imovel
         $negocio->fonte = $dados['fonte'];
+        $negocio->origem = "WEBHOOK";
 
         $negocio->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
         try {
             $negocio->save();
-            return "Negocio " . $dados['nome'] . " Criado com sucesso";
+            return "[Webhook] Negocio " . $dados['nome'] . " Importado com sucesso";
         } catch (QueryException $e) {
             return "Erro ao importar Negocio: " . $e->getMessage();
 
