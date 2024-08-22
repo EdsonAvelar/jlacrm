@@ -312,6 +312,12 @@ use App\Enums\NegocioTipo;
                             <option value="2">Embutir 2</option>
                             <option value="3">Embutir 3</option>
                             <option value="4">Embutir 4</option>
+                            <option value="5">Embutir 5</option>
+                            <option value="6">Embutir 6</option>
+                            <option value="7">Embutir 7</option>
+                            <option value="8">Embutir 8</option>
+                            <option value="9">Embutir 9</option>
+                            <option value="10">Embutir 10</option>
                         </select>
                     </div>
                 </div>

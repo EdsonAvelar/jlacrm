@@ -539,6 +539,12 @@ $protocolo_hora = 0;
                                                 <option value="2">2 Parcelas</option>
                                                 <option value="3">3 Parcelas</option>
                                                 <option value="4">4 Parcelas</option>
+                                                <option value="5">5 Parcelas</option>
+                                                <option value="6">6 Parcelas</option>
+                                                <option value="7">7 Parcelas</option>
+                                                <option value="8">8 Parcelas</option>
+                                                <option value="9">9 Parcelas</option>
+                                                <option value="10">10 Parcelas</option>
                                             </select>
                                         </div>
                                     </div>
