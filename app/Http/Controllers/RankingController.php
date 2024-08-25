@@ -55,7 +55,7 @@ class RankingController extends Controller
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
                 'meta' => 1500000,
-                'percentual' => ($vendas_totais / 1000000) * 100,
+                'percentual' => ($vendas_totais / 1500000) * 100,
                 "avatar" => $avatar
 
             ];
