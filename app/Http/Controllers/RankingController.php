@@ -54,8 +54,8 @@ class RankingController extends Controller
             $user_info = [
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
-                'meta' => 1000000,
-                'percentual' => ($vendas_totais/1000000)*100,
+                'meta' => 1500000,
+                'percentual' => ($vendas_totais / 1000000) * 100,
                 "avatar" => $avatar
 
             ];
@@ -66,7 +66,7 @@ class RankingController extends Controller
         }
 
         $output['total_vendas'] = $total;
-       
+
         usort($output['colaboradores'], function ($a, $b) {
             return $b['total'] <=> $a['total'];
         });
