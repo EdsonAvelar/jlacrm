@@ -836,7 +836,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                                 </div>
                                 <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
                             </div>
-                            <div class="percentage">${Math.round(100 - colaborador.percentual) }%</div>
+                            <div class="percentage">${Math.round(colaborador.percentual) }%</div>
                         </div>`;
                     });
     
