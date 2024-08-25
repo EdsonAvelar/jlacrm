@@ -307,9 +307,6 @@
 
         });
 
-
-
-
         var drake = dragula(cont);
 
         drake.on('drop', function(el, target, source, sibling) {

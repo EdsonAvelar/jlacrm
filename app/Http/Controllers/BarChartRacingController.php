@@ -53,16 +53,6 @@ class BarChartRacingController extends Controller
         $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
         $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo])->get();
 
-        // $metricas = [
-        //     'vendedores',
-        //     'vendas',
-        // ];
-
-        // foreach ($metricas as $metrica) {
-        //     $output[$metrica] = array();
-        // }
-
-
         foreach ($users as $vendedor) {
             #array_push($output['vendedores'], $vendedor->name);
 
@@ -92,6 +82,8 @@ class BarChartRacingController extends Controller
     public function vendas_get(Request $request)
     {
         $output = array();
+
+       
 
 
         $data_inicio = config('data_inicio');

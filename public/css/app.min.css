@@ -13917,7 +13917,7 @@ body {
 .content-page {
     margin-left: 260px;
     overflow: hidden;
-    padding: 0px 12px 0px 0px;
+    padding: 70px 12px 0px 0px;
     min-height: 100vh;
 }
 
@@ -22937,4 +22937,4 @@ div.table-responsive
     display: none;
 }
 
-/*# sourceMappingURL=app.min.css.map */
+}

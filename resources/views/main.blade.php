@@ -1,6 +1,8 @@
 <?php
 use Carbon\Carbon;
 
+$user = Auth::user();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -158,8 +160,10 @@ use Carbon\Carbon;
 <?php
 $url = 'http://' . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
 $style = '';
+$style_pipe="";
 if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     $style = 'style="overflow-y: hidden;"';
+    $style_pipe='style="display:none"';
 }
 ?>
 
@@ -177,7 +181,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
     <div hidden="true" name="{{ url('/') }}" id="public_path"></div>
 
-    <div id="notification" class="notificacao_venda hadow-box" style="display: none;">
+    <div id="notification" class="notificacao_venda" style="display: none;">
         <div class="card-vendedor">
             <img id="imagem_empresa" class="loggo empresa" src="" alt="Logo da Empresa">
             <div class="texto-cima">É VENDA</div>
@@ -192,9 +196,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             <img id="imagem_equipe" class="loggo equipe" src="" alt="Logo da Equipe">
         </div>
     </div>
-
-
-
 
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
@@ -266,7 +267,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         href="{{ route('home', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Geral</a>
                                 </li>
 
-                                @if (\Auth::user()->hasRole('admin'))
+                                @if ($user->hasRole('admin'))
                                 <li>
                                     <a
                                         href="{{ route('dashboard_equipes', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Equipes</a>
@@ -281,6 +282,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 <li>
                                     <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('ranking.home') }}">Ranking</a>
                                 </li>
                                 @endif
                             </ul>
@@ -298,32 +303,32 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             <ul class="side-nav-second-level">
                                 <li>
                                     <a
-                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'status' => 'ativo', 'view_card' => 'compact']) }}">Pipeline</a>
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'status' => 'ativo', 'view_card' => 'compact']) }}">Pipeline</a>
                                 </li>
                                 <li>
                                     <a
-                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista</a>
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista</a>
                                 </li>
 
                                 <li>
                                     <a
-                                        href="{{ route('agendamento.calendario', ['proprietario' => \Auth::user()->id]) }}">Calendário</a>
+                                        href="{{ route('agendamento.calendario', ['proprietario' => $user->id]) }}">Calendário</a>
                                 </li>
 
                                 <li>
                                     <a
-                                        href="{{ route('agendamento.lista', ['proprietario' => \Auth::user()->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
+                                        href="{{ route('agendamento.lista', ['proprietario' => $user->id, 'data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Agendamentos</a>
                                 </li>
 
-                                @if (Auth::user()->hasAnyRole(['admin']) ||
-                                Auth::user()->hasAnyRole(['gerenciar_equipe']))
+                                @if ($user->hasAnyRole(['admin']) ||
+                                $user->hasAnyRole(['gerenciar_equipe']))
 
                                 <li>
                                     <a href="{{ route('negocios.aprovacoes') }}">Produção</a>
                                 </li>
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole(['importar_leads']))
+                                @if ($user->hasAnyRole(['importar_leads']))
                                 <li>
                                     <a href="{{ route('importar.negocios.index') }}">Importar</a>
                                 </li>
@@ -332,7 +337,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         </div>
                     </li>
 
-                    @if (Auth::user()->hasAnyRole(['admin']))
+                    @if ($user->hasAnyRole(['admin']))
 
 
                     <li class="side-nav-item">
@@ -347,13 +352,13 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         <div class="collapse" id="funcionarios">
                             <ul class="side-nav-second-level">
 
-                                @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
+                                @if ($user->hasAnyRole(['gerenciar_funcionarios']))
                                 <li>
                                     <a href="{{ route('users.funcionarios') }}">Funcionários</a>
                                 </li>
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole(['gerenciar_vendas']))
+                                @if ($user->hasAnyRole(['gerenciar_vendas']))
                                 <li>
 
                                     <a
@@ -362,7 +367,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
                                 @endif
 
-                                @if (Auth::user()->hasAnyRole(['gerenciar_funcionarios']))
+                                @if ($user->hasAnyRole(['gerenciar_funcionarios']))
                                 <li>
                                     <a href="{{ route('equipes.index') }}">Equipes</a>
                                 </li>
@@ -386,13 +391,13 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         <div class="collapse" id="perfil">
                             <ul class="side-nav-second-level">
                                 <li>
-                                    <a href="{{ route('users_profile', ['id' => \Auth::user()->id]) }}">Minha
+                                    <a href="{{ route('users_profile', ['id' => $user->id]) }}">Minha
                                         Conta</a>
                                 </li>
 
-                                @if (\Auth::user()->hasRole('admin'))
+                                @if ($user->hasRole('admin'))
                                 <li>
-                                    <a href="{{ route('empresa_profile', ['id' => \Auth::user()->id]) }}">Empresa</a>
+                                    <a href="{{ route('empresa_profile', ['id' => $user->id]) }}">Empresa</a>
                                 </li>
                                 @endif
 
@@ -438,7 +443,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             <div class="content" id="content">
                 <!-- Topbar Start -->
 
-                {{-- <div class="navbar-custom">
+                <div class="navbar-custom" <?php echo $style_pipe; ?>>
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list d-lg-none">
                             <a class="nav-link dropdown-toggle arrow-none" data-bs-toggle="dropdown" href="#"
@@ -473,7 +478,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     </h5>
                                 </div>
 
-                                <div style="max-height: 230px;" data-simplebar="">
+                                <div style="max-height: 230px;overflow: scroll;" data-simplebar="">
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon bg-primary">
@@ -497,8 +502,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="{{ url('') }}/images/users/avatar-2.jpg"
-                                                class="img-fluid rounded-circle" alt="">
+                                            <img src="assets/images/users/avatar-2.jpg" class="img-fluid rounded-circle"
+                                                alt="">
                                         </div>
                                         <p class="notify-details">Cristina Pride</p>
                                         <p class="text-muted mb-0 user-msg">
@@ -519,8 +524,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <!-- item-->
                                     <a href="javascript:void(0);" class="dropdown-item notify-item">
                                         <div class="notify-icon">
-                                            <img src="{{ url('') }}/images/users/avatar-4.jpg"
-                                                class="img-fluid rounded-circle" alt="">
+                                            <img src="assets/images/users/avatar-4.jpg" class="img-fluid rounded-circle"
+                                                alt="">
                                         </div>
                                         <p class="notify-details">Karen Robinson</p>
                                         <p class="text-muted mb-0 user-msg">
@@ -551,36 +556,74 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
 
+                        {{-- <li class="notification-list">
+                            <a class="nav-link end-bar-toggle" href="javascript: void(0);">
+                                <i class="dripicons-gear noti-icon"></i>
+                            </a>
+                        </li> --}}
+
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    <img src="{{ url('') }}/images/users/user_{{ \Auth::user()->id }}/{{ \Auth::user()->avatar }}"
+                                    <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
                                         alt="user-image" class="rounded-circle">
                                 </span>
                                 <span>
-                                    <span class="account-user-name">{{ \Auth::user()->name }}</span>
-                                    <span class="account-position">{{ \Auth::user()->cargo()->first()->nome }}</span>
+                                    <span class="account-user-name">{{ $user->name }}</span>
+                                    <span class="account-position">{{ $user->cargo->nome }}</span>
                                 </span>
                             </a>
                             <div
                                 class="dropdown-menu dropdown-menu-end dropdown-menu-animated topbar-dropdown-menu profile-dropdown">
                                 <!-- item-->
                                 <div class=" dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Bem Vindo !</h6>
+                                    <h6 class="text-overflow m-0">Bem vindo !</h6>
                                 </div>
 
                                 <!-- item-->
-                                <a href="{{ route('users_profile', ['id' => \Auth::user()->id]) }}"
+                                <a href="{{ route('users_profile', ['id' => $user->id]) }}"
                                     class="dropdown-item notify-item">
                                     <i class="mdi mdi-account-circle me-1"></i>
                                     <span>Minha Conta</span>
                                 </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="mdi mdi-account-edit me-1"></i>
+                                    <span>Configurações</span>
+                                </a>
+
+                                @if ($user->hasRole('admin'))
+
+                                <a href="{{ route('empresa_profile', ['id' => $user->id]) }}"
+                                    class="dropdown-item notify-item">
+                                    <i class="mdi mdi-cog-outline me-1"></i>
+                                    <span>Empresa</span>
+                                </a>
+
+                                @endif
+
+                                <!-- item-->
                                 <a href="{{ route('change-password') }}" class="dropdown-item notify-item">
-                                    <i class="mdi textbox-password me-1"></i>
+                                    <i class="mdi mdi-account-edit me-1"></i>
                                     <span>Mudar Senha</span>
                                 </a>
-                                <hr>
+
+
+
+                                {{--
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="mdi mdi-lifebuoy me-1"></i>
+                                    <span>Support</span>
+                                </a>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="mdi mdi-lock-outline me-1"></i>
+                                    <span>Lock Screen</span>
+                                </a> --}}
 
                                 <!-- item-->
                                 <a href="{{ url('/logout') }}" class="dropdown-item notify-item">
@@ -591,12 +634,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         </li>
 
                     </ul>
-
-
                     <button class="button-menu-mobile open-left">
                         <i class="mdi mdi-menu"></i>
                     </button>
-                </div> --}}
+
+                </div>
 
 
 
@@ -630,6 +672,106 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         </div>
     </div>
     <!-- END wrapper -->
+
+
+    <!-- Right Sidebar -->
+    <div class="end-bar">
+
+        <div class="rightbar-title">
+            <a href="javascript:void(0);" class="end-bar-toggle float-end">
+                <i class="dripicons-cross noti-icon"></i>
+            </a>
+            <h5 class="m-0">Configurações</h5>
+        </div>
+
+        <div class="rightbar-content h-100" data-simplebar="">
+
+            <div class="p-3">
+                <div class="alert alert-warning" role="alert">
+                    <strong>Customize </strong> o seu CRM.
+                </div>
+
+                <!-- Settings -->
+                <h5 class="mt-3">Schema de Cores</h5>
+                <hr class="mt-1">
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="light"
+                        id="light-mode-check" checked="">
+                    <label class="form-check-label" for="light-mode-check">Light Mode</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="color-scheme-mode" value="dark"
+                        id="dark-mode-check">
+                    <label class="form-check-label" for="dark-mode-check">Dark Mode</label>
+                </div>
+
+
+                <!-- Width -->
+                <h5 class="mt-4">Width</h5>
+                <hr class="mt-1">
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="width" value="fluid" id="fluid-check"
+                        checked="">
+                    <label class="form-check-label" for="fluid-check">Fluid</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="width" value="boxed" id="boxed-check">
+                    <label class="form-check-label" for="boxed-check">Boxed</label>
+                </div>
+
+
+                <!-- Left Sidebar-->
+                <h5 class="mt-4">Left Sidebar</h5>
+                <hr class="mt-1">
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="theme" value="default" id="default-check">
+                    <label class="form-check-label" for="default-check">Default</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="theme" value="light" id="light-check"
+                        checked="">
+                    <label class="form-check-label" for="light-check">Light</label>
+                </div>
+
+                <div class="form-check form-switch mb-3">
+                    <input class="form-check-input" type="checkbox" name="theme" value="dark" id="dark-check">
+                    <label class="form-check-label" for="dark-check">Dark</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="compact" value="fixed" id="fixed-check"
+                        checked="">
+                    <label class="form-check-label" for="fixed-check">Fixed</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="compact" value="condensed"
+                        id="condensed-check">
+                    <label class="form-check-label" for="condensed-check">Condensed</label>
+                </div>
+
+                <div class="form-check form-switch mb-1">
+                    <input class="form-check-input" type="checkbox" name="compact" value="scrollable"
+                        id="scrollable-check">
+                    <label class="form-check-label" for="scrollable-check">Scrollable</label>
+                </div>
+
+                {{-- <div class="d-grid mt-4">
+                    <button class="btn btn-primary" id="resetBtn">Reset to Default</button>
+
+                    <a href="../../product/hyper-responsive-admin-dashboard-template/index.htm"
+                        class="btn btn-danger mt-3" target="_blank"><i class="mdi mdi-basket me-1"></i> Purchase Now</a>
+                </div> --}}
+            </div> <!-- end padding-->
+
+        </div>
+    </div>
+
+    <div class="rightbar-overlay"></div>
 
     <!-- bundle -->
     <script src="{{ url('') }}/js/vendor.min.js"></script>
@@ -871,6 +1013,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         "hideMethod": "fadeOut"
     }
 
+
+
     $('.logo_consensed').on('click', function() { 
 
 
@@ -878,20 +1022,16 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
 
             $("body").attr("data-leftbar-compact-mode", "not_condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", 'not_condensed', true)
+            save_config("menu_condensed_"+"{{$user->id}}", 'not_condensed', true)
         } else {
             $("body").attr("data-leftbar-compact-mode", "condensed");
-            save_config("menu_condensed_"+"{{Auth::User()->id}}", "condensed", true)
+            save_config("menu_condensed_"+"{{$user->id}}", "condensed", true)
         }
 
         
 
     });
 
-
-    
-    // Função para simular uma nova venda (você pode remover isso quando integrar com Laravel)
-    //setTimeout(showNotification, 2000);
 </script>
 
 <script>
@@ -978,11 +1118,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         })
 </script>
 @endif
-
-{{-- <div class="alert alert-success" role="alert">
-
-    <strong>Success!</strong> {{ session('status') }}
-</div> --}}
 
 
 </html>

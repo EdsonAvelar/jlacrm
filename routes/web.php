@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\RankingController;
 use App\Http\Controllers\SimulacaoController;
 
 use Illuminate\Support\Facades\Route;
@@ -14,6 +15,7 @@ use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -146,6 +148,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+    Route::group(
+        ['prefix' => 'ranking'],
+        function () {
+            Route::get('/home', [RankingController::class, 'home'])->name('ranking.home');
+            Route::get('/colaboradores/atualizar', [RankingController::class, 'colaboradores'])->name('ranking.colaboradores');
+        }
+    );
+
 
     Route::group(
         ['prefix' => 'users'],
@@ -170,6 +180,9 @@ Route::group(['middleware' => 'auth'], function () {
     );
 });
 
+
+
+
 Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function () {
     Route::group(
         ['prefix' => 'funcionarios'],
@@ -182,6 +195,9 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function
         }
     );
 });
+
+
+
 
 
 Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {

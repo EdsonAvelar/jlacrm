@@ -72,12 +72,12 @@ use App\Enums\VendaStatus;
                         </li>
                     </ul>
                 </div>
-                {{-- <h4 class="page-title">Vendas Realizadas</h4> --}}
+                <h4 class="page-title">Gerenciamento de Vendas</h4>
             </div>
         </div>
 
         <div class="col-md-4">
-            <h3>Vendas na Produção</h3>
+
             <input class="form-control btn btn-primary" type="text" name="daterange"
                 value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
 
