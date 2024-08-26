@@ -641,6 +641,68 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             border: 1px solid #d8eff3;
         }
     </style>
+
+
+
+    <style>
+        /* Estilo para a janela de contexto */
+        #settings-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 100%;
+            background-color: #1f2045;
+            color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+    
+        /* Estilo para o botão de fechar */
+        #settings-window .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+    
+        /* Estilo das abas verticais */
+        .settings-tabs {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .settings-tab {
+            padding: 10px;
+            background-color: #181942;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+    
+        .settings-tab:hover {
+            background-color: #2f2f6b;
+        }
+    
+        /* Conteúdo da aba selecionada */
+        .settings-content {
+            margin-top: 20px;
+        }
+    
+        .hidden {
+            display: none;
+        }
+    
+        /* Estilo para a aba ativa */
+        .active-tab {
+            background-color: #2f2f6b;
+        }
+    </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 
@@ -697,11 +759,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     --}}
                 </div>
             </div>
-            <div class="ranking-board">
-
-
-
-
+            {{-- <div class="ranking-board">
                 <div class="item">
 
                     <div class="award segundo">
@@ -750,7 +808,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <div id="valor3">R$53.920,00</div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
         <!-- Info Panel Section -->
@@ -824,6 +882,39 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         <div class="update-timer">
             <span>9m:59s | Restantes...</span>
             <i class="fas fa-play" id="play-pause-icon"></i>
+        </div>
+    </div>
+
+    {{-- JANELA DE CONFIGURAÇÕESSSSS --}}
+    <div id="settings-window">
+        <div class="close-btn">&times;</div>
+        <div class="settings-tabs">
+            <div class="settings-tab active-tab" data-content="info-gerais">Informações Gerais</div>
+            <div class="settings-tab" data-content="producao">Produção</div>
+            <div class="settings-tab" data-content="sons">Sons</div>
+            <div class="settings-tab" data-content="aparencia">Aparência</div>
+        </div>
+        <div class="settings-content">
+            <div id="info-gerais" class="content-section">
+                <h4>Informações Gerais</h4>
+                <p>Configurações principais sobre o time.</p>
+                <!-- Conteúdo adicional -->
+            </div>
+            <div id="producao" class="content-section hidden">
+                <h4>Produção</h4>
+                <p>Configurações de produção.</p>
+                <!-- Conteúdo adicional -->
+            </div>
+            <div id="sons" class="content-section hidden">
+                <h4>Sons</h4>
+                <p>Configurações de sons.</p>
+                <!-- Conteúdo adicional -->
+            </div>
+            <div id="aparencia" class="content-section hidden">
+                <h4>Aparência</h4>
+                <p>Configurações de aparência.</p>
+                <!-- Conteúdo adicional -->
+            </div>
         </div>
     </div>
 
@@ -999,6 +1090,31 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
         });
+    </script>
+
+
+
+    <script>
+        //************************** Abrir a janela de configurações
+            document.querySelector('.settings').addEventListener('click', function () {
+                document.getElementById('settings-window').style.transform = 'translateX(0)';
+            });
+    
+            // Fechar a janela de configurações
+            document.querySelector('.close-btn').addEventListener('click', function () {
+                document.getElementById('settings-window').style.transform = 'translateX(-100%)';
+            });
+    
+            // Alternar entre as abas
+            document.querySelectorAll('.settings-tab').forEach(tab => {
+                tab.addEventListener('click', function () {
+                    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
+                    this.classList.add('active-tab');
+    
+                    document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+                    document.getElementById(this.dataset.content).classList.remove('hidden');
+                });
+            });
     </script>
 </body>
 
