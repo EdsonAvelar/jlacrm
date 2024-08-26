@@ -660,7 +660,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             transition: transform 0.3s ease;
             z-index: 1000;
         }
-    
+
         /* Estilo para o botão de fechar */
         #settings-window .close-btn {
             position: absolute;
@@ -669,14 +669,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             font-size: 1.5em;
             cursor: pointer;
         }
-    
+
         /* Estilo das abas verticais */
         .settings-tabs {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-    
+
         .settings-tab {
             padding: 10px;
             background-color: #181942;
@@ -684,20 +684,20 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
-    
+
         .settings-tab:hover {
             background-color: #2f2f6b;
         }
-    
+
         /* Conteúdo da aba selecionada */
         .settings-content {
             margin-top: 20px;
         }
-    
+
         .hidden {
             display: none;
         }
-    
+
         /* Estilo para a aba ativa */
         .active-tab {
             background-color: #2f2f6b;
@@ -759,13 +759,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     --}}
                 </div>
             </div>
-            {{-- <div class="ranking-board">
+            <div class="ranking-board">
                 <div class="item">
 
-                    <div class="award segundo">
+                    {{-- <div class="award segundo">
                         <img src="https://via.placeholder.com/20" alt="Premiação">
                         <div>COMISSÃO DOBRADA</div>
-                    </div>
+                    </div> --}}
 
 
                     <div class="position-wrapper2">
@@ -779,10 +779,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
                 </div>
                 <div class="item">
-                    <div class="award primeiro">
+                    {{-- <div class="award primeiro">
                         <img src="https://via.placeholder.com/20" alt="Premiação">
                         <div>COMISSÃO DOBRADA</div>
-                    </div>
+                    </div> --}}
                     <div class="position-wrapper1">
                         <div class="collaborator-photo" id="collaborator-photo-1"
                             style="background-image: url('https://via.placeholder.com/80');"></div>
@@ -794,10 +794,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                 </div>
                 <div class="item">
-                    <div class="award terceiro">
+                    {{-- <div class="award terceiro">
                         <img src="https://via.placeholder.com/20" alt="Premiação">
                         <div>COMISSÃO DOBRADA</div>
-                    </div>
+                    </div> --}}
                     <div class="position-wrapper3">
                         <div class="collaborator-photo" id="collaborator-photo-3"
                             style="background-image: url('https://via.placeholder.com/80');">
@@ -808,7 +808,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <div id="valor3">R$53.920,00</div>
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
 
         <!-- Info Panel Section -->
