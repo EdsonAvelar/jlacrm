@@ -77,6 +77,13 @@ $protocolo_hora = 0;
         padding: 0rem 0.6rem !important;
     }
 
+    .content-page {
+
+        padding: 0px 12px 0px 0px !important;
+
+    }
+
+
     /* .border1 {
                     border: 0px solid #d0d0d0;
                 }
