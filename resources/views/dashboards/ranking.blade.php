@@ -280,6 +280,18 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             cursor: pointer;
         }
 
+        .logo-empresa>img {
+            display: flex;
+            align-items: center;
+            background-color: #2f2f6b;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            position: relative;
+            width: 100%;
+            padding: 30px 10px 30px 10px;
+        }
+
         .collaborator-card {
             display: flex;
             align-items: center;
@@ -459,7 +471,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .nome {
-            background-color: #36befaa8;
+            background-color: #36befaf5;
             width: 200px;
             left: 70px;
             top: 420px;
@@ -476,14 +488,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .nome.segundo {
-            background-color: #1c3414a8;
-            top: 572px;
+            background-color: #1c3414f5;
+            top: 552px;
             left: 98px;
         }
 
         .nome.terceiro {
-            background-color: #4c0b05a8;
-            top: 573px;
+            background-color: #4c0b05f5;
+            top: 569px;
         }
 
 
@@ -658,7 +670,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <img src="https://via.placeholder.com/40" alt="Logo">
+            <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="Logo">
             <div class="title">Ranking de vendas</div>
         </div>
         <div class="actions">
@@ -761,6 +773,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <?= $pages ?>
                     </span>
                 </div>
+            </div>
+            <div class="logo-empresa">
+                <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
 
             <div class="body-panel">
