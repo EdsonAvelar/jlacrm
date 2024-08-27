@@ -153,6 +153,7 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::get('/home', [RankingController::class, 'home'])->name('ranking.home');
             Route::get('/colaboradores/atualizar', [RankingController::class, 'colaboradores'])->name('ranking.colaboradores');
+            Route::post('/image/save', [RankingController::class, 'ranking_premiacoes'])->name('ranking_premiacoes');
         }
     );
 

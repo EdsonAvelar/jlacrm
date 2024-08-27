@@ -16,16 +16,19 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ranking de Vendas</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
     <!-- Font Awesome for Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Outros scripts -->
 
 
@@ -640,6 +643,30 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             height: 90px;
             border: 1px solid #d8eff3;
         }
+
+        .premiacao-item {
+            margin-bottom: 20px;
+        }
+
+        .premiacao-label {
+            display: block;
+            font-size: 14px;
+            color: #ffffff;
+            margin-bottom: 8px;
+        }
+
+        .premiacao-info {
+            padding: 10px;
+            background-color: #2f2f6b;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .premiacao-visualizar {
+            cursor: pointer;
+        }
     </style>
 
 
@@ -647,10 +674,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     <style>
         /* Estilo para a janela de contexto */
         #settings-window {
+            display: flex;
+            flex-direction: row;
+            /* Alinhar as abas e o conteúdo lado a lado */
             position: fixed;
             top: 0;
             left: 0;
-            width: 400px;
+            width: 800px;
             height: 100%;
             background-color: #1f2045;
             color: white;
@@ -671,10 +701,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         /* Estilo das abas verticais */
+        /* Ajustar o tamanho das abas */
         .settings-tabs {
+            width: 200px;
+            /* Definir largura fixa para as abas */
             display: flex;
             flex-direction: column;
             gap: 10px;
+            padding-top: 30px
         }
 
         .settings-tab {
@@ -691,7 +725,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         /* Conteúdo da aba selecionada */
         .settings-content {
-            margin-top: 20px;
+            flex-grow: 1;
+            margin-left: 20px;
+            padding-top: 30px
         }
 
         .hidden {
@@ -701,6 +737,212 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         /* Estilo para a aba ativa */
         .active-tab {
             background-color: #2f2f6b;
+        }
+
+        /* JANELA ESCURA */
+
+        .settings-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        .context-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .context-window {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 100%;
+            background-color: #2c2e48;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .context-window.open {
+            transform: translateX(0);
+        }
+
+        .context-overlay.show {
+            display: block;
+        }
+
+        .context-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #181942;
+            border-bottom: 1px solid #444;
+        }
+
+        .context-header h5 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #ffffff;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .context-tabs {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .context-tab {
+            padding: 15px;
+            font-size: 1em;
+            background-color: #181942;
+            color: white;
+            border-bottom: 1px solid #444;
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .context-tab:hover {
+            background-color: #3f4195;
+        }
+
+        .context-content {
+            flex-grow: 1;
+            padding: 20px;
+            background-color: #1f2045;
+        }
+
+        .context-content input,
+        .context-content select,
+        .context-content button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            background-color: #2c2e48;
+            color: white;
+        }
+
+        .context-content button {
+            background-color: #2e7d32;
+            cursor: pointer;
+        }
+
+        .context-content button:hover {
+            background-color: #1f5d23;
+        }
+
+        /* Overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .content-section {
+            padding: 20px;
+            background-color: #2f2f6b;
+            border-radius: 10px;
+        }
+
+
+
+        /* PREMIAÇÕESSSSSSSS */
+
+        /* Estilo geral da aba de premiações */
+        #premiacoes {
+            padding: 20px;
+            background-color: #1f2045;
+            border-radius: 10px;
+        }
+
+        .premiacao-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            background-color: #181942;
+            padding: 10px;
+            border-radius: 10px;
+            height: 100px;
+        }
+
+        .premiacao-icon img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .premiacao-1-img img {
+            width: 80px;
+            height: 80px;
+        }
+
+        .premiacao-info {
+            flex-grow: 1;
+            margin-left: 15px;
+        }
+
+        .premiacao-info input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            background-color: #2c2e48;
+            color: white;
+            font-size: 1em;
+        }
+
+        .premiacao-visualizar {
+            margin-left: 15px;
+            cursor: pointer;
+        }
+
+        .premiacao-visualizar i {
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .premiacao-salvar {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .premiacao-salvar button {
+            padding: 10px 20px;
+            background-color: #2e7d32;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .premiacao-salvar button:hover {
+            background-color: #1f5d23;
         }
     </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -732,10 +974,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="Logo">
+            <a href="{{url('')}}/crm"> <img style="width:200px"
+                    src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
+            </a>
             <div class="title">Ranking de vendas</div>
         </div>
         <div class="actions">
+
+
             {{-- <button class="support">Suporte</button>
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
             <button class="settings"><i class="fas fa-cog"></i></button>
@@ -762,10 +1008,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div class="ranking-board">
                 <div class="item">
 
-                    {{-- <div class="award segundo">
-                        <img src="https://via.placeholder.com/20" alt="Premiação">
-                        <div>COMISSÃO DOBRADA</div>
-                    </div> --}}
+                    <div class="award segundo" id="premiacao_2">
+                        <img src="{{asset('images/ranking/premiacao_2.png')}}" alt="Premiação">
+                        <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
+                    </div>
 
 
                     <div class="position-wrapper2">
@@ -779,10 +1025,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
                 </div>
                 <div class="item">
-                    {{-- <div class="award primeiro">
-                        <img src="https://via.placeholder.com/20" alt="Premiação">
-                        <div>COMISSÃO DOBRADA</div>
-                    </div> --}}
+                    <div class="award primeiro" id="premiacao_1">
+                        <img src="{{asset('images/ranking/premiacao_1.png')}}" alt="Premiação">
+                        <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
+                    </div>
                     <div class="position-wrapper1">
                         <div class="collaborator-photo" id="collaborator-photo-1"
                             style="background-image: url('https://via.placeholder.com/80');"></div>
@@ -794,10 +1040,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                 </div>
                 <div class="item">
-                    {{-- <div class="award terceiro">
-                        <img src="https://via.placeholder.com/20" alt="Premiação">
-                        <div>COMISSÃO DOBRADA</div>
-                    </div> --}}
+                    <div class="award terceiro" id="premiacao_3">
+                        <img src="{{asset('images/ranking/premiacao_3.png')}}" alt="Premiação">
+                        <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
+                    </div>
                     <div class="position-wrapper3">
                         <div class="collaborator-photo" id="collaborator-photo-3"
                             style="background-image: url('https://via.placeholder.com/80');">
@@ -886,10 +1132,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     </div>
 
     {{-- JANELA DE CONFIGURAÇÕESSSSS --}}
+
+    <div class="context-overlay"></div> <!-- Overlay para bloquear a tela ao abrir a janela de configurações -->
+
     <div id="settings-window">
-        <div class="close-btn">&times;</div>
+
+        <div class="close-btn">X</div>
+
+
         <div class="settings-tabs">
             <div class="settings-tab active-tab" data-content="info-gerais">Informações Gerais</div>
+            <div class="settings-tab" data-content="premiacao">Premiações</div>
             <div class="settings-tab" data-content="producao">Produção</div>
             <div class="settings-tab" data-content="sons">Sons</div>
             <div class="settings-tab" data-content="aparencia">Aparência</div>
@@ -898,29 +1151,166 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div id="info-gerais" class="content-section">
                 <h4>Informações Gerais</h4>
                 <p>Configurações principais sobre o time.</p>
-                <!-- Conteúdo adicional -->
+
+
+            </div>
+            <div id="premiacao" class="content-section hidden">
+                <h4>Premiações</h4>
+                <p>Defina as premiação de cada posição.</p>
+
+                <div class="premiacao-item">
+                    <div class="premiacao-icon">
+
+                        <img src="{{asset('images/ranking/icon-primeiro.png')}}" alt="Gold Trophy">
+                    </div>
+                    <div class="premiacao-1-img">
+                        <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
+                            <img src="{{ url('') }}/images/ranking/premiacao_1.png" class="avatar-lx img-thumbnail"
+                                alt="profile-image">
+                        </a>
+                    </div>
+
+                    <div class="premiacao-info">
+                        <input type="text" value="{{config('ranking_premiacao_1')}}" id="ranking_premiacao_1" />
+                    </div>
+                    <div class="premiacao-visualizar" data-id="premiacao_1">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+                <div class="premiacao-item">
+
+                    <div class="premiacao-icon">
+                        <img src="{{asset('images/ranking/icon-segundo.png')}}" alt="Silver Trophy">
+                    </div>
+
+                    <div class="premiacao-1-img">
+                        <a href="#" onclick="image_save('','/premiacao_2.png')" class="text-muted font-14">
+                            <img src="{{ url('') }}/images/ranking/premiacao_2.png" class="avatar-lx img-thumbnail"
+                                alt="profile-image">
+                        </a>
+                    </div>
+
+                    <div class="premiacao-info">
+                        <input type="text" value="{{config('ranking_premiacao_2')}}" id="ranking_premiacao_2" />
+                    </div>
+                    <div class="premiacao-visualizar" data-id="premiacao_2">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+                <div class="premiacao-item">
+                    <div class="premiacao-icon">
+                        <img src="{{asset('images/ranking/icon-terceiro.png')}}" alt="Bronze Trophy">
+                    </div>
+
+                    <div class="premiacao-1-img">
+                        <a href="#" onclick="image_save('','/premiacao_3.png')" class="text-muted font-14">
+                            <img src="{{ url('') }}/images/ranking/premiacao_3.png" class="avatar-lx img-thumbnail"
+                                alt="profile-image">
+                        </a>
+                    </div>
+                    <div class="premiacao-info">
+                        <input type="text" value="{{config('ranking_premiacao_3')}}" id="ranking_premiacao_3" />
+                    </div>
+                    <div class="premiacao-visualizar" data-id="premiacao_3">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                </div>
+                {{-- <div class="premiacao-salvar">
+                    <button>Salvar</button>
+                </div> --}}
             </div>
             <div id="producao" class="content-section hidden">
                 <h4>Produção</h4>
                 <p>Configurações de produção.</p>
-                <!-- Conteúdo adicional -->
             </div>
             <div id="sons" class="content-section hidden">
                 <h4>Sons</h4>
                 <p>Configurações de sons.</p>
-                <!-- Conteúdo adicional -->
             </div>
             <div id="aparencia" class="content-section hidden">
                 <h4>Aparência</h4>
                 <p>Configurações de aparência.</p>
-                <!-- Conteúdo adicional -->
             </div>
         </div>
     </div>
 
+
+    @include('templates.escolher_img', [
+    'action' => route('ranking_premiacoes'),
+    'titulo' => "Editar Arte da Premiação"
+    ])
+
+
     <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 
     <script>
+        $.ajaxSetup({
+    headers: {
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+    });
+        function image_save($folder, $imgname) {
+                $('#pasta_imagem').val($folder);
+                $('#imagem_name').val($imgname);
+
+                $('#change_logo').modal('show');
+            }
+
+            var ids_toggle = [
+                'ranking_premiacao_1',
+                'ranking_premiacao_2',
+                'ranking_premiacao_3',         
+            ];
+            
+            ids_toggle.forEach(function(id) {
+                var element = document.getElementById(id);
+                if (element) {
+                    element.addEventListener('blur', function(e) {
+                    var value = e.target.value.toUpperCase();;
+
+                    console.log(id,value)
+
+                    save_config(id, value);
+                    $("#txt_"+id).html(value);
+              
+                    });
+                }
+            });
+
+
+
+    function save_config(config_info, config_value, alert=true) {
+
+            info = [];
+            info[0] = config_info;
+            info[1] = config_value;
+
+            $.ajax({
+                url: "{{ url('empresa/config') }}",
+                type: 'post',
+                data: {
+                    info: info
+                },
+                Type: 'json',
+                success: function(res) {
+
+                if (alert){
+                console.log(res)
+    
+                }
+                   
+                },
+                error: function(res) {
+
+                if (alert){
+                    console.log(res)
+                }
+                   
+                },
+            });
+        }
+
+
         function atualizarColaboradores() {
             $.ajax({
                 url: '/ranking/colaboradores/atualizar',
@@ -1096,25 +1486,64 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <script>
         //************************** Abrir a janela de configurações
-            document.querySelector('.settings').addEventListener('click', function () {
-                document.getElementById('settings-window').style.transform = 'translateX(0)';
+            // Abrir a janela de configurações com o overlay
+           // Abrir a janela de configurações
+        document.querySelector('.settings').addEventListener('click', function () {
+        document.getElementById('settings-window').style.transform = 'translateX(0)';
+        document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
+        });
+        
+        // Fechar a janela de configurações
+        document.querySelector('.close-btn').addEventListener('click', function () {
+        document.getElementById('settings-window').style.transform = 'translateX(-100%)';
+        document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
+        });
+        
+        // Fechar a janela de configurações ao clicar fora dela
+        document.querySelector('.context-overlay').addEventListener('click', function () {
+        document.getElementById('settings-window').style.transform = 'translateX(-100%)';
+        document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
+        });
+        
+        // Alternar entre as abas
+        document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+        document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
+        this.classList.add('active-tab');
+        
+        document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+        document.getElementById(this.dataset.content).classList.remove('hidden');
+        });
+        });
+    </script>
+
+    <script>
+        document.querySelectorAll('.premiacao-visualizar').forEach(function(button) {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const premiacaoId = this.getAttribute('data-id');  // Captura o data-id
+
+                if (icon.classList.contains('fa-eye')) {
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                    console.log(`Premiação ${premiacaoId} foi escondida.`);
+
+
+                    $("#"+premiacaoId).hide();
+
+                    save_config("ranking_visibilidade_"+)
+                    // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
+                } else {
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                    console.log(`Premiação ${premiacaoId} foi mostrada.`);
+                    $("#"+premiacaoId).show()
+
+
+                    // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
+                }
             });
-    
-            // Fechar a janela de configurações
-            document.querySelector('.close-btn').addEventListener('click', function () {
-                document.getElementById('settings-window').style.transform = 'translateX(-100%)';
-            });
-    
-            // Alternar entre as abas
-            document.querySelectorAll('.settings-tab').forEach(tab => {
-                tab.addEventListener('click', function () {
-                    document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
-                    this.classList.add('active-tab');
-    
-                    document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-                    document.getElementById(this.dataset.content).classList.remove('hidden');
-                });
-            });
+        });
     </script>
 </body>
 

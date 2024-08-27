@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Enums\UserStatus;
 use Carbon\Carbon;
 use App\Models\Fechamento;
-
+use Validator;
 class RankingController extends Controller
 {
 
@@ -16,6 +16,43 @@ class RankingController extends Controller
     {
         return view('dashboards.ranking');
     }
+
+    public function ranking_premiacoes(Request $request)
+    {
+
+        $input = $request->all();
+
+        $rules = array(
+            'image' => 'required|mimes:png|max:2048',
+        );
+
+        $error_msg = [
+            'image.required' => 'Imagem é Obrigatório',
+            'image.max' => 'Limite Máximo do Arquivo 2mb',
+            'image.mimes' => 'extensões válidas (png)'
+        ];
+
+        $validator = Validator::make($input, $rules, $error_msg);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+
+        $pasta_imagem = $input['pasta_imagem'];
+        $imagem_name = $input['imagem_name'];
+
+
+        $destino = public_path('images') . "/ranking/" . $pasta_imagem . "";
+
+        $request->image->move($destino, $imagem_name);
+
+
+        return back()->with("status", "Imagem salva com sucesso");
+    }
+
 
     public function colaboradores()
     {

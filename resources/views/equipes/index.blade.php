@@ -56,7 +56,7 @@
     <!-- end page title -->
 
     <div class="row container_exp" id="container"
-        data-containers='["semequipe","<?php echo implode('","', $equipes->pluck(' nome')->toArray()); ?>"]'>
+        data-containers='["semequipe","<?php echo implode('","', $equipes->pluck("nome")->toArray()); ?>"]'>
         <div class="col-md-3">
             <div class="row" style="padding-top: 20px;">
                 <div class="col-md-12">
