@@ -148,17 +148,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         .award.primeiro {
             top: -320px;
-            left: 104px;
+            left: 142px;
         }
 
         .award.segundo {
             top: -134px;
-            left: 131px;
+            left: 171px;
         }
 
         .award.terceiro {
             top: -116px;
-            left: 83px;
+            left: 121px;
         }
 
         .award img {
