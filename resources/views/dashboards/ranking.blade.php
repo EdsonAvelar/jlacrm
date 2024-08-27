@@ -899,6 +899,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .premiacao-1-img img {
             width: 80px;
             height: 80px;
+            border-radius: 50%;
+            border: 1px;
         }
 
         .premiacao-info {
@@ -1008,7 +1010,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div class="ranking-board">
                 <div class="item">
 
-                    <div class="award segundo" id="premiacao_2" hidden>
+                    <div class="award segundo" id="premiacao_2" <?php if (config('ranking_visivel_premiacao_2')=="false"
+                        ){ echo 'style="display:none"' ; } ?>>
                         <img src="{{asset('images/ranking/premiacao_2.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
                     </div>
@@ -1025,7 +1028,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
                 </div>
                 <div class="item">
-                    <div class="award primeiro" id="premiacao_1" hidden>
+                    <div class="award primeiro" id="premiacao_1" <?php if
+                        (config('ranking_visivel_premiacao_1')=="false" ){ echo 'style="display:none"' ; } ?>>
                         <img src="{{asset('images/ranking/premiacao_1.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
                     </div>
@@ -1040,7 +1044,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                 </div>
                 <div class="item">
-                    <div class="award terceiro" id="premiacao_3" hidden>
+                    <div class="award terceiro" id="premiacao_3" <?php if
+                        (config('ranking_visivel_premiacao_3')=="false" ){ echo 'style="display:none"' ; } ?>
+                        >
                         <img src="{{asset('images/ranking/premiacao_3.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
                     </div>
@@ -1174,7 +1180,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <input type="text" value="{{config('ranking_premiacao_1')}}" id="ranking_premiacao_1" />
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_1">
-                        <i class="fas fa-eye"></i>
+                        <?php 
+                                            if (config('ranking_visivel_premiacao_1') == "false"){
+                                                echo '<i class="fas fa-eye-slash"></i>';
+                                            }else {
+                                                echo '<i class="fas fa-eye"></i>';
+                                            }
+                                            
+                                            ?>
                     </div>
                 </div>
                 <div class="premiacao-item">
@@ -1194,7 +1207,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <input type="text" value="{{config('ranking_premiacao_2')}}" id="ranking_premiacao_2" />
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_2">
-                        <i class="fas fa-eye"></i>
+                        <?php 
+                            if (config('ranking_visivel_premiacao_2') == "false"){
+                                echo '<i class="fas fa-eye-slash"></i>';
+                            }else {
+                                echo '<i class="fas fa-eye"></i>';
+                            }
+                            
+                            ?>
                     </div>
                 </div>
                 <div class="premiacao-item">
@@ -1212,7 +1232,16 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <input type="text" value="{{config('ranking_premiacao_3')}}" id="ranking_premiacao_3" />
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_3">
-                        <i class="fas fa-eye"></i>
+
+                        <?php 
+                   if (config('ranking_visivel_premiacao_3') == "false"){
+                        echo '<i class="fas fa-eye-slash"></i>';
+                    }else {
+                        echo '<i class="fas fa-eye"></i>';
+                    }
+                    
+                    ?>
+
                     </div>
                 </div>
                 {{-- <div class="premiacao-salvar">
@@ -1521,7 +1550,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     <script>
         document.querySelectorAll('.premiacao-visualizar').forEach(function(button) {
 
-            
+           
 
             button.addEventListener('click', function() {
                 const icon = this.querySelector('i');
