@@ -45,7 +45,7 @@ class RankingController extends Controller
         $imagem_name = $input['imagem_name'];
 
 
-        $destino = public_path('images') . "/ranking/" . $pasta_imagem . "";
+        $destino = public_path('images') . "/ranking/user/" . $pasta_imagem . "";
 
         $request->image->move($destino, $imagem_name);
 

@@ -123,7 +123,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("/images/ranking/background_ranking.png");
+            background: url("/images/ranking/system/background_ranking.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -419,7 +419,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/primeiro_lugar.png");
+            background-image: url("/images/ranking/system/primeiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -435,7 +435,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/segundo_lugar.png");
+            background-image: url("/images/ranking/system/segundo_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -451,7 +451,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/terceiro_lugar.png");
+            background-image: url("/images/ranking/system/terceiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1012,7 +1012,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     <div class="award segundo" id="premiacao_2" <?php if (config('ranking_visivel_premiacao_2')=="false"
                         ){ echo 'style="display:none"' ; } ?>>
-                        <img src="{{asset('images/ranking/premiacao_2.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_2.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
                     </div>
 
@@ -1030,7 +1030,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="item">
                     <div class="award primeiro" id="premiacao_1" <?php if
                         (config('ranking_visivel_premiacao_1')=="false" ){ echo 'style="display:none"' ; } ?>>
-                        <img src="{{asset('images/ranking/premiacao_1.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_1.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
                     </div>
                     <div class="position-wrapper1">
@@ -1047,7 +1047,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     <div class="award terceiro" id="premiacao_3" <?php if
                         (config('ranking_visivel_premiacao_3')=="false" ){ echo 'style="display:none"' ; } ?>
                         >
-                        <img src="{{asset('images/ranking/premiacao_3.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_3.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
                     </div>
                     <div class="position-wrapper3">
@@ -1167,11 +1167,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/icon-primeiro.png')}}" alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/system/icon-primeiro.png')}}" alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/premiacao_1.png" class="avatar-lx img-thumbnail"
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_1.png" class="avatar-lx img-thumbnail"
                                 alt="profile-image">
                         </a>
                     </div>
@@ -1193,12 +1193,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
 
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/icon-segundo.png')}}" alt="Silver Trophy">
+                        <img src="{{asset('images/ranking/system/icon-segundo.png')}}" alt="Silver Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_2.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/premiacao_2.png" class="avatar-lx img-thumbnail"
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_2.png" class="avatar-lx img-thumbnail"
                                 alt="profile-image">
                         </a>
                     </div>
@@ -1219,12 +1219,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/icon-terceiro.png')}}" alt="Bronze Trophy">
+                        <img src="{{asset('images/ranking/system/icon-terceiro.png')}}" alt="Bronze Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_3.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/premiacao_3.png" class="avatar-lx img-thumbnail"
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_3.png" class="avatar-lx img-thumbnail"
                                 alt="profile-image">
                         </a>
                     </div>
