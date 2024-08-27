@@ -1008,7 +1008,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div class="ranking-board">
                 <div class="item">
 
-                    <div class="award segundo" id="premiacao_2">
+                    <div class="award segundo" id="premiacao_2" hidden>
                         <img src="{{asset('images/ranking/premiacao_2.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
                     </div>
@@ -1025,7 +1025,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
                 </div>
                 <div class="item">
-                    <div class="award primeiro" id="premiacao_1">
+                    <div class="award primeiro" id="premiacao_1" hidden>
                         <img src="{{asset('images/ranking/premiacao_1.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
                     </div>
@@ -1040,7 +1040,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                 </div>
                 <div class="item">
-                    <div class="award terceiro" id="premiacao_3">
+                    <div class="award terceiro" id="premiacao_3" hidden>
                         <img src="{{asset('images/ranking/premiacao_3.png')}}" alt="Premiação">
                         <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
                     </div>
@@ -1249,6 +1249,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
     });
+
         function image_save($folder, $imgname) {
                 $('#pasta_imagem').val($folder);
                 $('#imagem_name').val($imgname);
@@ -1519,6 +1520,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <script>
         document.querySelectorAll('.premiacao-visualizar').forEach(function(button) {
+
+            
+
             button.addEventListener('click', function() {
                 const icon = this.querySelector('i');
                 const premiacaoId = this.getAttribute('data-id');  // Captura o data-id
@@ -1531,13 +1535,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     $("#"+premiacaoId).hide();
 
-                    save_config("ranking_visibilidade_"+)
+                    save_config("ranking_visivel_"+premiacaoId, "false");
                     // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
                 } else {
                     icon.classList.remove('fa-eye-slash');
                     icon.classList.add('fa-eye');
                     console.log(`Premiação ${premiacaoId} foi mostrada.`);
                     $("#"+premiacaoId).show()
+                    save_config("ranking_visivel_"+premiacaoId, "true");
 
 
                     // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
