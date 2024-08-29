@@ -283,10 +283,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 <li>
                                     <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
                                 </li>
-                                {{--
+
                                 <li>
                                     <a href="{{ route('ranking.home') }}">Ranking</a>
-                                </li> --}}
+                                </li>
                                 @endif
                             </ul>
                         </div>
