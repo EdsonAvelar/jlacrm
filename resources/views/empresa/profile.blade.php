@@ -883,8 +883,6 @@ vermelho mais do que 5 dias parados
             });
         };
 
-
-
         function myFacebookLogin() {
             FB.login(function(response) {
                 if (response.authResponse) {
@@ -904,6 +902,7 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
+
     function image_save($folder, $imgname) {
 
             $('#pasta_imagem').val($folder);

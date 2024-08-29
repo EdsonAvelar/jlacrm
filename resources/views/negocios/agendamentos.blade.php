@@ -370,8 +370,6 @@ $users = User::where('status', UserStatus::ativo)->get();
 <script src="{{ url('') }}/js/jquery.timepicker.min.js"></script>
 
 
-<script src="{{ url('') }}/js/vendor/jquery.dataTables.min.js"></script>
-<script src="{{ url('') }}/js/vendor/dataTables.bootstrap5.js"></script>
 <script>
     $(document).ready(function() {
 
@@ -391,7 +389,8 @@ $users = User::where('status', UserStatus::ativo)->get();
 
 
             let example = $('#example').DataTable({
-                pageLength: 100
+                pageLength: 100,
+                scrollX: true
             });
 
             let selectall = false;

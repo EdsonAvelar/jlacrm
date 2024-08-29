@@ -2,16 +2,18 @@
     <div class="card">
         <div class="card-body">
             <div class="row align-items-center">
-            <h5 class="text-muted fw-normal mt-0 text-truncate" >{{$name}}</h5>
+                <h5 class="text-muted fw-normal mt-0 text-truncate">{{$name}}</h5>
                 <div class="col-12">
                     <div class="text-end">
-                        
-                        <div id='funnel_individual'><!-- Plotly chart will be drawn inside this DIV --></div>
+
+                        <div id='funnel_individual'>
+                            <!-- Plotly chart will be drawn inside this DIV -->
+                        </div>
 
                     </div>
                 </div>
 
-                
+
             </div> <!-- end row-->
 
         </div> <!-- end card-body -->
@@ -21,8 +23,7 @@
 <script src='https://cdn.plot.ly/plotly-2.24.1.min.js'></script>
 
 <script>
-
-//https://plotly.com/javascript/funnel-charts/
+    //https://plotly.com/javascript/funnel-charts/
 var gd = document.getElementById('funnel_individual');
 var data = [
     {

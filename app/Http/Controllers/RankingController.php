@@ -93,9 +93,13 @@ class RankingController extends Controller
                 "total" => $vendas_totais,
                 'meta' => 1500000,
                 'percentual' => ($vendas_totais / 1500000) * 100,
-                "avatar" => $avatar
-
+                "avatar" => $avatar,
             ];
+
+            if ($vendedor->equipe) {
+                $user_info["equipe_name"] = $vendedor->equipe->descricao;
+                $user_info["equipe_logo"] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo;
+            }
 
             $total = $total + $vendas_totais;
 

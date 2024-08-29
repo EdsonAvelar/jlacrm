@@ -148,14 +148,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
-    Route::group(
-        ['prefix' => 'ranking'],
-        function () {
-            Route::get('/home', [RankingController::class, 'home'])->name('ranking.home');
-            Route::get('/colaboradores/atualizar', [RankingController::class, 'colaboradores'])->name('ranking.colaboradores');
-            Route::post('/image/save', [RankingController::class, 'ranking_premiacoes'])->name('ranking_premiacoes');
-        }
-    );
+    // Route::group(
+    //     ['prefix' => 'ranking'],
+    //     function () {
+    //         Route::get('/home', [RankingController::class, 'home'])->name('ranking.home');
+    //         Route::get('/colaboradores/atualizar', [RankingController::class, 'colaboradores'])->name('ranking.colaboradores');
+    //         Route::post('/image/save', [RankingController::class, 'ranking_premiacoes'])->name('ranking_premiacoes');
+    //     }
+    // );
 
 
     Route::group(

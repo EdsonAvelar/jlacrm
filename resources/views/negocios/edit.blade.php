@@ -36,18 +36,15 @@ use App\Enums\LevantamentoStatus;
 
                                         @if ($levantamento->status)
 
-
                                         @if($levantamento->status == "APROVADO")
                                         <span class="badge bg-success float-begin">APROVADO</span>
                                         @elseif ($levantamento->status == "REJEITADO")
                                         <span class="badge bg-danger float-begin">REJEITADO</span>
                                         @else
                                         <span class="badge bg-warning float-begin">EM APROVAÇÂO</span>
-
                                         @endif
 
                                         @endif
-
 
 
                                         <ul class="mb-0 list-inline text-light">

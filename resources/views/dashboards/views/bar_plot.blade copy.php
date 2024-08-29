@@ -2,6 +2,61 @@
     .modal-content {
         width: auto;
     }
+
+    #chart_ {
+            {
+            $name
+        }
+    }
+
+    ,
+    #modal_chart_ {
+            {
+            $name
+        }
+    }
+
+        {
+        width: 80%;
+        /* Gráficos ocuparão 80% da largura do contêiner */
+        max-width: 100%;
+        height: auto;
+        /* Ajusta a altura para manter a proporção */
+        margin: 0 auto;
+        /* Centraliza o gráfico */
+    }
+
+    @media (max-width: 768px) {
+
+        /* Ajustes adicionais para telas menores */
+        #grafico_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 100%;
+        }
+
+        #chart_ {
+                {
+                $name
+            }
+        }
+
+        ,
+        #modal_chart_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 90%;
+            /* Ajusta para ocupar mais espaço em telas muito pequenas */
+        }
+    }
 </style>
 
 <?php
@@ -110,6 +165,24 @@ $name = strtolower($name);
 
             },
             type: 'bar'
+            ,
+            height: 'auto', // Ajusta automaticamente a altura do gráfico com base no contêiner
+            width: '100%',  // Usa 100% da largura do contêiner
+            responsive: [
+                {
+                    breakpoint: 300,
+                    options: {
+                        chart: {
+                            width: '100%', // Ajusta a largura em dispositivos móveis
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false, // Evita que os gráficos fiquem achatados verticalmente
+                            }
+                        },
+                    }
+                }
+            ]
         },
         series: [{
             name: '{{ $name }}',
@@ -135,42 +208,42 @@ $name = strtolower($name);
         },
         dataLabels: {
             enabled: true,
-            formatter: function(num) {
+            formatter: function (num) {
                 const digits = 2;
                 const lookup = [{
-                        value: 1,
-                        symbol: ""
-                    },
-                    {
-                        value: 1e3,
-                        symbol: "K"
-                    },
-                    {
-                        value: 1e6,
-                        symbol: "M"
-                    },
-                    {
-                        value: 1e9,
-                        symbol: "G"
-                    },
-                    {
-                        value: 1e12,
-                        symbol: "T"
-                    },
-                    {
-                        value: 1e15,
-                        symbol: "P"
-                    },
-                    {
-                        value: 1e18,
-                        symbol: "E"
-                    }
+                    value: 1,
+                    symbol: ""
+                },
+                {
+                    value: 1e3,
+                    symbol: "K"
+                },
+                {
+                    value: 1e6,
+                    symbol: "M"
+                },
+                {
+                    value: 1e9,
+                    symbol: "G"
+                },
+                {
+                    value: 1e12,
+                    symbol: "T"
+                },
+                {
+                    value: 1e15,
+                    symbol: "P"
+                },
+                {
+                    value: 1e18,
+                    symbol: "E"
+                }
                 ];
 
 
 
                 const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-                var item = lookup.slice().reverse().find(function(item) {
+                var item = lookup.slice().reverse().find(function (item) {
 
                     return num >= item.value;
                 });

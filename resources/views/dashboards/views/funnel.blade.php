@@ -33,7 +33,7 @@ var data = [{
     marker: {color: ["241023", "6B0504", "A3320B", "D5E68D", "47A025"]}
 }];
 
-var layout = {margin: {l: 150}, funnelmode: "stack", showlegend: 'True'}
+var layout = {margin: {l: 150}, funnelmode: "stack", showlegend: 'True', responsive: true}
 
 Plotly.newPlot('myDiv', data, layout);
 

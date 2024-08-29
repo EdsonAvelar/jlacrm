@@ -621,9 +621,8 @@
 $(document).ready(function() {
     let table = $('#example2').DataTable({
         pageLength: 100,
-        columnDefs: [
-        { orderable: false, targets: '_all' } // Desativa a ordenação em todas as colunas
-        ]
+        scrollX: true
+        
     });
 
     // Criar a estrutura do dropdown de filtro
@@ -645,7 +644,7 @@ $(document).ready(function() {
         $filterDropdown.data('icon', $(this));
         $filterDropdown.css({
             top: position.top + 30 + 'px',
-            left: position.left + 'px'
+            left: (position.left -80) + 'px'
         }).show();
     });
 

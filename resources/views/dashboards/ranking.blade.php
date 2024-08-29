@@ -224,9 +224,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background-color: #21224f;
             border-radius: 10px;
             padding: 20px;
-            margin-top: 20px;
-            max-height: 1050px;
+            /* margin-top: 20px; */
+
             /* Define o limite de altura */
+
+        }
+
+        .body-panel {
+            max-height: 800px;
             overflow-y: auto;
             /* Adiciona o scroll vertical */
             overflow-x: hidden;
@@ -234,17 +239,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         /* Estilizando o scroll para combinar com as cores da página */
-        .info-panel::-webkit-scrollbar {
+        .body-panel::-webkit-scrollbar {
             width: 10px;
         }
 
-        .info-panel::-webkit-scrollbar-track {
+        .body-panel::-webkit-scrollbar-track {
             background: #1f2045;
             /* Cor do fundo do track */
             border-radius: 10px;
         }
 
-        .info-panel::-webkit-scrollbar-thumb {
+        .body-panel::-webkit-scrollbar-thumb {
             background-color: #3f4195;
             /* Cor do "polegar" do scroll */
             border-radius: 10px;
@@ -252,16 +257,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             /* Espaço entre o "polegar" e o track */
         }
 
-        .info-panel::-webkit-scrollbar-thumb:hover {
+        .body-panel::-webkit-scrollbar-thumb:hover {
             background-color: #5a5cc2;
             /* Cor ao passar o mouse */
         }
+
 
         .header-panel {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .header-panel select {
@@ -295,8 +301,19 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             padding: 30px 10px 30px 10px;
         }
 
+        /* .collaborator-card {
+            display: flex;
+            align-items: center;
+            background-color: #2f2f6b;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        } */
+
         .collaborator-card {
             display: flex;
+            justify-content: space-between;
             align-items: center;
             background-color: #2f2f6b;
             padding: 10px 20px;
@@ -321,17 +338,44 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .collaborator-card .photo {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 80px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            margin-right: 20px;
+            margin-right: 10px;
             border: 2px solid white;
         }
 
         .collaborator-info {
             flex-grow: 1;
+            width: 75%;
+            /* Ajuste a largura da seção de informações */
+        }
+
+        .team-section {
+
+            flex-direction: column;
+            align-items: center;
+            width: 20%;
+            /* Definindo cerca de 20% da largura */
+            padding-left: 10px;
+        }
+
+        .team-section .team-photo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 5px;
+            border: 2px solid #fff;
+        }
+
+        .team-section .team-name {
+            font-size: 0.9em;
+            color: #ffffff;
+            text-align: center;
         }
 
         .collaborator-info .name {
@@ -946,6 +990,19 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .premiacao-salvar button:hover {
             background-color: #1f5d23;
         }
+
+        input[type=checkbox] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(1.3);
+            /* IE */
+            -moz-transform: scale(1.3);
+            /* FF */
+            -webkit-transform: scale(1.3);
+            /* Safari and Chrome */
+            -o-transform: scale(1.3);
+            /* Opera */
+            padding: 10px;
+        }
     </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
@@ -987,7 +1044,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             {{-- <button class="support">Suporte</button>
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
             <button class="settings"><i class="fas fa-cog"></i></button>
-            <button class="settings"><i class="fas fa-sync-alt"></i></button>
+            <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
         </div>
     </div>
 
@@ -1114,6 +1171,15 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     <div class="percentage">
                         <?= 100 - $colaborador['percentual'] ?>%
                     </div>
+                    <div class="team-section">
+                        <div class="team-photo" style="background-image: url('https://via.placeholder.com/60');">
+                            <!-- Imagem da equipe -->
+                        </div>
+                        <div class="team-name">
+                            <!-- Nome da equipe -->
+                            <?= $colaborador['equipe'] ?>
+                        </div>
+                    </div>
                 </div>
 
                 <?php endforeach; ?>
@@ -1157,6 +1223,32 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div id="info-gerais" class="content-section">
                 <h4>Informações Gerais</h4>
                 <p>Configurações principais sobre o time.</p>
+
+
+                <div class="mb-3">
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                        <label for="inputEmail3" class="col-form-label">Permitir Deletar
+                            Negócio
+                            <span class="mdi mdi-information"></span>
+                        </label> </span>
+
+                    <input class="toggle-event" type="checkbox" <?php $monstrar=config("ranking_mostrar_equipe"); if
+                        ($monstrar!=null & $monstrar=='true' ){ echo 'checked' ;} ?>
+                    data-config_info="ranking_mostrar_equipe" data-toggle="toggle"
+                    data-on="com equipe" data-off="sem equipe"
+                    data-onstyle="success"
+                    data-offstyle="danger">
+                </div>
+
+
+
+                {{--
+                <div class="col-md-8">
+                    <h1>Monstrar Equipe</h1>
+                    </h1>
+                </div>
+                <div class="col-md-4"></div> --}}
+
 
 
             </div>
@@ -1259,6 +1351,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div id="aparencia" class="content-section hidden">
                 <h4>Aparência</h4>
                 <p>Configurações de aparência.</p>
+
+
+
             </div>
         </div>
     </div>
@@ -1278,6 +1373,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
     });
+
+    var mostra_equipe = true;
+
 
         function image_save($folder, $imgname) {
                 $('#pasta_imagem').val($folder);
@@ -1340,8 +1438,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             });
         }
 
+      
 
         function atualizarColaboradores() {
+
+            let equipe= "none";
+            if (mostra_equipe){
+                equipe= "flex";
+            }
             $.ajax({
                 url: '/ranking/colaboradores/atualizar',
                 method: 'GET',
@@ -1350,6 +1454,25 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     
                     let html = '';
                     colaboradores.forEach(function(colaborador, index) {
+                        let html_colaborador = "";
+                        
+
+                        if (colaborador.equipe_logo != null ){
+                           
+
+                            console.log(mostra_equipe+" - atualizarColaboradores: - "+equipe)
+
+                            html_colaborador = `
+                            <div class="team-section" style='display:${equipe}'">
+                                <div class="team-photo" style="background-image: url('${colaborador.equipe_logo}');">
+                                    <!-- Imagem da equipe -->
+                                </div>
+                                <div class="team-name">
+                                    <!-- Nome da equipe -->
+                                    <p>${colaborador.equipe_name}</p>
+                                </div>
+                            </div>`
+                        }
                         html += `
                         <div class="collaborator-card">
                             <div class="position">${index + 1}</div>
@@ -1363,10 +1486,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                                 <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
                             </div>
                             <div class="percentage">${Math.round(colaborador.percentual) }%</div>
+                            ${html_colaborador}
                         </div>`;
                     });
     
                     $('.body-panel').html(html);
+
+                    
+
 
                     for (let index = 0; index < 3; index++) {
                     
@@ -1395,7 +1522,23 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             });
         }
 
-        atualizarColaboradores();
+        
+
+        $(document).ready(function() {
+
+            let has_equipe = "{{config('ranking_mostrar_equipe')}}";
+            if (has_equipe == "false"){
+               
+        
+                mostra_equipe=false;
+
+            }else {
+                mostra_equipe=true;
+            }
+
+
+            atualizarColaboradores();
+        });
 
         // Chama a função a cada x segundos (por exemplo, 30 segundos)
         //setInterval(atualizarColaboradores, 5000);
@@ -1487,6 +1630,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             
             setTimeout(function() {
                 showNotification();
+    
                 
                 atualizarColaboradores();
 
@@ -1518,39 +1662,42 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         //************************** Abrir a janela de configurações
             // Abrir a janela de configurações com o overlay
            // Abrir a janela de configurações
+
+           
+    
+
         document.querySelector('.settings').addEventListener('click', function () {
-        document.getElementById('settings-window').style.transform = 'translateX(0)';
-        document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
+            document.getElementById('settings-window').style.transform = 'translateX(0)';
+            document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
         });
         
         // Fechar a janela de configurações
         document.querySelector('.close-btn').addEventListener('click', function () {
-        document.getElementById('settings-window').style.transform = 'translateX(-100%)';
-        document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
+            document.getElementById('settings-window').style.transform = 'translateX(-100%)';
+            document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
         });
         
         // Fechar a janela de configurações ao clicar fora dela
         document.querySelector('.context-overlay').addEventListener('click', function () {
-        document.getElementById('settings-window').style.transform = 'translateX(-100%)';
-        document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
+            document.getElementById('settings-window').style.transform = 'translateX(-100%)';
+            document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
         });
         
         // Alternar entre as abas
         document.querySelectorAll('.settings-tab').forEach(tab => {
-        tab.addEventListener('click', function () {
-        document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
-        this.classList.add('active-tab');
-        
-        document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-        document.getElementById(this.dataset.content).classList.remove('hidden');
-        });
+            tab.addEventListener('click', function () {
+            document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
+            this.classList.add('active-tab');
+            
+            document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+            document.getElementById(this.dataset.content).classList.remove('hidden');
+            });
         });
     </script>
 
     <script>
         document.querySelectorAll('.premiacao-visualizar').forEach(function(button) {
 
-           
 
             button.addEventListener('click', function() {
                 const icon = this.querySelector('i');
@@ -1577,6 +1724,39 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
                 }
             });
+        });
+
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detecta o clique no botão com a classe settings-sync
+            document.querySelector('.settings-sync').addEventListener('click', function() {
+            
+            
+            atualizarColaboradores();
+            
+         
+            });
+        });
+
+ 
+
+
+        $('.toggle-event').change(function($this) {
+        
+            var config_info = $(this).data('config_info');
+            var config_value = $(this).prop('checked');
+
+            console.log( config_info, config_value )
+            if (config_info == "ranking_mostrar_equipe"){
+          
+                mostra_equipe = config_value
+
+                atualizarColaboradores();
+            }
+            
+            save_config(config_info, config_value);
+        
         });
     </script>
 </body>

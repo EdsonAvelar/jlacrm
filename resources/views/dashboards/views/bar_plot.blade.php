@@ -2,6 +2,62 @@
     .modal-content {
         width: auto;
     }
+
+    /* CSS para tornar os gráficos responsivos */
+    #chart_ {
+            {
+            $name
+        }
+    }
+
+    ,
+    #modal_chart_ {
+            {
+            $name
+        }
+    }
+
+        {
+        width: 80%;
+        /* Gráficos ocuparão 80% da largura do contêiner */
+        max-width: 100%;
+        height: auto;
+        /* Ajusta a altura para manter a proporção */
+        margin: 0 auto;
+        /* Centraliza o gráfico */
+    }
+
+    @media (max-width: 768px) {
+
+        /* Ajustes adicionais para telas menores */
+        #grafico_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 100%;
+        }
+
+        #chart_ {
+                {
+                $name
+            }
+        }
+
+        ,
+        #modal_chart_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 90%;
+            /* Ajusta para ocupar mais espaço em telas muito pequenas */
+        }
+    }
 </style>
 
 <?php
@@ -32,7 +88,7 @@ $name = strtolower($name);
                 </a>
             </div>
         </div>
-    </div> 
+    </div>
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
@@ -107,7 +163,24 @@ $name = strtolower($name);
                 },
 
             },
-            type: 'bar'
+            type: 'bar',
+            height: '400px', // Ajusta automaticamente a altura do gráfico com base no contêiner
+            width: '100%',  // Usa 100% da largura do contêiner
+            responsive: [
+                {
+                    breakpoint: 300,
+                    options: {
+                        chart: {
+                            width: '100%', // Ajusta a largura em dispositivos móveis
+                        },
+                        plotOptions: {
+                            bar: {
+                                horizontal: false, // Evita que os gráficos fiquem achatados verticalmente
+                            }
+                        },
+                    }
+                }
+            ]
         },
         series: [{
             name: '{{ $name }}',
