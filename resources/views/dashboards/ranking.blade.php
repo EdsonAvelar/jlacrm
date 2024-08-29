@@ -1227,8 +1227,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                 <div class="mb-3">
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
-                        <label for="inputEmail3" class="col-form-label">Permitir Deletar
-                            Negócio
+                        <label for="inputEmail3" class="col-form-label">Mostrar Equipes
                             <span class="mdi mdi-information"></span>
                         </label> </span>
 
