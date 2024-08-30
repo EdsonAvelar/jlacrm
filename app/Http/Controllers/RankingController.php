@@ -12,9 +12,9 @@ use Validator;
 class RankingController extends Controller
 {
 
-    public function home()
+    public function vendas()
     {
-        return view('dashboards.ranking');
+        return view('dashboards.ranking.vendas');
     }
 
     public function ranking_premiacoes(Request $request)

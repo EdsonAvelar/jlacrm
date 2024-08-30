@@ -33,6 +33,11 @@ class SimulacaoController extends Controller
 
     }
 
+    public function calculadora(Request $request)
+    {
+        return view('simulacoes.calculadora');
+    }
+
     public function criar_proposta(Request $request)
     {
 

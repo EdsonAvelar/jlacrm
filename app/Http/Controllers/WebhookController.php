@@ -58,7 +58,7 @@ class WebhookController extends Controller
             $lead->email = $dados['email'];
             $lead->fonte = $dados['fonte'];
 
-            $lead->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+            $lead->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d H:i');
             $lead->save();
 
             $deal_input = array();
@@ -123,7 +123,7 @@ class WebhookController extends Controller
         $negocio->fonte = $dados['fonte'];
         $negocio->origem = "WEBHOOK";
 
-        $negocio->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+        $negocio->data_conversao = Carbon::now('America/Sao_Paulo')->format('Y-m-d  H:i');
         try {
             $negocio->save();
             return "[Webhook] Negocio " . $dados['nome'] . " Importado com sucesso";

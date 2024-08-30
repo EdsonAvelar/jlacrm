@@ -358,7 +358,7 @@ class NegocioController extends Controller
             $campanha = $sheet->getCell("E{$row}")->getValue();
             $fonte = $sheet->getCell("F{$row}")->getValue();
 
-            $create_time = Carbon::now()->format('Y-m-d');
+            $create_time = Carbon::now()->format('Y-m-d H:i');
 
 
             #Remover padrões como 55,p:+55. p:55 e +55 da frent das strings

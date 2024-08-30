@@ -20,6 +20,10 @@ use App\Enums\NegocioTipo;
             height: 4rem !important;
         }
 
+        .jumbotron h1 {
+            color: white;
+        }
+
 
         hr {
             border: 2px;
@@ -34,7 +38,7 @@ use App\Enums\NegocioTipo;
         }
 
         .jumb-auto {
-            background-color: #dbe966
+            background-color: #e96966
         }
 
         .jumb-manual {
@@ -59,7 +63,8 @@ use App\Enums\NegocioTipo;
             margin-left: 15px;
             margin-top: 3px;
             padding: 6px 0px 6px 0px;
-            padding-left: 15px
+            padding-left: 15px;
+            font-size: 16px;
         }
 
         .select-amortizacao {
@@ -71,7 +76,8 @@ use App\Enums\NegocioTipo;
             margin-left: 15px;
             margin-top: 3px;
             padding: 6px 0px 6px 0px;
-            padding-left: 15px
+            padding-left: 15px;
+            font-size: 16px;
         }
 
         label.titulo_secao {
@@ -100,8 +106,8 @@ use App\Enums\NegocioTipo;
 
 <div id="jumb" class="jumbotron jumbotron-fluid jumb-auto">
     <div class="container">
-        <h1 class="display-4">Criador de Propostas 2.0</h1>
-        <p class="lead">Coloque os valores abaixo e clique em Gerar Proposta</p>
+        <h1 class="display-4">Calculadora de Valores</h1>
+        <p class="lead">Utilizada apenas para calcular valores, não gera propostas</p>
     </div>
 </div>
 
@@ -110,7 +116,7 @@ use App\Enums\NegocioTipo;
 
     <section class="pb-5 section_financiamento" id="entrySection_1" hidden>
         <button type="button" class="close" id="remove_section"
-            onclick="return this.parentNode.remove();">Remover</button>
+            onclick="return this.parentNode.remove()">Remover</button>
 
         <label for="formGroupExampleInput" class="titulo_secao">FINANCIAMENTO</label>
 
@@ -414,7 +420,7 @@ use App\Enums\NegocioTipo;
     <form id="form-criar" action="{{ route('simulacao.criar_proposta') }}" method="post">
         @csrf
 
-        <input type="text" hidden name="negocio_id" value="{{ $negocio->id }}">
+        <input type="text" hidden name="negocio_id" value="1">
 
 
         <div class="form-group row">
@@ -430,7 +436,7 @@ use App\Enums\NegocioTipo;
             <label for="inputEmail3" class="col-sm-2 col-form-label">Cliente</label>
             <div class="col-sm-5">
                 <input type="text" name="cliente" class="form-control" id="inputCredito" placeholder="Nome do Cliente"
-                    value="{{ $negocio->lead->nome }}" readonly>
+                    value="">
             </div>
         </div>
 
@@ -442,11 +448,9 @@ use App\Enums\NegocioTipo;
                 <input type="text" data-mask='000.000.000-00' name="cpf" class="form-control" id="cpf"
                     placeholder="CPF do Cliente" value="<?php
                     
-                    if ($negocio->lead->cpf) {
-                        echo $negocio->lead->cpf;
-                    } else {
+                   
                         echo 'xxx.xxx.xxx-xx';
-                    }
+                    
                     
                     ?>">
             </div>
@@ -460,7 +464,7 @@ use App\Enums\NegocioTipo;
                 <select class="form-select form-select-lg mb-3 select-items" name="tipo" id="tipoCredito">
 
                     @foreach (NegocioTipo::all() as $neg)
-                    <option value={{ $neg }} @if ($negocio->tipo == $neg) {{ 'selected="selected"' }} @endif>
+                    <option value={{ $neg }}>
                         {{ $neg }}</option>
                     @endforeach
 
@@ -496,12 +500,12 @@ use App\Enums\NegocioTipo;
         <span id="ConSection_0"></span>
 
 
-        <div class="form-group row" id="gerar_proposta" hidden>
+        {{-- <div class="form-group row" id="gerar_proposta" hidden>
             <div class="col-sm-10">
                 <button type="submit" style="padding: 10px; margin: 20px;" class="btn btn-primary btn-lg">Gerar
                     Proposta</button>
             </div>
-        </div>
+        </div> --}}
 
     </form>
 </div>

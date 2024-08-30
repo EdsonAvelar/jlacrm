@@ -285,7 +285,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
 
                                 <li>
-                                    <a href="{{ route('ranking.home') }}">Ranking</a>
+                                    <a href="{{ route('ranking.vendas') }}">Ranking</a>
                                 </li>
                                 @endif
                             </ul>
