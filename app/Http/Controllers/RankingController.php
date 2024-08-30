@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Enums\UserStatus;
 use Carbon\Carbon;
 use App\Models\Fechamento;
+use App\Models\Agendamento;
 use Validator;
 class RankingController extends Controller
 {
@@ -15,6 +16,12 @@ class RankingController extends Controller
     public function vendas()
     {
         return view('dashboards.ranking.vendas');
+    }
+
+    public function agendamentos()
+    {
+        return view('dashboards.ranking.agendamentos');
+
     }
 
     public function ranking_premiacoes(Request $request)
@@ -54,7 +61,7 @@ class RankingController extends Controller
     }
 
 
-    public function colaboradores()
+    public function colaboradores_vendas()
     {
 
         $output = array();
@@ -93,6 +100,62 @@ class RankingController extends Controller
                 "total" => $vendas_totais,
                 'meta' => 1500000,
                 'percentual' => ($vendas_totais / 1500000) * 100,
+                "avatar" => $avatar,
+            ];
+
+            if ($vendedor->equipe) {
+                $user_info["equipe_name"] = $vendedor->equipe->descricao;
+                $user_info["equipe_logo"] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo;
+            }
+
+            $total = $total + $vendas_totais;
+
+            array_push($output['colaboradores'], $user_info);
+        }
+
+        $output['total_vendas'] = $total;
+
+        usort($output['colaboradores'], function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
+
+
+        return response()->json($output);
+    }
+
+    public function colaboradores_agendamentos()
+    {
+
+        $output = array();
+        $output['colaboradores'] = array();
+
+        $today = Carbon::now()->format('Y-m-d');
+
+        $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
+        $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo])->get();
+
+
+        $total = 0;
+        foreach ($users as $vendedor) {
+            $query = [
+                ['data_agendamento', '=', $today],
+                ['user_id', '=', $vendedor->id],
+            ];
+
+            $vendas_totais = Agendamento::where($query)->count();
+
+            $avatar = url("") . "/images/users/avatars/user-padrao.png";
+            if (
+                $vendedor->avatar
+            ) {
+                $avatar = url('') . '/images/users/user_' . $vendedor->id . '/' . $vendedor->avatar;
+            }
+
+            $user_info = [
+                "name" => $vendedor->name,
+                "total" => $vendas_totais,
+                'meta' => 15,
+                'percentual' => ($vendas_totais / 15) * 100,
                 "avatar" => $avatar,
             ];
 

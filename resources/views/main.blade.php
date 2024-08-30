@@ -150,14 +150,14 @@ $user = Auth::user();
         }
 
         a {
-            color: black;
+            color: rgb(45, 109, 249);
             text-decoration: none;
         }
 
         /* Estilo para links ao passar o mouse */
         a:hover {
             color: black;
-            background-color: #75a5d4;
+            background-color: #6aa0d660;
             /* Cor levemente esverdeada */
             display: inline-block;
         }
