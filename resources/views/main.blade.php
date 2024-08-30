@@ -149,6 +149,19 @@ $user = Auth::user();
             height: 90px;
         }
 
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        /* Estilo para links ao passar o mouse */
+        a:hover {
+            color: black;
+            background-color: #75a5d4;
+            /* Cor levemente esverdeada */
+            display: inline-block;
+        }
+
         /* body[data-leftbar-theme="dark"] .leftside-menu {
             background: #ffffff;
         } */
@@ -333,6 +346,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('importar.negocios.index') }}">Importar</a>
                                 </li>
                                 @endif
+
+                                <li>
+                                    <a href="{{ route('simulacao.calculadora') }}">Simulador</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

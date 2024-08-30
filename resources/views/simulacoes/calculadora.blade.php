@@ -4,33 +4,11 @@
 
 
 <style>
-    .jumbotron h1 {
-        color: white;
-    }
-
-
     .input-auto {
         border-color: #66e9af;
         outline: 0;
         -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.3);
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.3);
-    }
-
-    .jumb-auto {
-        background-color: #e96966
-    }
-
-    .jumb-manual {
-        background-color: #66afe9
-    }
-
-    .content-auto {
-        background-color: rgba(10, 122, 10, 0.1)
-    }
-
-    .content-manual {
-
-        background-color: rgba(10, 10, 122, 0.1)
     }
 
     .select-items {
@@ -91,6 +69,7 @@
 
     .col-sm-6 {
         width: 70%;
+        padding: 5px;
     }
 </style>
 @endsection

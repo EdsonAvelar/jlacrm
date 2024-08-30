@@ -88,7 +88,7 @@ use App\Enums\NegocioTipo;
         }
 
         .section_consorcio {
-            background: rgb(165 203 176);
+            background: #e4f6f3;
             padding: 31px;
             border-radius: 48px;
             margin-top: 12px;

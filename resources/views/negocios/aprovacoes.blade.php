@@ -18,9 +18,6 @@ function formatString($input) {
 
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
-
-
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 <link href="{{ url('') }}/css/jquery.timepicker.min.css" rel="stylesheet" type="text/css" />
 <style>
