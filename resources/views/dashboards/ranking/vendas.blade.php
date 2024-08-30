@@ -81,7 +81,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .menu-bar .actions button {
-            background-color: #2e7d32;
+            background-color: transparent;
             color: white;
             border: none;
             padding: 5px 15px;
@@ -123,7 +123,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("/images/ranking/system/background_ranking.png");
+            background: url("/images/ranking/tema01/background_ranking.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -463,7 +463,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/primeiro_lugar.png");
+            background-image: url("/images/ranking/tema01/primeiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -479,7 +479,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/segundo_lugar.png");
+            background-image: url("/images/ranking/tema01/segundo_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -495,7 +495,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/terceiro_lugar.png");
+            background-image: url("/images/ranking/tema01/terceiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1043,8 +1043,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             {{-- <button class="support">Suporte</button>
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
-            <button class="settings"><i class="fas fa-cog"></i></button>
+            <button class="settings-ranking"><i class="fas fa-trophy"></i></button>
             <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
+            <button class="settings"><i class="fas fa-cog"></i></button>
         </div>
     </div>
 
@@ -1124,12 +1125,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         <div class="info-panel">
             <div class="header-panel">
                 <select name="update-interval" id="update-interval">
-                    <option value="15">15s</option>
-                    <option value="30">30s</option>
-                    <option value="60">1m</option>
-                    <option value="180">3m</option>
-                    <option value="300">5m</option>
-                    <option value="600">10m</option>
+                    <option value="5000">5s</option>
+                    <option value="15000">15s</option>
+                    <option value="30000">30s</option>
+                    <option value="60000">1m</option>
+                    <option value="180000">3m</option>
+                    <option value="300000">5m</option>
                 </select>
                 <div class="pagination-controls">
                     <i class="fas fa-arrow-left"></i>
@@ -1258,7 +1259,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/system/icon-primeiro.png')}}" alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}" alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
@@ -1284,7 +1285,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
 
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/system/icon-segundo.png')}}" alt="Silver Trophy">
+                        <img src="{{asset('images/ranking/tema01/icon-segundo.png')}}" alt="Silver Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1310,7 +1311,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/system/icon-terceiro.png')}}" alt="Bronze Trophy">
+                        <img src="{{asset('images/ranking/tema01/icon-terceiro.png')}}" alt="Bronze Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1373,8 +1374,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     }
     });
 
-    var mostra_equipe = true;
 
+
+    var mostra_equipe = true;
+ 
 
         function image_save($folder, $imgname) {
                 $('#pasta_imagem').val($folder);
@@ -1441,6 +1444,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         function atualizarColaboradores() {
 
+            console.log("Atualização de Colaboradores");
             let equipe= "none";
             if (mostra_equipe){
                 equipe= "flex";
@@ -1459,7 +1463,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         if (colaborador.equipe_logo != null ){
                            
 
-                            console.log(mostra_equipe+" - atualizarColaboradores: - "+equipe)
+                            
 
                             html_colaborador = `
                             <div class="team-section" style='display:${equipe}'">
@@ -1540,6 +1544,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         });
 
         // Chama a função a cada x segundos (por exemplo, 30 segundos)
+        
         //setInterval(atualizarColaboradores, 5000);
 
 
@@ -1653,6 +1658,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
         });
+
+
     </script>
 
 
@@ -1690,6 +1697,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             
             document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
             document.getElementById(this.dataset.content).classList.remove('hidden');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detecta o clique no botão com a classe settings-ranking
+            document.querySelector('.settings-ranking').addEventListener('click', function() {
+            window.location.href = "{{ route('ranking.agendamentos') }}";
             });
         });
     </script>

@@ -37,7 +37,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1f2045;
+            background-color: #4f626d;
             color: white;
             margin: 0;
             padding: 0;
@@ -52,7 +52,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #181942;
+            background-color: #000000;
             padding: 10px 20px;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -81,7 +81,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .menu-bar .actions button {
-            background-color: #2e7d32;
+            background-color: transparent;
             color: white;
             border: none;
             padding: 5px 15px;
@@ -100,12 +100,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             font-size: 1.2em;
         }
 
+
+
         .container2 {
             width: 1800px;
             display: flex;
             justify-content: space-between;
             padding: 20px;
-            background-color: #1c1d40;
+            background-color: #1a1b1f;
             border-radius: 10px;
             flex-direction: row;
         }
@@ -123,7 +125,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("/images/ranking/system/background_ranking.png");
+            background: url("/images/ranking/tema02/background_ranking.png");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -210,18 +212,18 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             gap: 20px;
             font-weight: bold;
-            color: greenyellow;
+            color: #ffffff;
             font-size: large;
             padding: 10px;
             border-radius: 10px;
-            background: #2e2e72;
+            background: #777778;
         }
 
 
 
         .info-panel {
             flex: 1;
-            background-color: #21224f;
+            background-color: #242425;
             border-radius: 10px;
             padding: 20px;
             /* margin-top: 20px; */
@@ -244,7 +246,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .body-panel::-webkit-scrollbar-track {
-            background: #1f2045;
+            background: #58585d;
             /* Cor do fundo do track */
             border-radius: 10px;
         }
@@ -258,7 +260,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .body-panel::-webkit-scrollbar-thumb:hover {
-            background-color: #5a5cc2;
+            background-color: #9293ca;
             /* Cor ao passar o mouse */
         }
 
@@ -271,7 +273,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .header-panel select {
-            background-color: #2f2f6b;
+            background-color: #717181;
             color: white;
             border: none;
             padding: 5px;
@@ -292,7 +294,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .logo-empresa>img {
             display: flex;
             align-items: center;
-            background-color: #2f2f6b;
+            background-color: #9d9a92;
             padding: 10px 20px;
             border-radius: 10px;
             margin-bottom: 10px;
@@ -315,7 +317,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #2f2f6b;
+            background-color: #101417;
             padding: 10px 20px;
             border-radius: 10px;
             margin-bottom: 10px;
@@ -326,7 +328,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             font-size: 1.5em;
             font-weight: bold;
             color: white;
-            background-color: #3f4195;
+            background-color: #515157;
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -431,7 +433,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
-            background-color: #181942;
+            background-color: #d9d9d9;
             border-radius: 10px;
             margin-top: 20px;
             color: white;
@@ -463,7 +465,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/primeiro_lugar.png");
+            background-image: url("/images/ranking/tema02/primeiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -479,7 +481,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/segundo_lugar.png");
+            background-image: url("/images/ranking/tema02/segundo_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -495,7 +497,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/system/terceiro_lugar.png");
+            background-image: url("/images/ranking/tema02/terceiro_lugar.png");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1036,15 +1038,16 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <a href="{{url('')}}/crm"> <img style="width:200px"
                     src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
-            <div class="title">Ranking de vendas</div>
+            <div class="title">Ranking de Agendamentos</div>
         </div>
         <div class="actions">
 
 
             {{-- <button class="support">Suporte</button>
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
-            <button class="settings"><i class="fas fa-cog"></i></button>
+            <button class="settings-ranking"><i class="fas fa-trophy"></i></button>
             <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
+            <button class="settings"><i class="fas fa-cog"></i></button>
         </div>
     </div>
 
@@ -1059,7 +1062,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
                 <div class="ranking-totals">
 
-                    <span style="color:gray">Total em Vendas: </span> <span class="total-time">R$268.979,00</span>
+                    <span style="color:white">Total de Agendamentos: </span> <span
+                        class="total-time"></span>
                     {{-- <span style="color:gray">Total do top 3: </span> <span class="total-top3">R$106.508,00</span>
                     --}}
                 </div>
@@ -1124,12 +1128,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         <div class="info-panel">
             <div class="header-panel">
                 <select name="update-interval" id="update-interval">
-                    <option value="15">15s</option>
-                    <option value="30">30s</option>
-                    <option value="60">1m</option>
-                    <option value="180">3m</option>
-                    <option value="300">5m</option>
-                    <option value="600">10m</option>
+                    <option value="10000">10s</option>
+                    <option value="30000">30s</option>
+                    <option value="60000">1m</option>
+                    <option value="1800000">30m</option>
+                    <option value="3600000">60m</option>
+                </select>
                 </select>
                 <div class="pagination-controls">
                     <i class="fas fa-arrow-left"></i>
@@ -1157,15 +1161,15 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             <?= $colaborador['name'] ?>
                         </div>
                         <div class="meta">
-                            Meta: R$
-                            <?= number_format($colaborador['meta'], 2, ',', '.') ?> | Total: R$
-                            <?= number_format($colaborador['total'], 2, ',', '.') ?>
+                            Meta: 
+                            <?= $colaborador['meta'] ?> | Total: 
+                            <?= $colaborador['total'] ?>
                         </div>
                         <div class="progress">
                             <div class="progress-bar" style="width: <?= $colaborador['percentual'] ?>%;"></div>
                         </div>
-                        <div class="missing-value">Faltam: R$
-                            <?= number_format($colaborador['meta'] - $colaborador['total'], 2, ',', '.') ?>
+                        <div class="missing-value">Faltam: 
+                            <?= ($colaborador['meta'] - $colaborador['total']) ?>
                         </div>
                     </div>
                     <div class="percentage">
@@ -1258,7 +1262,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/system/icon-primeiro.png')}}" alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/tema02/icon-primeiro.png')}}" alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
@@ -1284,7 +1288,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
 
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/system/icon-segundo.png')}}" alt="Silver Trophy">
+                        <img src="{{asset('images/ranking/tema02/icon-segundo.png')}}" alt="Silver Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1310,7 +1314,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/system/icon-terceiro.png')}}" alt="Bronze Trophy">
+                        <img src="{{asset('images/ranking/tema02/icon-terceiro.png')}}" alt="Bronze Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1372,6 +1376,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
     });
+
+    var intervalId;
 
     var mostra_equipe = true;
 
@@ -1459,7 +1465,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         if (colaborador.equipe_logo != null ){
                            
 
-                            console.log(mostra_equipe+" - atualizarColaboradores: - "+equipe)
+                   
 
                             html_colaborador = `
                             <div class="team-section" style='display:${equipe}'">
@@ -1478,11 +1484,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             <div class="photo" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.name}</div>
-                                <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$ ${colaborador.total.toLocaleString()}</div>
+                                <div class="meta">Meta: ${colaborador.meta.toLocaleString()} | Total: ${colaborador.total.toLocaleString()}</div>
                                 <div class="progress">
                                     <div class="progress-bar" style="width: ${colaborador.percentual}%;"></div>
                                 </div>
-                                <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
+                                <div class="missing-value">Faltam: ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
                             </div>
                             <div class="percentage">${Math.round(colaborador.percentual) }%</div>
                             ${html_colaborador}
@@ -1508,15 +1514,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     }
 
-                    var valorFormatado = new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL'
-                        }).format(data.total_vendas);
+                  
 
-                    $('.total-time').html(valorFormatado)
+                    $('.total-time').html(data.total_vendas)
                    
-                    // $('#collaborator-photo-2').css('background-image', 'url('+colaboradores[1].avatar+')');
-                    // $('#collaborator-photo-3').css('background-image', 'url('+colaboradores[2].avatar +')');
+                  
                 }
             });
         }
@@ -1538,133 +1540,36 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             atualizarColaboradores();
         });
-
-        // Chama a função a cada x segundos (por exemplo, 30 segundos)
-        //setInterval(atualizarColaboradores, 5000);
+      
 
 
+        // Função para atualizar o intervalo
+        function updateInterval() {
+            clearInterval(intervalId); // Limpar o intervalo anterior
+            var intervalTime = $('#update-interval').val(); // Obter o novo valor do select
+            
+            console.log("Atualização mudou para cada "+intervalId/1000+"s")
 
-        //###---------- Notificação de Venda ------------#
-        function nFormatter(num, digits) {
-            const lookup = [{
-                    value: 1,
-                    symbol: ""
-                },
-                {
-                    value: 1e3,
-                    symbol: "K"
-                },
-                {
-                    value: 1e6,
-                    symbol: "M"
-                },
-                {
-                    value: 1e9,
-                    symbol: "G"
-                },
-                {
-                    value: 1e12,
-                    symbol: "T"
-                },
-                {
-                    value: 1e15,
-                    symbol: "P"
-                },
-                {
-                    value: 1e18,
-                    symbol: "E"
-                }
-            ];
-            num = num.split(',')[0]
-            num = num.replaceAll('.', '')
 
-            const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-            var item = lookup.slice().reverse().find(function(item) {
-                return num >= item.value;
+            intervalId = setInterval(atualizarColaboradores, intervalTime); // Definir novo intervalo
+            
+        }
+
+        // Definindo o intervalo padrão ao carregar a página
+        $(document).ready(function() {
+            updateInterval(); // Chamar a função para iniciar o intervalo padrão
+
+
+            // Event listener para detectar mudanças no select
+            $('#update-interval').on('change', function() {
+                updateInterval(); // Atualizar o intervalo quando o select mudar
             });
-            return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
-        }
-        
-        function showNotification() {
-            const notification = document.getElementById('notification');
-            notification.style.display = 'flex'; // Mostrar a notificação
-            setTimeout(() => {
-                notification.style.display = 'none'; // Ocultar a notificação após 5 segundos
-                }, 20000);
-        }
-
-        Pusher.logToConsole = true;
-    
-        var pusher = new Pusher('ae35a6a0e6cd96def27f', {
-          cluster: 'sa1'
-        });
-    
-        var channel = pusher.subscribe( "{{ config('broadcast_canal') }}" );
-        console.log('pusher'+channel);
-        channel.bind('nova-venda', function(data) {
-
-            
-
-            console.log( JSON.stringify(data));
-            
-        
-            document.getElementById('venda_valor').innerText = "Crédito: " +nFormatter( data.data.credito, 2);
-            document.getElementById('nome_cliente').innerText = "Cliente: "+data.data.cliente;
-            document.getElementById('nome_vendedor').innerText = data.data.vendedor;
-            document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
-           
-            //document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
-            document.getElementById('imagem_vendedor').src = data.data.avatar ;
-
-
-            if (data.data.equipe_logo){
-                $("#imagem_equipe").show()
-                document.getElementById('imagem_equipe').src = data.data.equipe_logo ;
-            }else {
-                $("#imagem_equipe").hide()
-            }
-           
-            document.getElementById('imagem_empresa').src = data.data.empresa ;
-        
-            
-            setTimeout(function() {
-                showNotification();
-    
-                
-                atualizarColaboradores();
-
-                var aplausos = "{{ config('broadcast_audio') }}"
-                
-
-                if (aplausos == "true"){
-                
-                    var musicPlayer = document.getElementById('musicPlayer');
-                    musicPlayer.play();
-
-                    setTimeout(function() {
-                    musicPlayer.pause();
-                    musicPlayer.currentTime = 0; // Retorna a música ao início
-                    }, 20000);
-                }
-           
-           }, 10000);
-
-           
-
-
         });
     </script>
 
 
 
     <script>
-        //************************** Abrir a janela de configurações
-            // Abrir a janela de configurações com o overlay
-           // Abrir a janela de configurações
-
-           
-    
-
         document.querySelector('.settings').addEventListener('click', function () {
             document.getElementById('settings-window').style.transform = 'translateX(0)';
             document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
@@ -1690,6 +1595,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             
             document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
             document.getElementById(this.dataset.content).classList.remove('hidden');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Detecta o clique no botão com a classe settings-ranking
+            document.querySelector('.settings-ranking').addEventListener('click', function() {
+            window.location.href = "{{ route('ranking.vendas') }}";
             });
         });
     </script>

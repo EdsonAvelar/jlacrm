@@ -297,9 +297,31 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
                                 </li>
 
-                                <li>
-                                    <a href="{{ route('ranking.vendas') }}">Ranking</a>
-                                </li>
+
+
+                                <ul class="side-nav-second-level">
+                                    <li class="side-nav-item">
+                                        <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
+                                            aria-controls="sidebarSecondLevel">
+                                            <span> Ranking </span>
+                                            <span class="menu-arrow"></span>
+                                        </a>
+                                        <div class="collapse" id="sidebarSecondLevel">
+                                            <ul class="side-nav-third-level">
+                                                <li>
+                                                    <a href="{{ route('ranking.vendas') }}">Vendas</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ route('ranking.agendamentos') }}">Agendamentos</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+
+                                </ul>
+
+
+
                                 @endif
                             </ul>
                         </div>
