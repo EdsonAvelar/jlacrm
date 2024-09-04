@@ -850,10 +850,6 @@ vermelho mais do que 5 dias parados
                                 </div>
 
                                 {{-- TERCEIRA COLUNA VAZIA --}}
-                                {{-- <div class="col-md-3">
-
-                                </div> --}}
-
                             </div>
 
                         </div> <!-- end tab-pane -->
@@ -902,16 +898,12 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
-
     function image_save($folder, $imgname) {
 
             $('#pasta_imagem').val($folder);
             $('#imagem_name').val($imgname);
-
             $('#change_logo').modal('show');
         }
-
-
 
         $('.toggle-event').change(function($this) {
 
@@ -919,9 +911,7 @@ vermelho mais do que 5 dias parados
             var config_value = $(this).prop('checked');
 
             save_config(config_info, config_value);
-
         });
-
 
         $('body').on('click', '.confirm-delete', function(e) {
             //MSK-000122		
@@ -950,7 +940,6 @@ vermelho mais do que 5 dias parados
             $('#myImg').attr('src', e.target.result);
         };
 
-
         $('#data_contratacao').datepicker({
             orientation: 'top',
             todayHighlight: true,
@@ -959,20 +948,16 @@ vermelho mais do que 5 dias parados
         });
 
         $(document).ready(function() {
-
-
             $('#datapicker_config').daterangepicker({
                     locale: {
                         format: 'DD-MM-YYYY'
                     }
                 },
                 function(start, end, label) {
-
                     save_config('data_inicio', start.format('DD/MM/YYYY'));
                     save_config('data_fim', end.format('DD/MM/YYYY'));
 
                 });
-
 
 
             var ids = [
@@ -985,7 +970,6 @@ vermelho mais do que 5 dias parados
                 'protocolo_agendamento_cnpj',
                 'protocolo_agendamento_xau',
                 'protocolo_agendamento_endereco',
-                
             ];
 
             ids.forEach(function(id) {

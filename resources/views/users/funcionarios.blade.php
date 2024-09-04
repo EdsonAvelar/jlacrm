@@ -7,35 +7,50 @@ use Illuminate\Support\Facades\Hash;?>
 <meta name="csrf-token" content="{{ csrf_token() }}">
 
 <link href="{{url('')}}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
 <style>
-    input[type=checkbox]
-{
-  /* Double-sized Checkboxes */
-  -ms-transform: scale(1.3); /* IE */
-  -moz-transform: scale(1.3); /* FF */
-  -webkit-transform: scale(1.3); /* Safari and Chrome */
-  -o-transform: scale(1.3); /* Opera */
-  padding: 10px;
-}
+    input[type=checkbox] {
+        /* Double-sized Checkboxes */
+        -ms-transform: scale(1.3);
+        /* IE */
+        -moz-transform: scale(1.3);
+        /* FF */
+        -webkit-transform: scale(1.3);
+        /* Safari and Chrome */
+        -o-transform: scale(1.3);
+        /* Opera */
+        padding: 10px;
+    }
 
-#info_label {
-    padding: 10px;
-    color: #000080;
-}
+    #info_label {
+        padding: 10px;
+        color: #000080;
+    }
 
-.mdi-18px { font-size: 18px; }
-.mdi-24px { font-size: 24px; }
-.mdi-36px { font-size: 36px; }
-.mdi-48px { font-size: 48px; }
+    .mdi-18px {
+        font-size: 18px;
+    }
 
-i.icon-success {
-    color: green;
-}
+    .mdi-24px {
+        font-size: 24px;
+    }
 
-i.icon-danger {
-    color: red;
-}
+    .mdi-36px {
+        font-size: 36px;
+    }
+
+    .mdi-48px {
+        font-size: 48px;
+    }
+
+    i.icon-success {
+        color: green;
+    }
+
+    i.icon-danger {
+        color: red;
+    }
 </style>
 
 @endsection
@@ -48,20 +63,21 @@ i.icon-danger {
     <div class="row">
 
         <div class="col-12">
-        <div class="page-title-right"></div>
+            <div class="page-title-right"></div>
             <div class="card">
                 <div class="card-body left">
                     <h4 class="header-title m-t-0">Funcionários Ativos</h4>
-                        </h4>
-                        <div class="mb-3">
-                                    <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-new-task-modal">+ Adicionar</a>
-                                </div>
-                  
-                                <label id="info_label"></label>
-                    <table id="example" class="table w-100 nowrap" >
+                    </h4>
+                    <div class="mb-3">
+                        <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-new-task-modal">+
+                            Adicionar</a>
+                    </div>
+
+                    <label id="info_label"></label>
+                    <table id="example" class="table w-100 nowrap">
                         <thead>
                             <tr>
-                               
+
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th>Cargo</th>
@@ -69,20 +85,20 @@ i.icon-danger {
                                 <th>Telefone</th>
                                 <th>Resetada?</th>
                                 <th>Data Contratacao</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
-                        @if(isset($users_ativo))
+                            @if(isset($users_ativo))
                             @foreach ($users_ativo as $user)
                             <tr>
-                            <?php
+                                <?php
                                 $ischecked = "";
                                 if ( $user->status == UserStatus::ativo ){
                                     $ischecked = "checked";
                                 }
                                 ?>
-                                 <!--
+                                <!--
                                 if ($user->hasRole('admin'))
                                     <td></td> 
                                 else 
@@ -90,42 +106,45 @@ i.icon-danger {
                                 endif 
                                  -->
                                 <td>
-                                    <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
-                                    <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>
+                                    <img src="{{ asset($user->avatar) }}" alt="user-img"
+                                        class="avatar-xs rounded-circle me-1">
+                                    <a href="{{route('users_profile', array('id'=> $user->id) )}}">
+                                        {{$user['name']}}</a>
+                                </td>
                                 <td>{{$user['email']}}</td>
                                 <td>{{$user->cargo->nome}}</td>
                                 <td>
                                     @if ( $user->roles() )
-                                        <?php $perms = 1 ?>
-                                        @foreach ($user->roles as $role)
-                                        <span class="badge badge-info-lighten">{{$role->name}}</span>
+                                    <?php $perms = 1 ?>
+                                    @foreach ($user->roles as $role)
+                                    <span class="badge badge-info-lighten">{{$role->name}}</span>
 
-                                                @if ($perms > 2 )
-                                                    <br>
-                                                    <?php $perms = 0; ?>
-                                                @endif
-                                            <?php $perms = $perms + 1; ?>
-                                        @endforeach
+                                    @if ($perms > 2 )
+                                    <br>
+                                    <?php $perms = 0; ?>
+                                    @endif
+                                    <?php $perms = $perms + 1; ?>
+                                    @endforeach
                                     @endif
                                 </td>
                                 <td>{{$user['telefone']}}</td>
                                 <td>
-                                
-                                
-                                @if ( Hash::check('mudarsenha', $user['password']))
+
+
+                                    @if ( Hash::check('mudarsenha', $user['password']))
                                     <span class="badge badge-danger-lighten">Não Resetada</span>
-                                @else 
-                                <span class="badge badge-success-lighten">OK</span>
-                                @endif
+                                    @else
+                                    <span class="badge badge-success-lighten">OK</span>
+                                    @endif
 
 
                                 </td>
                                 <td>{{$user['data_contratacao']}}</td>
-                               
+
                             </tr>
 
                             @endforeach
-                        @endif
+                            @endif
 
                         </tbody>
                     </table>
@@ -137,98 +156,95 @@ i.icon-danger {
         <!-- end col-->
     </div>
     <!-- end row -->
-                            
+
     <div class="row">
 
-<div class="col-12">
-<div class="page-title-right"></div>
-    <div class="card">
-        <div class="card-body left">
-            <h4 class="header-title m-t-0">Funcionários Inativos</h4>
-                </h4>
-                
-          
-                        <label id="info_label"></label>
-            <table id="example" class="table w-100 nowrap" >
-                <thead>
-                    <tr>
-                       
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Cargo</th>
-                        <th>Permissões</th>
-                        <th>Telefone</th>
-                        <th>Resetada?</th>
-                        <th>Data Contratacao</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                @if(isset($users_inativo))
-                    @foreach ($users_inativo as $user)
-                    <tr>
-                    <?php
+        <div class="col-12">
+            <div class="page-title-right"></div>
+            <div class="card">
+                <div class="card-body left">
+                    <h4 class="header-title m-t-0">Funcionários Inativos</h4>
+                    </h4>
+
+
+                    <label id="info_label"></label>
+                    <table id="example" class="table w-100 nowrap">
+                        <thead>
+                            <tr>
+
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Cargo</th>
+                                <th>Permissões</th>
+                                <th>Telefone</th>
+                                <th>Resetada?</th>
+                                <th>Data Contratacao</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if(isset($users_inativo))
+                            @foreach ($users_inativo as $user)
+                            <tr>
+                                <?php
                         $ischecked = "";
                         if ( $user->status == UserStatus::ativo ){
                             $ischecked = "checked";
                         }
                         ?>
-                        <!--
-                        if ($user->hasRole('admin'))
-                            <td></td> 
-                        else 
-                            <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
-                        endif 
-                        -->
-                        <td>
-                            <img src="{{url('')}}/images/users/user_{{$user->id}}/{{$user->avatar}}" alt="user-img" class="avatar-xs rounded-circle me-1">
-                            <a href="{{route('users_profile', array('id'=> $user->id) )}}"> {{$user['name']}}</a></td>
-                        <td>{{$user['email']}}</td>
-                        <td>{{$user->cargo->nome}}</td>
-                        <td>
-                            @if ( $user->roles() )
-                                <?php $perms = 1 ?>
-                                @foreach ($user->roles as $role)
-                                <span class="badge badge-info-lighten">{{$role->name}}</span>
+                              
+                                <td>
+                                    <img src="{{ asset( $user->avatar )}}" alt="user-img"
+                                        class="avatar-xs rounded-circle me-1">
+                                    <a href="{{route('users_profile', array('id'=> $user->id) )}}">
+                                        {{$user['name']}}</a>
+                                </td>
+                                <td>{{$user['email']}}</td>
+                                <td>{{$user->cargo->nome}}</td>
+                                <td>
+                                    @if ( $user->roles() )
+                                    <?php $perms = 1 ?>
+                                    @foreach ($user->roles as $role)
+                                    <span class="badge badge-info-lighten">{{$role->name}}</span>
 
-                                        @if ($perms > 2 )
-                                            <br>
-                                            <?php $perms = 0; ?>
-                                        @endif
+                                    @if ($perms > 2 )
+                                    <br>
+                                    <?php $perms = 0; ?>
+                                    @endif
                                     <?php $perms = $perms + 1; ?>
-                                @endforeach
+                                    @endforeach
+                                    @endif
+                                </td>
+                                <td>{{$user['telefone']}}</td>
+                                <td>
+
+
+                                    @if ( Hash::check('mudarsenha', $user['password']))
+                                    <span class="badge badge-danger-lighten">Não Resetada</span>
+                                    @else
+                                    <span class="badge badge-success-lighten">OK</span>
+                                    @endif
+
+
+                                </td>
+                                <td>{{$user['data_contratacao']}}</td>
+
+                            </tr>
+
+                            @endforeach
                             @endif
-                        </td>
-                        <td>{{$user['telefone']}}</td>
-                        <td>
-                        
-                        
-                        @if ( Hash::check('mudarsenha', $user['password']))
-                            <span class="badge badge-danger-lighten">Não Resetada</span>
-                        @else 
-                        <span class="badge badge-success-lighten">OK</span>
-                        @endif
 
-
-                        </td>
-                        <td>{{$user['data_contratacao']}}</td>
-                       
-                    </tr>
-
-                    @endforeach
-                @endif
-
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- end card-body -->
+            </div>
+            <!-- end card-->
         </div>
-        <!-- end card-body -->
+        <!-- end col-->
     </div>
-    <!-- end card-->
-</div>
-<!-- end col-->
-</div>
-<!-- end row -->
-    
+    <!-- end row -->
+
 
 </div>
 <!--  Add new task modal -->
@@ -247,62 +263,60 @@ i.icon-danger {
                         <!-- Painel Esquedo -->
                         <div class="col-md-6">
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Nome<span
-                                                class="text-danger"> *</span></label>
-                                <input type="text" class="form-control form-control-light" 
-                                    name="name" required>
+                                <label for="task-title" class="form-label">Nome<span class="text-danger">
+                                        *</span></label>
+                                <input type="text" class="form-control form-control-light" name="name" required>
                             </div>
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Email<span
-                                                class="text-danger"> *</span></label>
-                                <input type="text" class="form-control form-control-light" 
-                                    name="email" required>
+                                <label for="task-title" class="form-label">Email<span class="text-danger">
+                                        *</span></label>
+                                <input type="text" class="form-control form-control-light" name="email" required>
                             </div>
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Senha Provisoria<span
-                                                class="text-danger"> *</span></label>
-                                <input type="text" class="form-control form-control-light"
-                                    name="password" value="mudarsenha" required>
+                                <label for="task-title" class="form-label">Senha Provisoria<span class="text-danger">
+                                        *</span></label>
+                                <input type="text" class="form-control form-control-light" name="password"
+                                    value="mudarsenha" required>
                             </div>
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Cargo<span
-                                    class="text-danger"> *</label>
+                                <label for="task-title" class="form-label">Cargo<span class="text-danger"> *</label>
                                 <select class="form-select form-control-light" name="cargo_id" required>
                                     <option value="">Selecione Cargo</option>
                                     @foreach (\App\Models\Cargo::all() as $cargo)
                                     <option value="{{$cargo->id}}">{{$cargo->nome}}</option>
                                     @endforeach
                                 </select>
-                            
+
                             </div>
-                            
+
                             <div class="mb-12">
                                 <label for="task-priority" class="form-label">Data Contratação</label>
                                 <input type="text" class="form-control form-control-light" id="data_contratacao"
-                                    data-single-date-picker="true" name="data_contratacao" value="<?php echo date("d/m/Y"); ?>">
+                                    data-single-date-picker="true" name="data_contratacao" value="<?php echo date("
+                                    d/m/Y"); ?>">
                             </div>
                         </div>
                         <!-- Painel Esquedo -->
-                        <div class="col-md-6" style="border-left: 1px solid rgb(228 230 233);">                           
+                        <div class="col-md-6" style="border-left: 1px solid rgb(228 230 233);">
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">Telefone</label>
-                                <input type="text" class="form-control form-control-light" 
-                                    placeholder="Digite nome"  name="telefone" id="telefone">
+                                <input type="text" class="form-control form-control-light" placeholder="Digite nome"
+                                    name="telefone" id="telefone">
                             </div>
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">CPF</label>
-                                <input type="text" class="form-control form-control-light" 
-                                    placeholder="Digite nome" name="cpf" id="cpf">
+                                <input type="text" class="form-control form-control-light" placeholder="Digite nome"
+                                    name="cpf" id="cpf">
                             </div>
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">RG</label>
-                                <input type="text" class="form-control form-control-light" 
-                                    placeholder="Digite nome" name="rg">
+                                <input type="text" class="form-control form-control-light" placeholder="Digite nome"
+                                    name="rg">
                             </div>
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">Endereço</label>
-                                <input type="text" class="form-control form-control-light" 
-                                    placeholder="Digite nome" name="endereco">
+                                <input type="text" class="form-control form-control-light" placeholder="Digite nome"
+                                    name="endereco">
                             </div>
                         </div>
                     </div>
@@ -327,8 +341,7 @@ i.icon-danger {
 <script src="{{url('')}}/js/vendor/jquery.dataTables.min.js"></script>
 <script src="{{url('')}}/js/vendor/dataTables.bootstrap5.js"></script>
 <script>
-
-$.ajaxSetup({
+    $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }

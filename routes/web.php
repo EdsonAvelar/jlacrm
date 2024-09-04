@@ -28,11 +28,12 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/leaderboard', function () {
-    return view('leaderboard');
+Route::get('/index2', function () {
+    return view('index2');
 })->name('leaderboard');
 
 Route::get('/', [AdminController::class, 'index'])->name('landingpage');
+
 
 Route::get('/login', [AdminController::class, 'login'])->name('login');
 Route::post('/login', [AdminController::class, 'login']);

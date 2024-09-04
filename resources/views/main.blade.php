@@ -552,8 +552,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             <a class="nav-link dropdown-toggle nav-user arrow-none me-0" data-bs-toggle="dropdown"
                                 href="#" role="button" aria-haspopup="false" aria-expanded="false">
                                 <span class="account-user-avatar">
-                                    <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
-                                        alt="user-image" class="rounded-circle">
+                                    <img src="{{ asset( $user->avatar) }}" alt="user-image" class="rounded-circle">
                                 </span>
                                 <span>
                                     <span class="account-user-name">{{ $user->name }}</span>
@@ -575,17 +574,17 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </a>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="mdi mdi-account-edit me-1"></i>
                                     <span>Configurações</span>
-                                </a>
+                                </a> --}}
 
                                 @if ($user->hasRole('admin'))
 
                                 <a href="{{ route('empresa_profile', ['id' => $user->id]) }}"
                                     class="dropdown-item notify-item">
                                     <i class="mdi mdi-cog-outline me-1"></i>
-                                    <span>Empresa</span>
+                                    <span>Configurações</span>
                                 </a>
 
                                 @endif
@@ -950,7 +949,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
            
-            //document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
             document.getElementById('imagem_vendedor').src = data.data.avatar ;
 
 

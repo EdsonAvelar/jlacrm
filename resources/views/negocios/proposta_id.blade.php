@@ -193,7 +193,7 @@ function convert($frase)
                         <?php if (isset($_POST['apenasconsorcio']) and $_POST['apenasconsorcio'] == "1") { ?>
                         <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
                         <h4>Simulação: <span style="font-weight: bold;">
-                                Multimarcas</span>
+                                ADMINSTRADORA</span>
                         </h4>
                         <?php } else { ?>
                         <h4>Modalidade de Crédito: FINANCIAMENTO BANCÁRIO</h4>
@@ -330,8 +330,6 @@ function convert($frase)
 
                 </tr>
             </table>
-            <!--?php echo "<img  align=\"right\" class=\"logo-multi\" src=\"/wp-content/uploads/2021/12/multimarcas_representanteautorizado.png\"></img>"; ?-->
-
 
             <p>** Sujeito à aprovação de crédito.<br>
                 ** Esta proposta é uma simulação, não gerando qualquer espécie de obrigação entre as partes.

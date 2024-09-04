@@ -776,21 +776,21 @@ function to_data($data)
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">VALOR CRÉDITO</label>
-                                        <input type="text" class="form-control moeda" value="{{ $fechamento->valor }}"
+                                        <input type="text" class="form-control money" value="{{ $fechamento->valor }}"
                                             name="valor">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">PARCELA</label>
-                                        <input type="text" class="form-control moeda" value="{{ $fechamento->parcela }}"
+                                        <input type="text" class="form-control money" value="{{ $fechamento->parcela }}"
                                             name="parcela">
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">PARCELAS ANTECIPADAS</label>
-                                        <input type="text" class="form-control"
+                                        <input type="text" class="form-control money"
                                             value="{{ $fechamento->parcela_antecipada }}" name="parcela_antecipada">
                                     </div>
                                 </div>
@@ -808,7 +808,7 @@ function to_data($data)
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">ADESÃO</label>
-                                        <input type="text" class="form-control moeda" value="{{ $fechamento->adesao }}"
+                                        <input type="text" class="form-control money" value="{{ $fechamento->adesao }}"
                                             name="adesao">
                                     </div>
                                 </div>
@@ -1087,9 +1087,10 @@ function to_data($data)
                                         class="mdi mdi-content-save"></i> Salvar e Notificar
                                     Venda
                                 </button>
-                                <input type="hidden" id="notificar_venda" name="notificar_venda" value="0">
+                                
 
                                 @endif
+                                <input type="hidden" id="notificar_venda" name="notificar_venda" value="0">
                             </div>
 
                             <div class="text-end no-print">

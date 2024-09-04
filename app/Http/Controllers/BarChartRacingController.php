@@ -83,7 +83,7 @@ class BarChartRacingController extends Controller
     {
         $output = array();
 
-       
+
 
 
         $data_inicio = config('data_inicio');
@@ -111,7 +111,7 @@ class BarChartRacingController extends Controller
             $user_info = [
                 "name" => $vendedor->name,
                 "sales" => $vendas_totais,
-                "image" => url('') . '/images/users/user_' . $vendedor->id . '/' . $vendedor->avatar
+                "image" => asset($vendedor->avatar)
 
             ];
 
@@ -144,7 +144,7 @@ class BarChartRacingController extends Controller
             $user_info = [
                 "name" => $vendedor->name,
                 "sales" => $count,
-                "image" => url('') . '/images/users/user_' . $vendedor->id . '/' . $vendedor->avatar
+                "image" => asset($vendedor->avatar)
 
             ];
 

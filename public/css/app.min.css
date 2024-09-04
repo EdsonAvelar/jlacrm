@@ -9274,6 +9274,7 @@ fieldset:disabled .btn {
 
 .text-muted {
     color: #98a6ad !important;
+    font-size: 16px;
 }
 
 .text-black-50 {

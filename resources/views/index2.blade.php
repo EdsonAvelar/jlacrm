@@ -100,7 +100,7 @@
       font-size: xx-large;
       font-weight: 600;
       color: green;
-    }thn ,.bnmhmnmm m n nb  
+    }
   </style>
 </head>
 

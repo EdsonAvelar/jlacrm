@@ -88,19 +88,19 @@ class RankingController extends Controller
 
             $vendas_totais = Fechamento::where($query)->sum('valor');
 
-            $avatar = url("") . "/images/users/avatars/user-padrao.png";
+            $avatar = asset("images/users/avatars/user-padrao.png");
             if (
                 $vendedor->avatar
             ) {
-                $avatar = url('') . '/images/users/user_' . $vendedor->id . '/' . $vendedor->avatar;
+                $avatar = $vendedor->avatar;
             }
-
+            $valor = (float) config("racing_vendas_max");
             $user_info = [
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
-                'meta' => 1500000,
-                'percentual' => ($vendas_totais / 1500000) * 100,
-                "avatar" => $avatar,
+                'meta' => $valor,
+                'percentual' => ($vendas_totais / $valor) * 100,
+                "avatar" => asset($avatar),
             ];
 
             if ($vendedor->equipe) {
@@ -134,7 +134,6 @@ class RankingController extends Controller
         $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
         $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo])->get();
 
-
         $total = 0;
         foreach ($users as $vendedor) {
             $query = [
@@ -144,19 +143,21 @@ class RankingController extends Controller
 
             $vendas_totais = Agendamento::where($query)->count();
 
-            $avatar = url("") . "/images/users/avatars/user-padrao.png";
+            $avatar = asset("images/users/avatars/user-padrao.png");
             if (
                 $vendedor->avatar
             ) {
-                $avatar = url('') . '/images/users/user_' . $vendedor->id . '/' . $vendedor->avatar;
+                $avatar = $vendedor->avatar;
             }
+
+            $meta_agen = (int) config("racing_agendamento_max");
 
             $user_info = [
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
-                'meta' => 15,
-                'percentual' => ($vendas_totais / 15) * 100,
-                "avatar" => $avatar,
+                'meta' => $meta_agen,
+                'percentual' => ($vendas_totais / $meta_agen) * 100,
+                "avatar" => asset($avatar),
             ];
 
             if ($vendedor->equipe) {

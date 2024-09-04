@@ -635,11 +635,16 @@ $(document).ready(function() {
     `);
 
     let $filterDropdown = $('.filter-dropdown');
+    var filter_content = {};
+
 
     // Abrir o dropdown ao clicar no ícone de filtro
     $('.filter-icon').on('click', function(e) {
         let column = $(this).data('column');
         let position = $(this).offset();
+
+        $("#filter-input").val(filter_content[column]);
+
         $filterDropdown.data('column', column);
         $filterDropdown.data('icon', $(this));
         $filterDropdown.css({
@@ -653,6 +658,8 @@ $(document).ready(function() {
         let column = $filterDropdown.data('column');
         let value = $('#filter-input').val();
         let $icon = $filterDropdown.data('icon');
+
+        filter_content[column] = value;
 
         table.column(column).search(value).draw();
 
@@ -670,6 +677,8 @@ $(document).ready(function() {
     $('#clear-filter-btn').on('click', function() {
         let column = $filterDropdown.data('column');
         let $icon = $filterDropdown.data('icon');
+
+        filter_content[column] = '';
 
         // Limpar o campo de filtro e remover o filtro aplicado
         $('#filter-input').val('');

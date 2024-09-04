@@ -68,8 +68,8 @@
                             <div class="card mb-0 mt-2" id="{{ $user->id }}">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-                                        <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
-                                            alt="image" class="me-3 d-none d-sm-block avatar-sm rounded-circle">
+                                        <img src="{{ asset($user->avatar) }}" alt="image"
+                                            class="me-3 d-none d-sm-block avatar-sm rounded-circle">
                                         <div class="w-100 overflow-hidden">
                                             <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
                                         </div> <!-- end w-100 -->
@@ -129,7 +129,7 @@
                             <div class="card mb-0 mt-1" id="{{ $user->id }}">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-                                        <img src="{{ url('') }}/images/users/user_{{ $user->id }}/{{ $user->avatar }}"
+                                        <img src="{{ asset( $user->avatar) }}"
                                             alt="image" class="me-0 d-none d-sm-block avatar-sm rounded-circle">
                                         <div class="w-100 overflow-hidden">
                                             <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
@@ -343,17 +343,13 @@
             });
         });
 
-
         $('.editar_equipe').on('click', function() {
-
             var id = $(this).data('id');
             $.ajax({
                 url: "{{ url('equipes/get?id=') }}" + id,
                 type: 'get',
                 Type: 'json',
                 success: function(res) {
-
-
                     $('#editar_equipe_id').val(res[0]);
                     $('#edit_nome_equipe').val(res[3]);
                     $('#edit_nome_lider').val(res[2]);
@@ -364,13 +360,8 @@
 
                     $('#editarequipe_modal').modal('show');
                 }
-
-
             });
-
-
         });
-
 
         $('.excluir_equipe').on('click', function() {
 

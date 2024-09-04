@@ -257,7 +257,7 @@ use App\Enums\NegocioTipo;
                                     <label for="inputEmail3" class="col-sm-3 col-form-label">Administradora</label>
                                     <div class="col-sm-6">
                                         <input type="text" name="con-empresa[]" class="form-control" id="administradora"
-                                            placeholder="Nome da Administradora" value="MULTIMARCAS">
+                                            placeholder="Nome da Administradora" value="ADMINSTRADORA">
                                     </div>
                                 </div>
 

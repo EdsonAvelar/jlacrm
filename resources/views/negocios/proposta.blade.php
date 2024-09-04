@@ -183,7 +183,7 @@ function convert($frase)
                         <?php if ($_POST['apenasconsorcio'] == "1") { ?>
                         <h4>Modalidade de Crédito: CARTA DE CRÉDITO</h4>
                         <h4>Simulação: <span style="font-weight: bold;">
-                                Multimarcas</span>
+                                ADMINSTRADORA</span>
                         </h4>
                         <?php } else { ?>
                         <h4>Modalidade de Crédito: FINANCIAMENTO BANCÁRIO</h4>

@@ -12,6 +12,9 @@ use App\Models\User;
 use App\Models\Equipe;
 use App\Models\Cargo;
 use App\Enums\UserStatus;
+use Carbon\Carbon;
+use App\Models\Empresa;
+
 
 class DatabaseSeeder extends Seeder
 {
@@ -35,19 +38,23 @@ class DatabaseSeeder extends Seeder
 
 		$this->adminTable();
 
+		#Configurações Iniciais
+		$this->initConfig();
+
 
 		#$this->usersTable();
 		#$this->command->info('usuario (Gerente,Administrador,Coordenador,Financeiro,Vendedor) criados com sucesso, senha padrão: 123');
 
 		$this->call([
 			FunilSeeder::class,
-				//LeadSeeder::class,
+			//LeadSeeder::class,
 			//NegocioSeeder::class
 		]);
 
 	}
 
-	private function motivo_Perdas(){
+	private function motivo_Perdas()
+	{
 
 		$motivos = [
 			'Cliente não quer comprar agora',
@@ -58,20 +65,20 @@ class DatabaseSeeder extends Seeder
 		foreach ($motivos as $motivo) {
 			$perdas = new MotivoPerda();
 			$perdas->motivo = $motivo;
-			$perdas->save();	
+			$perdas->save();
 		}
 	}
 	private function createEquipe()
 	{
-		
+
 		$equipe = new Equipe();
-		$equipe->nome = "EquipeFera1";	
-		$equipe->descricao = "Equipe Fera 1";	
+		$equipe->nome = "EquipeFera1";
+		$equipe->descricao = "Equipe Fera 1";
 		$equipe->logo = 'user-padrao.png';
 		$equipe->save();
 
 		$equipe = new Equipe();
-		$equipe->nome = "EquipeFera2";	
+		$equipe->nome = "EquipeFera2";
 		$equipe->descricao = "Equipe Fera 2";
 		$equipe->logo = 'user-padrao.png';
 		$equipe->save();
@@ -94,7 +101,7 @@ class DatabaseSeeder extends Seeder
 		$cargo->nome = "Coordenador";
 		$cargo->setor = "Comercial";
 		$cargo->save();
-		
+
 		$cargo = new Cargo();
 		$cargo->nome = "Gerente Administrativo";
 		$cargo->setor = "Administrativo";
@@ -140,9 +147,54 @@ class DatabaseSeeder extends Seeder
 
 	}
 
+	private function save_config($config_name, $config_value)
+	{
+		$empresa = Empresa::where('settings', $config_name)->first();
+
+		// Make sure you've got the Page model
+		if ($empresa) {
+			$empresa->value = $config_value;
+			$empresa->save();
+		} else {
+			$empresa = new Empresa();
+			$empresa->settings = $config_name;
+			$empresa->value = $config_value;
+			$empresa->save();
+		}
+
+		$this->command->info('Atualizando configuração: (' . $config_name . ',' . $config_value . ')');
+	}
+
+	private function initConfig()
+	{
+
+		$dia = intval(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d'));
+		if ($dia <= 20) {
+			$data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+		} else {
+			$data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->format('m/Y'));
+		}
+
+		$data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+
+		$this->save_config('data_inicio', $data_inicio);
+		$this->save_config('data_fim', $data_fim);
+
+
+		$url = preg_replace("(^https?://)", "", url(''));
+
+		$this->save_config('broadcast_canal', $url);
+
+
+		$this->save_config('racing_agendamento_max', 10);
+		$this->save_config('racing_vendas_max', 1500000);
+
+
+	}
+
 
 	private function adminTable()
-	{	
+	{
 		$role_gerente = Role::where('name', 'admin')->first();
 		$gerenciar_funcionarios = Role::where('name', 'gerenciar_funcionarios')->first();
 		$importar_leads = Role::where('name', 'importar_leads')->first();
@@ -150,12 +202,19 @@ class DatabaseSeeder extends Seeder
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
 
 		$cargo_gerente = Cargo::where('nome', 'Gerente Geral')->first();
-		
+
 		$role_gerente = Role::where('name', 'admin')->first();
 		$user = new User();
 		$user->name = 'Gerente';
-		$user->email = 'gerente@com.br';
-		$user->avatar = 'user-padrao.png';
+
+		$url = preg_replace("(^https?://)", "", url(''));
+
+		$user->email = 'gerente@' . $url;
+		$user->avatar = 'images/users/avatars/user-padrao.png';
+
+		$this->command->info('Avatar Padrão: ' . $user->avatar);
+
+
 		$user->status = UserStatus::ativo;
 
 		$senha_padrao = '#admin123';
@@ -169,7 +228,7 @@ class DatabaseSeeder extends Seeder
 		$user->roles()->attach($gerenciar_vendas);
 
 
-		$this->command->info('Usuario Gerente criado com email: '.$user->email.' e senha: '.$senha_padrao);
+		$this->command->info('Usuario Gerente criado com email: ' . $user->email . ' e senha: ' . $senha_padrao);
 	}
 
 	private function usersTable()
@@ -180,7 +239,7 @@ class DatabaseSeeder extends Seeder
 		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
 		$role_administrativo = Role::where('name', 'gerenciar_funcionarios')->first();
-			
+
 		$equipe1 = Equipe::where('nome', 'EquipeFera1')->first();
 		$equipe2 = Equipe::where('nome', 'EquipeFera2')->first();
 
@@ -193,7 +252,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Gerente';
-		$user->email = 'gerente@'.env('APP_SHORT_NAME');
+		$user->email = 'gerente@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
 		$user->password = Hash::make('123');
@@ -207,7 +266,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Administrador';
-		$user->email = 'administrativo@'.env('APP_SHORT_NAME');
+		$user->email = 'administrativo@' . env('APP_SHORT_NAME');
 		$user->status = UserStatus::ativo;
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_admvo->id;
@@ -217,7 +276,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Coordenador1';
-		$user->email = 'coordenador1@'.env('APP_SHORT_NAME');
+		$user->email = 'coordenador1@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_coordenador->id;
 		$user->status = UserStatus::ativo;
@@ -229,10 +288,10 @@ class DatabaseSeeder extends Seeder
 
 		$equipe1->lider_id = $user->id;
 		$equipe1->save();
-		
+
 		$user = new User();
 		$user->name = 'Coordenador2';
-		$user->email = 'coordenador2@'.env('APP_SHORT_NAME');
+		$user->email = 'coordenador2@' . env('APP_SHORT_NAME');
 		$user->cargo_id = $cargo_coordenador->id;
 		$user->avatar = 'user-padrao.png';
 		$user->status = UserStatus::ativo;
@@ -240,14 +299,14 @@ class DatabaseSeeder extends Seeder
 		$user->equipe_id = $equipe2->id;
 		$user->save();
 		$user->roles()->attach($gerenciar_equipe);
-		
+
 		$equipe2->lider_id = $user->id;
 
 		$equipe2->save();
 
 		$user = new User();
 		$user->name = 'Vendedor1';
-		$user->email = 'vendedor1@'.env('APP_SHORT_NAME');
+		$user->email = 'vendedor1@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 
@@ -256,10 +315,10 @@ class DatabaseSeeder extends Seeder
 		$user->equipe_id = $equipe1->id;
 		$user->save();
 
-		
+
 		$user = new User();
 		$user->name = 'Vendedor2';
-		$user->email = 'vendedor2@'.env('APP_SHORT_NAME');
+		$user->email = 'vendedor2@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->status = UserStatus::ativo;
@@ -270,7 +329,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Vendedor3';
-		$user->email = 'vendedor3@'.env('APP_SHORT_NAME');
+		$user->email = 'vendedor3@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->equipe_id = $equipe2->id;
@@ -281,7 +340,7 @@ class DatabaseSeeder extends Seeder
 
 		$user = new User();
 		$user->name = 'Vendedor4';
-		$user->email = 'vendedor4@'.env('APP_SHORT_NAME');
+		$user->email = 'vendedor4@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_vendedor->id;
 		$user->equipe_id = $equipe2->id;
@@ -289,10 +348,10 @@ class DatabaseSeeder extends Seeder
 		$user->password = Hash::make('123');
 		$user->save();
 
-		
+
 		$user = new User();
 		$user->name = 'Pos Venda';
-		$user->email = 'posvenda@'.env('APP_SHORT_NAME');
+		$user->email = 'posvenda@' . env('APP_SHORT_NAME');
 		$user->avatar = 'user-padrao.png';
 		$user->cargo_id = $cargo_posvenda->id;
 		$user->status = UserStatus::ativo;

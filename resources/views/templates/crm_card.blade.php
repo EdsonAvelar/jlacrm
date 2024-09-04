@@ -46,8 +46,8 @@ if (app('request')->view_card == 'compact') {
 
                     @if ($negocio->status == 'ATIVO')
 
-                    <a href="{{ route('negocios.simulacao', ['negocio_id' => $negocio->id]) }}"
-                        class="dropdown-item"><i class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
+                    <a href="{{ route('negocios.simulacao', ['negocio_id' => $negocio->id]) }}" class="dropdown-item"><i
+                            class="mdi mdi-file-document-multiple me-1"></i>Gerar Proposta</a>
 
                     <a href="{{ route('simulacao.index', ['negocio_id' => $negocio->id]) }}" class="dropdown-item"><i
                             class="mdi mdi-file-document-multiple me-1"></i>Multi Proposta</a>
@@ -144,8 +144,7 @@ if (app('request')->view_card == 'compact') {
             <p class="{{ $mb }}">
 
                 @if (!is_null($negocio->user))
-                <img src="{{ url('') }}/images/users/user_{{ $negocio->user->id }}/{{ $negocio->user->avatar }}"
-                    alt="user-img" class="avatar-xs rounded-circle me-1">
+                <img src="{{asset( $negocio->user->avatar) }}" alt="user-img" class="avatar-xs rounded-circle me-1">
                 <span class="align-middle text-muted">{{ $negocio->user->name }}</span>
                 @else
                 <img src="{{ url('') }}/images/users/avatars/user-padrao.png" alt="user-img"

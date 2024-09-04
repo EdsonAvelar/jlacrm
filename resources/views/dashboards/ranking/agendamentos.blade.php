@@ -125,7 +125,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("/images/ranking/tema02/background_ranking.png");
+            background: url("{{url('/images/ranking/tema02/background_ranking.png')}}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -465,7 +465,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema02/primeiro_lugar.png");
+            background-image: url("{{url('/images/ranking/tema02/primeiro_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -481,7 +481,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema02/segundo_lugar.png");
+            background-image: url("{{url('/images/ranking/tema02/segundo_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -497,7 +497,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema02/terceiro_lugar.png");
+            background-image: url("{{url('/images/ranking/tema02/terceiro_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1062,8 +1062,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
                 <div class="ranking-totals">
 
-                    <span style="color:white">Total de Agendamentos: </span> <span
-                        class="total-time"></span>
+                    <span style="color:white">Total de Agendamentos: </span> <span class="total-time"></span>
                     {{-- <span style="color:gray">Total do top 3: </span> <span class="total-top3">R$106.508,00</span>
                     --}}
                 </div>
@@ -1084,8 +1083,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
 
                     <div class="nome segundo">
-                        <div id="nome2">Marcelo</div>
-                        <div id="valor2">R$53.920,00</div>
+                        <div id="nome2">Adriano</div>
+                        <div id="valor2">1</div>
                     </div>
                 </div>
                 <div class="item">
@@ -1099,8 +1098,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             style="background-image: url('https://via.placeholder.com/80');"></div>
                     </div>
                     <div class="nome primeiro">
-                        <div id="nome1">Marcelo</div>
-                        <div id="valor1">R$53.920,00</div>
+                        <div id="nome1">Adriano</div>
+                        <div id="valor1">1</div>
                     </div>
 
                 </div>
@@ -1117,8 +1116,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         </div>
                     </div>
                     <div class="nome terceiro">
-                        <div id="nome3">Marcelo</div>
-                        <div id="valor3">R$53.920,00</div>
+                        <div id="nome3">Adriano</div>
+                        <div id="valor3">1</div>
                     </div>
                 </div>
             </div>
@@ -1161,14 +1160,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             <?= $colaborador['name'] ?>
                         </div>
                         <div class="meta">
-                            Meta: 
-                            <?= $colaborador['meta'] ?> | Total: 
+                            Meta:
+                            <?= $colaborador['meta'] ?> | Total:
                             <?= $colaborador['total'] ?>
                         </div>
                         <div class="progress">
                             <div class="progress-bar" style="width: <?= $colaborador['percentual'] ?>%;"></div>
                         </div>
-                        <div class="missing-value">Faltam: 
+                        <div class="missing-value">Faltam:
                             <?= ($colaborador['meta'] - $colaborador['total']) ?>
                         </div>
                     </div>
@@ -1346,16 +1345,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div id="producao" class="content-section hidden">
                 <h4>Produção</h4>
                 <p>Configurações de produção.</p>
+                <h3>Em Breve</h3>
             </div>
             <div id="sons" class="content-section hidden">
                 <h4>Sons</h4>
                 <p>Configurações de sons.</p>
+                <h3>Em Breve</h3>
             </div>
             <div id="aparencia" class="content-section hidden">
                 <h4>Aparência</h4>
                 <p>Configurações de aparência.</p>
-
-
+                <h3>Em Breve</h3>
 
             </div>
         </div>
@@ -1399,7 +1399,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 var element = document.getElementById(id);
                 if (element) {
                     element.addEventListener('blur', function(e) {
-                    var value = e.target.value.toUpperCase();;
+                    var value = e.target.value.toUpperCase();
 
                     console.log(id,value)
 
@@ -1452,7 +1452,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 equipe= "flex";
             }
             $.ajax({
-                url: '/ranking/colaboradores/agendamentos',
+                url: "{{url('/ranking/colaboradores/agendamentos')}}" ,
                 method: 'GET',
                 success: function(data) {
                     let colaboradores = data.colaboradores;
@@ -1497,18 +1497,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     
                     $('.body-panel').html(html);
 
-                    
-
-
-                    for (let index = 0; index < 3; index++) {
-                    
-                        var valorFormatado = new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL'
-                        }).format(colaboradores[index].total);
+                    for (let index = 0; index < 3; index++) {                     
 
                         $('#nome'+(index+1)).html(colaboradores[index].name);
-                        $('#valor'+(index+1)).html(valorFormatado);
+                        $('#valor'+(index+1)).html(colaboradores[index].total);
 
                         $('#collaborator-photo-'+(index+1)).css('background-image', 'url('+colaboradores[index].avatar+')');
 

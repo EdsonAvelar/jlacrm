@@ -279,7 +279,7 @@ use App\Models\User;
             <label for="inputEmail3" class="col-sm-2 col-form-label">Administradora</label>
             <div class="col-sm-3">
                 <input type="text" name="con-administradora" class="form-control" id="administradora"
-                    placeholder="Nome da Administradora" value="MULTIMARCAS">
+                    placeholder="Nome da Administradora" value="ADMINSTRADORA">
             </div>
         </div>
 

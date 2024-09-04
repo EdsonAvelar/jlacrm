@@ -1,4 +1,7 @@
 <?php 
+
+
+
 $colaboradores = [
   
 ];
@@ -123,7 +126,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("/images/ranking/tema01/background_ranking.png");
+            background: url("{{ url('/images/ranking/tema01/background_ranking.png') }}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -463,7 +466,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema01/primeiro_lugar.png");
+            background-image: url("{{ url('images/ranking/tema01/primeiro_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -479,7 +482,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema01/segundo_lugar.png");
+            background-image: url("{{ url('images/ranking/tema01/segundo_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -495,7 +498,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("/images/ranking/tema01/terceiro_lugar.png");
+            background-image: url("{{ url('images/ranking/tema01/terceiro_lugar.png')}}");
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1081,8 +1084,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
 
                     <div class="nome segundo">
-                        <div id="nome2">Marcelo</div>
-                        <div id="valor2">R$53.920,00</div>
+                        <div id="nome2"></div>
+                        <div id="valor2"></div>
                     </div>
                 </div>
                 <div class="item">
@@ -1096,8 +1099,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             style="background-image: url('https://via.placeholder.com/80');"></div>
                     </div>
                     <div class="nome primeiro">
-                        <div id="nome1">Marcelo</div>
-                        <div id="valor1">R$53.920,00</div>
+                        <div id="nome1"></div>
+                        <div id="valor1"></div>
                     </div>
 
                 </div>
@@ -1114,8 +1117,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         </div>
                     </div>
                     <div class="nome terceiro">
-                        <div id="nome3">Marcelo</div>
-                        <div id="valor3">R$53.920,00</div>
+                        <div id="nome3"></div>
+                        <div id="valor3"></div>
                     </div>
                 </div>
             </div>
@@ -1226,7 +1229,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <p>Configurações principais sobre o time.</p>
 
 
-                <div class="mb-3">
+                <div class="mb-6">
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                         <label for="inputEmail3" class="col-form-label">Mostrar Equipes
                             <span class="mdi mdi-information"></span>
@@ -1239,16 +1242,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     data-onstyle="success"
                     data-offstyle="danger">
                 </div>
-
-
-
-                {{--
-                <div class="col-md-8">
-                    <h1>Monstrar Equipe</h1>
-                    </h1>
-                </div>
-                <div class="col-md-4"></div> --}}
-
 
 
             </div>
@@ -1343,16 +1336,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <div id="producao" class="content-section hidden">
                 <h4>Produção</h4>
                 <p>Configurações de produção.</p>
+                <h3>Em Breve</h3>
             </div>
             <div id="sons" class="content-section hidden">
                 <h4>Sons</h4>
                 <p>Configurações de sons.</p>
+                <h3>Em Breve</h3>
             </div>
             <div id="aparencia" class="content-section hidden">
                 <h4>Aparência</h4>
                 <p>Configurações de aparência.</p>
-
-
+                <h3>Em Breve</h3>
 
             </div>
         </div>
@@ -1450,7 +1444,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 equipe= "flex";
             }
             $.ajax({
-                url: '/ranking/colaboradores/vendas',
+                url: "{{ url('ranking/colaboradores/vendas') }}" ,
                 method: 'GET',
                 success: function(data) {
                     let colaboradores = data.colaboradores;
@@ -1459,11 +1453,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     colaboradores.forEach(function(colaborador, index) {
                         let html_colaborador = "";
                         
-
+                        
                         if (colaborador.equipe_logo != null ){
-                           
-
-                            
 
                             html_colaborador = `
                             <div class="team-section" style='display:${equipe}'">
@@ -1497,8 +1488,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     
 
+                
+                    let num_coladores = Math.min(colaboradores.length, 3)
 
-                    for (let index = 0; index < 3; index++) {
+                    for (let index = 0; index < num_coladores; index++) {
                     
                         var valorFormatado = new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
@@ -1618,7 +1611,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
            
-            //document.getElementById('imagem_vendedor').src = "{{ url('') }}/images/users/user_"+data.data.id+"/"+data.data.avatar ;
             document.getElementById('imagem_vendedor').src = data.data.avatar ;
 
 
@@ -1770,6 +1762,23 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             
             save_config(config_info, config_value);
         
+        });
+
+        var ids_toggle = [
+
+            'racing_vendas_max',
+        ];
+        
+        ids_toggle.forEach(function(id) {
+            var element = document.getElementById(id);
+                if (element) {
+                element.addEventListener('blur', function(e) {
+                var value = e.target.value;
+                
+                save_config(id, value);
+                
+                });
+            }
         });
     </script>
 </body>

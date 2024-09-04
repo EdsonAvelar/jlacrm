@@ -14,37 +14,40 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function index(){
+    public function index()
+    {
 
         return view('index');
     }
 
-    public function consultor($consultor_nome){
+    public function consultor($consultor_nome)
+    {
 
         return view('users.consultor');
     }
-    
 
-    public function login(Request  $req){
+
+    public function login(Request $req)
+    {
 
         $submit = $req['submit'];
 
         if ($submit == "submit") {
-            
+
             $req->validate([
                 'email' => 'required',
                 'password' => 'required'
             ]);
 
-            if(Auth::attempt($req->only('email','password'))){
+            if (Auth::attempt($req->only('email', 'password'))) {
 
-                if (Auth::User()->status == UserStatus::ativo){
+                if (Auth::User()->status == UserStatus::ativo) {
                     return redirect('/crm');
-                }else {
+                } else {
                     return redirect('/login')->withError('Usuário está inativo');
                 }
-               
-            }else{
+
+            } else {
                 return redirect('/login')->withError('Email ou senha incorreto');
             }
 
@@ -54,11 +57,11 @@ class AdminController extends Controller
 
     public function changePassword()
     {
-    return view('users.change-password');
+        return view('users.change-password');
     }
 
     public function updatePassword(Request $request)
-{
+    {
         # Validation
         $request->validate([
             'old_password' => 'required',
@@ -67,7 +70,7 @@ class AdminController extends Controller
 
 
         #Match The Old Password
-        if(!Hash::check($request->old_password, auth()->user()->password)){
+        if (!Hash::check($request->old_password, auth()->user()->password)) {
             return back()->with("error", "Login ou senha inválidas!");
         }
 
@@ -78,61 +81,65 @@ class AdminController extends Controller
         ]);
 
         return back()->with("status", "Senha Atualizada com sucesso!");
-}
- 
-    public function logout(){
+    }
+
+    public function logout()
+    {
         Session::flush();
         Auth::logout();
-        
+
         return redirect('/login');
     }
 
 
-    public function profile(Request $request){
+    public function profile(Request $request)
+    {
 
         $id = $request->query('id');
 
         $user = User::find($id);
 
-        $user->slug =  strtolower( str_replace(' ','.', $user->name) );
+        $user->slug = strtolower(str_replace(' ', '.', $user->name));
 
         $equipes = Equipe::all();
 
         $roles = Role::all();
 
-        if ( Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente','gerenciar_funcionarios']) ){
-            return view('users.profile', compact('user','equipes','roles'));
-        }else {
+        if (Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente', 'gerenciar_funcionarios'])) {
+            return view('users.profile', compact('user', 'equipes', 'roles'));
+        } else {
             return abort(401);
         }
     }
 
-    public function add_permissao(Request $request){
+    public function add_permissao(Request $request)
+    {
 
         $input = $request->all();
 
-        $user = User::find( $input['user_id']);
+        $user = User::find($input['user_id']);
 
         $role = Role::find($input['role_id']);
 
-        if ( is_null( $role ) ){
+        if (is_null($role)) {
             return back()->withErrors("Permissão não selecionada");
         }
 
-        if ( $user->hasRole($role->name) ){
+        if ($user->hasRole($role->name)) {
             return back()->withErrors("Usuário já possui essa permissão");
         }
 
-        $user->roles()->attach($role);       
+        $user->roles()->attach($role);
         return back()->with("status", "Permissao adicionada com sucesso");
     }
 
 
-    public function del_permissao(Request $request){
+    public function del_permissao(Request $request)
+    {
 
         $input = $request->all();
 
-        $user = User::find( $input['user_id']);
+        $user = User::find($input['user_id']);
 
         $role = Role::find($input['delete_id']);
 
@@ -142,8 +149,9 @@ class AdminController extends Controller
     }
 
 
-    public function avatar_edit(Request $request){
-        
+    public function avatar_edit(Request $request)
+    {
+
         $input = $request->all();
 
         $rules = array(
@@ -164,14 +172,14 @@ class AdminController extends Controller
                 ->withInput();
         }
 
-        $user = User::find( $input['user_id']);
+        $user = User::find($input['user_id']);
 
-        $imageName = 'avatar.'.$request->image->extension();  
+        $imageName = 'avatar.' . $request->image->extension();
 
-        $request->image->move(public_path('images')."/users/user_".$user->id."", $imageName);
+        $request->image->move(public_path('images') . "/users/user_" . $user->id . "", $imageName);
 
 
-        $user->avatar = $imageName;
+        $user->avatar = "images/users/user_" . $user->id . "/" . $imageName;
         $user->save();
         return back()->with("status", "Imagem salva com sucesso");
     }

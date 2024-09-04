@@ -48,7 +48,7 @@ class EquipeController extends Controller
         $nome_equipe = strtolower(trim(preg_replace("/[^A-Za-z0-9]/", '_', $nome_equipe)));
         $equipe->nome = $nome_equipe;
 
-        if ($request->filled('image')) {
+        if ($request->hasFile('image')) {
             $rules = array(
                 'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
             );

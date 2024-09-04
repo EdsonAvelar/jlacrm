@@ -89,7 +89,7 @@ class FechamentoController extends Controller
         $data = [
             'vendedor' => $vendedor->name,
             'id' => $vendedor->id,
-            'avatar' => url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar,
+            'avatar' => $vendedor->avatar,
             'cliente' => $negocio->lead->nome,
             'credito' => $negocio->valor,
             'empresa' => url('') . "/images/empresa/logos/empresa_logo_circular.png"
@@ -100,7 +100,7 @@ class FechamentoController extends Controller
         if ($vendedor->equipe) {
             $data['equipe_nome'] = $vendedor->equipe->descricao;
             $data['equipe_id'] = $vendedor->equipe->id;
-            $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; //url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar; //$vendedor->equipe->logo;
+            $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; 
         }
 
         $broadcast_fechamento = config("broadcast_fechamento");
@@ -294,7 +294,7 @@ class FechamentoController extends Controller
             $data = [
                 'vendedor' => $vendedor->name,
                 'id' => $vendedor->id,
-                'avatar' => url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar,
+                'avatar' => $vendedor->avatar,
                 'cliente' => $negocio->lead->nome,
                 'credito' => $negocio->valor,
                 'empresa' => url('') . "/images/empresa/logos/empresa_logo_circular.png"
@@ -303,7 +303,7 @@ class FechamentoController extends Controller
             if ($vendedor->equipe) {
                 $data['equipe_nome'] = $vendedor->equipe->descricao;
                 $data['equipe_id'] = $vendedor->equipe->id;
-                $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; //url('') . "/images/users/user_" . $vendedor->id . "/" . $vendedor->avatar; //$vendedor->equipe->logo;
+                $data['equipe_logo'] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo; 
             }
 
             $broadcast_fechamento = config("broadcast_fechamento");
