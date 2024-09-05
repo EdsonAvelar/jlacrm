@@ -106,19 +106,12 @@ Fazer a aplicação reler o cache novamente
 # Migrate
 php artisan migrate --force
 
+php artisan db:seed
+
 # Configuração de Cache: Otimize a configuração e o roteamento.
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-
-
-
-
-# Mudanças em Colunas
-composer require doctrine/dbal
-
-
-
 
 
 ## JLA CRM

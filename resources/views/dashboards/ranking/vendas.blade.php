@@ -1036,8 +1036,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <a href="{{url('')}}/crm"> <img style="width:200px"
-                    src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
+            <a href="{{url('')}}/crm"> <img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
             <div class="title">Ranking de vendas</div>
         </div>
