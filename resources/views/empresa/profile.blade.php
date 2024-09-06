@@ -864,7 +864,8 @@ vermelho mais do que 5 dias parados
 
 @include('templates.escolher_img', [
 'action' => route('empresa_images'),
-'titulo' => "Editar Arte"
+'titulo' => "Editar Arte",
+'user_id' => app('request')->id
 ])
 </div>
 @endsection

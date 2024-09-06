@@ -228,7 +228,7 @@
 
                             </div>
                             <div class="col-4">
-                                <img src="{{ url('') }}/images/distribuicao.png" width="200px">
+                                <img src="{{ url('') }}/images/sistema/distribuicao.png" width="200px">
                             </div>
                             <div class="col-4 scroll">
 

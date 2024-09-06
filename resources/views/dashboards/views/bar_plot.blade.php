@@ -66,6 +66,9 @@ $fullname = $name;
 $name = str_replace(' ', '_', $name);
 $name = strtolower($name);
 
+if (!isset($horizontal)) {
+    $horizontal = false;
+} 
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
@@ -166,6 +169,7 @@ $name = strtolower($name);
             type: 'bar',
             height: '400px', // Ajusta automaticamente a altura do gráfico com base no contêiner
             width: '100%',  // Usa 100% da largura do contêiner
+            
             responsive: [
                 {
                     breakpoint: 300,
@@ -198,6 +202,8 @@ $name = strtolower($name);
             bar: {
                 distributed: true,
                 borderRadius: 10,
+                borderRadiusApplication: 'end',
+                horizontal: {{ $horizontal ? 'true' : 'false' }},
                 dataLabels: {
                     position: 'top', // top, center, bottom
 

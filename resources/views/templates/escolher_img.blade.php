@@ -20,11 +20,12 @@
                                                 *</label>
                                         <input type="file" name="image" id="inputImage"
                                             class="form-control @error('image') is-invalid @enderror">
-                                        <input name="user_id" hidden value={{ app('request')->id }}>
+                                        <input id="editimage_user_id" name="user_id" hidden value={{ $user_id }}>
                                         <br>
                                         <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#">
                                         <input name="pasta_imagem" id="pasta_imagem" hidden />
                                         <input name="imagem_name" id="imagem_name" hidden />
+
                                     </div>
                                 </div>
 

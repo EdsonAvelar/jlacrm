@@ -147,7 +147,7 @@ if (app('request')->view_card == 'compact') {
                 <img src="{{asset( $negocio->user->avatar) }}" alt="user-img" class="avatar-xs rounded-circle me-1">
                 <span class="align-middle text-muted">{{ $negocio->user->name }}</span>
                 @else
-                <img src="{{ url('') }}/images/user-padrao.png" alt="user-img" class="avatar-xs rounded-circle me-1">
+                <img src="{{ url('') }}/images/sistema/user-padrao.png" alt="user-img" class="avatar-xs rounded-circle me-1">
                 @endif
 
 

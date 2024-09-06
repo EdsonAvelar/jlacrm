@@ -210,7 +210,7 @@ class DatabaseSeeder extends Seeder
 		$url = preg_replace("(^https?://)", "", url(''));
 
 		$user->email = 'gerente@' . $url;
-		$user->avatar = 'images/users/avatars/user-padrao.png';
+		$user->avatar = 'images/sistema/user-padrao.png';
 
 		$this->command->info('Avatar Padrão: ' . $user->avatar);
 

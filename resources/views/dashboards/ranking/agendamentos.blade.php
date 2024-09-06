@@ -1364,11 +1364,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     @include('templates.escolher_img', [
     'action' => route('ranking_premiacoes'),
-    'titulo' => "Editar Arte da Premiação"
+    'titulo' => "Editar Arte da Premiação",
+    'user_id' => app('request')->id
     ])
 
-
-    <!-- jQuery and Bootstrap Bundle (includes Popper) -->
 
     <script>
         $.ajaxSetup({

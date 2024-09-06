@@ -98,16 +98,17 @@ use Illuminate\Support\Facades\Hash;?>
                                     $ischecked = "checked";
                                 }
                                 ?>
-                                <!--
-                                if ($user->hasRole('admin'))
-                                    <td></td> 
-                                else 
-                                    <td><input class="toggle-event"  type="checkbox" <?php echo $ischecked; ?> data-user_id="{{$user->id}}" data-toggle="toggle" data-on="Ativo" data-off="Inativo" data-onstyle="success" data-offstyle="danger"></td>
-                                endif 
-                                 -->
+
                                 <td>
-                                    <img src="{{ asset($user->avatar) }}" alt="user-img"
-                                        class="avatar-xs rounded-circle me-1">
+                                    <a href="#"
+                                        onclick="image_save('images/users/user_{{$user->id}}/','/avatar.png',{{$user->id}})"
+                                        class="text-muted font-14">
+                                        <img src="{{ asset($user->avatar) }}" alt="user-img"
+                                            class="avatar-xs rounded-circle me-1">
+
+                                    </a>
+
+
                                     <a href="{{route('users_profile', array('id'=> $user->id) )}}">
                                         {{$user['name']}}</a>
                                 </td>
@@ -192,7 +193,7 @@ use Illuminate\Support\Facades\Hash;?>
                             $ischecked = "checked";
                         }
                         ?>
-                              
+
                                 <td>
                                     <img src="{{ asset( $user->avatar )}}" alt="user-img"
                                         class="avatar-xs rounded-circle me-1">
@@ -332,6 +333,11 @@ use Illuminate\Support\Facades\Hash;?>
 </div><!-- /.modal -->
 
 
+@include('templates.escolher_img', [
+'action' => url('users/edit/avatar'),
+'titulo' => "Editar Imagem Funcionário",
+'user_id' => app('request')->id
+])
 @endsection
 
 @section('specific_scripts')
@@ -346,6 +352,35 @@ use Illuminate\Support\Facades\Hash;?>
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+
+    function image_save($folder, $imgname, $user_id) {
+
+        $('#pasta_imagem').val($folder);
+        $('#imagem_name').val($imgname);
+        $('#editimage_user_id').val($user_id);
+
+
+        $('#change_logo').modal('show');
+    }
+
+
+    $(function() {
+            $("#inputImage").change(function() {
+     
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+
+        function imageIsLoaded(e) {
+            $('#myImg').attr('src', e.target.result);
+        };
+
 
 
 $(document).ready(function () {

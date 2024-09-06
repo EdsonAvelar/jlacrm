@@ -25,7 +25,7 @@ use App\Enums\LevantamentoStatus;
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <div class="avatar-lg">
-                                        <img src="{{ url('') }}/images/user-padrao.png" alt=""
+                                        <img src="{{ url('') }}/images/sistema/user-padrao.png" alt=""
                                             class="rounded-circle img-thumbnail">
                                     </div>
                                 </div>
@@ -592,8 +592,7 @@ use App\Enums\LevantamentoStatus;
                             @foreach ($negocio->comentarios->sortDesc() as $negcom)
                             <div class="border border-light rounded p-2 mb-3">
                                 <div class="d-flex">
-                                    <img class="me-2 rounded-circle"
-                                        src="{{ url('') }}/images/users/avatars/{{ $negcom->user->avatar }}"
+                                    <img class="me-2 rounded-circle" src="{{ asset($negcom->user->avatar) }}"
                                         alt="Generic placeholder image" height="32">
                                     <div>
                                         <h5 class="m-0">{{ $negcom->user->name }}</h5>

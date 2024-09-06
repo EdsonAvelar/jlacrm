@@ -162,6 +162,11 @@ $user = Auth::user();
             display: inline-block;
         }
 
+        .dropdown-menu-end {
+            max-height: 300px !important;
+            overflow-y: scroll !important;
+        }
+
         /* body[data-leftbar-theme="dark"] .leftside-menu {
             background: #ffffff;
         } */

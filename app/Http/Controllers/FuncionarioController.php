@@ -24,7 +24,7 @@ class FuncionarioController extends Controller
         $input = $request->except('_token');
    
         
-        $avatar = url("") . "/images/user-padrao.png";
+        $avatar = url("") . "/images/sistema/user-padrao.png";
         
         $input['avatar'] = $avatar;
 

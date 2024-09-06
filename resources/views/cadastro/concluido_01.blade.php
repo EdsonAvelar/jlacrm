@@ -43,7 +43,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <br>
                     <p>Ou caso, queira deixar uma mensagem em nosso whatsapp clique no botão abaixo</p>
                     <a href = "https://api.whatsapp.com/send/?phone=55{{$consultor}}&text=Ol%C3%A1,%20fiz%20o%20cadastro%20no%20site,%20gostaria%20de%20Mais%20informa%C3%A7%C3%B5es&type=phone_number&app_absent=0">
-                        <img src="{{url('')}}/images/clique-para-falar-pelo-whatsapp.png" style="width:300px"/>
+                        <img src="{{url('')}}/images/sistema/clique-para-falar-pelo-whatsapp.png" style="width:300px"/>
                     </a>
             
                     @if(app('request')->consultor and App::isLocal())
