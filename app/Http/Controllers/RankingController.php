@@ -88,7 +88,7 @@ class RankingController extends Controller
 
             $vendas_totais = Fechamento::where($query)->sum('valor');
 
-            $avatar = asset("images/users/avatars/user-padrao.png");
+            $avatar = asset("images/user-padrao.png");
             if (
                 $vendedor->avatar
             ) {
@@ -143,7 +143,7 @@ class RankingController extends Controller
 
             $vendas_totais = Agendamento::where($query)->count();
 
-            $avatar = asset("images/users/avatars/user-padrao.png");
+            $avatar = asset("images/user-padrao.png");
             if (
                 $vendedor->avatar
             ) {

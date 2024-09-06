@@ -25,7 +25,7 @@ use App\Enums\LevantamentoStatus;
                             <div class="row align-items-center">
                                 <div class="col-auto">
                                     <div class="avatar-lg">
-                                        <img src="{{ url('') }}/images/users/avatars/user-padrao.png" alt=""
+                                        <img src="{{ url('') }}/images/user-padrao.png" alt=""
                                             class="rounded-circle img-thumbnail">
                                     </div>
                                 </div>

@@ -22,9 +22,9 @@ class FuncionarioController extends Controller
     public function store(Request $request)
     {
         $input = $request->except('_token');
-        //$input['avatar'] = 'user-padrao.png';
+   
         
-        $avatar = url("") . "/images/users/avatars/user-padrao.png";
+        $avatar = url("") . "/images/user-padrao.png";
         
         $input['avatar'] = $avatar;
 

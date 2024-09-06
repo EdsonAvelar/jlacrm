@@ -69,7 +69,7 @@
         <nav class="navbar navbar-expand-lg custom_nav-container ">
           <a class="navbar-brand" href="{{route('landingpages')}}">
             <span>
-              <img style="width:300px" src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
+              <img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </span>
           </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
