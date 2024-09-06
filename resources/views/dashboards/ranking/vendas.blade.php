@@ -41,13 +41,29 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         body {
             font-family: 'Arial', sans-serif;
             background-color: #1f2045;
-            color: white;
+            /* color: white; */
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-direction: column;
+        }
+
+        .missing-value {
+            color: white;
+        }
+
+        .name {
+            color: white;
+        }
+
+        .nome {
+            color: white;
+        }
+
+        .meta {
+            color: white;
         }
 
         .menu-bar {
@@ -1072,7 +1088,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     <div class="award segundo" id="premiacao_2" <?php if (config('ranking_visivel_premiacao_2')=="false"
                         ){ echo 'style="display:none"' ; } ?>>
-                        <img src="{{asset('images/ranking/user/premiacao_2.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_2.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
+                            alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
                     </div>
 
@@ -1090,7 +1107,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="item">
                     <div class="award primeiro" id="premiacao_1" <?php if
                         (config('ranking_visivel_premiacao_1')=="false" ){ echo 'style="display:none"' ; } ?>>
-                        <img src="{{asset('images/ranking/user/premiacao_1.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_1.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
+                            alt="Premiação">
                         <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
                     </div>
                     <div class="position-wrapper1">
@@ -1107,7 +1125,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     <div class="award terceiro" id="premiacao_3" <?php if
                         (config('ranking_visivel_premiacao_3')=="false" ){ echo 'style="display:none"' ; } ?>
                         >
-                        <img src="{{asset('images/ranking/user/premiacao_3.png')}}" alt="Premiação">
+                        <img src="{{asset('images/ranking/user/premiacao_3.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
+                            alt="Premiação">
                         <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
                     </div>
                     <div class="position-wrapper3">
@@ -1251,12 +1270,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}" alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}"
+                            alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/user/premiacao_1.png" class="avatar-lx img-thumbnail"
-                                alt="profile-image">
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_1.png?{{ \Carbon\Carbon::now()->timestamp }}"
+                                class="avatar-lx img-thumbnail" alt="profile-image">
                         </a>
                     </div>
 
@@ -1282,8 +1302,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_2.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/user/premiacao_2.png" class="avatar-lx img-thumbnail"
-                                alt="profile-image">
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_2.png?{{ \Carbon\Carbon::now()->timestamp }}"
+                                class="avatar-lx img-thumbnail" alt="profile-image">
                         </a>
                     </div>
 
@@ -1308,8 +1328,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_3.png')" class="text-muted font-14">
-                            <img src="{{ url('') }}/images/ranking/user/premiacao_3.png" class="avatar-lx img-thumbnail"
-                                alt="profile-image">
+                            <img src="{{ url('') }}/images/ranking/user/premiacao_3.png?{{ \Carbon\Carbon::now()->timestamp }}"
+                                class="avatar-lx img-thumbnail" alt="profile-image">
                         </a>
                     </div>
                     <div class="premiacao-info">
@@ -1354,9 +1374,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
     @include('templates.escolher_img', [
-        'action' => route('ranking_premiacoes'),
-        'titulo' => "Editar Arte da Premiação",
-        'user_id' => app('request')->id
+    'action' => route('ranking_premiacoes'),
+    'titulo' => "Editar Arte da Premiação",
+    'user_id' => app('request')->id
     ])
 
     <!-- jQuery and Bootstrap Bundle (includes Popper) -->

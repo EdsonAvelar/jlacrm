@@ -103,8 +103,8 @@ use Illuminate\Support\Facades\Hash;?>
                                     <a href="#"
                                         onclick="image_save('images/users/user_{{$user->id}}/','/avatar.png',{{$user->id}})"
                                         class="text-muted font-14">
-                                        <img src="{{ asset($user->avatar) }}" alt="user-img"
-                                            class="avatar-xs rounded-circle me-1">
+                                        <img src="{{ asset($user->avatar) }}?{{ \Carbon\Carbon::now()->timestamp }}"
+                                            alt="user-img" class="avatar-xs rounded-circle me-1">
 
                                     </a>
 

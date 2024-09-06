@@ -74,11 +74,19 @@
             <div class="card text-center">
                 <div class="card-body">
 
+                    <a href="#" onclick="image_save('images/users/user_{{$user->id}}/','/avatar.png',{{$user->id}})"
+                        class="text-muted font-14">
+                        <img src="{{ asset($user->avatar) }}?{{ \Carbon\Carbon::now()->timestamp }}" alt="user-img"
+                            class="rounded-circle avatar-lg img-thumbnail">
+                    
+                    </a>
 
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#edit-profile-img"
-                        class="text-muted font-14"><img src="{{ asset($user->avatar) }}"
+
+                    {{-- <a href="#" data-bs-toggle="modal" data-bs-target="#edit-profile-img"
+                        class="text-muted font-14"><img
+                            src="{{ asset($user->avatar) }}?{{ \Carbon\Carbon::now()->timestamp }}"
                             class="rounded-circle avatar-lg img-thumbnail" alt="profile-image"
-                            onclick="myfunction()"></a>
+                            onclick="myfunction()"></a> --}}
 
                     <p><a href="#" data-bs-toggle="modal" data-bs-target="#edit-profile-img"
                             class="text-muted font-14">Editar Imagem</a></p>
@@ -126,11 +134,11 @@
                                 Informações
                             </a>
                         </li>
-                       
+
 
                     </ul>
                     <div class="tab-content">
-                       
+
 
                         <div class="tab-pane  show active" id="settings">
                             <form method="POST" action="{{ route('user_edit') }}">
@@ -366,6 +374,10 @@
 
 
 
+
+
+
+{{--
 <!-- Modal -->
 <div class="modal fade" id="edit-profile-img" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -406,10 +418,14 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 </div>
 
-
+@include('templates.escolher_img', [
+'action' => url('users/edit/avatar'),
+'titulo' => "Editar Imagem Funcionário",
+'user_id' => app('request')->id
+])
 @endsection
 
 @section('specific_scripts')
@@ -420,6 +436,15 @@
             }
         });
 
+function image_save($folder, $imgname, $user_id) {
+    
+    $('#pasta_imagem').val($folder);
+    $('#imagem_name').val($imgname);
+    $('#editimage_user_id').val($user_id);
+    
+    
+    $('#change_logo').modal('show');
+    }
 
 
 

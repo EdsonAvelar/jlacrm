@@ -24,50 +24,52 @@ class EmpresaController extends Controller
         $roles = Role::all();
 
         $empresa__ = Empresa::all();
-        $empresa =  array();
+        $empresa = array();
         foreach (Empresa::all() as $empresa__) {
-           $empresa[$empresa__->settings] =$empresa__->value;
+            $empresa[$empresa__->settings] = $empresa__->value;
         }
 
-       
 
-        if ( Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente','gerenciar_funcionarios']) ){
-            return view('empresa.profile', compact('user','equipes','roles','empresa'));
-        }else {
+
+        if (Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente', 'gerenciar_funcionarios'])) {
+            return view('empresa.profile', compact('user', 'equipes', 'roles', 'empresa'));
+        } else {
             return abort(401);
         }
-        
+
     }
-    
-    public function empresa_config(Request $request){
+
+    public function empresa_config(Request $request)
+    {
 
 
         $input = $request->except('_token');
 
         $config_name = $input['info'][0];
         $config_value = $input['info'][1];
-           
 
-        $empresa = Empresa::where('settings', $config_name )->first();
+
+        $empresa = Empresa::where('settings', $config_name)->first();
 
         // Make sure you've got the Page model
-        if( $empresa) {
-            $empresa->value =$config_value;
+        if ($empresa) {
+            $empresa->value = $config_value;
             $empresa->save();
-        }else {
-            $empresa =  new Empresa();
+        } else {
+            $empresa = new Empresa();
             $empresa->settings = $config_name;
             $empresa->value = $config_value;
             $empresa->save();
         }
-        
+
         return "Configuração atualizada com sucesso";
-      
+
 
     }
 
-    public function empresa_images(Request $request){
-        
+    public function empresa_images(Request $request)
+    {
+
         $input = $request->all();
 
         $rules = array(
@@ -94,39 +96,45 @@ class EmpresaController extends Controller
         $imagem_name = $input['imagem_name'];
 
 
-        $destino = public_path('images')."/empresa/".$pasta_imagem."";
+        $destino = public_path('images') . "/empresa/" . $pasta_imagem . "";
 
         $request->image->move($destino, $imagem_name);
 
 
-        return back()->with("status", "Imagem salva com sucesso");
+        //return back()->with("status", "Imagem salva com sucesso");
+        #return redirect()->route('empresa_images', ['_t' => time(), "status" => "Imagem salva com sucesso" ]);
+        #return redirect()->route('empresa_profile', ['_t' => time()])->with('status', 'Imagem salva com sucesso');
+        return back()->with('status', 'Imagem salva com sucesso')->with('_t', time());
+
+
     }
 
-    public function save(Request $request){
+    public function save(Request $request)
+    {
 
         $inputs = $request->except('_token');
 
         $settings = array();
 
         foreach ($inputs as $key => $value) {
-           
-           if ( !empty($value)){
 
-            $empresa = Empresa::where('settings',$key )->first();
+            if (!empty($value)) {
 
-            // Make sure you've got the Page model
-            if( $empresa) {
-                $empresa->value = $value;
-                $empresa->save();
-            }else {
-                $empresa =  new Empresa();
-                $empresa->settings = $key;
-                $empresa->value = $value;
-                $empresa->save();
+                $empresa = Empresa::where('settings', $key)->first();
+
+                // Make sure you've got the Page model
+                if ($empresa) {
+                    $empresa->value = $value;
+                    $empresa->save();
+                } else {
+                    $empresa = new Empresa();
+                    $empresa->settings = $key;
+                    $empresa->value = $value;
+                    $empresa->save();
+                }
             }
-           }
 
         }
-        return back()->with('status','Informações Atualizadas com Sucesso');
+        return back()->with('status', 'Informações Atualizadas com Sucesso');
     }
 }

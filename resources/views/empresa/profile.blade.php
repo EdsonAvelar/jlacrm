@@ -145,7 +145,7 @@
 
                                             <p><a href="#" onclick="image_save('logos','/empresa_logo_circular.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png"
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="rounded-circle avatar-lg img-thumbnail"
                                                         alt="Logo Circular">
                                                 </a></p>
@@ -161,9 +161,9 @@
                                         <div class="card-body">
 
                                             <p><a href="#"
-                                                    onclick="image_save('logos','/empresa_logo_transparente.png')"
+                                                    onclick="image_save('logos','/empresa_logo_transparente.png','retangular')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png"
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="Logo Horizontal">
                                                 </a></p>
 
@@ -176,9 +176,10 @@
                                         <h5>Logo Horizontal 1280px x 128px (PNG) </h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('logos','/empresa_logo_horizontal.png')"
+                                            <p><a href="#"
+                                                    onclick="image_save('logos','/empresa_logo_horizontal.png','retangular')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_horizontal.png"
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_horizontal.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="Logo Horizontal">
                                                 </a></p>
 
@@ -208,7 +209,7 @@
 
                                             <p><a href="#" onclick="image_save('logos','/marcadagua.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/logos/marcadagua.png"
+                                                    <img src="{{ url('') }}/images/empresa/logos/marcadagua.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="Marca D'Agua">
                                                 </a></p>
 
@@ -221,9 +222,10 @@
                                         <h5>Logo Ranking - 1280 x 720 (PNG) </h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('logos','/empresa_ranking.png')"
+                                            <p><a href="#"
+                                                    onclick="image_save('logos','/empresa_ranking.png','retangular')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png"
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="Logo Empresa Ranking">
                                                 </a></p>
 
@@ -242,9 +244,10 @@
                                         <h5>Fundo Folha de Proposta (2048px x 3500px</h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('proposta','/fundo_proposta.png')"
+                                            <p><a href="#"
+                                                    onclick="image_save('proposta','/fundo_proposta.png','livre')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/proposta/fundo_proposta.png"
+                                                    <img src="{{ url('') }}/images/empresa/proposta/fundo_proposta.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -260,7 +263,7 @@
 
                                             <p><a href="#" onclick="image_save('proposta','/imovel.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/proposta/imovel.png"
+                                                    <img src="{{ url('') }}/images/empresa/proposta/imovel.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -276,7 +279,7 @@
 
                                             <p><a href="#" onclick="image_save('proposta','/caminhao.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/proposta/caminhao.png"
+                                                    <img src="{{ url('') }}/images/empresa/proposta/caminhao.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -291,7 +294,7 @@
 
                                             <p><a href="#" onclick="image_save('proposta','/maquinario.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/proposta/maquinario.png"
+                                                    <img src="{{ url('') }}/images/empresa/proposta/maquinario.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -306,7 +309,7 @@
 
                                             <p><a href="#" onclick="image_save('proposta','/carro.png')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/proposta/carro.png"
+                                                    <img src="{{ url('') }}/images/empresa/proposta/carro.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -322,9 +325,9 @@
                                         <h5>Login - Background</h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('outros','/background.png')"
+                                            <p><a href="#" onclick="image_save('outros','/background.png','retangular')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/outros/background.png"
+                                                    <img src="{{ url('') }}/images/empresa/outros/background.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -337,9 +340,9 @@
                                         <h5>Banner - 366px x 512px</h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('outros','/banner.png')"
+                                            <p><a href="#" onclick="image_save('outros','/banner.png','livre')"
                                                     class="text-muted font-14">
-                                                    <img src="{{ url('') }}/images/empresa/outros/banner.png"
+                                                    <img src="{{ url('') }}/images/empresa/outros/banner.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
                                                 </a></p>
 
@@ -865,7 +868,7 @@ vermelho mais do que 5 dias parados
 @include('templates.escolher_img', [
 'action' => route('empresa_images'),
 'titulo' => "Editar Arte",
-'user_id' => app('request')->id
+'user_id' => app('request')->id,
 ])
 </div>
 @endsection
@@ -899,10 +902,11 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
-    function image_save($folder, $imgname) {
+    function image_save($folder, $imgname, $tipo_corte='quadrado2') {
 
             $('#pasta_imagem').val($folder);
             $('#imagem_name').val($imgname);
+            $('#tipo_corte').val($tipo_corte);
             $('#change_logo').modal('show');
         }
 
