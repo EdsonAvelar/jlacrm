@@ -186,9 +186,17 @@ function formatString($input) {
                                 <img class="equipelogo"
                                     src="{{ url('') }}/images/equipes/{{ $dados_equipe[$name]['id'] }}/{{ $dados_equipe[$name]['logo'] }}"
                                     alt="">
+
+
+                                <p class="text">EQUIPE {{ strtoupper($name) }}<br><span class="text-muted">Lider: {{
+                                        ($dados_equipe[$name]['lider']) }}</span></p>
+                                @else
+
+                                <p class="text">SEM EQUIPE </span></p>
+
                                 @endif
 
-                                <p class="text">EQUIPE {{ strtoupper($name) }}</p>
+
                             </div>
                         </div>
                         <div class="col-md-2">

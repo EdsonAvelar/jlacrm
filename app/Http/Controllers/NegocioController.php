@@ -187,6 +187,8 @@ class NegocioController extends Controller
                 $equipe = $vendedor->equipe->descricao;
                 $dados_equipe[$equipe]['id'] = $vendedor->equipe->id;
                 $dados_equipe[$equipe]['logo'] = $vendedor->equipe->logo;
+                $dados_equipe[$equipe]['lider'] = $vendedor->equipe->lider->name;
+                $dados_equipe[$equipe]['lider_id'] = $vendedor->equipe->lider->id;
             }
 
             if (!array_key_exists($equipe, $dados)) {
@@ -274,7 +276,8 @@ class NegocioController extends Controller
                 $equipe = $vendedor->equipe->descricao;
                 $dados_equipe[$equipe]['id'] = $vendedor->equipe->id;
                 $dados_equipe[$equipe]['logo'] = $vendedor->equipe->logo;
-
+                $dados_equipe[$equipe]['lider'] = $vendedor->equipe->lider->name;
+                $dados_equipe[$equipe]['lider_id'] = $vendedor->equipe->lider->id;
             }
 
             if (!array_key_exists($equipe, $dados)) {
