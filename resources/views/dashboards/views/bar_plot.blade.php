@@ -201,7 +201,7 @@ if (!isset($horizontal)) {
         plotOptions: {
             bar: {
                 distributed: true,
-                borderRadius: 10,
+                borderRadius: 3,
                 borderRadiusApplication: 'end',
                 horizontal: {{ $horizontal ? 'true' : 'false' }},
                 dataLabels: {
@@ -257,7 +257,8 @@ if (!isset($horizontal)) {
 
                 return nFormatter(val, 0);
             },
-            offsetY: -20,
+            offsetY: {{ $horizontal ? 0 : -20 }},
+            offsetX: {{ $horizontal ? 10 : 0 }},
             style: {
                 fontSize: '16px',
                 colors: ['#338888']
