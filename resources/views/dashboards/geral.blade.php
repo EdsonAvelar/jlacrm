@@ -90,11 +90,13 @@
 
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['oportunidades'])." Oportunidades",
         'name' => 'Oportunidades',
         'plots' => [$output['vendedores'], $output['oportunidades']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['agendamentos'])." Agendamentos",
         'name' => 'Agendamentos',
         'plots' => [$output['vendedores'], $output['agendamentos']],
         ])
@@ -130,21 +132,25 @@
         @endif
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['reunioes'])." Reuniões",
         'name' => 'Reuniões',
         'plots' => [$output['vendedores'], $output['reunioes']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['propostas'])." Propostas",
         'name' => 'Propostas',
         'plots' => [$output['vendedores'], $output['propostas']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['aprovacoes'])." Aprovações",
         'name' => 'Aprovações',
         'plots' => [$output['vendedores'], $output['aprovacoes']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['vendas'])." Vendas",
         'name' => 'Vendas',
         'plots' => [$output['vendedores'], $output['vendas']],
         ])
@@ -170,8 +176,8 @@
         ])
 
 
-
         @include('dashboards.views.donuts', [
+        'title' => array_sum($output['agendamentos_realizado'])." Reuniões Concretizadas",
         'name' => 'Reuniões Concretizadas',
         'plots' => [$output['vendedores'], $output['agendamentos_realizado']],
         ])

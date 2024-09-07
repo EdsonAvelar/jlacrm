@@ -57,11 +57,13 @@
     <div class="row">
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['oportunidades'])." Oportunidades",
         'name' => 'Oportunidades',
         'plots' => [$output['equipes'], $output['oportunidades']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['agendamentos'])." Agendamentos",
         'name' => 'Agendamentos',
         'plots' => [$output['equipes'], $output['agendamentos']],
         ])
@@ -99,21 +101,25 @@
 
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['reunioes'])." Reuniões",
         'name' => 'Reuniões',
         'plots' => [$output['equipes'], $output['reunioes']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['propostas'])." Propostas",
         'name' => 'Propostas',
         'plots' => [$output['equipes'], $output['propostas']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['aprovacoes'])." Aprovações",
         'name' => 'Aprovações',
         'plots' => [$output['equipes'], $output['aprovacoes']],
         ])
 
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($output['vendas'])." Vendas",
         'name' => 'Vendas',
         'plots' => [$output['equipes'], $output['vendas']],
         ]);
