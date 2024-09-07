@@ -537,10 +537,8 @@ class DashboardController extends Controller
                 $hoje = Carbon::now()->format('Y-m-d');
 
                 $query = [
-                    ['data_agendado', '>=', $hoje],
-                    ['data_agendado', '<=', $hoje],
+                    ['data_agendado', '=', $hoje],
                     ['user_id', '=', $vendedor->id]
-
                 ];
 
                 $count = Agendamento::where($query)->count();
@@ -554,10 +552,8 @@ class DashboardController extends Controller
                 $amanha = Carbon::now()->addDay()->format('Y-m-d');
 
                 $query = [
-                    ['data_agendado', '>=', $amanha],
-                    ['data_agendado', '<=', $amanha],
+                    ['data_agendado', '=', $amanha],
                     ['user_id', '=', $vendedor->id]
-
                 ];
 
                 $count = Agendamento::where($query)->count();
