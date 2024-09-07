@@ -119,7 +119,7 @@
         ])
 
         @include('dashboards.views.bar_plot', [
-        'title' => array_sum($output['vendas'])." Vendas",
+        'title' => "Vendas ("."R$ " . number_format(array_sum($output['vendas']), 2, ',', '.').")",
         'name' => 'Vendas',
         'plots' => [$output['equipes'], $output['vendas']],
         ]);
