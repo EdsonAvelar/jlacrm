@@ -73,6 +73,7 @@ class DashboardController extends Controller
 
         $output = [];
         $output['oportunidades'] = [];
+        $output['agendamentos_media'] = [];
         $output['agendamentos'] = [];
         $output['agendados_hoje'] = [];
         $output['agendados_amanha'] = [];
@@ -116,6 +117,22 @@ class DashboardController extends Controller
 
             $count = Agendamento::where($query)->whereIn('user_id', $ids)->count();
             array_push($output['agendamentos'], $count);
+
+            // #########
+            // Agendamento Médio por Dia
+            // #########
+
+            $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
+            $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+
+            $dias_uteis = $inicio->diffInWeekdays($fim);
+
+            $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+            array_push($output['agendamentos_media'], $media_agendamentos);
+
+
+
 
             // #########
             // Agendados para hoje
@@ -447,6 +464,7 @@ class DashboardController extends Controller
 
             $stats['sum_oportunidades'] = 0;
             $stats['sum_agendamentos'] = 0;
+
             $stats['sum_reunioes'] = 0;
             $stats['sum_aprovacoes'] = 0;
             $stats['sum_propostas'] = 0;
@@ -467,7 +485,8 @@ class DashboardController extends Controller
                 'agendamentos_faltou',
                 'agendamentos_realizado',
                 'agendados_hoje',
-                'agendados_amanha'
+                'agendados_amanha',
+                'agendamentos_media'
             ];
 
             foreach ($metricas as $metrica) {
@@ -527,6 +546,15 @@ class DashboardController extends Controller
 
                 $count = Agendamento::where($query)->count();
                 array_push($output['agendamentos'], $count);
+
+                $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
+                $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+
+                $dias_uteis = $inicio->diffInWeekdays($fim);
+
+                $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+                array_push($output['agendamentos_media'], $media_agendamentos);
 
                 $stats['sum_agendamentos'] = $stats['sum_agendamentos'] + $count;
 

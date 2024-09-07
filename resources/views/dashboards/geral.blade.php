@@ -101,6 +101,12 @@
         'plots' => [$output['vendedores'], $output['agendamentos']],
         ])
 
+        @include('dashboards.views.bar_plot', [
+        'title' => "Agendamentos Médio por Dia",
+        'name' => 'Agendamentos Medio',
+        'plots' => [$output['vendedores'], $output['agendamentos_media']],
+        ])
+
 
         {{-- Gráficos de Hoje e Amanhã só são mostrados se o botão de hoje não tiver sido pressionado --}}
         @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )

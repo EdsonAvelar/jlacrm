@@ -68,6 +68,12 @@
         'plots' => [$output['equipes'], $output['agendamentos']],
         ])
 
+        @include('dashboards.views.bar_plot', [
+        'title' => "Agendamentos Médio por Dia",
+        'name' => 'Agendamentos Medio',
+        'plots' => [$output['equipes'], $output['agendamentos_media']],
+        ])
+
 
         @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )
 
