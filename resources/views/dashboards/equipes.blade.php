@@ -67,6 +67,8 @@
         ])
 
 
+        @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )
+
         <?php  
             $vendedores_hoje = $output['equipes'];
             $vendedores_amanha = $output['equipes'];
@@ -92,6 +94,8 @@
         'plots' => [$vendedores_amanha, $agendados_amanha],
         'horizontal' => true
         ])
+
+        @endif
 
 
         @include('dashboards.views.bar_plot', [

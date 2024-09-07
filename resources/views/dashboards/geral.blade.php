@@ -101,7 +101,7 @@
 
 
         {{-- Gráficos de Hoje e Amanhã só são mostrados se o botão de hoje não tiver sido pressionado --}}
-
+        @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )
         <?php  
             $vendedores_hoje = $output['vendedores'];
             $vendedores_amanha = $output['vendedores'];
@@ -127,7 +127,7 @@
         'plots' => [$vendedores_amanha, $agendados_amanha],
         'horizontal' => true
         ])
-
+        @endif
 
         @include('dashboards.views.bar_plot', [
         'name' => 'Reuniões',
