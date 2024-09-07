@@ -82,6 +82,12 @@ $name = strtolower($name);
 if (!isset($horizontal)) {
     $horizontal = false;
 } 
+
+if (!isset($float)) {
+    $float = false;
+} 
+
+
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">

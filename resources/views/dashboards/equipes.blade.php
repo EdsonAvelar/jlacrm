@@ -72,6 +72,7 @@
         'title' => "Agendamentos Médio por Dia",
         'name' => 'Agendamentos Medio',
         'plots' => [$output['equipes'], $output['agendamentos_media']],
+        'horizontal' => true
         ])
 
 
