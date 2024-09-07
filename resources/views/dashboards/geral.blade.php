@@ -142,7 +142,11 @@
             $vendedores_medio = $output['vendedores'];
             $agendados_medio = $output['agendados_medio'];
 
+            $vendedores_reuniao = $output['vendedores'];
+            $reunioes_medio = $output['reunioes_medio'];
+
             array_multisort($agendados_medio,SORT_DESC,$vendedores_medio);
+            array_multisort($reunioes_medio,SORT_DESC,$vendedores_reuniao);
 
             $inicio = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_inicio'));
             $fim = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_fim'));
@@ -155,6 +159,15 @@
         'title' => 'Agendamentos Médio nos últimos '.$dias_uteis.' dias úteis',
         'name' => 'Agendamentos Medio Por dia',
         'plots' => [$vendedores_medio, $agendados_medio],
+        'horizontal' => true,
+        ])
+
+
+
+        @include('dashboards.views.bar_plot', [
+        'title' => 'Reunião Média nos últimos '.$dias_uteis.' dias úteis',
+        'name' => 'Reuniao Medio Por dia',
+        'plots' => [$vendedores_reuniao, $reunioes_medio],
         'horizontal' => true,
         ])
 

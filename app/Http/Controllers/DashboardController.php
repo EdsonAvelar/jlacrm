@@ -78,6 +78,7 @@ class DashboardController extends Controller
         $output['agendados_hoje'] = [];
         $output['agendados_amanha'] = [];
         $output['reunioes'] = [];
+        $output['reunioes_medio'] = [];
         $output['aprovacoes'] = [];
         $output['vendas'] = [];
         $output['propostas'] = [];
@@ -177,6 +178,16 @@ class DashboardController extends Controller
 
             $count = Reuniao::where($query)->whereIn('user_id', $ids)->count();
             array_push($output['reunioes'], $count);
+
+
+            $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
+            $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+
+            $dias_uteis = $inicio->diffInWeekdays($fim);
+
+            $reunioes_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+            array_push($output['reunioes_medio'], $reunioes_medio);
 
 
             // #########
@@ -324,6 +335,9 @@ class DashboardController extends Controller
 
             $count = Reuniao::where($query)->count();
             array_push($output['reunioes'], $count);
+
+
+
 
             // #########
             // Proposta
@@ -478,6 +492,7 @@ class DashboardController extends Controller
                 'oportunidades',
                 'agendamentos',
                 'reunioes',
+                'reunioes_medio',
                 'aprovacoes',
                 'vendas',
                 'propostas',
@@ -602,6 +617,17 @@ class DashboardController extends Controller
                 $count = Reuniao::where($query)->count();
                 array_push($output['reunioes'], $count);
                 $stats['sum_reunioes'] = $stats['sum_reunioes'] + $count;
+
+                $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
+                $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+
+                $dias_uteis = $inicio->diffInWeekdays($fim);
+
+                $reunioes_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+                array_push($output['reunioes_medio'], $reunioes_medio);
+
+
 
 
                 $query = [

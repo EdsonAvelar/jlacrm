@@ -68,12 +68,7 @@
         'plots' => [$output['equipes'], $output['agendamentos']],
         ])
 
-        @include('dashboards.views.bar_plot', [
-        'title' => "Agendamentos Médio por Dia",
-        'name' => 'Agendamentos Medio',
-        'plots' => [$output['equipes'], $output['agendados_medio']],
-        'horizontal' => true
-        ])
+
 
 
         @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )
@@ -102,6 +97,50 @@
         'name' => 'Agendamentos Para Amanha',
         'plots' => [$vendedores_amanha, $agendados_amanha],
         'horizontal' => true
+        ])
+
+        @else
+
+
+        {{-- @include('dashboards.views.bar_plot', [
+        'title' => "Agendamentos Médio por Dia",
+        'name' => 'Agendamentos Medio',
+        'plots' => [$output['equipes'], $output['agendados_medio']],
+        'horizontal' => true
+        ]) --}}
+
+        <?php  
+            
+                $vendedores_medio = $output['equipes'];
+                $agendados_medio = $output['agendados_medio'];
+
+                $vendedores_reuniao = $output['equipes'];
+                $reunioes_medio = $output['reunioes_medio'];
+
+                array_multisort($agendados_medio,SORT_DESC,$vendedores_medio);
+                array_multisort($reunioes_medio,SORT_DESC,$vendedores_reuniao);
+
+                $inicio = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_inicio'));
+                $fim = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_fim'));
+
+                $dias_uteis = $inicio->diffInWeekdays($fim);
+            
+            ?>
+
+        @include('dashboards.views.bar_plot', [
+        'title' => 'Agendamentos Médio nos últimos '.$dias_uteis.' dias úteis',
+        'name' => 'Agendamentos Medio Por dia',
+        'plots' => [$vendedores_medio, $agendados_medio],
+        'horizontal' => true,
+        ])
+
+
+
+        @include('dashboards.views.bar_plot', [
+        'title' => 'Reunião Média nos últimos '.$dias_uteis.' dias úteis',
+        'name' => 'Reuniao Medio Por dia',
+        'plots' => [$vendedores_reuniao, $reunioes_medio],
+        'horizontal' => true,
         ])
 
         @endif
