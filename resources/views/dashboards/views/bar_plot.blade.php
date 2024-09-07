@@ -280,7 +280,7 @@ if (!isset($float)) {
             offsetX: {{ $horizontal ? 10 : 0 }},
             style: {
                 fontSize: '16px',
-                colors: ['#338888']
+                colors: ['#000']
             }
         }
     }
