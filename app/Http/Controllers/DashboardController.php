@@ -121,8 +121,8 @@ class DashboardController extends Controller
             // Agendados para hoje
             // #########
 
-            $hoje = Carbon::now()->format('Y-m-d');
-
+            #$hoje = Carbon::now()->format('Y-m-d');
+            $hoje = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $query = [
                 ['data_agendado', '>=', $hoje],
                 ['data_agendado', '<=', $hoje],
@@ -137,8 +137,8 @@ class DashboardController extends Controller
             // Agendados para Amanhã
             // #########
 
-            $amanha = Carbon::now()->addDay()->format('Y-m-d');
-
+            #$amanha = Carbon::now()->addDay()->format('Y-m-d');
+            $amanha = Carbon::createFromFormat('d/m/Y', $data_inicio)->addDay()->format('Y-m-d');
             $query = [
                 ['data_agendado', '>=', $amanha],
                 ['data_agendado', '<=', $amanha],
@@ -534,8 +534,8 @@ class DashboardController extends Controller
                 // Agendados para hoje
                 // #########
 
-                $hoje = Carbon::now()->format('Y-m-d');
-
+                #$hoje = Carbon::now()->format('Y-m-d');
+                $hoje = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
                 $query = [
                     ['data_agendado', '=', $hoje],
                     ['user_id', '=', $vendedor->id]
@@ -549,7 +549,8 @@ class DashboardController extends Controller
                 // Agendados para Amanhã
                 // #########
 
-                $amanha = Carbon::now()->addDay()->format('Y-m-d');
+                #$amanha = Carbon::now()->addDay()->format('Y-m-d');
+                $amanha = Carbon::createFromFormat('d/m/Y', $data_inicio)->addDay()->format('Y-m-d');
 
                 $query = [
                     ['data_agendado', '=', $amanha],
