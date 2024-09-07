@@ -167,7 +167,7 @@ if (!isset($horizontal)) {
 
             },
             type: 'bar',
-            height: '400px', // Ajusta automaticamente a altura do gráfico com base no contêiner
+            height: '500px', // Ajusta automaticamente a altura do gráfico com base no contêiner
             width: '100%',  // Usa 100% da largura do contêiner
             
             responsive: [
