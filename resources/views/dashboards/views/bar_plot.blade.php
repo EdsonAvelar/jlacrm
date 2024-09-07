@@ -3,6 +3,12 @@
         width: auto;
     }
 
+    .text-muted {
+        color: #106c9a !important;
+        font-size: 21px !important;
+        font-weight: 600;
+    }
+
     /* CSS para tornar os gráficos responsivos */
     #chart_ {
             {
@@ -61,7 +67,14 @@
 </style>
 
 <?php
-$fullname = $name;
+
+if (isset($title)){
+    
+    $fullname = $title ;
+}else {
+   $fullname = $name;
+}
+
 
 $name = str_replace(' ', '_', $name);
 $name = strtolower($name);

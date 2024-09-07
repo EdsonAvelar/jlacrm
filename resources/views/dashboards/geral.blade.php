@@ -101,9 +101,7 @@
 
 
         {{-- Gráficos de Hoje e Amanhã só são mostrados se o botão de hoje não tiver sido pressionado --}}
-        @if ( ((app('request')->input('data_inicio') == \Carbon\Carbon::now()->format('d/m/Y') ) &
-        (app('request')->input('data_fim') == \Carbon\Carbon::now()->format('d/m/Y') ))
-        )
+
         <?php  
             $vendedores_hoje = $output['vendedores'];
             $vendedores_amanha = $output['vendedores'];
@@ -114,18 +112,22 @@
             array_multisort($agendados_amanha,SORT_DESC,$vendedores_amanha);
         
         ?>
+
         @include('dashboards.views.bar_plot', [
+        'title' => array_sum($agendados_hoje).' Agendamentos Para Hoje: '.app('request')->input('data_inicio'),
         'name' => 'Agendamentos Para Hoje',
         'plots' => [$vendedores_hoje, $agendados_hoje],
         'horizontal' => true
         ])
 
         @include('dashboards.views.bar_plot', [
-        'name' => 'Agendamentos Para Amanhã',
+        'title' => array_sum($agendados_amanha).' Agendamentos Para Amanhã: '.\Carbon\Carbon::createFromFormat('d/m/Y',
+        app('request')->input('data_inicio'))->addDay()->format('d/m/Y'),
+        'name' => 'Agendamentos Para Amanha',
         'plots' => [$vendedores_amanha, $agendados_amanha],
         'horizontal' => true
         ])
-        @endif
+
 
         @include('dashboards.views.bar_plot', [
         'name' => 'Reuniões',
