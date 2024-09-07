@@ -73,7 +73,7 @@ class DashboardController extends Controller
 
         $output = [];
         $output['oportunidades'] = [];
-        $output['agendamentos_media'] = [];
+        $output['agendados_medio'] = [];
         $output['agendamentos'] = [];
         $output['agendados_hoje'] = [];
         $output['agendados_amanha'] = [];
@@ -129,7 +129,7 @@ class DashboardController extends Controller
 
             $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
 
-            array_push($output['agendamentos_media'], $media_agendamentos);
+            array_push($output['agendados_medio'], $media_agendamentos);
 
 
 
@@ -486,7 +486,7 @@ class DashboardController extends Controller
                 'agendamentos_realizado',
                 'agendados_hoje',
                 'agendados_amanha',
-                'agendamentos_media'
+                'agendados_medio'
             ];
 
             foreach ($metricas as $metrica) {
@@ -554,7 +554,7 @@ class DashboardController extends Controller
 
                 $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
 
-                array_push($output['agendamentos_media'], $media_agendamentos);
+                array_push($output['agendados_medio'], $media_agendamentos);
 
                 $stats['sum_agendamentos'] = $stats['sum_agendamentos'] + $count;
 

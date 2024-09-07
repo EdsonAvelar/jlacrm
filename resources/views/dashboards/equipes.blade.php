@@ -71,7 +71,7 @@
         @include('dashboards.views.bar_plot', [
         'title' => "Agendamentos Médio por Dia",
         'name' => 'Agendamentos Medio',
-        'plots' => [$output['equipes'], $output['agendamentos_media']],
+        'plots' => [$output['equipes'], $output['agendados_medio']],
         'horizontal' => true
         ])
 

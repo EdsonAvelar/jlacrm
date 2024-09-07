@@ -103,42 +103,21 @@
 
 
 
-        @include('dashboards.views.bar_plot', [
-        'title' => "Agendamentos Médio por Dia",
-        'name' => 'Agendamentos Medio',
-        'plots' => [$output['vendedores'], $output['agendamentos_media']],
-        'horizontal' => true
-        ])
 
-
-        {{-- Gráficos de Hoje e Amanhã só são mostrados se o botão de hoje não tiver sido pressionado --}}
         @if ( app('request')->input('data_inicio') == app('request')->input('data_fim') )
+
         <?php  
-            $vendedores_hoje = $output['vendedores'];
-            $vendedores_amanha = $output['vendedores'];
-            $vendedores_medio = $output['vendedores'];
-            $agendados_hoje = $output['agendados_hoje'];
-            $agendados_amanha = $output['agendados_amanha'];
-            $agendados_medio = $output['agendados_medio'];
+                $vendedores_hoje = $output['vendedores'];
+                $vendedores_amanha = $output['vendedores'];
+                $agendados_hoje = $output['agendados_hoje'];
+                $agendados_amanha = $output['agendados_amanha'];
+      
+                array_multisort($agendados_hoje,SORT_DESC,$vendedores_hoje);
+                array_multisort($agendados_amanha,SORT_DESC,$vendedores_amanha);
+               
+           
+            ?>
 
-            array_multisort($agendados_hoje,SORT_DESC,$vendedores_hoje);
-            array_multisort($agendados_amanha,SORT_DESC,$vendedores_amanha);
-            array_multisort($agendados_medio,SORT_DESC,$vendedores_medio);
-
-            $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
-            $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
-
-            $dias_uteis = $inicio->diffInWeekdays($fim);
-        
-        ?>
-
-        @include('dashboards.views.bar_plot', [
-        'title' => 'Agendamentos Médio nos últimos '.$dias_uteis.' dias úteis',
-        'name' => 'Agendamentos Medio Por dia',
-        'plots' => [$vendedores_medio, $agendados_medio],
-        'horizontal' => true,
-        'float' => true
-        ])
 
         @include('dashboards.views.bar_plot', [
         'title' => array_sum($agendados_hoje).' Agendamentos Para Hoje: '.app('request')->input('data_inicio'),
@@ -154,6 +133,32 @@
         'plots' => [$vendedores_amanha, $agendados_amanha],
         'horizontal' => true
         ])
+
+        @else
+
+        {{-- Gráficos de Hoje e Amanhã só são mostrados se o botão de hoje não tiver sido pressionado --}}
+        <?php  
+
+            $vendedores_medio = $output['vendedores'];
+            $agendados_medio = $output['agendados_medio'];
+
+            array_multisort($agendados_medio,SORT_DESC,$vendedores_medio);
+
+            $inicio = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_inicio'));
+            $fim = \Carbon\Carbon::createFromFormat('d/m/Y', app('request')->input('data_fim'));
+
+            $dias_uteis = $inicio->diffInWeekdays($fim);
+        
+        ?>
+
+        @include('dashboards.views.bar_plot', [
+        'title' => 'Agendamentos Médio nos últimos '.$dias_uteis.' dias úteis',
+        'name' => 'Agendamentos Medio Por dia',
+        'plots' => [$vendedores_medio, $agendados_medio],
+        'horizontal' => true,
+        ])
+
+
         @endif
 
         @include('dashboards.views.bar_plot', [
