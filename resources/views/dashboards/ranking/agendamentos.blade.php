@@ -538,13 +538,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         .nome.segundo {
             background-color: #1c3414f5;
-            top: 552px;
+            top: 459px;
             left: 98px;
         }
 
         .nome.terceiro {
             background-color: #4c0b05f5;
-            top: 569px;
+            top: 475px;
         }
 
 
@@ -570,7 +570,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             }
 
             50% {
-                transform: translateY(-180px) scale(1.15);
+                transform: translateY(-180px) scale(1.2);
             }
         }
 
@@ -578,11 +578,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(0px) scale(1);
+                transform: translateY(50px) scale(1);
             }
 
             50% {
-                transform: translateY(-10px) scale(1.05);
+                transform: translateY(20px) scale(1.1);
             }
         }
 
@@ -590,11 +590,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(0px) scale(1);
+                transform: translateY(100px) scale(1);
             }
 
             50% {
-                transform: translateY(30px) scale(1.05);
+                transform: translateY(80px) scale(1.05);
             }
         }
 
@@ -1005,11 +1005,42 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             /* Opera */
             padding: 10px;
         }
+
+        .fire-circle {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at center, #ffb347 20%, #ffcc33 40%, #ff4500 60%, transparent 80%);
+            border-radius: 50%;
+            position: relative;
+            animation: flicker 1.5s infinite alternate;
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
+        }
+
+        /* Animação para simular as chamas */
+        @keyframes flicker {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
+            }
+
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 30px rgba(255, 69, 0, 0.6), 0 0 60px rgba(255, 140, 0, 0.8), 0 0 100px rgba(255, 69, 0, 1);
+            }
+
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
+            }
+        }
     </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 
 <body>
+
+    <div class="fire-circle"></div>
+
     <audio id="musicPlayer">
         <source src="{{ asset('music/aplausos.mp3') }}" type="audio/mpeg">
     </audio>
