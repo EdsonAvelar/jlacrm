@@ -267,7 +267,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         
                         if (config('data_inicio') & config('data_fim')) {
                             $data_inicio = config('data_inicio');
-                            $data_fim = config('data_fim');
+                            #$data_fim = config('data_fim');
                         }
                         ?>
 
