@@ -46,6 +46,7 @@ Vamos criar um htaccess para ignorar a pasta public
 
 Cuidado ao copiar, as vezes come letras na copia
 
+$cp htaccess .htaccess
 $vi .htaccess$
 
 
@@ -80,7 +81,9 @@ Configuração do Ambiente: Copie o arquivo .env.example para .env e configure a
 
 5. vi .env
 
-APP_SHORT_NAME="jla.com"
+APP_SHORT_NAME="jla"
+APP_URL=
+
 
 DB_DATABASE=jlacrm
 DB_USERNAME=root
@@ -88,6 +91,7 @@ DB_PASSWORD=
 
 
 BROADCAST_DRIVER=pusher
+
 
 PUSHER_APP_ID=1234
 PUSHER_APP_KEY=asdfdf

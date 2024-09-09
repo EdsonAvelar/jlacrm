@@ -956,7 +956,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
            
             document.getElementById('imagem_vendedor').src = data.data.avatar ;
 
-
             if (data.data.equipe_logo){
                 $("#imagem_equipe").show()
                 document.getElementById('imagem_equipe').src = data.data.equipe_logo ;
