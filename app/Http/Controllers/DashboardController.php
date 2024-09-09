@@ -720,6 +720,8 @@ class DashboardController extends Controller
                 'vendedores',
                 'oportunidades',
                 'agendamentos',
+                'agendados_medio',
+                'reunioes_medio',
                 'reunioes',
                 'aprovacoes',
                 'vendas',
@@ -790,6 +792,20 @@ class DashboardController extends Controller
                 array_push($output['agendamentos'], $count);
                 $stats['sum_agendamentos'] = $stats['sum_agendamentos'] + $count;
 
+                // #########
+                // Agendamento Médio por Dia
+                // #########
+
+                $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
+                $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+
+                $dias_uteis = $inicio->diffInWeekdays($fim);
+
+                $agendados_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+                array_push($output['agendados_medio'], $agendados_medio);
+
+
                 $query = [
                     ['data_reuniao', '>=', $from],
                     ['data_reuniao', '<=', $to],
@@ -799,6 +815,16 @@ class DashboardController extends Controller
                 $count = Reuniao::where($query)->count();
                 array_push($output['reunioes'], $count);
                 $stats['sum_reunioes'] = $stats['sum_reunioes'] + $count;
+
+                // #########
+                // Agendamento Médio por Dia
+                // #########
+
+
+                $reunioes_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
+
+                array_push($output['reunioes_medio'], $reunioes_medio);
+
 
                 $query = [
                     ['data_aprovacao', '>=', $from],
