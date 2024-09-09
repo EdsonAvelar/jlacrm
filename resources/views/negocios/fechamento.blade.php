@@ -535,7 +535,7 @@ function to_data($data)
                                             name="cidade">
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="mb-3">
                                         <label for="state" class="form-label">ESTADO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->estado }}"
@@ -543,7 +543,7 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">TEL 1</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
@@ -551,7 +551,7 @@ function to_data($data)
                                     </div>
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">TEL 2 </label>
                                         <input type="text" class="form-control"
@@ -1087,7 +1087,7 @@ function to_data($data)
                                         class="mdi mdi-content-save"></i> Salvar e Notificar
                                     Venda
                                 </button>
-                                
+
 
                                 @endif
                                 <input type="hidden" id="notificar_venda" name="notificar_venda" value="0">
