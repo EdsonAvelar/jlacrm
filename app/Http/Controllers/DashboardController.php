@@ -728,7 +728,9 @@ class DashboardController extends Controller
                 'propostas',
                 'agendamentos_faltou_perc',
                 'agendamentos_faltou',
-                'agendamentos_realizado'
+                'agendamentos_realizado',
+                'agendados_hoje',
+                'agendados_amanha'
             ];
 
             foreach ($metricas as $metrica) {
@@ -791,6 +793,46 @@ class DashboardController extends Controller
 
                 array_push($output['agendamentos'], $count);
                 $stats['sum_agendamentos'] = $stats['sum_agendamentos'] + $count;
+
+                // #########
+                // Agendados para hoje
+                // #########
+
+                #$hoje = Carbon::now()->format('Y-m-d');
+                $hoje = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+                $query = [
+                    ['data_agendado', '=', $hoje],
+                    ['user_id', '=', $vendedor->id]
+                ];
+
+                $count = Agendamento::where($query)->count();
+                array_push($output['agendados_hoje'], $count);
+
+
+                // #########
+                // Agendados para Amanhã
+                // #########
+
+                #$amanha = Carbon::now()->addDay()->format('Y-m-d');
+                $amanha = Carbon::createFromFormat('d/m/Y', $data_inicio)->addDay()->format('Y-m-d');
+
+                $query = [
+                    ['data_agendado', '=', $amanha],
+                    ['user_id', '=', $vendedor->id]
+                ];
+
+                $count = Agendamento::where($query)->count();
+                array_push($output['agendados_amanha'], $count);
+
+
+
+                $query = [
+                    ['data_reuniao', '>=', $from],
+                    ['data_reuniao', '<=', $to],
+                    ['user_id', '=', $vendedor->id]
+                ];
+
+
 
                 // #########
                 // Agendamento Médio por Dia
