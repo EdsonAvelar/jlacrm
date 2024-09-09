@@ -1005,41 +1005,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             /* Opera */
             padding: 10px;
         }
-
-        .fire-circle {
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle at center, #ffb347 20%, #ffcc33 40%, #ff4500 60%, transparent 80%);
-            border-radius: 50%;
-            position: relative;
-            animation: flicker 1.5s infinite alternate;
-            box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
-        }
-
-        /* Animação para simular as chamas */
-        @keyframes flicker {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
-            }
-
-            50% {
-                transform: scale(1.05);
-                box-shadow: 0 0 30px rgba(255, 69, 0, 0.6), 0 0 60px rgba(255, 140, 0, 0.8), 0 0 100px rgba(255, 69, 0, 1);
-            }
-
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 20px rgba(255, 69, 0, 0.5), 0 0 40px rgba(255, 140, 0, 0.7), 0 0 80px rgba(255, 69, 0, 0.9);
-            }
-        }
     </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
 
 <body>
 
-    <div class="fire-circle"></div>
 
     <audio id="musicPlayer">
         <source src="{{ asset('music/aplausos.mp3') }}" type="audio/mpeg">
