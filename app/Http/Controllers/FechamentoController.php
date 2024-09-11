@@ -294,7 +294,7 @@ class FechamentoController extends Controller
             $data = [
                 'vendedor' => $vendedor->name,
                 'id' => $vendedor->id,
-                'avatar' => $vendedor->avatar,
+                'avatar' => asset($vendedor->avatar),
                 'cliente' => $negocio->lead->nome,
                 'credito' => $negocio->valor,
                 'empresa' => url('') . "/images/empresa/logos/empresa_logo_circular.png"

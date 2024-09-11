@@ -1630,8 +1630,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             document.getElementById('nome_cliente').innerText = "Cliente: "+data.data.cliente;
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
-           
-            document.getElementById('imagem_vendedor').src = data.data.avatar ;
+            
+            document.getElementById('imagem_vendedor').src = data.data.avatar;
 
 
             if (data.data.equipe_logo){
