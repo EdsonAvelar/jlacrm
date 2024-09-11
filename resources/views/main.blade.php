@@ -302,8 +302,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
                                 </li>
 
-
-
                                 <ul class="side-nav-second-level">
                                     <li class="side-nav-item">
                                         <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
