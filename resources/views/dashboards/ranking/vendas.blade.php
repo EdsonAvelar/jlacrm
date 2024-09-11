@@ -121,6 +121,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         .container2 {
             width: 1800px;
+            height: 100%;
             display: flex;
             justify-content: space-between;
             padding: 20px;
@@ -1010,7 +1011,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background-color: #1f5d23;
         }
 
-        input[type=checkbox] {
+        .toggle-event {
             /* Double-sized Checkboxes */
             -ms-transform: scale(1.3);
             /* IE */
@@ -1022,6 +1023,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             /* Opera */
             padding: 10px;
         }
+
+
+        /* RESPONSIVIDADE */
     </style>
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
 </head>
@@ -1063,6 +1067,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
             <button class="settings-ranking"><i class="fas fa-trophy"></i></button>
             <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
+            <button class="fullscreen-toggle"><i class="fas fa-expand"></i></button>
             <button class="settings"><i class="fas fa-cog"></i></button>
         </div>
     </div>
@@ -1074,11 +1079,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="ranking-info">
                     <i class="fas fa-arrow-left"></i>
                     <span>Rankings</span>
-
                 </div>
-                <div class="ranking-totals">
+                <h1>Rankin: {{config('ranking_mostrar_vendas')}}</h1>
+                <div class="ranking-totals" id="header-total"
+                    style="display: {{ config('ranking_mostrar_vendas') == 'true'? 'flex' : 'none' }}">
 
-                    <span style="color:gray">Total em Vendas: </span> <span class="total-time">R$268.979,00</span>
+                    <span style="color:gray">Total em Vendas: </span> <span class="total-time">R$ 0</span>
                     {{-- <span style="color:gray">Total do top 3: </span> <span class="total-top3">R$106.508,00</span>
                     --}}
                 </div>
@@ -1092,8 +1098,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
                     </div>
-
-
                     <div class="position-wrapper2">
                         <div class="collaborator-photo" id="collaborator-photo-2"
                             style="background-image: url('https://via.placeholder.com/80');"></div>
@@ -1253,13 +1257,29 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             <span class="mdi mdi-information"></span>
                         </label> </span>
 
-                    <input class="toggle-event" type="checkbox" <?php $monstrar=config("ranking_mostrar_equipe"); if
-                        ($monstrar!=null & $monstrar=='true' ){ echo 'checked' ;} ?>
+                    <input class="toggle-event" type="checkbox" <?php $exibir=config("ranking_mostrar_equipe"); if
+                        ($exibir!=null & $exibir=='true' ){ echo 'checked' ;} ?>
                     data-config_info="ranking_mostrar_equipe" data-toggle="toggle"
                     data-on="com equipe" data-off="sem equipe"
                     data-onstyle="success"
                     data-offstyle="danger">
                 </div>
+
+                <div class="mb-6">
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                        <label for="inputEmail3" class="col-form-label">Mostrar Vendas
+                            <span class="mdi mdi-information"></span>
+                        </label> </span>
+
+                    <input class="toggle-event" type="checkbox" <?php $exibir_vendas=config("ranking_mostrar_vendas");
+                        if ($exibir_vendas!=null & $exibir_vendas=='true' ){ echo 'checked' ;} ?>
+                    data-config_info="ranking_mostrar_vendas" data-toggle="toggle"
+                    data-on="Com Vendas Totais" data-off="Sem Venda Totais"
+                    data-onstyle="success"
+                    data-offstyle="danger">
+                </div>
+
+
 
 
             </div>
@@ -1270,8 +1290,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}"
-                            alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}" alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
@@ -1543,15 +1562,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         $(document).ready(function() {
 
             let has_equipe = "{{config('ranking_mostrar_equipe')}}";
-            if (has_equipe == "false"){
-               
-        
+            if (has_equipe == "false"){        
                 mostra_equipe=false;
-
             }else {
                 mostra_equipe=true;
             }
-
 
             atualizarColaboradores();
         });
@@ -1765,28 +1780,39 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         });
 
  
-
-
         $('.toggle-event').change(function($this) {
         
             var config_info = $(this).data('config_info');
             var config_value = $(this).prop('checked');
 
-            console.log( config_info, config_value )
+       
             if (config_info == "ranking_mostrar_equipe"){
           
                 mostra_equipe = config_value
 
                 atualizarColaboradores();
             }
+
+            if(config_info == "ranking_mostrar_vendas"){
+
+                if ($('#header-total').css('display') == 'none'){
+                    $('#header-total').css('display','flex')
+                }else{
+                    $('#header-total').css('display','none')
+                }
+            
+            }
             
             save_config(config_info, config_value);
         
         });
 
+
+
         var ids_toggle = [
 
             'racing_vendas_max',
+      
         ];
         
         ids_toggle.forEach(function(id) {
@@ -1800,6 +1826,97 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 });
             }
         });
+
+  
+
+
+        function ajustarContainer() {
+            const container = document.querySelector('.container2');
+            let scaleFactor = Math.min(
+                document.documentElement.clientWidth / 1800, // Largura original da div container2
+                document.documentElement.clientHeight / 1000 // Altura original da div container2
+            );
+
+            console.log()
+            if (scaleFactor > 1){
+                scaleFactor = scaleFactor - scaleFactor*0.1;
+            }
+            container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
+            container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo
+            // container.style.width = '1800px'; // Mantém a largura original
+            // container.style.height = '1000px'; // Mantém a altura original
+
+             var height__ = parseInt(document.documentElement.clientHeight) - 210;
+           
+
+            // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            // if (isMobile) {
+            //     $('.board').css({
+            //         "max-height": height__ + 100
+            //     })
+            // } else {
+            //     $('.board').css({
+            //         "max-height": height__
+            //     })
+            // }
+            // set_columns_height();
+        }
+
+        let fullscreen = false;
+        window.addEventListener('resize', ajustarContainer);
+        window.addEventListener('load', ajustarContainer);
+
+        document.querySelector('.fullscreen-toggle').addEventListener('click', function () {
+
+
+            fullscreen = true;
+            $(".menu-bar").css('display','none');
+            $('.ranking-header').css('display','none');
+            $('.header-panel').css('display','none');
+            $('.footer-panel').css('display','none');
+            $('.container2').css('padding','0px');
+            ajustarContainer()
+
+        // if (!document.fullscreenElement) {
+        //     document.documentElement.requestFullscreen();
+        //         ajustarContainer()
+        // } else {
+        //     if (document.exitFullscreen) {
+        //         document.exitFullscreen();
+        //         ajustarContainer()
+        //     }
+        // }
+    });
+
+    const container = document.querySelector('.container2');
+    
+    // Adiciona um ouvinte de evento de clique ao documento
+    document.addEventListener('click', function(event) {
+    // Verifica se o clique ocorreu fora do container2
+        if (container.contains(event.target) ) {
+
+            if ( fullscreen == true){
+            
+            $(".menu-bar").css('display','flex');
+            $('.ranking-header').css('display','flex');
+            $('.header-panel').css('display','flex');
+            $('.footer-panel').css('display','flex');
+            $('.container2').css('padding','20px');
+            ajustarContainer()
+            
+            }
+
+            fullscreen = false;
+
+
+           
+
+            
+
+        }
+    });
+
+
     </script>
 </body>
 

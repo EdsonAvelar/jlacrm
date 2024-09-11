@@ -229,7 +229,7 @@ $protocolo_hora = 0;
                                         <div class="notify-icon bg-danger">
                                             <!--i class="dripicons-thumbs-up noti-icon"></i-->
                                         </div>
-                                        <p class="notify-details">Negócios Peridos
+                                        <p class="notify-details">Negócios Perdidos
                                         </p>
                                     </a>
 
