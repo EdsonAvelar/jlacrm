@@ -83,7 +83,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .menu-bar .logo img {
-            width: 40px;
+            width: 200px;
             margin-right: 10px;
         }
 
@@ -1056,7 +1056,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <a href="{{url('')}}/crm"> <img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
+            <a href="{{url('')}}/crm"> <img style="width:150px"
+                    src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
             <div class="title">Ranking de vendas</div>
         </div>
@@ -1837,29 +1838,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 document.documentElement.clientHeight / 1000 // Altura original da div container2
             );
 
-            console.log()
+           
             if (scaleFactor > 1){
                 scaleFactor = scaleFactor - scaleFactor*0.1;
             }
             container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
             container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo
-            // container.style.width = '1800px'; // Mantém a largura original
-            // container.style.height = '1000px'; // Mantém a altura original
+
 
              var height__ = parseInt(document.documentElement.clientHeight) - 210;
            
 
-            // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            // if (isMobile) {
-            //     $('.board').css({
-            //         "max-height": height__ + 100
-            //     })
-            // } else {
-            //     $('.board').css({
-            //         "max-height": height__
-            //     })
-            // }
-            // set_columns_height();
         }
 
         let fullscreen = false;
@@ -1877,15 +1866,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             $('.container2').css('padding','0px');
             ajustarContainer()
 
-        // if (!document.fullscreenElement) {
-        //     document.documentElement.requestFullscreen();
-        //         ajustarContainer()
-        // } else {
-        //     if (document.exitFullscreen) {
-        //         document.exitFullscreen();
-        //         ajustarContainer()
-        //     }
-        // }
     });
 
     const container = document.querySelector('.container2');
@@ -1907,11 +1887,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             }
 
             fullscreen = false;
-
-
-           
-
-            
 
         }
     });

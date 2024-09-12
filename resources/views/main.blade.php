@@ -29,9 +29,7 @@ $user = Auth::user();
     <!-- third party css end -->
 
     <!-- App css -->
-    <link href="{{ url('') }}/css/icons.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ url('') }}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
-    <link href="{{ url('') }}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+
     <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
         rel="stylesheet">
 
@@ -45,6 +43,9 @@ $user = Auth::user();
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <link href="{{ url('') }}/css/icons.min.css" rel="stylesheet" type="text/css">
+    <link href="{{ url('') }}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
+    <link href="{{ url('') }}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
     @yield('headers')
 
 
@@ -188,7 +189,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 <body class="loading" <?php echo $style; ?>
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
     "leftSidebarCondensed":false,"leftSidebarScrollable":false,"darkMode":false,
-    "showRightSidebarOnStart": true}'>
+    "showRightSidebarOnStart": true}' data-leftbar-compact-mode="scrollable">
 
 
 
@@ -217,7 +218,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
     <div class="wrapper">
         <!-- ========== Left Sidebar Start ========== -->
-        <div class="leftside-menu">
+        <div class="leftside-menu ">
             <a class="button-menu-mobile open-left">
                 <i class="mdi mdi-menu"></i>
             </a>
@@ -228,7 +229,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         height="32">
                 </span>
                 <span class="logo-sm">
-                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_transparente.png" alt="" height="32">
+                    <img src="{{ url('') }}/images/empresa/logos/empresa_logo_circular.png" alt="" height="32">
                 </span>
             </a>
 
@@ -292,8 +293,25 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
                                 <li>
                                     <a
-                                        href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanas</a>
+                                        href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanal</a>
                                 </li>
+
+                                @endif
+                            </ul>
+                        </div>
+                    </li>
+
+                    @if ($user->hasAnyRole(['admin']))
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#ranking" aria-expanded="false" aria-controls="crm"
+                            class="side-nav-link">
+                            <i class="uil-store"></i>
+                            <span> Rankings </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="ranking">
+                            <ul class="side-nav-second-level">
+
                                 <li>
                                     <a href="{{ route('dashboard_bar_race_vendas') }}">Corrida de Vendas</a>
                                 </li>
@@ -302,33 +320,19 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('dashboard_bar_race_agendamentos') }}">Corrida de Agendamentos</a>
                                 </li>
 
-                                <ul class="side-nav-second-level">
-                                    <li class="side-nav-item">
-                                        <a data-bs-toggle="collapse" href="#sidebarSecondLevel" aria-expanded="false"
-                                            aria-controls="sidebarSecondLevel">
-                                            <span> Ranking </span>
-                                            <span class="menu-arrow"></span>
-                                        </a>
-                                        <div class="collapse" id="sidebarSecondLevel">
-                                            <ul class="side-nav-third-level">
-                                                <li>
-                                                    <a href="{{ route('ranking.vendas') }}">Vendas</a>
-                                                </li>
-                                                <li>
-                                                    <a href="{{ route('ranking.agendamentos') }}">Agendamentos</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
+                                <li>
+                                    <a href="{{ route('ranking.vendas') }}">Ranking de Vendas</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('ranking.agendamentos') }}">Ranking de Agendamentos</a>
+                                </li>
 
-                                </ul>
-
-
-
-                                @endif
                             </ul>
                         </div>
                     </li>
+
+
+                    @endif
 
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#crm" aria-expanded="false" aria-controls="crm"
@@ -380,6 +384,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     </li>
 
                     @if ($user->hasAnyRole(['admin']))
+
+
+
 
 
                     <li class="side-nav-item">
@@ -673,6 +680,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script>
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
+
+
+
     <!-- third party js ends -->
 
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
@@ -907,22 +917,22 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
 
-    $('.logo_consensed').on('click', function() { 
+    // $('.logo_consensed').on('click', function() { 
 
 
 
-        if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
+    //     if ($("body").attr("data-leftbar-compact-mode") == "condensed") {
 
-            $("body").attr("data-leftbar-compact-mode", "not_condensed");
-            save_config("menu_condensed_"+"{{$user->id}}", 'not_condensed', true)
-        } else {
-            $("body").attr("data-leftbar-compact-mode", "condensed");
-            save_config("menu_condensed_"+"{{$user->id}}", "condensed", true)
-        }
+    //         $("body").attr("data-leftbar-compact-mode", "not_condensed");
+    //         save_config("menu_condensed_"+"{{$user->id}}", 'not_condensed', true)
+    //     } else {
+    //         $("body").attr("data-leftbar-compact-mode", "condensed");
+    //         save_config("menu_condensed_"+"{{$user->id}}", "condensed", true)
+    //     }
 
         
 
-    });
+    // });
 
 </script>
 

@@ -78,7 +78,7 @@
                         class="text-muted font-14">
                         <img src="{{ asset($user->avatar) }}?{{ \Carbon\Carbon::now()->timestamp }}" alt="user-img"
                             class="rounded-circle avatar-lg img-thumbnail">
-                    
+
                     </a>
 
 
@@ -228,7 +228,7 @@
 
                                         </div>
                                     </div>
-                                    @if (\Auth::user()->hasRole('admin'))
+                                    @if (\Auth::user()->hasRole('admin') & app('request')->id != 1 )
                                     <div class="col-md-6">
 
                                         <label for="task-title" class="form-label">Permissões

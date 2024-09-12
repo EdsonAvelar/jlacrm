@@ -520,31 +520,31 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .nome {
-            background-color: #36befaf5;
+            background-color: #c00000f5;
             width: 200px;
             left: 70px;
-            top: 420px;
+            top: 217px;
             padding: 10px;
             font-family: sans-serif;
             font-weight: bold;
-            font-size: large;
+            font-size: 20px;
             border-radius: 20px;
             position: absolute;
         }
 
         .nome.primeiro {
-            left: 82px;
+            left: 83px;
         }
 
         .nome.segundo {
             background-color: #1c3414f5;
-            top: 459px;
-            left: 98px;
+            top: 411px;
+            left: 116px;
         }
 
         .nome.terceiro {
             background-color: #4c0b05f5;
-            top: 475px;
+            top: 456px;
         }
 
 
@@ -1037,7 +1037,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <a href="{{url('')}}/crm"> <img style="width:200px"
+            <a href="{{url('')}}/crm"> <img style="width:150px"
                     src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
             <div class="title">Ranking de Agendamentos</div>
@@ -1049,6 +1049,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
             <button class="settings-ranking"><i class="fas fa-trophy"></i></button>
             <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
+            <button class="fullscreen-toggle"><i class="fas fa-expand"></i></button>
             <button class="settings"><i class="fas fa-cog"></i></button>
         </div>
     </div>
@@ -1662,6 +1663,71 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             save_config(config_info, config_value);
         
         });
+
+
+      function ajustarContainer() {
+            const container = document.querySelector('.container2');
+            let scaleFactor = Math.min(
+                document.documentElement.clientWidth / 1800, // Largura original da div container2
+                document.documentElement.clientHeight / 1000 // Altura original da div container2
+            );
+
+        
+            if (scaleFactor > 1){
+                scaleFactor = scaleFactor - scaleFactor*0.1;
+            }
+            container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
+            container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo
+            // container.style.width = '1800px'; // Mantém a largura original
+            // container.style.height = '1000px'; // Mantém a altura original
+
+             var height__ = parseInt(document.documentElement.clientHeight) - 210;
+           
+
+          
+        }
+
+        let fullscreen = false;
+        window.addEventListener('resize', ajustarContainer);
+        window.addEventListener('load', ajustarContainer);
+
+        document.querySelector('.fullscreen-toggle').addEventListener('click', function () {
+
+
+            fullscreen = true;
+            $(".menu-bar").css('display','none');
+            $('.ranking-header').css('display','none');
+            $('.header-panel').css('display','none');
+            $('.footer-panel').css('display','none');
+            $('.container2').css('padding','0px');
+            ajustarContainer()
+
+      
+    });
+
+    const container = document.querySelector('.container2');
+    
+    // Adiciona um ouvinte de evento de clique ao documento
+    document.addEventListener('click', function(event) {
+    // Verifica se o clique ocorreu fora do container2
+        if (container.contains(event.target) ) {
+
+            if ( fullscreen == true){
+            
+            $(".menu-bar").css('display','flex');
+            $('.ranking-header').css('display','flex');
+            $('.header-panel').css('display','flex');
+            $('.footer-panel').css('display','flex');
+            $('.container2').css('padding','20px');
+            ajustarContainer()
+            
+            }
+
+            fullscreen = false;
+
+        }
+    });
+
     </script>
 </body>
 
