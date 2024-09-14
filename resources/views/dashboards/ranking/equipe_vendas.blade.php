@@ -585,8 +585,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .collaborator-photo {
-            width: 130px;
-            height: 130px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
@@ -642,11 +642,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-442px) scale(1.05);
+                transform: translateY(-395px) scale(1.05);
             }
 
             50% {
-                transform: translateY(-440px) scale(1.10);
+                transform: translateY(-390px) scale(1.10);
             }
         }
 
@@ -666,11 +666,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-285px) scale(1);
+                transform: translateY(-250px) scale(1);
             }
 
             50% {
-                transform: translateY(-290px) scale(1.05);
+                transform: translateY(-255px) scale(1.05);
             }
         }
 
