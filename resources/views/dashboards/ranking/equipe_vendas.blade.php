@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 
 
 $colaboradores = [
-  
+
 ];
 
-$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$page = isset($_GET['page']) ? (int) $_GET['page'] : 1;
 $perPage = 6;
 $total = count($colaboradores);
 $pages = ceil($total / $perPage);
@@ -40,7 +40,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #1f2045;
+            background-color: #193625f5;
             /* color: white; */
             margin: 0;
             padding: 0;
@@ -49,6 +49,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             align-items: center;
             flex-direction: column;
         }
+
+
 
         .missing-value {
             color: white;
@@ -71,10 +73,10 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #181942;
+            background-color: #071809;
             padding: 10px 20px;
             border-radius: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .menu-bar .logo {
@@ -83,7 +85,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .menu-bar .logo img {
-            width: 200px;
+            width: 90px;
+            height: 27px;
             margin-right: 10px;
         }
 
@@ -125,7 +128,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             justify-content: space-between;
             padding: 20px;
-            background-color: #1c1d40;
+            background-color: #1c402c;
             border-radius: 10px;
             flex-direction: row;
         }
@@ -143,16 +146,52 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             background: #21224f;
             border-radius: 10px;
             padding: 20px;
-            background: url("{{ url('/images/ranking/tema01/background_ranking.png') }}");
+            background: url("{{ url('/images/ranking/tema03/background_ranking.png') }}");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 1000px;
+            height: 1100px;
         }
 
         .item {
             position: relative;
             text-align: center;
+        }
+
+        .time1 {
+            background-image: url('https://via.placeholder.com/80');
+            height: 62px;
+            width: 70px;
+            position: relative;
+            left: 127px;
+            top: -515px;
+            border-radius: 100%;
+            background-size: cover;
+
+        }
+
+        .time2 {
+            background-image: url('https://via.placeholder.com/80');
+            height: 62px;
+            width: 70px;
+            position: relative;
+            left: 163px;
+            top: -365px;
+            border-radius: 100%;
+            transform: rotateY(35deg);
+            background-size: cover;
+        }
+
+        .time3 {
+            background-image: url('https://via.placeholder.com/80');
+            height: 62px;
+            width: 70px;
+            position: relative;
+            left: 103px;
+            top: -361px;
+            border-radius: 100%;
+            transform: rotateY(324deg);
+            background-size: cover;
         }
 
         .award {
@@ -201,6 +240,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .ranking-board .item img {
+            position: relative;
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -230,28 +270,28 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             gap: 20px;
             font-weight: bold;
-            color: greenyellow;
+            color: white;
             font-size: large;
             padding: 10px;
             border-radius: 10px;
-            background: #2e2e72;
+            background: #40722e;
         }
 
 
 
         .info-panel {
             flex: 1;
-            background-color: #21224f;
+            background-color: #334f21;
             border-radius: 10px;
             padding: 20px;
-            /* margin-top: 20px; */
+            /* margin-top: 94px; */
 
             /* Define o limite de altura */
 
         }
 
         .body-panel {
-            max-height: 800px;
+            max-height: 850px;
             overflow-y: auto;
             /* Adiciona o scroll vertical */
             overflow-x: hidden;
@@ -312,7 +352,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .logo-empresa>img {
             display: flex;
             align-items: center;
-            background-color: #2f2f6b;
+            background-color: #2f6b36;
             padding: 10px 20px;
             border-radius: 10px;
             margin-bottom: 10px;
@@ -335,7 +375,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #2f2f6b;
+            background-color: #2f6b2f;
             padding: 10px 20px;
             border-radius: 10px;
             margin-bottom: 10px;
@@ -346,7 +386,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             font-size: 1.5em;
             font-weight: bold;
             color: white;
-            background-color: #3f4195;
+            background-color: #4e953f;
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -483,7 +523,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         .position-wrapper1 {
             width: 320px;
             height: 320px;
-            background-image: url("{{ url('images/ranking/tema01/primeiro_lugar.png')}}");
+            /* background-image: url("{{ url('images/ranking/tema03/primeiro_lugar.png')}}"); */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -492,14 +532,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             position: relative;
             margin: 0 auto;
             transform: translate(20px, -160px);
-            left: 20px;
+            left: 4px;
             animation: subtleMovement1 6s infinite ease-in-out
         }
 
         .position-wrapper2 {
             width: 320px;
             height: 320px;
-            background-image: url("{{ url('images/ranking/tema01/segundo_lugar.png')}}");
+            /* background-image: url("{{ url('images/ranking/tema03/segundo_lugar.png')}}"); */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -512,10 +552,26 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             animation: subtleMovement2 5s infinite ease-in-out
         }
 
+        .position-wrapper-time-2 {
+            width: 120px;
+            height: 120px;
+            display: flex;
+            background-color: #12c2e9
+            /* background-image: url("{{ url('images/ranking/tema03/segundo_lugar.png')}}"); */
+            /* background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin: 0 auto;
+            left: 50px; */
+        }
+
         .position-wrapper3 {
             width: 320px;
             height: 320px;
-            background-image: url("{{ url('images/ranking/tema01/terceiro_lugar.png')}}");
+            /* background-image: url("{{ url('images/ranking/tema03/terceiro_lugar.png')}}"); */
             background-size: cover;
             background-position: center;
             display: flex;
@@ -524,7 +580,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             position: relative;
             margin: 0 auto;
             transform: translate(0, 0);
-            animation: subtleMovement3 5s infinite ease-in-out
+            animation: subtleMovement3 5s infinite ease-in-out;
+            left: -48px;
         }
 
         .collaborator-photo {
@@ -533,21 +590,22 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             border-radius: 50%;
             background-size: cover;
             background-position: center;
-            border: 3px solid #ffffff;
+            /* border: 3px solid #ffffff; */
 
         }
 
         .nome {
-            background-color: #36befaf5;
+            background-color: #252728f5;
             width: 200px;
             left: 70px;
-            top: 420px;
+            top: 171px;
             padding: 10px;
             font-family: sans-serif;
             font-weight: bold;
             font-size: large;
             border-radius: 20px;
             position: absolute;
+
         }
 
         .nome.primeiro {
@@ -556,13 +614,13 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         .nome.segundo {
             background-color: #1c3414f5;
-            top: 552px;
+            top: 316px;
             left: 98px;
         }
 
         .nome.terceiro {
             background-color: #4c0b05f5;
-            top: 569px;
+            top: 316px;
         }
 
 
@@ -584,11 +642,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-200px) scale(1.05);
+                transform: translateY(-442px) scale(1.05);
             }
 
             50% {
-                transform: translateY(-180px) scale(1.15);
+                transform: translateY(-440px) scale(1.10);
             }
         }
 
@@ -596,11 +654,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(0px) scale(1);
+                transform: translateY(-290px) scale(1);
             }
 
             50% {
-                transform: translateY(-10px) scale(1.05);
+                transform: translateY(-290px) scale(1.05);
             }
         }
 
@@ -608,11 +666,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(0px) scale(1);
+                transform: translateY(-285px) scale(1);
             }
 
             50% {
-                transform: translateY(30px) scale(1.05);
+                transform: translateY(-290px) scale(1.05);
             }
         }
 
@@ -649,7 +707,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             text-align: center;
             padding: 20px;
             color: #d51414;
-            background-color: #2f2f6b;
+            background-color: #214e4f;
             font-family: sans-serif;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
         }
@@ -1056,14 +1114,15 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="menu-bar">
         <div class="logo">
-            <a href="{{url('')}}/crm"> <img style="width:150px"
-                    src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
+            <a href="{{url('')}}/crm"> <img src="{{url('')}}/images/empresa/logos/empresa_logo_horizontal.png" />
             </a>
-            <div class="title">Ranking de vendas</div>
+            <div class="title">Ranking de vendas - Por Equipes</div>
         </div>
         <div class="actions">
 
 
+            {{-- <button class="support">Suporte</button>
+            <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
             <button class="settings-vendas"><i class="fas fa-trophy"></i></button>
             <button class="settings-agendamentos"><i class="fas fa-medal"></i></button>
             <button class="settings-times"><i class="fas fa-futbol"></i></button>
@@ -1075,13 +1134,23 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <div class="container2">
         <!-- Ranking Board Section -->
+
+
+
         <div class="ranking">
+
+
             <div class="ranking-header">
-                <div class="ranking-info">
+                {{-- <div class="ranking-info">
                     <i class="fas fa-arrow-left"></i>
                     <span>Rankings</span>
-                </div>
-                <h1>Rankin: {{config('ranking_mostrar_vendas')}}</h1>
+                </div> --}}
+                {{--
+                <div class="ranking-totals">
+                    <h1>RANKING DE VENDA - EQUIPES</h1>
+
+                </div> --}}
+
                 <div class="ranking-totals" id="header-total"
                     style="display: {{ config('ranking_mostrar_vendas') == 'true'? 'flex' : 'none' }}">
 
@@ -1091,10 +1160,12 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
             </div>
             <div class="ranking-board">
+
+
                 <div class="item">
 
-                    <div class="award segundo" id="premiacao_2" <?php if (config('ranking_visivel_premiacao_2')=="false"
-                        ){ echo 'style="display:none"' ; } ?>>
+                    <div class="award segundo" id="premiacao_2" <?php if (
+                        config('ranking_visivel_premiacao_2')=="false" ) { echo 'style="display:none"' ; } ?>>
                         <img src="{{asset('images/ranking/user/premiacao_2.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
                             alt="Premiação">
                         <div id="txt_ranking_premiacao_2">{{ strtoupper( config('ranking_premiacao_2')) }} </div>
@@ -1104,14 +1175,21 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             style="background-image: url('https://via.placeholder.com/80');"></div>
                     </div>
 
+
                     <div class="nome segundo">
                         <div id="nome2"></div>
                         <div id="valor2"></div>
                     </div>
+
+                    <div class="time2" id="time-photo-2">
+                    </div>
+
                 </div>
+
+
                 <div class="item">
                     <div class="award primeiro" id="premiacao_1" <?php if
-                        (config('ranking_visivel_premiacao_1')=="false" ){ echo 'style="display:none"' ; } ?>>
+                        (config('ranking_visivel_premiacao_1')=="false" ) { echo 'style="display:none"' ; } ?>>
                         <img src="{{asset('images/ranking/user/premiacao_1.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
                             alt="Premiação">
                         <div id="txt_ranking_premiacao_1">{{ strtoupper( config('ranking_premiacao_1')) }}</div>
@@ -1125,11 +1203,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <div id="valor1"></div>
                     </div>
 
+                    <div class="time1" id="time-photo-1">
+                    </div>
+
                 </div>
+
                 <div class="item">
                     <div class="award terceiro" id="premiacao_3" <?php if
-                        (config('ranking_visivel_premiacao_3')=="false" ){ echo 'style="display:none"' ; } ?>
-                        >
+                        (config('ranking_visivel_premiacao_3')=="false" ) { echo 'style="display:none"' ; } ?>>
                         <img src="{{asset('images/ranking/user/premiacao_3.png')}}?{{ \Carbon\Carbon::now()->timestamp }}"
                             alt="Premiação">
                         <div id="txt_ranking_premiacao_3">{{ strtoupper( config('ranking_premiacao_3')) }}</div>
@@ -1143,31 +1224,19 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <div id="nome3"></div>
                         <div id="valor3"></div>
                     </div>
+
+                    <div class="time3" id="time-photo-3">
+                    </div>
                 </div>
+
+
+
             </div>
         </div>
 
         <!-- Info Panel Section -->
         <div class="info-panel">
-            <div class="header-panel">
-                <select name="update-interval" id="update-interval">
-                    <option value="5000">5s</option>
-                    <option value="15000">15s</option>
-                    <option value="30000">30s</option>
-                    <option value="60000">1m</option>
-                    <option value="180000">3m</option>
-                    <option value="300000">5m</option>
-                </select>
-                <div class="pagination-controls">
-                    <i class="fas fa-arrow-left"></i>
-                    <i class="fas fa-play"></i>
-                    <i class="fas fa-arrow-right"></i>
-                    <span>
-                        <?= $page ?> /
-                        <?= $pages ?>
-                    </span>
-                </div>
-            </div>
+
             <div class="logo-empresa">
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
@@ -1251,7 +1320,6 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <h4>Informações Gerais</h4>
                 <p>Configurações principais sobre o time.</p>
 
-
                 <div class="mb-6">
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                         <label for="inputEmail3" class="col-form-label">Mostrar Equipes
@@ -1259,11 +1327,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         </label> </span>
 
                     <input class="toggle-event" type="checkbox" <?php $exibir=config("ranking_mostrar_equipe"); if
-                        ($exibir!=null & $exibir=='true' ){ echo 'checked' ;} ?>
-                    data-config_info="ranking_mostrar_equipe" data-toggle="toggle"
-                    data-on="com equipe" data-off="sem equipe"
-                    data-onstyle="success"
-                    data-offstyle="danger">
+                        ($exibir !=null & $exibir=='true' ) { echo 'checked' ; } ?>
+                    data-config_info="ranking_mostrar_equipe" data-toggle="toggle" data-on="com equipe"
+                    data-off="sem equipe" data-onstyle="success" data-offstyle="danger">
                 </div>
 
                 <div class="mb-6">
@@ -1273,11 +1339,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         </label> </span>
 
                     <input class="toggle-event" type="checkbox" <?php $exibir_vendas=config("ranking_mostrar_vendas");
-                        if ($exibir_vendas!=null & $exibir_vendas=='true' ){ echo 'checked' ;} ?>
-                    data-config_info="ranking_mostrar_vendas" data-toggle="toggle"
-                    data-on="Com Vendas Totais" data-off="Sem Venda Totais"
-                    data-onstyle="success"
-                    data-offstyle="danger">
+                        if ($exibir_vendas !=null & $exibir_vendas=='true' ) { echo 'checked' ; } ?>
+                    data-config_info="ranking_mostrar_vendas" data-toggle="toggle" data-on="Com Vendas Totais"
+                    data-off="Sem Venda Totais" data-onstyle="success" data-offstyle="danger">
                 </div>
 
 
@@ -1291,7 +1355,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
 
-                        <img src="{{asset('images/ranking/tema01/icon-primeiro.png')}}" alt="Gold Trophy">
+                        <img src="{{asset('images/ranking/tema03/icon-primeiro.png')}}" alt="Gold Trophy">
                     </div>
                     <div class="premiacao-1-img">
                         <a href="#" onclick="image_save('','/premiacao_1.png')" class="text-muted font-14">
@@ -1304,20 +1368,20 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <input type="text" value="{{config('ranking_premiacao_1')}}" id="ranking_premiacao_1" />
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_1">
-                        <?php 
-                                            if (config('ranking_visivel_premiacao_1') == "false"){
-                                                echo '<i class="fas fa-eye-slash"></i>';
-                                            }else {
-                                                echo '<i class="fas fa-eye"></i>';
-                                            }
-                                            
-                                            ?>
+                        <?php
+                        if (config('ranking_visivel_premiacao_1') == "false") {
+                            echo '<i class="fas fa-eye-slash"></i>';
+                        } else {
+                            echo '<i class="fas fa-eye"></i>';
+                        }
+
+                        ?>
                     </div>
                 </div>
                 <div class="premiacao-item">
 
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/tema01/icon-segundo.png')}}" alt="Silver Trophy">
+                        <img src="{{asset('images/ranking/tema03/icon-segundo.png')}}" alt="Silver Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1331,19 +1395,19 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                         <input type="text" value="{{config('ranking_premiacao_2')}}" id="ranking_premiacao_2" />
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_2">
-                        <?php 
-                            if (config('ranking_visivel_premiacao_2') == "false"){
-                                echo '<i class="fas fa-eye-slash"></i>';
-                            }else {
-                                echo '<i class="fas fa-eye"></i>';
-                            }
-                            
-                            ?>
+                        <?php
+                        if (config('ranking_visivel_premiacao_2') == "false") {
+                            echo '<i class="fas fa-eye-slash"></i>';
+                        } else {
+                            echo '<i class="fas fa-eye"></i>';
+                        }
+
+                        ?>
                     </div>
                 </div>
                 <div class="premiacao-item">
                     <div class="premiacao-icon">
-                        <img src="{{asset('images/ranking/tema01/icon-terceiro.png')}}" alt="Bronze Trophy">
+                        <img src="{{asset('images/ranking/tema03/icon-terceiro.png')}}" alt="Bronze Trophy">
                     </div>
 
                     <div class="premiacao-1-img">
@@ -1357,14 +1421,14 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     </div>
                     <div class="premiacao-visualizar" data-id="premiacao_3">
 
-                        <?php 
-                   if (config('ranking_visivel_premiacao_3') == "false"){
-                        echo '<i class="fas fa-eye-slash"></i>';
-                    }else {
-                        echo '<i class="fas fa-eye"></i>';
-                    }
-                    
-                    ?>
+                        <?php
+                        if (config('ranking_visivel_premiacao_3') == "false") {
+                            echo '<i class="fas fa-eye-slash"></i>';
+                        } else {
+                            echo '<i class="fas fa-eye"></i>';
+                        }
+
+                        ?>
 
                     </div>
                 </div>
@@ -1403,47 +1467,47 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <script>
         $.ajaxSetup({
-    headers: {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-    });
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
 
 
 
-    var mostra_equipe = true;
- 
+        var mostra_equipe = true;
+
 
         function image_save($folder, $imgname) {
-                $('#pasta_imagem').val($folder);
-                $('#imagem_name').val($imgname);
+            $('#pasta_imagem').val($folder);
+            $('#imagem_name').val($imgname);
 
-                $('#change_logo').modal('show');
-            }
+            $('#change_logo').modal('show');
+        }
 
-            var ids_toggle = [
-                'ranking_premiacao_1',
-                'ranking_premiacao_2',
-                'ranking_premiacao_3',         
-            ];
-            
-            ids_toggle.forEach(function(id) {
-                var element = document.getElementById(id);
-                if (element) {
-                    element.addEventListener('blur', function(e) {
+        var ids_toggle = [
+            'ranking_premiacao_1',
+            'ranking_premiacao_2',
+            'ranking_premiacao_3',
+        ];
+
+        ids_toggle.forEach(function (id) {
+            var element = document.getElementById(id);
+            if (element) {
+                element.addEventListener('blur', function (e) {
                     var value = e.target.value.toUpperCase();;
 
-                    console.log(id,value)
+                    console.log(id, value)
 
                     save_config(id, value);
-                    $("#txt_"+id).html(value);
-              
-                    });
-                }
-            });
+                    $("#txt_" + id).html(value);
+
+                });
+            }
+        });
 
 
 
-    function save_config(config_info, config_value, alert=true) {
+        function save_config(config_info, config_value, alert = true) {
 
             info = [];
             info[0] = config_info;
@@ -1456,124 +1520,128 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     info: info
                 },
                 Type: 'json',
-                success: function(res) {
+                success: function (res) {
 
-                if (alert){
-                console.log(res)
-    
-                }
-                   
+                    if (alert) {
+                        console.log(res)
+
+                    }
+
                 },
-                error: function(res) {
+                error: function (res) {
 
-                if (alert){
-                    console.log(res)
-                }
-                   
+                    if (alert) {
+                        console.log(res)
+                    }
+
                 },
             });
         }
 
-      
+
 
         function atualizarColaboradores() {
 
             console.log("Atualização de Colaboradores");
-            let equipe= "none";
-            if (mostra_equipe){
-                equipe= "flex";
+            let equipe = "none";
+            if (mostra_equipe) {
+                equipe = "flex";
             }
             $.ajax({
-                url: "{{ url('ranking/colaboradores/vendas') }}" ,
+                url: "{{ url('ranking/equipes/vendas') }}",
                 method: 'GET',
-                success: function(data) {
-                    let colaboradores = data.colaboradores;
-                    
+                success: function (data) {
+                    let colaboradores = data.equipes;
+
+                    console.log( colaboradores )
+
                     let html = '';
-                    colaboradores.forEach(function(colaborador, index) {
+                    colaboradores.forEach(function (colaborador, index) {
                         let html_colaborador = "";
+
                         
-                        
-                        if (colaborador.equipe_logo != null ){
+
+
+                        if (colaborador.equipe_logo != null) {
 
                             html_colaborador = `
                             <div class="team-section" style='display:${equipe}'">
-                                <div class="team-photo" style="background-image: url('${colaborador.equipe_logo}');">
+                                <div class="team-photo" style="background-image: url('${colaborador.lider_avatar}');">
                                     <!-- Imagem da equipe -->
                                 </div>
                                 <div class="team-name">
                                     <!-- Nome da equipe -->
-                                    <p>${colaborador.equipe_name}</p>
+                                    <p>${colaborador.lider_name}</p>
                                 </div>
                             </div>`
                         }
                         html += `
                         <div class="collaborator-card">
                             <div class="position">${index + 1}</div>
-                            <div class="photo" style="background-image: url('${colaborador.avatar}');"></div>
+                            <div class="photo" style="background-image: url('${colaborador.equipe_logo}');"></div>
                             <div class="collaborator-info">
-                                <div class="name">${colaborador.name}</div>
+                                <div class="name">${colaborador.equipe_name}</div>
                                 <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$ ${colaborador.total.toLocaleString()}</div>
                                 <div class="progress">
                                     <div class="progress-bar" style="width: ${colaborador.percentual}%;"></div>
                                 </div>
                                 <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
                             </div>
-                            <div class="percentage">${Math.round(colaborador.percentual) }%</div>
+                            <div class="percentage">${Math.round(colaborador.percentual)}%</div>
                             ${html_colaborador}
                         </div>`;
                     });
-    
+
                     $('.body-panel').html(html);
 
-                    
 
-                
+
+
                     let num_coladores = Math.min(colaboradores.length, 3)
 
                     for (let index = 0; index < num_coladores; index++) {
-                    
+
                         var valorFormatado = new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
                         }).format(colaboradores[index].total);
 
-                        $('#nome'+(index+1)).html(colaboradores[index].name);
-                        $('#valor'+(index+1)).html(valorFormatado);
-
-                        $('#collaborator-photo-'+(index+1)).css('background-image', 'url('+colaboradores[index].avatar+')');
+                        $('#nome' + (index + 1)).html(colaboradores[index].equipe_name);
+                        $('#valor' + (index + 1)).html(valorFormatado);
+                        $('#collaborator-photo-' + (index + 1)).css('background-image', 'url(' + colaboradores[index].lider_avatar + ')');
+                        $('#time-photo-' + (index + 1)).css('background-image', 'url(' + colaboradores[index].equipe_logo + ')');
 
                     }
 
                     var valorFormatado = new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL'
-                        }).format(data.total_vendas);
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(data.total_vendas);
 
                     $('.total-time').html(valorFormatado)
-                   
+
                     // $('#collaborator-photo-2').css('background-image', 'url('+colaboradores[1].avatar+')');
                     // $('#collaborator-photo-3').css('background-image', 'url('+colaboradores[2].avatar +')');
                 }
             });
         }
 
-        
 
-        $(document).ready(function() {
+
+        $(document).ready(function () {
 
             let has_equipe = "{{config('ranking_mostrar_equipe')}}";
-            if (has_equipe == "false"){        
-                mostra_equipe=false;
-            }else {
-                mostra_equipe=true;
+            if (has_equipe == "false") {
+                mostra_equipe = false;
+            } else {
+                mostra_equipe = true;
             }
 
             atualizarColaboradores();
         });
 
         // Chama a função a cada x segundos (por exemplo, 30 segundos)
-        
+
         //setInterval(atualizarColaboradores, 5000);
 
 
@@ -1581,108 +1649,108 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         //###---------- Notificação de Venda ------------#
         function nFormatter(num, digits) {
             const lookup = [{
-                    value: 1,
-                    symbol: ""
-                },
-                {
-                    value: 1e3,
-                    symbol: "K"
-                },
-                {
-                    value: 1e6,
-                    symbol: "M"
-                },
-                {
-                    value: 1e9,
-                    symbol: "G"
-                },
-                {
-                    value: 1e12,
-                    symbol: "T"
-                },
-                {
-                    value: 1e15,
-                    symbol: "P"
-                },
-                {
-                    value: 1e18,
-                    symbol: "E"
-                }
+                value: 1,
+                symbol: ""
+            },
+            {
+                value: 1e3,
+                symbol: "K"
+            },
+            {
+                value: 1e6,
+                symbol: "M"
+            },
+            {
+                value: 1e9,
+                symbol: "G"
+            },
+            {
+                value: 1e12,
+                symbol: "T"
+            },
+            {
+                value: 1e15,
+                symbol: "P"
+            },
+            {
+                value: 1e18,
+                symbol: "E"
+            }
             ];
             num = num.split(',')[0]
             num = num.replaceAll('.', '')
 
             const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-            var item = lookup.slice().reverse().find(function(item) {
+            var item = lookup.slice().reverse().find(function (item) {
                 return num >= item.value;
             });
             return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
         }
-        
+
         function showNotification() {
             const notification = document.getElementById('notification');
             notification.style.display = 'flex'; // Mostrar a notificação
             setTimeout(() => {
                 notification.style.display = 'none'; // Ocultar a notificação após 5 segundos
-                }, 20000);
+            }, 20000);
         }
 
         Pusher.logToConsole = true;
-    
+
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
-          cluster: 'sa1'
+            cluster: 'sa1'
         });
-    
-        var channel = pusher.subscribe( "{{ config('broadcast_canal') }}" );
-        console.log('pusher'+channel);
-        channel.bind('nova-venda', function(data) {
 
-            
+        var channel = pusher.subscribe("{{ config('broadcast_canal') }}");
+        console.log('pusher' + channel);
+        channel.bind('nova-venda', function (data) {
 
-            console.log( JSON.stringify(data));
-            
-        
-            document.getElementById('venda_valor').innerText = "Crédito: " +nFormatter( data.data.credito, 2);
-            document.getElementById('nome_cliente').innerText = "Cliente: "+data.data.cliente;
+
+
+            console.log(JSON.stringify(data));
+
+
+            document.getElementById('venda_valor').innerText = "Crédito: " + nFormatter(data.data.credito, 2);
+            document.getElementById('nome_cliente').innerText = "Cliente: " + data.data.cliente;
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
-            document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: "+data.data.equipe_nome : '';
-            
+            document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: " + data.data.equipe_nome : '';
+
             document.getElementById('imagem_vendedor').src = data.data.avatar;
 
 
-            if (data.data.equipe_logo){
+            if (data.data.equipe_logo) {
                 $("#imagem_equipe").show()
-                document.getElementById('imagem_equipe').src = data.data.equipe_logo ;
-            }else {
+                document.getElementById('imagem_equipe').src = data.data.equipe_logo;
+            } else {
                 $("#imagem_equipe").hide()
             }
-           
-            document.getElementById('imagem_empresa').src = data.data.empresa ;
-        
-            
-            setTimeout(function() {
+
+            document.getElementById('imagem_empresa').src = data.data.empresa;
+
+
+            setTimeout(function () {
                 showNotification();
-    
-                
+
+
                 atualizarColaboradores();
 
                 var aplausos = "{{ config('broadcast_audio') }}"
-                
 
-                if (aplausos == "true"){
-                
+
+                if (aplausos == "true") {
+
                     var musicPlayer = document.getElementById('musicPlayer');
                     musicPlayer.play();
 
-                    setTimeout(function() {
-                    musicPlayer.pause();
-                    musicPlayer.currentTime = 0; // Retorna a música ao início
+                    setTimeout(function () {
+                        musicPlayer.pause();
+                        musicPlayer.currentTime = 0; // Retorna a música ao início
                     }, 20000);
                 }
-           
-           }, 10000);
 
-           
+            }, 10000);
+
+
 
 
         });
@@ -1694,43 +1762,43 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     <script>
         //************************** Abrir a janela de configurações
-            // Abrir a janela de configurações com o overlay
-           // Abrir a janela de configurações
+        // Abrir a janela de configurações com o overlay
+        // Abrir a janela de configurações
 
-           
-    
+
+
 
         document.querySelector('.settings').addEventListener('click', function () {
             document.getElementById('settings-window').style.transform = 'translateX(0)';
             document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
         });
-        
+
         // Fechar a janela de configurações
         document.querySelector('.close-btn').addEventListener('click', function () {
             document.getElementById('settings-window').style.transform = 'translateX(-100%)';
             document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
         });
-        
+
         // Fechar a janela de configurações ao clicar fora dela
         document.querySelector('.context-overlay').addEventListener('click', function () {
             document.getElementById('settings-window').style.transform = 'translateX(-100%)';
             document.querySelector('.context-overlay').style.display = 'none'; // Ocultar o overlay
         });
-        
+
         // Alternar entre as abas
         document.querySelectorAll('.settings-tab').forEach(tab => {
             tab.addEventListener('click', function () {
-            document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
-            this.classList.add('active-tab');
-            
-            document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
-            document.getElementById(this.dataset.content).classList.remove('hidden');
+                document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active-tab'));
+                this.classList.add('active-tab');
+
+                document.querySelectorAll('.content-section').forEach(section => section.classList.add('hidden'));
+                document.getElementById(this.dataset.content).classList.remove('hidden');
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Detecta o clique no botão com a classe settings-ranking
-          document.querySelector('.settings-vendas').addEventListener('click', function() {
+           document.querySelector('.settings-vendas').addEventListener('click', function() {
             window.location.href = "{{ route('ranking.vendas') }}";
             });
             
@@ -1742,14 +1810,21 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             document.querySelector('.settings-times').addEventListener('click', function () {
             window.location.href = "{{ route('ranking.vendas.equipe') }}";
             });
+
+
         });
+
+        
+        
+
+
     </script>
 
     <script>
-        document.querySelectorAll('.premiacao-visualizar').forEach(function(button) {
+        document.querySelectorAll('.premiacao-visualizar').forEach(function (button) {
 
 
-            button.addEventListener('click', function() {
+            button.addEventListener('click', function () {
                 const icon = this.querySelector('i');
                 const premiacaoId = this.getAttribute('data-id');  // Captura o data-id
 
@@ -1759,16 +1834,16 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     console.log(`Premiação ${premiacaoId} foi escondida.`);
 
 
-                    $("#"+premiacaoId).hide();
+                    $("#" + premiacaoId).hide();
 
-                    save_config("ranking_visivel_"+premiacaoId, "false");
+                    save_config("ranking_visivel_" + premiacaoId, "false");
                     // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
                 } else {
                     icon.classList.remove('fa-eye-slash');
                     icon.classList.add('fa-eye');
                     console.log(`Premiação ${premiacaoId} foi mostrada.`);
-                    $("#"+premiacaoId).show()
-                    save_config("ranking_visivel_"+premiacaoId, "true");
+                    $("#" + premiacaoId).show()
+                    save_config("ranking_visivel_" + premiacaoId, "true");
 
 
                     // Aqui você pode salvar a informação usando AJAX, Fetch API ou outra solução.
@@ -1778,43 +1853,43 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Detecta o clique no botão com a classe settings-sync
-            document.querySelector('.settings-sync').addEventListener('click', function() {
-            
-            
-            atualizarColaboradores();
-            
-         
+            document.querySelector('.settings-sync').addEventListener('click', function () {
+
+
+                atualizarColaboradores();
+
+
             });
         });
 
- 
-        $('.toggle-event').change(function($this) {
-        
+
+        $('.toggle-event').change(function ($this) {
+
             var config_info = $(this).data('config_info');
             var config_value = $(this).prop('checked');
 
-       
-            if (config_info == "ranking_mostrar_equipe"){
-          
+
+            if (config_info == "ranking_mostrar_equipe") {
+
                 mostra_equipe = config_value
 
                 atualizarColaboradores();
             }
 
-            if(config_info == "ranking_mostrar_vendas"){
+            if (config_info == "ranking_mostrar_vendas") {
 
-                if ($('#header-total').css('display') == 'none'){
-                    $('#header-total').css('display','flex')
-                }else{
-                    $('#header-total').css('display','none')
+                if ($('#header-total').css('display') == 'none') {
+                    $('#header-total').css('display', 'flex')
+                } else {
+                    $('#header-total').css('display', 'none')
                 }
-            
+
             }
-            
+
             save_config(config_info, config_value);
-        
+
         });
 
 
@@ -1822,22 +1897,22 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         var ids_toggle = [
 
             'racing_vendas_max',
-      
+
         ];
-        
-        ids_toggle.forEach(function(id) {
+
+        ids_toggle.forEach(function (id) {
             var element = document.getElementById(id);
-                if (element) {
-                element.addEventListener('blur', function(e) {
-                var value = e.target.value;
-                
-                save_config(id, value);
-                
+            if (element) {
+                element.addEventListener('blur', function (e) {
+                    var value = e.target.value;
+
+                    save_config(id, value);
+
                 });
             }
         });
 
-  
+
 
 
         function ajustarContainer() {
@@ -1847,16 +1922,16 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 document.documentElement.clientHeight / 1000 // Altura original da div container2
             );
 
-           
-            if (scaleFactor > 1){
-                scaleFactor = scaleFactor - scaleFactor*0.1;
+
+            if (scaleFactor > 1) {
+                scaleFactor = scaleFactor - scaleFactor * 0.1;
             }
             container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
             container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo
 
 
-             var height__ = parseInt(document.documentElement.clientHeight) - 210;
-           
+            var height__ = parseInt(document.documentElement.clientHeight) - 210;
+
 
         }
 
@@ -1868,37 +1943,37 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
             fullscreen = true;
-            $(".menu-bar").css('display','none');
-            $('.ranking-header').css('display','none');
-            $('.header-panel').css('display','none');
-            $('.footer-panel').css('display','none');
-            $('.container2').css('padding','0px');
+            $(".menu-bar").css('display', 'none');
+            $('.header-total').css('display', 'none');
+            $('.header-panel').css('display', 'none');
+            $('.footer-panel').css('display', 'none');
+            $('.container2').css('padding', '0px');
             ajustarContainer()
 
-    });
+        });
 
-    const container = document.querySelector('.container2');
-    
-    // Adiciona um ouvinte de evento de clique ao documento
-    document.addEventListener('click', function(event) {
-    // Verifica se o clique ocorreu fora do container2
-        if (container.contains(event.target) ) {
+        const container = document.querySelector('.container2');
 
-            if ( fullscreen == true){
-            
-            $(".menu-bar").css('display','flex');
-            $('.ranking-header').css('display','flex');
-            $('.header-panel').css('display','flex');
-            $('.footer-panel').css('display','flex');
-            $('.container2').css('padding','20px');
-            ajustarContainer()
-            
+        // Adiciona um ouvinte de evento de clique ao documento
+        document.addEventListener('click', function (event) {
+            // Verifica se o clique ocorreu fora do container2
+            if (container.contains(event.target)) {
+
+                if (fullscreen == true) {
+
+                    $(".menu-bar").css('display', 'flex');
+                    $('.header-total').css('display', 'flex');
+                    $('.header-panel').css('display', 'flex');
+                    $('.footer-panel').css('display', 'flex');
+                    $('.container2').css('padding', '20px');
+                    ajustarContainer()
+
+                }
+
+                fullscreen = false;
+
             }
-
-            fullscreen = false;
-
-        }
-    });
+        });
 
 
     </script>

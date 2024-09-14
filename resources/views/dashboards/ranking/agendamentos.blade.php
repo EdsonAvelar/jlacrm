@@ -1047,7 +1047,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             {{-- <button class="support">Suporte</button>
             <button class="manage manage-collaborators">Gerenciar Colaborador</button> --}}
-            <button class="settings-ranking"><i class="fas fa-trophy"></i></button>
+            <button class="settings-vendas"><i class="fas fa-trophy"></i></button>
+            <button class="settings-agendamentos"><i class="fas fa-medal"></i></button>
+            <button class="settings-times"><i class="fas fa-futbol"></i></button>
             <button class="settings-sync"><i class="fas fa-sync-alt"></i></button>
             <button class="fullscreen-toggle"><i class="fas fa-expand"></i></button>
             <button class="settings"><i class="fas fa-cog"></i></button>
@@ -1594,8 +1596,17 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
         document.addEventListener('DOMContentLoaded', function() {
             // Detecta o clique no botão com a classe settings-ranking
-            document.querySelector('.settings-ranking').addEventListener('click', function() {
-            window.location.href = "{{ route('ranking.vendas') }}";
+            document.querySelector('.settings-vendas').addEventListener('click', function() {
+                window.location.href = "{{ route('ranking.vendas') }}";
+            });
+
+            // Detecta o clique no botão com a classe settings-ranking
+            document.querySelector('.settings-agendamentos').addEventListener('click', function() {
+                window.location.href = "{{ route('ranking.agendamentos') }}";
+            });
+
+            document.querySelector('.settings-times').addEventListener('click', function () {
+                window.location.href = "{{ route('ranking.vendas.equipe') }}";
             });
         });
     </script>

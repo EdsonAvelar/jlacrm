@@ -132,8 +132,6 @@
               </div>
             </div>
           </div>
-
-
         </div>
         <div class="container">
           <ol class="carousel-indicators">

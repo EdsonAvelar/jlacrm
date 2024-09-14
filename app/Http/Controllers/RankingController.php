@@ -9,6 +9,8 @@ use App\Enums\UserStatus;
 use Carbon\Carbon;
 use App\Models\Fechamento;
 use App\Models\Agendamento;
+use App\Models\Equipe;
+
 use Validator;
 class RankingController extends Controller
 {
@@ -22,6 +24,12 @@ class RankingController extends Controller
     {
         return view('dashboards.ranking.agendamentos');
 
+    }
+
+    public function ranking_vendas_equipe()
+    {
+
+        return view('dashboards.ranking.equipe_vendas');
     }
 
     public function ranking_premiacoes(Request $request)
@@ -60,6 +68,66 @@ class RankingController extends Controller
         return back()->with("status", "Imagem salva com sucesso");
     }
 
+    public function equipes_vendas()
+    {
+
+        $data_inicio = config('data_inicio');
+        $data_fim = config('data_fim');
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+
+        $output = array();
+        $output['equipes'] = array();
+
+        $equipes = Equipe::all();
+
+        foreach ($equipes as $equipe) {
+            //array_push($output['equipes'], $equipe->descricao);
+
+            $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+            // #########
+            // Fechamento
+            // #########
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'FECHADA']
+
+            ];
+            $vendas_totais = (float) Fechamento::where($query)->whereIn('primeiro_vendedor_id', $ids)->sum('valor');
+
+            $valor = (float) config("racing_vendas_max");
+
+            $user = User::find($equipe->lider_id);
+
+            $user_info = [
+                'equipe_name' => $equipe->descricao,
+                'equipe_logo' => url('') . '/images/equipes/' . $equipe->id . '/' . $equipe->logo,
+                'lider_name' => $user->name,
+                'lider_avatar' => asset($user->avatar),
+                'meta' => $valor,
+                "total" => $vendas_totais,
+                'percentual' => ($vendas_totais / $valor) * 100,
+
+            ];
+
+
+            array_push($output['equipes'], $user_info);
+
+        }
+
+
+        usort($output['equipes'], function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
+
+
+        return response()->json($output);
+
+    }
 
     public function colaboradores_vendas()
     {
