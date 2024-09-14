@@ -666,11 +666,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-276px) scale(1);
+                transform: translateY(-283px) scale(1);
             }
 
             50% {
-                transform: translateY(-268px) scale(1.05);
+                transform: translateY(-280px) scale(1.05);
             }
         }
 
