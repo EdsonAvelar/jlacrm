@@ -129,8 +129,8 @@
                             <div class="card mb-0 mt-1" id="{{ $user->id }}">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
-                                        <img src="{{ asset( $user->avatar) }}"
-                                            alt="image" class="me-0 d-none d-sm-block avatar-sm rounded-circle">
+                                        <img src="{{ asset( $user->avatar) }}" alt="image"
+                                            class="me-0 d-none d-sm-block avatar-sm rounded-circle">
                                         <div class="w-100 overflow-hidden">
                                             <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
                                         </div> <!-- end w-100 -->
@@ -235,9 +235,27 @@
                                 name="edit_nome_equipe" required>
                         </div>
 
-                        <div class="col-md-12">
+                        {{-- <div class="col-md-12">
                             <label for="task-title" class="form-label">Lider</label>
                             <input type="text" class="form-control form-control-light" id="edit_nome_lider" readonly>
+                        </div> --}}
+
+                        <div class="col-md-12">
+                            <label for="task-title" class="form-label">Lider da Equipe<span class="text-danger"></label>
+                            <select class="form-select form-control-light" id="task-priority" name="lider_id">
+
+                                <option id="edit_nome_lider" value="">{{ $user->name }}</option>
+
+                                @foreach ($semequipes as $user)
+                                @if ($user->hasRole('gerenciar_equipe'))
+                                @if ($user->id == \Auth::user()->id)
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @else
+                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endif
+                                @endif
+                                @endforeach
+                            </select>
                         </div>
 
                     </div>
@@ -352,7 +370,10 @@
                 success: function(res) {
                     $('#editar_equipe_id').val(res[0]);
                     $('#edit_nome_equipe').val(res[3]);
-                    $('#edit_nome_lider').val(res[2]);
+
+                    $('#edit_nome_lider').val(res[0]);
+                    $('#edit_nome_lider').html(res[2]);
+
                     $('#edit_img_equipe').attr('src', "{{ url('') }}" + "/images/equipes/" + res[
                             0] +
                         '/' +

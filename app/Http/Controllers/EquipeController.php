@@ -40,7 +40,22 @@ class EquipeController extends Controller
 
         $input = $request->all();
 
+
         $equipe = Equipe::find($input['editar_equipe_id']);
+        if ($request->has('lider_id')) {
+
+            if ($input['lider_id'] != '') {
+
+                $antigolider = User::find($equipe->lider_id);
+                User::where('id', $antigolider->id)->update(['equipe_id' => NULL]);
+
+                $novolider = User::find($input['lider_id']);
+                $equipe->lider_id = $novolider->id;
+
+                User::where('id', $novolider->id)->update(['equipe_id' => $equipe->id]);
+            }
+        }
+
         $nome_equipe = $input['edit_nome_equipe'];
         $equipe->descricao = $nome_equipe;
 
