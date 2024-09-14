@@ -792,11 +792,24 @@ vermelho mais do que 5 dias parados
                                             <div class="mb-12">
                                                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
                                                     title="">
-                                                    <label for="lastname" class="form-label">Valor Máximo de
-                                                        Vendas</label>
+                                                    <label for="lastname" class="form-label">Meta de Vendas por
+                                                        Vendedor</label>
                                                     </label> </span>
                                                 <input class="form-control" type="number" name="racing_vendas_max"
                                                     id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Meta de Vendas por
+                                                        Equipe</label>
+                                                    </label> </span>
+                                                <input class="form-control" type="number" name="racing_vendas_equipe"
+                                                    id="racing_vendas_equipe"
+                                                    value="{{config('racing_vendas_equipe')}}" />
                                             </div>
                                         </div>
 
@@ -975,6 +988,7 @@ vermelho mais do que 5 dias parados
                 'protocolo_agendamento_cnpj',
                 'protocolo_agendamento_xau',
                 'protocolo_agendamento_endereco',
+                
             ];
 
             ids.forEach(function(id) {
@@ -996,6 +1010,7 @@ vermelho mais do que 5 dias parados
                 'racing_vendas_max',
                 'permitir_deletar_negocio',
                 'broadcast_canal',
+                'racing_vendas_equipe',
                 'broadcast_audio'           
             ];
             

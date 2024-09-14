@@ -99,7 +99,7 @@ class RankingController extends Controller
             ];
             $vendas_totais = (float) Fechamento::where($query)->whereIn('primeiro_vendedor_id', $ids)->sum('valor');
 
-            $valor = (float) config("racing_vendas_max");
+            $valor = (float) config("racing_vendas_equipe");
 
             $user = User::find($equipe->lider_id);
 
