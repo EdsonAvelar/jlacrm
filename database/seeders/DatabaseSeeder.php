@@ -188,6 +188,7 @@ class DatabaseSeeder extends Seeder
 
 		$this->save_config('racing_agendamento_max', 10);
 		$this->save_config('racing_vendas_max', 1500000);
+		$this->save_config('racing_vendas_equipe', 3000000);
 
 
 	}

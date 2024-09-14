@@ -101,6 +101,10 @@ class RankingController extends Controller
 
             $valor = (float) config("racing_vendas_equipe");
 
+            if (!$valor) {
+                $valor = 3000000;
+            }
+
             $user = User::find($equipe->lider_id);
 
             $user_info = [
@@ -163,6 +167,11 @@ class RankingController extends Controller
                 $avatar = $vendedor->avatar;
             }
             $valor = (float) config("racing_vendas_max");
+
+            if (!$valor) {
+                $valor = 1000000;
+            }
+
             $user_info = [
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
@@ -219,6 +228,10 @@ class RankingController extends Controller
             }
 
             $meta_agen = (int) config("racing_agendamento_max");
+
+            if (!$meta_agen) {
+                $meta_agen = 15;
+            }
 
             $user_info = [
                 "name" => $vendedor->name,
