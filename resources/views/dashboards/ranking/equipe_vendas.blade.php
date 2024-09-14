@@ -585,8 +585,8 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
         }
 
         .collaborator-photo {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             background-size: cover;
             background-position: center;
@@ -642,11 +642,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-395px) scale(1.05);
+                transform: translateY(-415px) scale(1.05);
             }
 
             50% {
-                transform: translateY(-390px) scale(1.10);
+                transform: translateY(-410px) scale(1.10);
             }
         }
 
@@ -666,11 +666,11 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
             0%,
             100% {
-                transform: translateY(-250px) scale(1);
+                transform: translateY(-276px) scale(1);
             }
 
             50% {
-                transform: translateY(-255px) scale(1.05);
+                transform: translateY(-268px) scale(1.05);
             }
         }
 
@@ -1286,7 +1286,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
     </div>
 
-    <div class="footer-panel">
+    {{-- <div class="footer-panel">
         <div class="active-rankings">
             <span>Times Ativos:</span>
             <i class="fas fa-chart-line"></i>
@@ -1297,7 +1297,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             <span>9m:59s | Restantes...</span>
             <i class="fas fa-play" id="play-pause-icon"></i>
         </div>
-    </div>
+    </div> --}}
 
     {{-- JANELA DE CONFIGURAÇÕESSSSS --}}
 
