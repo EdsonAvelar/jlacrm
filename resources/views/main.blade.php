@@ -326,9 +326,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 <li>
                                     <a href="{{ route('ranking.agendamentos') }}">Ranking de Agendamentos</a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="{{ route('ranking.vendas.equipe') }}">Ranking Equipes</a>
-                                </li>
+                                </li> --}}
 
                             </ul>
                         </div>
@@ -690,7 +690,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
     <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
     <!-- end demo js-->
-        
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
