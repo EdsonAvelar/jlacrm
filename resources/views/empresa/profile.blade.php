@@ -245,7 +245,7 @@
                                         <div class="card-body">
 
                                             <p><a href="#"
-                                                    onclick="image_save('proposta','/fundo_proposta.png','livre')"
+                                                    onclick="image_save('proposta','/fundo_proposta.png','livre','2048','3500')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/proposta/fundo_proposta.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
@@ -915,11 +915,13 @@ vermelho mais do que 5 dias parados
 
 
 <script type="text/javascript">
-    function image_save($folder, $imgname, $tipo_corte='quadrado2') {
+    function image_save($folder, $imgname, $tipo_corte='quadrado2', $largura =300, $altura = 300) {
 
             $('#pasta_imagem').val($folder);
             $('#imagem_name').val($imgname);
             $('#tipo_corte').val($tipo_corte);
+            $('#corte_altura').val($altura);
+            $('#corte_largura').val($largura);
             $('#change_logo').modal('show');
         }
 

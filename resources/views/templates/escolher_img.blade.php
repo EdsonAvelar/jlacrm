@@ -21,6 +21,8 @@
                                 <input id="editimage_user_id" name="user_id" hidden value={{ $user_id }}>
 
                                 <input id="tipo_corte" hidden value="quadrado1">
+                                <input id="corte_largura" hidden value="300">
+                                <input id="tipo_altura" hidden value="300">
                                 <br>
                                 <div class="img-container mt-3" style="display:none;">
                                     <img id="cropperImage" class="img-fluid" src="#" alt="Imagem para cortar">
@@ -147,8 +149,8 @@
         cropButton.addEventListener('click', function () {
             if (cropper) {
                 const canvas = cropper.getCroppedCanvas({
-                    width: 300,
-                    height: 300
+                    width: $("#corte_largura").val(),
+                    height: $("#corte_altura").val()
                 });
 
                 cropperImage.src = canvas.toDataURL('image/png');
