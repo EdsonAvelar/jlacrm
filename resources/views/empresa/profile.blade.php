@@ -59,6 +59,12 @@
         width: 100% !important;
         height: 0rem !important;
     }
+
+    .text-example {
+        font-size: 16px;
+        background-color: #00aeff09;
+        padding: 10px;
+    }
 </style>
 <style>
     touch-action: none;
@@ -453,8 +459,8 @@
                         <!-- end settings content-->
                         <div class="tab-pane" id="marketing">
 
-                            <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                INFORMAÇÕES DE MARKETING</h5>
+                            {{-- <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                INFORMAÇÕES DE MARKETING</h5> --}}
 
                             {{-- <div class="row">
                                 <div class="col-md-12">
@@ -470,28 +476,95 @@
                             </div> --}}
 
                             <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                TOKEN WEBHOOK</h5>
+                                INTEGRAÇÃO LEADS COM CRM</h5>
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="lastname" class="form-label">Insira um token SHA1 Hash. <a
-                                                href="http://www.sha1-online.com/">Clique aqui para gerar</a></label>
-                                        <label>
-                                            <p>Exemplo de chamada:</p>
-                                            <p style="font-size: 20px">
+                                        <label for="lastname" class="form-label">
+                                            É possivel conectar o CRM para cadastros de leads automaticamente através de
+                                            WEBHOOK.
 
-                                                curl -X POST {{url('')}}/api/webhook/newlead
-                                                -H "Authorization: Bearer {{config('token_webhook')}}" -d
-                                                '{"nome":"Nome Cliente","telefone":"1123456789",
-                                                "email":"client@com.br","campanha":"FaceAds-Cadastro-Imovel","fonte":"FACEBOOK","tipo_do_bem":"IMOVEL","proprietario_id":"-1"}'
-                                            </p>
-                                        </label>
-
+                                            Para realizar a conexão você precisa de
+                                            um token SHA1 Hash Válido. <a href="http://www.sha1-online.com/">Clique
+                                                aqui para gerar</a></label>
+                                        <label>Copie e Cole o Token Abaixo</label>
                                         <input class="form-control" type="text" name="token_webhook" id="token_webhook"
                                             value="{{config('token_webhook')}}" />
+
+
+
+
                                     </div>
+                                    <div class="mb-3">
+                                        <h5 class="text-uppercase">Conexão via CURL</h5>
+                                        É possível conectar diretamente via CURL usando o comando abaixo
+                                        <p class="text-example">
+
+                                            curl -X POST {{url('')}}/api/webhook/newlead
+                                            -H "Authorization: Bearer {{config('token_webhook')}}" -d
+                                            '{"nome":"Nome Cliente","telefone":"1123456789",
+                                            "email":"client@com.br","campanha":"FaceAds-Cadastro-Imovel","fonte":"FACEBOOK","tipo_do_bem":"IMOVEL","proprietario_id":"-1"}'
+                                        </p>
+                                        </label>
+                                    </div>
+
                                 </div>
                             </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+
+                                    <div class="mb-3">
+                                        <h5 class="text-uppercase">Conexão via MAKE</h5>
+                                        É possível conectar qualquer plataforma via make (<a
+                                            href="https://www.make.com/">https://www.make.com/</a>)
+                                        <pre class="text-example">
+Tipo de Trigger: <b>HTTP</b>
+
+PRECHA AS INFORMAÇÕES ABAIXO
+
+<b>URL: </b>
+{{url('')}}
+
+<b>Method: </b>
+POST
+
+<b>Header:</b>
+Name: Authorization
+Value: Bearer {{config('token_webhook')}}
+
+Name: Content-Type
+Value: application/json
+
+<b>Body Type: </b>
+Raw
+
+<b>Content type: </b>
+JSON (Application/json)
+
+<b>Request content</b>
+{
+    "nome": " *campo_nome* }} ",
+    "telefone": " *campo_telefone* ",
+    "email": " *email* ",
+    "campanha": " *camapanha* ",
+    "fonte": " *platforma* ",
+    "tipo_do_bem": "IMOVEL",
+    "proprietario_id": "-1"
+}
+</pre>
+
+                                        </p>
+                                        </label>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    Teste
+                                </div>
+
+                            </div>
+
 
 
                         </div> <!-- end tab-pane -->

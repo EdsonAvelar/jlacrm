@@ -326,9 +326,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 <li>
                                     <a href="{{ route('ranking.agendamentos') }}">Ranking de Agendamentos</a>
                                 </li>
-                                {{-- <li>
+                                <li>
                                     <a href="{{ route('ranking.vendas.equipe') }}">Ranking Equipes</a>
-                                </li> --}}
+                                </li>
 
                             </ul>
                         </div>

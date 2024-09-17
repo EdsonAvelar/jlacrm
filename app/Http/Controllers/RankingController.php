@@ -17,6 +17,8 @@ class RankingController extends Controller
 
     public function vendas()
     {
+
+
         return view('dashboards.ranking.vendas');
     }
 

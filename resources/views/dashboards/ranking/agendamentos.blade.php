@@ -1150,6 +1150,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                 </div>
             </div>
             <div class="logo-empresa">
+                <h1 class="titulo-logo" style="display: none">Ranking de Agendamentos</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
 
@@ -1711,6 +1712,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
             $('.header-panel').css('display','none');
             $('.footer-panel').css('display','none');
             $('.container2').css('padding','0px');
+            
             ajustarContainer()
 
       
