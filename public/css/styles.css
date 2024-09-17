@@ -5164,7 +5164,7 @@ textarea.form-control-lg {
 .btn-close-white {
   filter: invert(1) grayscale(100%) brightness(200%);
 }
-
+/* 
 .toast {
   --bs-toast-zindex: 1090;
   --bs-toast-padding-x: 0.75rem;
@@ -5231,7 +5231,7 @@ textarea.form-control-lg {
 .toast-body {
   padding: var(--bs-toast-padding-x);
   word-wrap: break-word;
-}
+} */
 
 .modal {
   --bs-modal-zindex: 1055;

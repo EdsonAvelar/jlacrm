@@ -1,15 +1,12 @@
 @extends('main')
 
 @section('headers')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-<style>
-    img {
-        height: 170px width:auto;
-        /*maintain aspect ratio*/
-        max-width: 500px;
-    }
 
+<meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
+<style>
     @media screen and (max-width: 767px) {
         #equipe_logo {
             display: block;
@@ -28,7 +25,13 @@
         padding: 70px 12px 0px 0px !important;
 
     }
+
+    .w-100 {
+        margin-left: 10px;
+    }
 </style>
+
+@endsection
 @section('main_content')
 <!-- Start Content-->
 <div class="container-fluid">
@@ -63,7 +66,7 @@
                     <div class="bg-dragula p-2 p-lg-4" style="background: rgb(217 217 217);">
 
                         <h5 class="mt-0">Sem Equipe</h5>
-                        <div id="semequipe" class="py-2" data=-1>
+                        <div id="semequipe" class="py-2" data-id="-1">
                             @foreach ($semequipes as $user)
                             <div class="card mb-0 mt-2" id="{{ $user->id }}">
                                 <div class="card-body">
@@ -87,7 +90,7 @@
         <div class="col-md-9">
             <div class="row" style="padding-top: 20px;">
                 @foreach ($equipes as $equipe)
-                <div class="col-md-4" style="padding-bottom: 20;">
+                <div class="col-md-4" style="padding-bottom: 20px;">
                     <div class="bg-dragula p-2 p-lg-4" style="background: rgb(206 231 239);">
 
                         <div class="dropdown float-end">
@@ -113,9 +116,15 @@
 
                         <h5 class="mt-0">{{ $equipe->descricao }}</h5>
                         <div class="d-flex align-items-start">
+
+
+
+
                             <img id="equipe_logo"
                                 src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}"
                                 alt="user-image" class="rounded-circle" width="50" height="50">
+
+
                             <div class="w-100 overflow-hidden">
                                 <p class="mb-0 mt-0"> Lider </p>
                                 <h3 class="mb-0 mt-0">{{ $equipe->lider()->first()->name }}</h3>
@@ -129,8 +138,14 @@
                             <div class="card mb-0 mt-1" id="{{ $user->id }}">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
+
+
+
                                         <img src="{{ asset( $user->avatar) }}" alt="image"
                                             class="me-0 d-none d-sm-block avatar-sm rounded-circle">
+
+
+
                                         <div class="w-100 overflow-hidden">
                                             <h5 class="mb-1 mt-1">{{ $user->name }}</h5>
                                         </div> <!-- end w-100 -->
@@ -152,7 +167,7 @@
 </div> <!-- container -->
 
 {{-- Form para Adicionar Equipe --}}
-<form id="target" action="{{ url('equipes/create') }}" method="POST" enctype="multipart/form-data">
+<form id="createForm" action="{{ url('equipes/create') }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="modal fade" id="criar_equipe" tabindex="-1" aria-labelledby="criar_equipeLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -172,7 +187,8 @@
                         </div>
 
                         <div class="col-md-12">
-                            <label for="task-title" class="form-label">Lider da Equipe<span class="text-danger"></label>
+                            <label for="task-title" class="form-label">Lider da Equipe<span
+                                    class="text-danger">*</span></label>
                             <select class="form-select form-control-light" id="task-priority" name="lider_id">
                                 @foreach ($semequipes as $user)
                                 @if ($user->hasRole('gerenciar_equipe'))
@@ -214,7 +230,7 @@
 </form>
 
 {{-- Form para Editar Equipe --}}
-<form id="target" action="{{ url('equipes/change_equipe') }}" method="POST" enctype="multipart/form-data">
+<form id="editForm" action="{{ url('equipes/change_equipe') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
     <div class="modal fade" id="editarequipe_modal" tabindex="-1" aria-labelledby="configurarLeaderLabel"
@@ -312,10 +328,19 @@
     </div>
 
 </form>
+
+
+@include('templates.escolher_img', [
+'action' => url('equipes/change/image'),
+'titulo' => "Editar Imagem da Equipe",
+'user_id' => app('request')->id
+])
+
+
 @endsection
 
 @section('specific_scripts')
-<!-- bundle -->
+
 <script src="{{ url('') }}/js/vendor/dragula.min.js"></script>
 <!-- demo js -->
 <script src="{{ url('') }}/js/ui/component.dragula.js"></script>

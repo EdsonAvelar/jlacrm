@@ -34,6 +34,42 @@ class EquipeController extends Controller
         return [$equipe->id, $equipe->nome, $user->name, $equipe->descricao, $equipe->logo];
     }
 
+    public function change_image(Request $request)
+    {
+        $input = $request->all();
+
+
+        $equipe = Equipe::find($input['editar_equipe_id']);
+        if ($request->hasFile('image')) {
+            $rules = array(
+                'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
+            );
+
+            $error_msg = [
+                'image.max' => 'Limite Máximo do Arquivo 3mb',
+                'image.mimes' => 'extensões válidas (jpg,png,jpeg,gif,svg)'
+            ];
+
+            $validator = Validator::make($input, $rules, $error_msg);
+
+            if ($validator->fails()) {
+                return back()
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+
+            $imageName = "logo." . $request->image->extension();
+            $request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
+            $equipe->logo = $imageName;
+        }
+
+
+        $equipe->save();
+
+        return back()->with("status", "Equipe Editada com sucesso");
+    }
+
 
     public function change_equipe(Request $request)
     {

@@ -159,8 +159,8 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/agendamentos', [RankingController::class, 'agendamentos'])->name('ranking.agendamentos');
             Route::get('/colaboradores/vendas', [RankingController::class, 'colaboradores_vendas'])->name('ranking.colaboradores.vendas');
-            
-            
+
+
             Route::get('/colaboradores/agendamentos', [RankingController::class, 'colaboradores_agendamentos'])->name('ranking.colaboradores.agendamentos');
             Route::post('/image/save', [RankingController::class, 'ranking_premiacoes'])->name('ranking_premiacoes');
         }
@@ -209,7 +209,6 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function
 
 
 
-
 Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
     Route::group(
         ['prefix' => 'equipes'],
@@ -219,6 +218,7 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
             Route::post('/excluir', [EquipeController::class, 'excluir']);
             Route::post('/create', [EquipeController::class, 'create']);
             Route::post('/change_equipe', [EquipeController::class, 'change_equipe'])->name('change_equipe');
+            Route::post('/change/image', [EquipeController::class, 'change_image'])->name('equipe.change.image');
 
 
             Route::get('/get', [EquipeController::class, 'equipe_get'])->name('equipe_get');

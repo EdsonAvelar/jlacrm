@@ -338,6 +338,7 @@ use Illuminate\Support\Facades\Hash;?>
 'titulo' => "Editar Imagem Funcionário",
 'user_id' => app('request')->id
 ])
+
 @endsection
 
 @section('specific_scripts')
