@@ -999,7 +999,7 @@
 
     .vendas-meta-batida {
         background-color: #2f6b34;
-        background-image: url("{{url('')}}/images/sistema/fera2.png");
+        background-image: url("{{url('')}}/images/sistema/fera.png");
         background-size: cover;
     }
 
