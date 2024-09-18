@@ -529,7 +529,7 @@ if ($tema == ''){
                                 </div>
                                 <div class="missing-value">` +
                                     (colaborador.total <= colaborador.meta ? `Faltam: R$ ${(colaborador.meta -
-                                        colaborador.total).toLocaleString()}` : `Estrassalhou a meta em: R$ ${(colaborador.total -
+                                        colaborador.total).toLocaleString()}` : `Estraçalhou a meta em: R$ ${(colaborador.total -
                                         colaborador.meta).toLocaleString()}` ) + `</div>
                                 </div>
                                 <div class="percentage">${Math.round(colaborador.percentual)}%</div>
