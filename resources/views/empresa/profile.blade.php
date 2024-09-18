@@ -239,6 +239,22 @@
                                     </div> <!-- end card -->
                                 </div>
 
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <h5>Logo Fera de Vendas - Ranking - 350 x 90 (PNG) </h5>
+                                        <div class="card-body">
+
+                                            <p><a href="#"
+                                                    onclick="image_save('logos','/empresa_ranking_fera.png','retangular','350','90')"
+                                                    class="text-muted font-14">
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_ranking_fera.png?{{ \Carbon\Carbon::now()->timestamp }}"
+                                                        class="avatar-lx img-thumbnail" alt="Logo Empresa Ranking">
+                                                </a></p>
+
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end card -->
+                                </div>
+
 
 
                                 <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i

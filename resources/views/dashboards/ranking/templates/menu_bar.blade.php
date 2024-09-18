@@ -4,7 +4,7 @@
                 src="{{url('')}}/images/empresa/logos/empresa_logo_circular.png" />
         </a>
         <div class="title">
-            <h1 style="font-size: 3vw">{{ $title }}</h1>
+            <h1 style="font-size: 2vw">{{ $title }}</h1>
         </div>
     </div>
     <div class="actions">
