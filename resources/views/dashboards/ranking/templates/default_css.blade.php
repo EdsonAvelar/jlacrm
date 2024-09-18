@@ -282,15 +282,6 @@
         padding: 30px 10px 30px 10px;
     }
 
-    /* .collaborator-card {
-            display: flex;
-            align-items: center;
-            background-color: #2f2f6b;
-            padding: 10px 20px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            position: relative;
-        } */
 
     .collaborator-card {
         display: flex;
@@ -979,5 +970,45 @@
         -o-transform: scale(1.3);
         /* Opera */
         padding: 10px;
+    }
+
+
+    .brilho {
+        animation: glowing 2s infinite;
+    }
+
+    @keyframes glowing {
+        0% {
+            box-shadow: 0 0 5px rgb(255 255 255 / 50%), 0 0 15px rgb(255 255 255 / 94%), 0 0 30px rgba(255, 215, 0, 0.3), 0 0 45px rgba(255, 215, 0, 0.2);
+        }
+
+        30% {
+            box-shadow: 0 0 10px rgb(246 248 226 / 70%), 0 0 25px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.5), 0 0 75px rgba(255, 215, 0, 0.4);
+        }
+
+        60% {
+            box-shadow: 0 0 10px rgb(255 255 255 / 70%), 0 0 25px rgba(255, 215, 0, 0.6), 0 0 50px rgba(255, 215, 0, 0.5), 0 0 75px rgba(255, 215, 0, 0.4);
+        }
+
+        100% {
+            box-shadow: 0 0 5px rgb(255 215 0), 0 0 15px rgba(255, 215, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.3), 0 0 45px rgba(255,
+                    215, 0, 0.2);
+        }
+    }
+
+
+    .vendas-meta-batida {
+        background-color: #2f6b34;
+    }
+
+
+    @keyframes rotate {
+        from {
+            transform: rotate(0deg);
+        }
+
+        to {
+            transform: rotate(360deg);
+        }
     }
 </style>

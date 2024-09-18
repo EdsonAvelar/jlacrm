@@ -517,9 +517,9 @@ if ($tema == ''){
                             </div>`
                         }
                         html += `
-                        <div class="collaborator-card">
+                        <div class="collaborator-card ${colaborador.total > colaborador.meta ? 'vendas-meta-batida' : ''}">
                             <div class="position">${index + 1}</div>
-                            <div class="photo" style="background-image: url('${colaborador.avatar}');"></div>
+                            <div class="photo ${colaborador.total > colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.name}</div>
                                 <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$
@@ -529,7 +529,7 @@ if ($tema == ''){
                                 </div>
                                 <div class="missing-value">` +
                                     (colaborador.total <= colaborador.meta ? `Faltam: R$ ${(colaborador.meta -
-                                        colaborador.total).toLocaleString()}` : `Estraçalhou a meta em: R$ ${(colaborador.total -
+                                        colaborador.total).toLocaleString()}` : `Estrassalhou a meta em: R$ ${(colaborador.total -
                                         colaborador.meta).toLocaleString()}` ) + `</div>
                                 </div>
                                 <div class="percentage">${Math.round(colaborador.percentual)}%</div>
@@ -555,6 +555,11 @@ if ($tema == ''){
                         $('#valor'+(index+1)).html(valorFormatado);
 
                         $('#collaborator-photo-'+(index+1)).css('background-image', 'url('+colaboradores[index].avatar+')');
+
+                        if (colaboradores[index].total > colaboradores[index].meta){
+                            $('#collaborator-photo-'+(index+1)).addClass('brilho')
+                        }
+                        
 
                     }
 
