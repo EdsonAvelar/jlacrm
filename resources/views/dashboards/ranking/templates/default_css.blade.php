@@ -999,6 +999,8 @@
 
     .vendas-meta-batida {
         background-color: #2f6b34;
+        background-image: url("{{url('')}}/images/sistema/fera2.png");
+        background-size: cover;
     }
 
     .equipe-meta-batida {

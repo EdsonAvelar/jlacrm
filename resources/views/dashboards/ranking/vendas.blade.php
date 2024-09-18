@@ -851,6 +851,7 @@ if ($tema == ''){
 
         function ajustarContainer() {
             const container = document.querySelector('.container2');
+            const menu_bar = document.querySelector('.menu-bar');
             let scaleFactor = Math.min(
                 document.documentElement.clientWidth / 1800, // Largura original da div container2
                 document.documentElement.clientHeight / 1000 // Altura original da div container2
@@ -860,6 +861,8 @@ if ($tema == ''){
             if (scaleFactor > 1){
                 scaleFactor = scaleFactor - scaleFactor*0.1;
             }
+
+
             container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
             container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo
 
