@@ -522,15 +522,19 @@ if ($tema == ''){
                             <div class="photo" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.name}</div>
-                                <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$ ${colaborador.total.toLocaleString()}</div>
+                                <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$
+                                    ${colaborador.total.toLocaleString()}</div>
                                 <div class="progress">
                                     <div class="progress-bar" style="width: ${colaborador.percentual}%;"></div>
                                 </div>
-                                <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
-                            </div>
-                            <div class="percentage">${Math.round(colaborador.percentual) }%</div>
-                            ${html_colaborador}
-                        </div>`;
+                                <div class="missing-value">` +
+                                    (colaborador.total <= colaborador.meta ? `Faltam: R$ ${(colaborador.meta -
+                                        colaborador.total).toLocaleString()}` : `Estraçalhou a meta em: R$ ${(colaborador.total -
+                                        colaborador.meta).toLocaleString()}` ) + `</div>
+                                </div>
+                                <div class="percentage">${Math.round(colaborador.percentual)}%</div>
+                                ${html_colaborador}
+                            </div>`;
                     });
     
                     $('.body-panel').html(html);
