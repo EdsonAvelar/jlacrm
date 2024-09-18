@@ -514,7 +514,7 @@ if ($tema == ''){
                             </div>`
                         }
                         html += `
-                        <div class="collaborator-card ${colaborador.total > colaborador.meta ? 'vendas-meta-batida' : ''}">
+                        <div class="collaborator-card ${colaborador.total > colaborador.meta ? 'equipe-meta-batida' : ''}">
                             <div class="position">${index + 1}</div>
                             <div class="photo ${colaborador.total > colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.equipe_logo}');"></div>
                             <div class="collaborator-info">

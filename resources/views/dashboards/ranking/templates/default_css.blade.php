@@ -1001,6 +1001,13 @@
         background-color: #2f6b34;
     }
 
+    .equipe-meta-batida {
+        background-color: #973838;
+    }
+
+
+
+
 
     @keyframes rotate {
         from {
