@@ -651,9 +651,17 @@ if ($tema == ''){
 
             console.log(JSON.stringify(data));
 
+            var nome_cliente = data.data.cliente.split(' ');
+            var sobrenome = ''
+
+            if (nome_cliente.length > 1){
+                sobrenome = nome_cliente[ nome_cliente.length - 1]
+            }
+
+
 
             document.getElementById('venda_valor').innerText = "Crédito: " + nFormatter(data.data.credito, 2);
-            document.getElementById('nome_cliente').innerText = "Cliente: " + data.data.cliente;
+            document.getElementById('nome_cliente').innerText = "Cliente: " + nome_cliente[0] +' '+sobrenome;
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: " + data.data.equipe_nome : '';
 

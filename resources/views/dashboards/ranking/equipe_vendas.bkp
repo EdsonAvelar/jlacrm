@@ -1708,7 +1708,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
 
 
             document.getElementById('venda_valor').innerText = "Crédito: " + nFormatter(data.data.credito, 2);
-            document.getElementById('nome_cliente').innerText = "Cliente: " + data.data.cliente;
+            document.getElementById('nome_cliente').innerText = "Cliente: " + data.data.cliente.split(' ')[0];;
             document.getElementById('nome_vendedor').innerText = data.data.vendedor;
             document.getElementById('nome_equipe').innerText = data.data.equipe_nome ? "Equipe: " + data.data.equipe_nome : '';
 
