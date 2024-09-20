@@ -519,7 +519,7 @@ if ($tema == ''){
                         html += `
                         <div class="collaborator-card ${colaborador.total >= colaborador.meta ? 'vendas-meta-batida' : ''}">
                             <div class="position">${index + 1}</div>
-                            <div class="photo ${colaborador.total > colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
+                            <div class="photo ${colaborador.total >= colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.name}</div>
                                 <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$
@@ -556,7 +556,7 @@ if ($tema == ''){
 
                         $('#collaborator-photo-'+(index+1)).css('background-image', 'url('+colaboradores[index].avatar+')');
 
-                        if (colaboradores[index].total > colaboradores[index].meta){
+                        if (colaboradores[index].total >= colaboradores[index].meta){
                             $('#collaborator-photo-'+(index+1)).addClass('brilho')
                         }
                         
