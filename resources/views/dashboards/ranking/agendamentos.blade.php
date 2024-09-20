@@ -1484,9 +1484,9 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                             </div>`
                         }
                         html += `
-                        <div class="collaborator-card ${colaborador.total > colaborador.meta ? 'vendas-meta-batida' : ''}">
+                        <div class="collaborator-card ${colaborador.total >= colaborador.meta ? 'vendas-meta-batida' : ''}">
                             <div class="position">${index + 1}</div>
-                            <div class="photo ${colaborador.total > colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
+                            <div class="photo ${colaborador.total >= colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.name}</div>
                                 <div class="meta">Meta: ${colaborador.meta.toLocaleString()} | Total: ${colaborador.total.toLocaleString()}</div>
@@ -1512,7 +1512,7 @@ $colaboradoresPaginados = array_slice($colaboradores, $start, $perPage);
                     }
 
                   
-                    if (colaboradores[index].total > colaboradores[index].meta){
+                    if (colaboradores[index].total >= colaboradores[index].meta){
                             $('#collaborator-photo-'+(index+1)).addClass('brilho')
                         }
                     $('.total-time').html(data.total_vendas)
