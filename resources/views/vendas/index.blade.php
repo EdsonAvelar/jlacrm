@@ -158,7 +158,7 @@ use App\Enums\VendaStatus;
                             </tr>
 
                             @else
-                            <h1>Lead Incosistente: </h1> {{$vendas->id}}
+                            <h1>Lead Incosistente: </h1> {{$venda->id}}
                             {{ dd($venda) }}
                             @endif
 
@@ -228,7 +228,7 @@ use App\Enums\VendaStatus;
                             </tr>
 
                             @else
-                            <h1>Lead Incosistente: </h1> {{$vendas->id}}
+                            <h1>Lead Incosistente: </h1> {{$venda->id}}
                             {{ dd($venda) }}
                             @endif
                             @endforeach
@@ -305,7 +305,7 @@ use App\Enums\VendaStatus;
                                 </td>
                             </tr>
                             @else
-                            <h1>Lead Incosistente: </h1> {{$vendas->id}}
+                            <h1>Lead Incosistente: </h1> {{$venda->id}}
                             {{ dd($venda) }}
                             @endif
                             @endforeach
