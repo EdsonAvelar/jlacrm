@@ -117,7 +117,7 @@ use App\Enums\VendaStatus;
 
                             @foreach ($vendas as $venda)
 
-                            @if ($venda->negocio)
+
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
                                         $venda->negocio->lead->nome }}</a>
@@ -197,7 +197,7 @@ use App\Enums\VendaStatus;
 
                             @foreach ($vendas_rascunho as $venda)
 
-                            {{-- @if ($venda->negocio) --}}
+                            @if ($venda->negocio)
 
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
@@ -227,7 +227,9 @@ use App\Enums\VendaStatus;
                                 </td>
                             </tr>
 
-                            {{-- @endif --}}
+                            @else
+                            {{ dd($venda) }}
+                            @endif
                             @endforeach
 
                         </tbody>
@@ -265,7 +267,7 @@ use App\Enums\VendaStatus;
                                                                             ?>
 
                             @foreach ($vendas_canceladas as $venda)
-                            {{-- @if ($venda->negocio) --}}
+                            @if ($venda->negocio)
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
                                         $venda->negocio->lead->nome }}</a>
@@ -301,8 +303,9 @@ use App\Enums\VendaStatus;
                                     <span class="badge bg-{{ $style }}">{{ $venda->status }} </span>
                                 </td>
                             </tr>
-
-                            {{-- @endif --}}
+                            @else
+                            {{ dd($venda) }}
+                            @endif
                             @endforeach
 
                         </tbody>
