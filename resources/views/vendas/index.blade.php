@@ -117,7 +117,7 @@ use App\Enums\VendaStatus;
 
                             @foreach ($vendas as $venda)
 
-
+                            @if ($venda->negocio)
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
                                         $venda->negocio->lead->nome }}</a>
@@ -158,7 +158,7 @@ use App\Enums\VendaStatus;
                             </tr>
 
                             @else
-
+                            {{ Lead Incosistente: $vendas->id}}
                             {{ dd($venda) }}
                             @endif
 
@@ -228,6 +228,7 @@ use App\Enums\VendaStatus;
                             </tr>
 
                             @else
+                            {{ Lead Incosistente: $vendas->id}}
                             {{ dd($venda) }}
                             @endif
                             @endforeach
@@ -304,6 +305,7 @@ use App\Enums\VendaStatus;
                                 </td>
                             </tr>
                             @else
+                            {{ Lead Incosistente: $vendas->id}}
                             {{ dd($venda) }}
                             @endif
                             @endforeach
