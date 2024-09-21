@@ -117,7 +117,7 @@ use App\Enums\VendaStatus;
 
                             @foreach ($vendas as $venda)
 
-                            @if ($venda->negocio)
+                            {{-- @if ($venda->negocio) --}}
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
                                         $venda->negocio->lead->nome }}</a>
@@ -157,7 +157,7 @@ use App\Enums\VendaStatus;
                                 </td>
                             </tr>
 
-                            @endif
+                            {{-- @endif --}}
                             @endforeach
 
                         </tbody>
@@ -193,7 +193,7 @@ use App\Enums\VendaStatus;
 
                             @foreach ($vendas_rascunho as $venda)
 
-                            @if ($venda->negocio)
+                            {{-- @if ($venda->negocio) --}}
 
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
@@ -214,21 +214,16 @@ use App\Enums\VendaStatus;
                                 <td>{{ \Carbon\Carbon::parse($venda['data_primeira_assembleia'])->format('d/m/Y') }}
                                 </td>
                                 <td>R$ {{ number_format((float) $venda->valor, 2, ',', '.') }}</td>
-
                                 <td>
-
-                                    <?php
-                                                                                                        
+                                    <?php                                                
                                        $style = 'warning';
-                                                                        
                                        $sum_vendas_rascunho = $sum_vendas_rascunho + (float) $venda['valor'];
-                                                                        
                                                                     ?>
                                     <span class="badge bg-{{ $style }}">{{ $venda->status }} </span>
                                 </td>
                             </tr>
 
-                            @endif
+                            {{-- @endif --}}
                             @endforeach
 
                         </tbody>
@@ -266,7 +261,7 @@ use App\Enums\VendaStatus;
                                                                             ?>
 
                             @foreach ($vendas_canceladas as $venda)
-                            @if ($venda->negocio)
+                            {{-- @if ($venda->negocio) --}}
                             <tr>
                                 <td><a href="{{ route('negocio_fechamento', ['id' => $venda->negocio->id]) }}">{{
                                         $venda->negocio->lead->nome }}</a>
@@ -303,7 +298,7 @@ use App\Enums\VendaStatus;
                                 </td>
                             </tr>
 
-                            @endif
+                            {{-- @endif --}}
                             @endforeach
 
                         </tbody>
