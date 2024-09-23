@@ -229,8 +229,8 @@ use App\Enums\VendaStatus;
 
                             @else
                             {{-- <h1>Lead Incosistente: </h1> {{$vendas->id}}
-                            {{ dd($venda) }}
-                            @endif --}}
+                            {{ dd($venda) }} --}}
+                            @endif
                             @endforeach
 
                         </tbody>
@@ -306,7 +306,7 @@ use App\Enums\VendaStatus;
                             </tr>
                             @else
                             {{-- <h1>Lead Incosistente: </h1> {{$vendas->id}} --}}
-                            
+
                             @endif
                             @endforeach
 
