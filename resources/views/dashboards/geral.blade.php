@@ -63,7 +63,8 @@
 
         @include('dashboards.views.card', [
         'card_name' => 'Total Vendido',
-        'card_href' =>route('negocios.aprovacoes'),
+        'card_href' => route('vendas.lista', ['data_inicio' => app('request')->input('data_inicio'), 'data_fim'
+        =>app('request')->input('data_fim')]),
         'card_value' => "R$ " . number_format($stats['total_vendido'], 2, ',', '.'),
         'card_porc' => '3%',
         ])
