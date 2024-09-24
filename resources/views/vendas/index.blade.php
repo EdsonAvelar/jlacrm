@@ -153,7 +153,7 @@ use App\Enums\VendaStatus;
                                             $venda->negocio->lead->nome }}</a>
                                     </td>
                                     @else
-                                    <td>Erro: Fechamento sem Negocio
+                                    <td>Erro: Fechamento sem Negocio [ {{ $venda->id }}]
                                     </td>
 
                                     @endif
@@ -246,7 +246,7 @@ use App\Enums\VendaStatus;
                                             $venda->negocio->lead->nome }}</a>
                                     </td>
                                     @else
-                                    <td>Erro: Fechamento sem Negocio
+                                    <td>Erro: Fechamento sem Negocio [ {{ $venda->id }}]
                                     </td>
 
                                     @endif
@@ -326,7 +326,7 @@ use App\Enums\VendaStatus;
                                     </td>
                                     @else
 
-                                    <td>Erro: Fechamento sem Negocio
+                                    <td>Erro: Fechamento sem Negocio [ {{ $venda->id }}]
                                     </td>
 
                                     @endif
