@@ -81,7 +81,7 @@ class NegocioController extends Controller
         $levantamento->save();
 
         $negocio->tipo = $input['tipo_credito'];
-        $negocio->valor = $input['valor'];
+        $negocio->valor = str_replace('.', '', $input['valor']); //$input['valor'];
         $negocio->save();
 
         //return back()->with('status', 'Levantamento Salvo com sucesso');
@@ -500,8 +500,6 @@ class NegocioController extends Controller
 
     public function negocio_fechamento(Request $request)
     {
-
-
 
         $this->check_if_active();
         $this->check_authorization($request, 'fechamento');

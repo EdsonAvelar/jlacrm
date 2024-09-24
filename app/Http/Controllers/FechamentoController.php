@@ -73,6 +73,49 @@ class FechamentoController extends Controller
         return view('vendas.index', compact('vendas', 'vendas_canceladas', 'vendas_rascunho'));
     }
 
+    public function delete_fechamento(Request $request)
+    {
+
+        $input = $request->all();
+
+        if ($input['deletar_challenger'] != 'DELETAR') {
+            return back()->with('status_error', "Palavra DELETAR Escrita incorretamente");
+        }
+
+        if (array_key_exists('vendas_fechadas', $input)) {
+
+            $vendas = $input['vendas_fechadas'];
+            $vendas = Fechamento::whereIn('id', $vendas)->get();
+            $user_count_dist = 0;
+            foreach ($vendas as $venda) {
+
+                if ($venda->negocio) {
+                    $venda->negocio->status = NegocioStatus::ATIVO;
+
+                    $venda->negocio->fechamento_id = null;
+                    $venda->negocio->save();
+
+
+                    Atividade::add_atividade(\Auth::user()->id, "Deletando Fechamento Concluido", $venda->negocio->id);
+                }
+
+                $venda->delete();
+
+                $user_count_dist = $user_count_dist + 1;
+            }
+        }
+
+
+        if ($user_count_dist > 0) {
+            return back()->with('status', $user_count_dist . " fechamentos foram deletados com sucesso ");
+
+
+        } else {
+            return back()->with('status_error', " Nenhum fechamento foi deletado");
+
+        }
+
+    }
 
     private function gerar_notificacao($input)
     {

@@ -72,6 +72,9 @@ class NegocioSeeder extends Seeder
             $comentario->negocio_id = $negocio->id;
             $comentario->comentario = $faker->text();
             $comentario->save();
+
+
+            
         }
 
     }

@@ -49,7 +49,8 @@ use App\Enums\LevantamentoStatus;
 
                                         <ul class="mb-0 list-inline text-light">
                                             <li class="list-inline-item me-3">
-                                                <h5 class="mb-1 font-19">R$ {{ $negocio->valor }}</h5>
+                                                <h5 class="mb-1 font-19">R$ {{ number_format((float) $negocio->valor,
+                                                    2, ',', '.') }} </h5>
                                                 <p class="mb-0 font-19 text-white-50">Valor do Crédito</p>
                                             </li>
                                         </ul>
@@ -95,8 +96,14 @@ use App\Enums\LevantamentoStatus;
                                             href="{{ route('simulacao.index', ['negocio_id' => $negocio->id]) }}">Simulacao
                                             Multi</a>
 
+                                        @if ($negocio->user)
+
                                         <a class="dropdown-item"
-                                            href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => \Auth::user()->id, 'status' => 'ativo']) }}">Pipeline</a>
+                                            href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $negocio->user->id, 'status' => 'ativo']) }}">Pipeline</a>
+                                        @endif
+
+
+
                                         <hr>
                                         <a class="dropdown-item"
                                             href="{{ route('negocio_fechamento', ['id' => $negocio->id]) }}">Fechamento</a>
@@ -778,9 +785,8 @@ use App\Enums\LevantamentoStatus;
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label for="cwebsite" class="form-label">Valor do Crédito</label>
-                                            <input type="text" class="form-control" id="cwebsite"
-                                                value="{{ $negocio->valor }}" name="valor" data-mask-reverse="true"
-                                                data-mask="000.000.000.000.000,00">
+                                            <input type="text" class="form-control money" id="cwebsite"
+                                                value="{{ $negocio->valor }}" name="valor">
                                         </div>
                                     </div> <!-- end col -->
                                 </div> <!-- end row -->

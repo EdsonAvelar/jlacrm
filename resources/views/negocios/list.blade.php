@@ -214,11 +214,9 @@
 
                                 @if (Auth::user()->hasRole('admin'))
                                 <a type="button" class="btn btn-danger btn-sm ms-3 checkbox_sensitive" id="deletar_btn"
-                                    data-bs-toggle="modal" data-bs-target="#deletarModal">
+                                    data-bs-toggle="modal" data-bs-target="#deletarModal" >
                                     Deletar</a>
                                 @endif
-
-
                             </h4>
                         </div>
                     </div>

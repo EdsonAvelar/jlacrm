@@ -98,6 +98,9 @@ Route::group(['middleware' => 'auth'], function () {
         function () {
             Route::post('/nova', [FechamentoController::class, 'nova_venda'])->name('nova_venda');
             Route::post('/fechamento', [FechamentoController::class, 'nova_venda'])->name('vendas.fechamento');
+
+            Route::post('/delete', [FechamentoController::class, 'delete_fechamento'])->name('delete_fechamento');
+
             Route::post('/notificacao', [FechamentoController::class, 'notificacao'])->name('vendas.notificacao');
             Route::get('/index', [FechamentoController::class, 'index'])->name('vendas.lista');
             Route::post('/perdida', [FechamentoController::class, 'venda_perdida'])->name('vendas.perdida');

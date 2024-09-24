@@ -52,6 +52,7 @@ class Negocio extends Model
         return $this->belongsTo("App\Models\Fechamento");
     }
 
+
     public function aprovacoes()
     {
         return $this->hasMany("App\Models\Aprovacao");
