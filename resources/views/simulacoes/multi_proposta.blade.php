@@ -212,7 +212,7 @@ function convert($frase)
                     </td>
                     <td align="left">
                         @if ($simulacao->tipo == 'IMOVEL')
-                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">{{ $financiamento['cartorio'] }}
+                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">{{ $financiamento['fin-cartorio'] }}
                             </span></h4>
                         <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$
                                 2.400,00</span> </h4>
