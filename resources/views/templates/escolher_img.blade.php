@@ -19,6 +19,7 @@
                                 <input type="file" name="image" id="inputImage"
                                     class="form-control @error('image') is-invalid @enderror">
                                 <input id="editimage_user_id" name="user_id" hidden value={{ $user_id }}>
+                                <input type="text" class="editar_equipe_id" name="editar_equipe_id" hidden value="">
 
                                 <input id="tipo_corte" hidden value="quadrado1">
                                 <input id="corte_largura" hidden value="300">

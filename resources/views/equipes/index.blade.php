@@ -119,10 +119,14 @@
 
 
 
+                            <a href="#"
+                                onclick='image_save("/images/equipes/{{ $equipe->id }}","{{ $equipe->logo }}","{{ $equipe->id }}")'
+                                class="text-muted font-14">
+                                <img id="equipe_logo"
+                                    src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}"
+                                    alt="user-image" class="rounded-circle" width="50" height="50">
 
-                            <img id="equipe_logo"
-                                src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}"
-                                alt="user-image" class="rounded-circle" width="50" height="50">
+                            </a>
 
 
                             <div class="w-100 overflow-hidden">
@@ -206,11 +210,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe<span
-                                        class="text-danger">
-                                        *</label>
-                                <input type="file" name="image" id="inputImage"
-                                    class="form-control @error('image') is-invalid @enderror" required>
+                                <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe</label>
+                                <input type="file" name="image" id="CreateInputImage"
+                                    class="form-control @error('image') is-invalid @enderror" >
                                 <br>
                                 <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#">
                             </div>
@@ -279,9 +281,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="mb-12">
-                                <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe<span
-                                        class="text-danger">
-                                        *</label>
+                                <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe</label>
                                 <input type="file" name="image" id="EditInputImage"
                                     class="form-control @error('image') is-invalid @enderror">
                                 <br>
@@ -333,7 +333,7 @@
 @include('templates.escolher_img', [
 'action' => url('equipes/change/image'),
 'titulo' => "Editar Imagem da Equipe",
-'user_id' => app('request')->id
+'user_id' => app('request')->id,
 ])
 
 
@@ -346,6 +346,17 @@
 <script src="{{ url('') }}/js/ui/component.dragula.js"></script>
 
 <script>
+    function image_save($folder, $imgname,$editar_equipe_id) {
+
+        console.log($folder, $imgname,$editar_equipe_id)
+
+        $('#pasta_imagem').val($folder);
+        $('#imagem_name').val($imgname);
+        $('.editar_equipe_id').val($editar_equipe_id);
+        $('#change_logo').modal('show');
+    }
+
+    
     var cont = [];
         var arr = Array($('.container_exp').data('containers'))[0];
 

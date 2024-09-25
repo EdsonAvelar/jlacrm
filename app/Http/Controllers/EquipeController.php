@@ -135,11 +135,11 @@ class EquipeController extends Controller
         $input = $request->all();
 
         $rules = array(
-            'image' => 'required|mimes:jpg,png,jpeg,gif,svg|max:2048',
+            'image' => 'mimes:jpg,png,jpeg,gif,svg|max:2048',
         );
 
         $error_msg = [
-            'image.required' => 'Imagem é Obrigatório',
+
             'image.max' => 'Limite Máximo do Arquivo 3mb',
             'image.mimes' => 'extensões válidas (jpg,jpeg,png,jpeg,gif,svg)'
         ];
@@ -163,13 +163,22 @@ class EquipeController extends Controller
 
         $equipe->lider_id = $input['lider_id'];
 
-        $imageName = "logo." . $request->image->extension();
+        if ($request->hasFile('image')) {
+            $imageName = "logo." . $request->image->extension();
+            $equipe->logo = $imageName;
+            $equipe->save();
+
+            $request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
+        } else {
+            $equipe->logo = 'images/sistema/equipe-padrao.png';
 
 
-        $equipe->logo = $imageName;
+            #$request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
+        }
+
+
         $equipe->save();
 
-        $request->image->move(public_path('images') . "/equipes/" . $equipe->id . "/", $imageName);
 
         User::where('id', $input['lider_id'])->update(['equipe_id' => $equipe->id]);
 
