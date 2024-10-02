@@ -24,7 +24,7 @@ class NegocioSeeder extends Seeder
 
         $faker = \Faker\Factory::create('pt_BR');
 
-        for ($i = 1; $i < 1000; $i++) {
+        for ($i = 1; $i < 100; $i++) {
 
             $negocio = new Negocio();
             $negocio->titulo = "Casa 100k " . $faker->name;
@@ -72,10 +72,7 @@ class NegocioSeeder extends Seeder
             $comentario->negocio_id = $negocio->id;
             $comentario->comentario = $faker->text();
             $comentario->save();
-
-
-            
+           
         }
-
     }
 }

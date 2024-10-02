@@ -31,7 +31,7 @@ class EquipeController extends Controller
 
         $user = User::find($equipe->lider_id);
 
-        return [$equipe->id, $equipe->nome, $user->name, $equipe->descricao, $equipe->logo];
+        return [$equipe->id, $equipe->nome, $user->name, $equipe->descricao, $equipe->logo, $equipe->lider_id];
     }
 
     public function change_image(Request $request)
@@ -80,7 +80,7 @@ class EquipeController extends Controller
         $equipe = Equipe::find($input['editar_equipe_id']);
         if ($request->has('lider_id')) {
 
-            if ($input['lider_id'] != '') {
+            if ($input['lider_id'] != '' && $input['lider_id'] != $equipe->lider_id) {
 
                 $antigolider = User::find($equipe->lider_id);
                 User::where('id', $antigolider->id)->update(['equipe_id' => NULL]);

@@ -123,7 +123,7 @@
                                 onclick='image_save("/images/equipes/{{ $equipe->id }}","{{ $equipe->logo }}","{{ $equipe->id }}")'
                                 class="text-muted font-14">
                                 <img id="equipe_logo"
-                                    src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}"
+                                    src="{{ url('') }}/images/equipes/{{ $equipe->id }}/{{ $equipe->logo }}?{{ \Carbon\Carbon::now()->timestamp }}"
                                     alt="user-image" class="rounded-circle" width="50" height="50">
 
                             </a>
@@ -212,7 +212,7 @@
                             <div class="mb-12">
                                 <label for="task-title" class="form-label">Faça o Upload do Logo da Equipe</label>
                                 <input type="file" name="image" id="CreateInputImage"
-                                    class="form-control @error('image') is-invalid @enderror" >
+                                    class="form-control @error('image') is-invalid @enderror">
                                 <br>
                                 <img id="myImg" class="rounded-circle avatar-lg img-thumbnail" src="#">
                             </div>
@@ -262,8 +262,7 @@
                             <label for="task-title" class="form-label">Lider da Equipe<span class="text-danger"></label>
                             <select class="form-select form-control-light" id="task-priority" name="lider_id">
 
-                                <option id="edit_nome_lider" value="">{{ $user->name }}</option>
-
+                                <option id="edit_nome_lider" value="123">ABC</option>
                                 @foreach ($semequipes as $user)
                                 @if ($user->hasRole('gerenciar_equipe'))
                                 @if ($user->id == \Auth::user()->id)
@@ -407,7 +406,7 @@
                     $('#editar_equipe_id').val(res[0]);
                     $('#edit_nome_equipe').val(res[3]);
 
-                    $('#edit_nome_lider').val(res[0]);
+                    $('#edit_nome_lider').val(res[5]);
                     $('#edit_nome_lider').html(res[2]);
 
                     $('#edit_img_equipe').attr('src', "{{ url('') }}" + "/images/equipes/" + res[

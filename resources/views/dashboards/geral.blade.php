@@ -33,8 +33,6 @@
 
                         <a href="{{ route('home', ['data_inicio' => \Carbon\Carbon::now()->format('d/m/Y'), 'data_fim' => \Carbon\Carbon::now()->format('d/m/Y')]) }}"
                             type="button" style="margin-left: 10px;" class="btn btn-success">HOJE</a>
-
-
                     </form>
                 </div>
                 @if ( !((app('request')->input('data_inicio') == \Carbon\Carbon::now()->format('d/m/Y') ) &
@@ -47,7 +45,6 @@
                     @endif
             </div>
         </div>
-
     </div>
 
     <!-- end page title -->
