@@ -802,19 +802,6 @@ if ($tema == ''){
         });
 
 
-
-        document.addEventListener('DOMContentLoaded', function () {
-            // Detecta o clique no botão com a classe settings-sync
-            document.querySelector('.settings-sync').addEventListener('click', function () {
-
-
-                atualizarColaboradores();
-
-
-            });
-        });
-
-
         $('.toggle-event').change(function ($this) {
 
             var config_info = $(this).data('config_info');
@@ -888,10 +875,8 @@ if ($tema == ''){
         let fullscreen = false;
         window.addEventListener('resize', ajustarContainer);
         window.addEventListener('load', ajustarContainer);
-
-        document.querySelector('.fullscreen-toggle').addEventListener('click', function () {
-
-
+        
+        function set_tofullscreen(){
             fullscreen = true;
             $(".menu-bar").css('display', 'none');
             $('.header-total').css('display', 'none');
@@ -901,6 +886,14 @@ if ($tema == ''){
 
             $('.container2').css('padding', '0px');
             ajustarContainer()
+        
+        }
+
+        
+        document.querySelector('.fullscreen-toggle').addEventListener('click', function () {
+
+
+           set_tofullscreen();
 
         });
 
@@ -928,8 +921,21 @@ if ($tema == ''){
             }
         });
 
+        // const params = new URLSearchParams(window.location.search);
+        // // Verifica se o parâmetro 'atributo' existe
+        // if (params.has('carrossel')) {
+        
+        // set_tofullscreen()
+        
+        // setTimeout(() => {
+        // window.location.href = "{{url('')}}/ranking/agendamentos?carrossel=true" ; // Substitua pela URL desejada
+        // }, 60000);
+        // }
 
+       
     </script>
+
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'agendamentos'])
 </body>
 
 </html>

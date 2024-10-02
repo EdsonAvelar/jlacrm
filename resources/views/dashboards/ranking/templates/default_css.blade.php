@@ -11,6 +11,44 @@
         flex-direction: column;
     }
 
+
+    #overlay1 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0);
+        z-index: 999;
+        display: block;
+        transition: opacity 3s ease-in-out;
+        opacity: 0;
+        pointer-events: none;
+        /* Torna a div não clicável */
+    }
+
+    #overlay2 {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgb(0 0 0);
+        z-index: 999;
+        display: block;
+        pointer-events: none;
+        /* Torna a div não clicável */
+        transition: opacity 3s ease-in-out;
+    }
+
+    .overlay-fade-in {
+        opacity: 0;
+    }
+
+    .overlay-fade-out {
+        opacity: 1;
+    }
+
     .missing-value {
         color: white;
     }

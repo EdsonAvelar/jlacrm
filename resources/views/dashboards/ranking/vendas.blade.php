@@ -157,7 +157,7 @@ if ($tema == ''){
 
         <!-- Info Panel Section -->
         <div class="info-panel">
-            <div class="header-panel">
+            {{-- <div class="header-panel">
                 <select name="update-interval" id="update-interval">
                     <option value="5000">5s</option>
                     <option value="15000">15s</option>
@@ -176,6 +176,7 @@ if ($tema == ''){
                     </span>
                 </div>
             </div>
+            --}}
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking de Vendas</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
@@ -226,7 +227,7 @@ if ($tema == ''){
 
     </div>
 
-    <div class="footer-panel">
+    {{-- <div class="footer-panel">
         <div class="active-rankings">
             <span>Times Ativos:</span>
             <i class="fas fa-chart-line"></i>
@@ -237,7 +238,7 @@ if ($tema == ''){
             <span>9m:59s | Restantes...</span>
             <i class="fas fa-play" id="play-pause-icon"></i>
         </div>
-    </div>
+    </div> --}}
 
     {{-- JANELA DE CONFIGURAÇÕESSSSS --}}
 
@@ -259,7 +260,6 @@ if ($tema == ''){
             <div id="info-gerais" class="content-section">
                 <h4>Informações Gerais</h4>
                 <p>Configurações principais sobre o time.</p>
-
 
                 <div class="mb-6">
                     <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
@@ -289,8 +289,19 @@ if ($tema == ''){
                     data-offstyle="danger">
                 </div>
 
+                <div class="mb-6">
+                    <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                        <label for="inputEmail3" class="col-form-label">Carrossel
+                            <span class="mdi mdi-information"></span>
+                        </label> </span>
 
-
+                    <input class="toggle-event" type="checkbox" <?php $exibir_vendas=config("ranking_carrossel"); if
+                        ($exibir_vendas!=null & $exibir_vendas=='true' ){ echo 'checked' ;} ?>
+                    data-config_info="ranking_carrossel" data-toggle="toggle"
+                    data-on="Ligado" data-off="Desligado"
+                    data-onstyle="success"
+                    data-offstyle="danger">
+                </div>
 
             </div>
             <div id="premiacao" class="content-section hidden">
@@ -538,8 +549,7 @@ if ($tema == ''){
                     });
     
                     $('.body-panel').html(html);
-
-                    
+                  
 
                 
                     let num_coladores = Math.min(colaboradores.length, 3)
@@ -801,19 +811,6 @@ if ($tema == ''){
             });
         });
 
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // Detecta o clique no botão com a classe settings-sync
-            document.querySelector('.settings-sync').addEventListener('click', function() {
-            
-            
-            atualizarColaboradores();
-            
-         
-            });
-        });
-
  
         $('.toggle-event').change(function($this) {
         
@@ -836,7 +833,14 @@ if ($tema == ''){
                     $('#header-total').css('display','none')
                 }
             }
-            save_config(config_info, config_value);      
+
+            
+            save_config(config_info, config_value);    
+
+            if(config_info == "ranking_carrossel"){
+            
+                window.location.href = "{{url('')}}/ranking/vendas"
+            }  
         });
         var ids_toggle = [
 
@@ -882,19 +886,19 @@ if ($tema == ''){
         window.addEventListener('resize', ajustarContainer);
         window.addEventListener('load', ajustarContainer);
 
+    function set_tofullscreen(){
+        fullscreen = true;
+        $(".menu-bar").css('display','none');
+        $('.ranking-header').css('display','none');
+        $('.header-panel').css('display','none');
+        $('.footer-panel').css('display','none');
+        $('.container2').css('padding','0px');
+        
+        ajustarContainer()
+    }
         document.querySelector('.fullscreen-toggle').addEventListener('click', function () {
-
-
-            fullscreen = true;
-            $(".menu-bar").css('display','none');
-            $('.ranking-header').css('display','none');
-            $('.header-panel').css('display','none');
-            $('.footer-panel').css('display','none');
-            $('.container2').css('padding','0px');
-            
-            ajustarContainer()
-
-    });
+            set_tofullscreen()
+        });
 
     const container = document.querySelector('.container2');
     
@@ -920,6 +924,7 @@ if ($tema == ''){
     });
 
     document.querySelector('.settings').addEventListener('click', function () {
+
         document.getElementById('settings-window').style.transform = 'translateX(0)';
         document.querySelector('.context-overlay').style.display = 'block'; // Mostrar o overlay
         });
@@ -948,7 +953,22 @@ if ($tema == ''){
         });
 
 
+    // const params = new URLSearchParams(window.location.search);
+    // // Verifica se o parâmetro 'atributo' existe
+    // if (params.has('carrossel')) {
+
+    //     set_tofullscreen()
+        
+    //     setTimeout(() => {
+    //     window.location.href = "{{url('')}}/ranking/vendas/equipes?carrossel=true" ; // Substitua pela URL desejada
+    //     }, 10000);
+    // } 
+
     </script>
+
+
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+
 </body>
 
 </html>
