@@ -31,7 +31,7 @@
 
             // Configurações da barra de progresso
             const barraProgresso = document.getElementById('barra-progresso');
-            const tempoTotal = 60000; // 10 segundos (10000 ms)
+            const tempoTotal = 120000; // 10 segundos (10000 ms)
             const interval = 500; // Atualiza a barra a cada 500ms
             const fadeOutStart = 2000; // Inicia o fade-out nos últimos 2 segundos
 
