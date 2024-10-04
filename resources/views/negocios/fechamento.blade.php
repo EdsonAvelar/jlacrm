@@ -547,7 +547,7 @@ function to_data($data)
                                     <div class="mb-3">
                                         <label for="phone" class="form-label">TEL 1</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->telefone }}"
-                                            name="telefone">
+                                            name="telefone" required>
                                     </div>
                                 </div>
 

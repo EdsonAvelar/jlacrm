@@ -209,9 +209,6 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_funcionarios']], function
     );
 });
 
-
-
-
 Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
     Route::group(
         ['prefix' => 'equipes'],

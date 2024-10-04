@@ -178,7 +178,15 @@ class NegocioController extends Controller
             }
 
             $dados_item['vendedor'] = $vendedor->name;
-            $dados_item['cliente'] = $venda->negocio->lead->nome;
+            try {
+                //code...
+                $dados_item['cliente'] = $venda->negocio->lead->nome;
+            } catch (\Throwable $th) {
+                //throw $th;
+                dd($venda);
+            }
+
+
             $dados_item['credito'] = $venda->valor;
             $dados_item['negocio_id'] = $venda->negocio->id;
 
