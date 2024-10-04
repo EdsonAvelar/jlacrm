@@ -158,9 +158,6 @@ use App\Enums\VendaStatus;
 
                                     @endif
 
-
-
-
                                     <td><a href="">{{ $venda->numero_contrato }}</a>
                                     </td>
 

@@ -259,7 +259,7 @@ function to_data($data)
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">NOME COMPLETO</label>
                                         <input type="text" class="form-control" value="{{ $negocio->lead->nome }}"
-                                            name="nome">
+                                            name="nome" required>
                                     </div>
                                 </div>
                                 <div class="col-md-5">

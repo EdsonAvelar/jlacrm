@@ -246,82 +246,92 @@ class FechamentoController extends Controller
         $venda->terceiro_vendedor_id = $input['terceiro_vendedor_id'];
 
         $venda->status = $input['status'];
-        ;
+
 
         $venda->save();
 
-        if ($negocio->conjuge_id) {
-            $conjuge = Lead::find($negocio->conjuge_id);
-        } else {
-            $conjuge = new Lead();
-        }
-
-        if (!$input['conj_nome']) {
-            $input['conj_nome'] = "";
-        }
-
-        if (!$input['conf_telefone']) {
-            $input['conf_telefone'] = "";
-        }
-
-        $conjuge['nome'] = strtoupper($input['conj_nome']);
-        $conjuge['telefone'] = $input['conf_telefone'];
-        $conjuge['data_nasc'] = $input['conj_data_nasc'];
-        $conjuge['cpf'] = $input['conj_cpf'];
-        $conjuge['rg'] = $input['conj_rg'];
-        $conjuge['orgao_exp'] = $input['conj_orgao_exp'];
-        $conjuge['data_exp'] = $input['conj_data_exp'];
-        $conjuge['nacionalidade'] = $input['conj_nacionalidade'];
-        $conjuge['genero'] = $input['conj_genero'];
-        $conjuge['naturalidade'] = $input['conj_naturalidade'];
-        $conjuge['estado_civil'] = $input['estado_civil'];
-        $conjuge['formacao'] = $input['conj_formacao'];
-        $conjuge['profissao'] = $input['conj_profissao'];
-        $conjuge['renda_liquida'] = $input['conj_renda_liquida'];
-        $conjuge->save();
-
+        
         if ($negocio->lead_id) {
             $lead = Lead::find($negocio->lead_id);
         } else {
             $lead = new Lead();
         }
 
-        $lead['nome'] = strtoupper($input['nome']);
-        $lead['telefone'] = $input['telefone'];
-        $lead['nome_pai'] = $input['nome_pai'];
-        $lead['nome_mae'] = $input['nome_mae'];
-        $lead['data_nasc'] = $input['data_nasc'];
-        $lead['cpf'] = $input['cpf'];
-        $lead['rg'] = $input['rg'];
-        $lead['orgao_exp'] = $input['orgao_exp'];
-        $lead['data_exp'] = $input['data_exp'];
-        $lead['nacionalidade'] = $input['nacionalidade'];
-        $lead['naturalidade'] = $input['naturalidade'];
-        $lead['estado_civil'] = $input['estado_civil'];
-        $lead['genero'] = $input['genero'];
-        $lead['formacao'] = $input['formacao'];
-        $lead['profissao'] = $input['profissao'];
-        $lead['renda_liquida'] = $input['renda_liquida'];
+        try {
 
-        $lead['email'] = $input['email'];
-        $lead['cep'] = $input['cep'];
-        $lead['endereco'] = $input['endereco'];
-        $lead['numero'] = $input['numero'];
-        $lead['bairro'] = $input['bairro'];
-        $lead['cidade'] = $input['cidade'];
-        $lead['estado'] = $input['estado'];
+            if ($negocio->conjuge_id) {
+                $conjuge = Lead::find($negocio->conjuge_id);
+            } else {
+                $conjuge = new Lead();
+            }
 
-        $lead->save();
+            if (!$input['conj_nome']) {
+                $input['conj_nome'] = "";
+            }
 
-        # Atualizar tipo de negociacao
-        Negocio::where('id', $negocio_id)->update([
-            'valor' => $valor,
-            'fechamento_id' => $venda->id,
-            'conjuge_id' => $conjuge->id,
-            'lead_id' => $lead->id,
-            #'tipo'=>$tipo_credito,
-            'status' => NegocioStatus::VENDIDO
-        ]);
+            if (!$input['conf_telefone']) {
+                $input['conf_telefone'] = "";
+            }
+
+            $conjuge['nome'] = strtoupper($input['conj_nome']);
+            $conjuge['telefone'] = $input['conf_telefone'];
+            $conjuge['data_nasc'] = $input['conj_data_nasc'];
+            $conjuge['cpf'] = $input['conj_cpf'];
+            $conjuge['rg'] = $input['conj_rg'];
+            $conjuge['orgao_exp'] = $input['conj_orgao_exp'];
+            $conjuge['data_exp'] = $input['conj_data_exp'];
+            $conjuge['nacionalidade'] = $input['conj_nacionalidade'];
+            $conjuge['genero'] = $input['conj_genero'];
+            $conjuge['naturalidade'] = $input['conj_naturalidade'];
+            $conjuge['estado_civil'] = $input['estado_civil'];
+            $conjuge['formacao'] = $input['conj_formacao'];
+            $conjuge['profissao'] = $input['conj_profissao'];
+            $conjuge['renda_liquida'] = $input['conj_renda_liquida'];
+            $conjuge->save();
+
+            $lead['nome'] = strtoupper($input['nome']);
+            $lead['telefone'] = $input['telefone'];
+            $lead['nome_pai'] = $input['nome_pai'];
+            $lead['nome_mae'] = $input['nome_mae'];
+            $lead['data_nasc'] = $input['data_nasc'];
+            $lead['cpf'] = $input['cpf'];
+            $lead['rg'] = $input['rg'];
+            $lead['orgao_exp'] = $input['orgao_exp'];
+            $lead['data_exp'] = $input['data_exp'];
+            $lead['nacionalidade'] = $input['nacionalidade'];
+            $lead['naturalidade'] = $input['naturalidade'];
+            $lead['estado_civil'] = $input['estado_civil'];
+            $lead['genero'] = $input['genero'];
+            $lead['formacao'] = $input['formacao'];
+            $lead['profissao'] = $input['profissao'];
+            $lead['renda_liquida'] = $input['renda_liquida'];
+
+            $lead['email'] = $input['email'];
+            $lead['cep'] = $input['cep'];
+            $lead['endereco'] = $input['endereco'];
+            $lead['numero'] = $input['numero'];
+            $lead['bairro'] = $input['bairro'];
+            $lead['cidade'] = $input['cidade'];
+            $lead['estado'] = $input['estado'];
+
+            $lead->save();
+
+            # Atualizar tipo de negociacao
+            Negocio::where('id', $negocio_id)->update([
+                'valor' => $valor,
+                'fechamento_id' => $venda->id,
+                'conjuge_id' => $conjuge->id,
+                'lead_id' => $lead->id,
+                #'tipo'=>$tipo_credito,
+                'status' => NegocioStatus::VENDIDO
+            ]);
+
+        } catch (\Throwable $th) {
+            if ($venda) {
+                $venda->delete();
+            }
+            return back()->with('status_error', "Erro: ".$th->getMessage());
+        }
 
         Atividade::add_atividade(\Auth::user()->id, "Fechamento Concluido", $negocio_id);
 
