@@ -312,7 +312,7 @@ class NegocioController extends Controller
         return $string;
     }
 
-    public function importar_upload(Request $request)
+    public function importar_upload_old(Request $request)
     {
 
         $input = $request->all();
@@ -414,6 +414,127 @@ class NegocioController extends Controller
             }
         }
     }
+
+    public function importar_upload(Request $request)
+    {
+        $input = $request->all();
+        $rules = array(
+            'upload_file' => 'required|max:3000|mimetypes:text/plain,text/csv,application/csv,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        );
+
+        $error_msg = [
+            'upload_file.required' => 'Arquivo Obrigatório',
+            'upload_file.max' => 'Limite Máximo do Arquivo 3mb',
+            'upload_file.mimes' => 'O arquivo deve ser do tipo CSV ou XLSX',
+        ];
+
+        $validator = Validator::make($input, $rules, $error_msg);
+
+        if ($validator->fails()) {
+
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $file = $request->file('upload_file');
+        $filePath = storage_path() . '/app/' . $file->store('tmp');
+        $extension = $file->getClientOriginalExtension();
+
+        // Variáveis para contabilizar importações e rejeições
+        $import_data = [];
+        $imported = 0;
+        $negocios_rejeitados = 0;
+
+        if ($extension === 'csv') {
+            // Determinar o delimitador (vírgula ou ponto e vírgula)
+            $fileContent = file_get_contents($filePath);
+            $delimiter = strpos($fileContent, ';') !== false ? ';' : ',';
+
+            // Configurar o leitor de CSV
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Csv();
+            $reader->setInputEncoding('UTF-8');
+            $reader->setDelimiter($delimiter);
+            $reader->setEnclosure('');
+            $reader->setSheetIndex(0);
+
+        } elseif ($extension === 'xlsx') {
+            // Caso o arquivo seja XLSX
+            $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        } else {
+            return back()->with('status_error', 'Tipo de arquivo não suportado');
+        }
+
+        // Carregar a planilha
+        try {
+            $spreadsheet = $reader->load($filePath);
+        } catch (\PhpOffice\PhpSpreadsheet\Reader\Exception $e) {
+            return back()->with('status_error', 'Erro ao ler o arquivo: ' . $e->getMessage());
+        }
+
+        $sheet = $spreadsheet->getActiveSheet();
+        $worksheetinfo = $reader->listWorksheetInfo($filePath);
+        $totalRows = $worksheetinfo[0]['totalRows'];
+
+        // Processamento dos dados
+        for ($row = 2; $row <= $totalRows; $row++) {
+            $nome = $sheet->getCell("A{$row}")->getValue();
+            $telefone = $sheet->getCell("B{$row}")->getValue();
+            $email = $sheet->getCell("C{$row}")->getValue();
+            $tipo_do_bem = $sheet->getCell("D{$row}")->getValue();
+            $campanha = $sheet->getCell("E{$row}")->getValue();
+            $fonte = $sheet->getCell("F{$row}")->getValue();
+
+            $create_time = Carbon::now()->format('Y-m-d H:i');
+
+            // Remover padrões como 55, p:+55, p:55 e +55 das strings de telefone
+            $telefone = $this->removePatterns($telefone);
+
+            $lead = Lead::where(['telefone' => $telefone, 'nome' => $nome])->first();
+
+            if (!empty($lead)) {
+                $negocios_rejeitados++;
+                continue;
+            }
+
+            $negimp = NegocioImportado::where(['telefone' => $telefone])->first();
+
+            if (!empty($negimp)) {
+                $negocios_rejeitados++;
+                continue;
+            }
+
+            $negocio = new NegocioImportado();
+            $negocio->nome = $nome;
+            $negocio->telefone = $telefone;
+            $negocio->email = $email;
+            $negocio->tipo_do_bem = $tipo_do_bem;
+            $negocio->campanha = $campanha;
+            $negocio->fonte = $fonte;
+            $negocio->data_conversao = $create_time;
+            $negocio->origem = "IMPORTACAO_PLANILHA";
+
+            try {
+                $negocio->save();
+            } catch (QueryException $e) {
+                $negocios_rejeitados++;
+                continue;
+            }
+
+            $imported++;
+        }
+
+        if ($imported > 0) {
+            return back()->with('status', "$imported negocios importados com sucesso. $negocios_rejeitados rejeitados por duplicidade");
+        } else {
+            if ($negocios_rejeitados > 0) {
+                return back()->with('status_error', 'Todos foram rejeitados por duplicidade');
+            } else {
+                return back()->with('status_error', 'Erro ao ler o arquivo. Cheque se estava no formato correto');
+            }
+        }
+    }
+
 
     public function check_authorization($request, $action)
     {

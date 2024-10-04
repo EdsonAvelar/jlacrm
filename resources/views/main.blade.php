@@ -1027,6 +1027,24 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             message: "{{ session('status_error') }}"
         })
 </script>
+
+
+<script>
+    @if($errors->any())
+        @foreach ($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+
+    @if (session('status'))
+        toastr.success("{{ session('status') }}");
+    @endif
+
+    @if (session('status_error'))
+        toastr.error("{{ session('status_error') }}");
+    @endif
+</script>
+
 @endif
 
 

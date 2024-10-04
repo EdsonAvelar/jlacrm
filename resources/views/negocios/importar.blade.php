@@ -37,8 +37,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Obs: Vírgula como Separador=
-                        ',' )</h4>
+                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Serapado por ',' ou ';') ou Excel (xlsx)</h4>
                     <p class="text-muted font-14">
                         <strong>Passo 1: </strong>Coloque os leads no formado da planilha do link: <a
                             href="https://docs.google.com/spreadsheets/d/1xOgu3MoZhYFgwy3Zd0n_DPe1Hbc731ceNL5dY6DBzf0/edit?usp=sharing"
