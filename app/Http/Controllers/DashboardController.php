@@ -16,6 +16,7 @@ use App\Models\Cargo;
 use App\Models\Reuniao;
 use App\Models\Aprovacao;
 use App\Models\Equipe;
+use App\Models\Simulacao;
 use H;
 use Illuminate\Support\Facades\DB;
 
@@ -198,7 +199,15 @@ class DashboardController extends Controller
                 ['data_proposta', '<=', $to],
             ];
 
-            $count = Proposta::where($query)->whereIn('user_id', $ids)->count();
+            //$count = Proposta::where($query)->whereIn('user_id', $ids)->count();
+
+
+            $count_proposta = Proposta::where($query)->whereIn('user_id', $ids)->count();
+            $count_multiproposta = Simulacao::where($query)->whereIn('user_id', $ids)->count();
+
+            $count = $count_proposta + $count_multiproposta;
+
+
             array_push($output['propostas'], $count);
 
 
@@ -347,7 +356,13 @@ class DashboardController extends Controller
                 ['data_proposta', '<=', $to],
             ];
 
-            $count = Proposta::where($query)->count();
+            // $count = Proposta::where($query)->count();
+            $count_proposta = Proposta::where($query)->count();
+            $count_multiproposta = Simulacao::where($query)->count();
+
+            $count = $count_proposta + $count_multiproposta;
+
+            
             array_push($output['propostas'], $count);
 
             // #########
@@ -661,7 +676,10 @@ class DashboardController extends Controller
                     ['user_id', '=', $vendedor->id]
                 ];
 
-                $count = Proposta::where($query)->count();
+                $count_proposta = Proposta::where($query)->count();
+                $count_multiproposta = Simulacao::where($query)->count();
+
+                $count = $count_proposta + $count_multiproposta;
 
                 array_push($output['propostas'], $count);
                 $stats['sum_propostas'] = $stats['sum_propostas'] + $count;
@@ -897,9 +915,14 @@ class DashboardController extends Controller
                     ['user_id', '=', $vendedor->id]
                 ];
 
-                $__propostas = Proposta::where($query)->count();
+                //$__propostas = Proposta::where($query)->count();
 
-                array_push($output['propostas'], $__propostas);
+                $count_proposta = Proposta::where($query)->count();
+                $count_multiproposta = Simulacao::where($query)->count();
+
+                $count = $count_proposta + $count_multiproposta;
+
+                array_push($output['propostas'], $count);
                 $stats['sum_propostas'] = $stats['sum_propostas'] + $count;
 
             }

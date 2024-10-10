@@ -55,9 +55,11 @@ class SimulacaoController extends Controller
         $lead->cpf = $input['cpf'];
         $lead->save();
 
-        $simulacao['user_id'] = \Auth::user()->id;
-
-
+        if ($neg->user) {
+            $simulacao['user_id'] = $neg->user->id;
+        } else {
+            $simulacao['user_id'] = \Auth::user()->id;
+        }
 
         $simulacao->save();
 

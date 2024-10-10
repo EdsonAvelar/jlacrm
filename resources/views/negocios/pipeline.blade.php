@@ -61,9 +61,7 @@ $protocolo_hora = 0;
     .task {
         width: 1rem;
     }
-</style>
 
-<style>
     .nolink {
 
         text-decoration: none;
@@ -83,14 +81,16 @@ $protocolo_hora = 0;
 
     }
 
-
-    /* .border1 {
-                    border: 0px solid #d0d0d0;
-                }
-
-                .border1:hover {
-                    border: 3px solid rgb(78, 0, 146);
-                } */
+    .no-select {
+        -webkit-user-select: none;
+        /* Safari */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Standard */
+    }
 </style>
 @endsection
 
@@ -269,7 +269,7 @@ $protocolo_hora = 0;
 
     <div class="row container-drag" id="container" data-containers='["<?php echo implode('","', $etapa_funils); ?>"]'>
         <div class="col-12">
-            <div class="board">
+            <div class="board no-select">
 
                 @foreach ($etapa_funils as $key => $value)
                 @if (isset($negocios))

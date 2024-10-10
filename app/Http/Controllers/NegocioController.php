@@ -913,11 +913,17 @@ class NegocioController extends Controller
         $proposta['parcelas_embutidas'] = $input['parcelas_embutidas'];
         $proposta['data_proposta'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
 
-        $proposta['user_id'] = \Auth::user()->id;
-
-        $proposta['negocio_id'] = $input['negocio_id'];
-
         $neg = Negocio::find($input['negocio_id']);
+
+        $proposta['negocio_id'] = $neg->id;
+
+        if ($neg->user) {
+            $proposta['user_id'] = $neg->user->id;
+        } else {
+            $proposta['user_id'] = \Auth::user()->id;
+        }
+
+
         $lead = Lead::find($neg->lead->id);
         $lead->cpf = $input['cpf'];
         $lead->save();

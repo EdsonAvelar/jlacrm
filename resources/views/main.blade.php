@@ -46,6 +46,9 @@ $user = Auth::user();
     <link href="{{ url('') }}/css/icons.min.css" rel="stylesheet" type="text/css">
     <link href="{{ url('') }}/css/app.min.css" rel="stylesheet" type="text/css" id="light-style">
     <link href="{{ url('') }}/css/app-dark.min.css" rel="stylesheet" type="text/css" id="dark-style">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
     @yield('headers')
 
 
@@ -168,9 +171,15 @@ $user = Auth::user();
             overflow-y: scroll !important;
         }
 
-        /* body[data-leftbar-theme="dark"] .leftside-menu {
-            background: #ffffff;
-        } */
+
+        .leftside-menu {
+
+            box-shadow: 2px 1px 12px 0px #61767b;
+        }
+
+        .navbar-custom {
+            box-shadow: 0px 6px 7px 0px #cccccc38;
+        }
     </style>
 
     <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
@@ -190,8 +199,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     data-layout-config='{"leftSideBarTheme":"dark","layoutBoxed":false,
     "leftSidebarCondensed":false,"leftSidebarScrollable":false,"darkMode":false,
     "showRightSidebarOnStart": true}' data-leftbar-compact-mode="scrollable">
-
-
 
     <!-- Player de música HTML5 -->
     <audio id="musicPlayer">
@@ -274,7 +281,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                         <a data-bs-toggle="collapse" href="#dashboard" aria-expanded="false" aria-controls="dashboard"
                             class="side-nav-link">
-                            <i class="uil-store"></i>
+                            <i class="fas fa-chart-bar"></i>
                             <span> Dashboards </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -305,7 +312,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#ranking" aria-expanded="false" aria-controls="crm"
                             class="side-nav-link">
-                            <i class="uil-store"></i>
+                            <i class="fas fa-trophy"></i>
                             <span> Rankings </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -340,7 +347,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#crm" aria-expanded="false" aria-controls="crm"
                             class="side-nav-link">
-                            <i class="uil-store"></i>
+                            <i class="fas fa-briefcase"></i>
                             <span> Negócios </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -395,7 +402,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#funcionarios" aria-expanded="false"
                             aria-controls="funcionarios" class="side-nav-link">
-                            <i class="uil-user-circle"></i>
+                            <i class="fas fa-folder"></i>
                             <span> Administrativo </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -435,7 +442,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#perfil" aria-expanded="false" aria-controls="perfil"
                             class="side-nav-link">
-                            <i class="uil-bright"></i>
+                            <i class="fas fa-cog"></i>
                             <span> Configurações </span>
                             <span class="menu-arrow"></span>
                         </a>
@@ -466,14 +473,14 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
                     </li>
-
+                    {{--
                     <li class="side-nav-item">
 
                         <a class="side-nav-link" id="btnModoTV">
                             <i class="uil-home-alt"></i>
                             <span> Modo TV </span>
                         </a>
-                    </li>
+                    </li> --}}
 
 
                     <!-- Help Box -->

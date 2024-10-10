@@ -92,6 +92,28 @@ class AgendamentoController extends Controller
     public function calendario(Request $request)
     {
 
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+
+        if (is_null($data_inicio) and is_null($data_fim)) {
+
+            if (config('data_inicio') & config('data_fim')) {
+                $data_inicio = config('data_inicio');
+                $data_fim = config('data_fim');
+            } else {
+
+
+                $dia = intval(Carbon::now('America/Sao_Paulo')->subMonth(1)->format('d'));
+                if ($dia <= 20) {
+                    $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->subMonth(1)->format('m/Y'));
+                } else {
+                    $data_inicio = "20/" . (Carbon::now('America/Sao_Paulo')->format('m/Y'));
+                }
+
+                $data_fim = Carbon::now('America/Sao_Paulo')->format('d/m/Y');
+            }
+        }
+
 
         $curr_funil_id = intval($request->query('id'));
         $proprietario_id = intval($request->query('proprietario'));
@@ -134,13 +156,32 @@ class AgendamentoController extends Controller
             }
         }
 
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+        $query = [
+            ['data_agendamento', '>=', $from],
+            ['data_agendamento', '<=', $to],
+
+        ];
+
+
         if ($proprietario_id == -2 and $equipe_exists == 1) {
-            $agendamentos = Agendamento::all();
+
+            $agendamentos = Agendamento::where($query)->get();
+
         } else if ($proprietario_id == -2 and $equipe_exists == -1) {
+
             $ids = $equipe->integrantes()->pluck('id')->toArray();
             $agendamentos = Agendamento::whereIn('user_id', $ids)->get();
+        
         } else {
-            $agendamentos = Agendamento::where('user_id', $proprietario_id)->get();
+        
+            $query[] = ['user_id', '=', $proprietario_id];
+           //$agendamentos = Agendamento::where($query)->get();
+            $agendamentos = Agendamento::whereIn('user_id', [$proprietario_id])->where($query)->get();
+        
         }
 
         $calendario = array();
@@ -152,7 +193,12 @@ class AgendamentoController extends Controller
 
             if ($proprietario_id == -2) {
                 $start = $cal['title'];
-                $cal['title'] = "[" . $agendamento->negocio->user->name . "]" . $start;
+                if ($agendamento->negocio->user) {
+                    $cal['title'] = "[" . $agendamento->negocio->user->name . "]" . $start;
+                } else {
+                    $cal['title'] = "[Sem Proprietario]" . $start;
+                }
+
             }
 
             $cal['negocio'] = $agendamento->negocio->lead->nome;
