@@ -51,11 +51,28 @@
 
     <div class="row">
 
-
         @include('dashboards.views.card', [
         'card_name' => 'Negócios Ativos',
         'card_value' => $stats['leads_ativos'],
         'card_porc' => '1%',
+        'card_icon' =>'fa-briefcase'
+        ])
+
+        @include('dashboards.views.card', [
+        'card_name' => 'Vendas em Aprovação',
+        'card_href' => route('negocios.aprovacoes'),
+        'card_value' => "R$ " . number_format($stats['potencial_venda'], 2, ',', '.'),
+        'card_porc' => '4%',
+        'card_icon' =>'fa-chart-line'
+        ])
+
+        @include('dashboards.views.card', [
+        'card_name' => 'Vendas em Conclusão',
+        'card_href' => route('vendas.lista', ['data_inicio' => app('request')->input('data_inicio'), 'data_fim'
+        =>app('request')->input('data_fim')]),
+        'card_value' => "R$ " . number_format($stats['rascunho_totais'], 2, ',', '.'),
+        'card_porc' => '4%',
+        'card_icon' =>'fa-shopping-cart'
         ])
 
         @include('dashboards.views.card', [
@@ -64,16 +81,13 @@
         =>app('request')->input('data_fim')]),
         'card_value' => "R$ " . number_format($stats['total_vendido'], 2, ',', '.'),
         'card_porc' => '3%',
+        'card_icon' =>'fa-dollar-sign'
         ])
 
-        @include('dashboards.views.card', [
-        'card_name' => 'Potencial de Venda',
-        'card_href' => route('negocios.aprovacoes'),
-        'card_value' => "R$ " . number_format($stats['potencial_venda'], 2, ',', '.'),
-        'card_porc' => '4%',
-        ])
 
-        @include('dashboards.views.card', [
+
+
+        {{-- @include('dashboards.views.card', [
         'card_name' => 'Leads Sem Dono',
         'card_value' => $output['lead_novos'],
         'card_porc' => '5%',
@@ -84,7 +98,7 @@
         'proprietario' => '-1',
         'status' => 'ativo',
         ]),
-        ])
+        ]) --}}
 
 
         @include('dashboards.views.bar_plot', [

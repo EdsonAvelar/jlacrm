@@ -346,8 +346,6 @@ class DashboardController extends Controller
             array_push($output['reunioes'], $count);
 
 
-
-
             // #########
             // Proposta
             // #########
@@ -362,7 +360,7 @@ class DashboardController extends Controller
 
             $count = $count_proposta + $count_multiproposta;
 
-            
+
             array_push($output['propostas'], $count);
 
             // #########
@@ -479,6 +477,17 @@ class DashboardController extends Controller
             $stats['total_vendido'] = $vendas_totais;//Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
 
 
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'RASCUNHO']
+            ];
+            $rascunho_totais = Fechamento::where($query)->sum('valor');
+
+
+            $stats['rascunho_totais'] = $rascunho_totais;//Fechamento::whereBetween('data_fechamento', [$from, $to])->sum('valor');
+
+
 
             $stats['leads_ativos'] = Negocio::where('status', NegocioStatus::ATIVO)->count();
 
@@ -498,6 +507,7 @@ class DashboardController extends Controller
             $stats['sum_aprovacoes'] = 0;
             $stats['sum_propostas'] = 0;
             $stats['sum_vendas'] = 0;
+            $stats['sum_vendas_n_concluidas'] = 0;
 
             $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
             $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo])->get();
@@ -670,6 +680,9 @@ class DashboardController extends Controller
                 $count = Fechamento::where($query)->count();
                 $stats['sum_vendas'] = $stats['sum_vendas'] + $count;
 
+
+
+
                 $query = [
                     ['data_proposta', '>=', $from],
                     ['data_proposta', '<=', $to],
@@ -719,6 +732,7 @@ class DashboardController extends Controller
 
 
             $stats['total_vendido'] = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->sum('valor');
+
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status', NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status', NegocioStatus::ATIVO)->sum('valor');
 
