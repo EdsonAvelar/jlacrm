@@ -733,6 +733,14 @@ class DashboardController extends Controller
 
             $stats['total_vendido'] = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->sum('valor');
 
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'RASCUNHO']
+            ];
+ 
+            $stats['rascunho_totais'] = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->sum('valor');
+
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status', NegocioStatus::ATIVO)->count();
             $stats['potencial_venda'] = Negocio::whereIn('user_id', $ids)->where('status', NegocioStatus::ATIVO)->sum('valor');
 
