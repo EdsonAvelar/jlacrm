@@ -13,6 +13,9 @@
 
   <!-- jQuery UI CSS -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
+
+  <!-- AOS CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -20,13 +23,13 @@
 
     .logo {
       width: 150px;
-      margin: 20px;
+      margin: 10px;
     }
 
     .hero {
       background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
       color: white;
-      padding: 200px 0;
+      padding: 300px 0;
       text-align: left;
       position: relative;
     }
@@ -65,7 +68,7 @@
       background-color: white;
       border-radius: 15px;
       padding: 12px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 10px 13px 10px rgb(0 0 0 / 22%);
       position: absolute;
       top: 20%;
       right: 15%;
@@ -79,7 +82,11 @@
     }
 
     .simulation-box h3 {
-      color: #fbc02d;
+      color: #ffffff;
+      background: black;
+      padding: 10px;
+      border-radius: 20px 0px;
+      text-align: center;
     }
 
     .simulation-box .btn-primary {
@@ -101,25 +108,82 @@
       font-weight: 600;
       color: green;
     }
+
+    .btn-group,
+    {
+
+    padding-right: 10px;
+    }
+
+    .great {
+      font-family: system-ui;
+      padding: 0px 100px 0px 0px;
+    }
+
+    /* Media Query para dispositivos móveis */
+    @media (max-width: 768px) {
+      .simulation-box {
+        position: relative;
+        width: 100%;
+        top: 0;
+        right: 0;
+        max-width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .simulation-box h3 {
+        font-size: 1.5rem;
+        padding: 15px;
+      }
+
+      .simulation-box .btn-group-lg .btn {
+        font-size: 1rem;
+        padding: 10px;
+      }
+
+      .value-number {
+        font-size: 1.5rem;
+      }
+
+      .min,
+      .max {
+        font-size: 0.9rem;
+      }
+
+      .simulation-box .price-slider h4 {
+        font-size: 1.2rem;
+      }
+
+      .simulation-box span {
+        font-size: 0.9rem;
+      }
+
+      .hero {
+        padding: 0;
+      }
+    }
   </style>
+
+
 </head>
 
 <body>
   <!-- Logo -->
-  <div class="text-center">
+  <div class="text-center logo" data-aos="fade-down">
     <img src="https://via.placeholder.com/150x50" alt="Logo" class="logo">
   </div>
 
   <!-- Imagem de destaque -->
-  <section class="hero d-flex align-items-center">
+  <section class="hero d-flex align-items-center" data-aos="fade-in">
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <h1>DESCUBRA COMO REALIZAR SEU SONHO</h1>
-          <h2>Com preço justo, segurança e confiabilidade</h2>
+          <h1 data-aos="fade-up" data-aos-delay="200">DESCUBRA COMO REALIZAR SEU SONHO</h1>
+          <h2 data-aos="fade-up" data-aos-delay="400">Com preço justo, segurança e confiabilidade</h2>
         </div>
       </div>
-      <div class="simulation-box">
+      <div class="simulation-box" data-aos="fade-up" data-aos-delay="600">
         <h3>SIMULAÇÃO RÁPIDA</h3>
         <div class="container">
           <div class="price-box">
@@ -129,7 +193,7 @@
                 <div class="price-slider">
                   <h4 class="great">Tipo</h4>
                   <span>Escola qual Sonho deseja realizar</span>
-                  <div class="btn-group btn-group-justified">
+                  <div class="">
                     <div class="btn-group btn-group-lg">
                       <button type="button"
                         class="btn btn-primary btn-lg btn-block month active-month selected-month active"
@@ -151,23 +215,19 @@
                   <input name="tipo_credito" type="hidden" id="tipo_credito" value='imovel' readonly="readonly" />
                   <input name="simular_por" type="hidden" id="simular_por" value='credito' readonly="readonly" />
 
-                  <div class="d-flex justify-content-center mt-1">
-                    <div class="d-flex w-100">
+                </div>
 
-                      <div class="d-flex w-100">
+                <div class="row">
+                  <div class="w-50">
+                    <button type="button"
+                      class="w-100 btn btn-primary btn-lg btn-block flex-fill term active-term selected-term active"
+                      id='credito'>Crédito</button>
 
-                        <button type="button"
-                          class="btn btn-primary btn-lg btn-block flex-fill term active-term selected-term active"
-                          id='credito'>Crédito</button>
-
-                        <button type="button" class="btn btn-primary btn-lg btn-block  flex-fill term"
-                          id='parcela'>Parcela</button>
-
-
-                      </div>
-                    </div>
                   </div>
-
+                  <div class="w-50">
+                    <button type="button" class="w-100 btn btn-primary btn-lg btn-block  flex-fill term"
+                      id='parcela'>Parcela</button>
+                  </div>
 
                 </div>
 
@@ -199,7 +259,7 @@
                 <div class="form-group">
                   <div class="col-sm-12">
                     <button id="botao_simular" type="submit"
-                      class="btn btn-primary btn-lg btn-block btn-simular">SIMULAR <span>
+                      class="btn btn-success btn-lg btn-block btn-simular w-100">SIMULAR <span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                           class="bi bi-whatsapp" viewBox="0 0 16 16">
                           <path
@@ -226,13 +286,13 @@
   </section>
 
   <!-- Informações sobre empresa -->
-  <section class="info-section">
+  <section class="info-section" data-aos="fade-up" data-aos-delay="200">
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
           <img src="https://via.placeholder.com/500x300" alt="Sobre Nós">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="600">
           <h2>Sobre a Empresa</h2>
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque aliquam odio, quis venenatis
             purus. Nulla facilisi. Proin aliquet turpis in magna scelerisque, eget cursus arcu commodo. Duis at lacus
@@ -244,12 +304,11 @@
       </div>
     </div>
   </section>
-
   <!-- Imagens -->
-  <section class="images-section">
+  <section class="images-section" data-aos="fade-up" data-aos-delay="300">
     <div class="container">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
           <div class="card">
             <img src="https://via.placeholder.com/200x150" class="card-img-top" alt="Imóvel">
             <div class="card-body">
@@ -258,7 +317,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="500">
           <div class="card">
             <img src="https://via.placeholder.com/200x150" class="card-img-top" alt="Veículo">
             <div class="card-body">
@@ -267,7 +326,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="600">
           <div class="card">
             <img src="https://via.placeholder.com/200x150" class="card-img-top" alt="Caminhão">
             <div class="card-body">
@@ -276,7 +335,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-3" data-aos="fade-up" data-aos-delay="700">
           <div class="card">
             <img src="https://via.placeholder.com/200x150" class="card-img-top" alt="Terreno">
             <div class="card-body">
@@ -290,7 +349,7 @@
   </section>
 
   <!-- Carrossel -->
-  <section class="carousel-section">
+  <section class="carousel-section" data-aos="fade-up" data-aos-delay="400">
     <div class="container">
       <h2>Clientes Satisfeitos</h2>
       <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -303,19 +362,19 @@
             aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-          <div class="carousel-item active">
+          <div class="carousel-item active" data-aos="fade-up" data-aos-delay="500">
             <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 1">
           </div>
-          <div class="carousel-item">
+          <div class="carousel-item" data-aos="fade-up" data-aos-delay="600">
             <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 2">
           </div>
-          <div class="carousel-item">
+          <div class="carousel-item" data-aos="fade-up" data-aos-delay="700">
             <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 3">
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" />>
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+        <button class="carousel-control-prev" type="button">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next">
@@ -327,7 +386,7 @@
   </section>
 
   <!-- Contato -->
-  <section class="contact-section">
+  <section class="contact-section" data-aos="fade-up" data-aos-delay="500">
     <div class="container">
       <h2>Contato</h2>
       <form>
@@ -349,38 +408,43 @@
   </section>
 
   <!-- Footer -->
-  <section class="footer-section bg-dark text-white">
+  <section class="footer-section bg-dark text-white" data-aos="fade-up" data-aos-delay="600">
     <div class="container text-center">
       <p>&copy; 2024 Soluções Financeiras. Todos os direitos reservados.</p>
     </div>
   </section>
-
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- jQuery UI -->
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
   <!-- Bootstrap JS -->
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-  <script>
-    $(document).ready(function() {
-            // Exemplo de uso do jQuery UI
-            $("#name").tooltip({
-                content: "Digite seu nome completo"
-            });
-        });
-  </script>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-  <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
   <script type="text/javascript"
     src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
 
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
   <script src="https://jsuites.net/v4/jsuites.js"></script>
 
+
+  <!-- AOS JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   <script>
+    AOS.init({
+          duration: 1000, // Duração da animação em milissegundos
+          easing: 'ease', // Efeito de suavização
+          once: true, // Anima apenas uma vez ao entrar na tela
+        });
+  </script>
+
+
+  <script>
+    $(document).ready(function() {
+    // Exemplo de uso do jQuery UI
+    $("#name").tooltip({
+    content: "Digite seu nome completo"
+    });
+    });
     // JavaScript Document
           
           var_zap = 19989085014

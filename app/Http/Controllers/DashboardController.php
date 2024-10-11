@@ -651,10 +651,6 @@ class DashboardController extends Controller
                 $reunioes_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
 
                 array_push($output['reunioes_medio'], $reunioes_medio);
-
-
-
-
                 $query = [
                     ['data_aprovacao', '>=', $from],
                     ['data_aprovacao', '<=', $to],
