@@ -8,8 +8,8 @@
   <!-- Bootstrap CSS -->
 
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
   <!-- jQuery UI CSS -->
   <link href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" rel="stylesheet">
@@ -348,39 +348,142 @@
     </div>
   </section>
 
+
+  <!-- Infraestrutura -->
+  <section class="info-section" data-aos="fade-up" data-aos-delay="200">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="400">
+          <h2>Sobre a Infraestutura</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque aliquam odio, quis venenatis
+            purus. Nulla facilisi. Proin aliquet turpis in magna scelerisque, eget cursus arcu commodo. Duis at lacus
+            vitae sapien bibendum lacinia.</p>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam scelerisque aliquam odio, quis venenatis
+            purus. Nulla facilisi. Proin aliquet turpis in magna scelerisque, eget cursus arcu commodo. Duis at lacus
+            vitae sapien bibendum lacinia.</p>
+        </div>
+        <div class="col-md-6" data-aos="fade-up" data-aos-delay="600">
+
+          <img src="https://via.placeholder.com/300x600" alt="Sobre Nós">
+
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- Carrossel -->
   <section class="carousel-section" data-aos="fade-up" data-aos-delay="400">
     <div class="container">
       <h2>Clientes Satisfeitos</h2>
-      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+      <div id="carouselExampleCaptions" class="carousel slide">
         <div class="carousel-indicators">
-          <button type="button" data-target="#carouselExampleIndicators" data-slide-to="0" class="active"
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
             aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-target="#carouselExampleIndicators" data-slide-to="1"
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
             aria-label="Slide 2"></button>
-          <button type="button" data-target="#carouselExampleIndicators" data-slide-to="2"
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
             aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-          <div class="carousel-item active" data-aos="fade-up" data-aos-delay="500">
-            <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 1">
+          <div class="carousel-item active">
+            <img src="https://via.placeholder.com/1280x720" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>First slide label</h5>
+              <p>Some representative placeholder content for the first slide.</p>
+            </div>
           </div>
-          <div class="carousel-item" data-aos="fade-up" data-aos-delay="600">
-            <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 2">
+          <div class="carousel-item">
+            <img src="https://via.placeholder.com/1280x720" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Second slide label</h5>
+              <p>Some representative placeholder content for the second slide.</p>
+            </div>
           </div>
-          <div class="carousel-item" data-aos="fade-up" data-aos-delay="700">
-            <img src="https://via.placeholder.com/800x400" class="d-block w-100" alt="Cliente 3">
+          <div class="carousel-item">
+            <img src="https://via.placeholder.com/1280x720" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Third slide label</h5>
+              <p>Some representative placeholder content for the third slide.</p>
+            </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button">
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
           data-bs-slide="next">
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
+      </div>
+    </div>
+  </section>
+
+  {{-- Accordion --}}
+
+  <section class="container" data-aos="fade-up" data-aos-delay="400">
+    <h2>Dúvidas Frequentes</h2>
+
+    <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+            aria-expanded="true" aria-controls="collapseOne">
+            Accordion Item #1
+          </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the first item's accordion body.</strong> It is shown by default, until the collapse plugin
+            adds
+            the appropriate classes that we use to style each element. These classes control the overall appearance, as
+            well
+            as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our
+            default variables. It's also worth noting that just about any HTML can go within the
+            <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+            Accordion Item #2
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse
+            plugin
+            adds the appropriate classes that we use to style each element. These classes control the overall
+            appearance, as
+            well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+            our
+            default variables. It's also worth noting that just about any HTML can go within the
+            <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
+      </div>
+      <div class="accordion-item">
+        <h2 class="accordion-header">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+            data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+            Accordion Item #3
+          </button>
+        </h2>
+        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin
+            adds the appropriate classes that we use to style each element. These classes control the overall
+            appearance, as
+            well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding
+            our
+            default variables. It's also worth noting that just about any HTML can go within the
+            <code>.accordion-body</code>, though the transition does limit overflow.
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -425,6 +528,11 @@
 
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
   <script src="https://jsuites.net/v4/jsuites.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+  </script>
 
 
   <!-- AOS JS -->
