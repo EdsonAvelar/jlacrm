@@ -18,7 +18,7 @@ class CheckCrmBlocked
     {
         // Verifique se a aplicação está em modo bloqueado
         // if (config('crm.blocked')) {
-        if (true) {
+        if (false) {
             // Redireciona para uma página de aviso
             return response()->view('crm_blocked');
         } else {
