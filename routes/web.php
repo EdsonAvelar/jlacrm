@@ -15,6 +15,7 @@ use App\Http\Controllers\FechamentoController;
 use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProductionController;
 
 
 /*
@@ -55,6 +56,20 @@ Route::group(
 );
 
 Route::group(['middleware' => 'auth'], function () {
+
+    Route::group(
+        ['prefix' => 'productions'],
+        function () {
+            Route::get('/index', [ProductionController::class, 'index'])->name('productions.index');
+            Route::get('/edit', [ProductionController::class, 'index'])->name('productions.edit');
+            Route::delete('/delete/{id}', [ProductionController::class, 'destroy'])->name('productions.destroy');
+            Route::post('/store', [ProductionController::class, 'store'])->name('productions.store');
+
+        }
+    );
+
+
+
 
     Route::get('/corrida/vendas', [BarChartRacingController::class, 'vendas'])->name('dashboard_bar_race_vendas');
     Route::get('/corrida/vendas/get', [BarChartRacingController::class, 'vendas_get']);

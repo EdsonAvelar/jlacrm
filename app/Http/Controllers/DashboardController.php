@@ -16,6 +16,7 @@ use App\Models\Cargo;
 use App\Models\Reuniao;
 use App\Models\Aprovacao;
 use App\Models\Equipe;
+use App\Models\Production;
 use App\Models\Simulacao;
 use H;
 use Illuminate\Support\Facades\DB;
@@ -457,13 +458,11 @@ class DashboardController extends Controller
             $agendamento->save();
         }
 
-
         if (Auth::user()->hasRole('admin')) {
 
             $output = array();
 
             $stats = [];
-
 
             $query = [
                 ['data_fechamento', '>=', $from],
@@ -590,6 +589,19 @@ class DashboardController extends Controller
                 $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
                 $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
 
+                // Obtemos a data de hoje
+                $hoje = Carbon::today();
+
+                // Verificamos se 'hoje' está dentro do intervalo de 'inicio' e 'fim'
+                if ($hoje->between($inicio, $fim)) {
+                    // Se estiver dentro do intervalo, usamos 'hoje' como a data final
+                    $fim = $hoje;
+                } else {
+                    // Caso contrário, mantemos 'fim' como estava originalmente
+                    $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+                }
+
+
                 $dias_uteis = $inicio->diffInWeekdays($fim);
 
                 $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
@@ -701,6 +713,31 @@ class DashboardController extends Controller
             $output['lead_novos'] = $lead_novos;
             $output['stats'] = $stats;
 
+            $prd = Production::where('is_active', true)->first();
+            if ($prd) {
+                $output['producao'] = array();
+
+                $start_date = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
+                $end_date = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
+
+
+                $output['producao']['name'] = $prd->name;
+                $output['producao']['start_date'] = $start_date;
+                $output['producao']['end_date'] = $end_date;
+
+                $hoje = Carbon::today();
+                $inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->startOfDay();
+                $fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->startOfDay();
+                if ($hoje >= $inicio && $hoje <= $fim) {
+                    // Se estiver dentro do intervalo, usamos 'hoje' como a data final
+                    $output['producao']['dentro'] = true;
+                } else {
+                    // Caso contrário, mantemos 'fim' como estava originalmente
+                    $output['producao']['dentro'] = false;
+                }
+            }
+
+
             return view('dashboards.geral', compact('stats', 'lead_novos', 'output'));
         } else if (Auth::user()->hasRole('gerenciar_equipe')) {
 
@@ -734,7 +771,7 @@ class DashboardController extends Controller
                 ['data_fechamento', '<=', $to],
                 ['status', '=', 'RASCUNHO']
             ];
- 
+
             $stats['rascunho_totais'] = Fechamento::whereIn('primeiro_vendedor_id', $ids)->where($query)->sum('valor');
 
             $stats['leads_ativos'] = Negocio::whereIn('user_id', $ids)->where('status', NegocioStatus::ATIVO)->count();
@@ -877,6 +914,18 @@ class DashboardController extends Controller
                 $inicio = Carbon::createFromFormat('d/m/Y', $data_inicio);
                 $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
 
+                // Obtemos a data de hoje
+                $hoje = Carbon::today();
+
+                // Verificamos se 'hoje' está dentro do intervalo de 'inicio' e 'fim'
+                if ($hoje->between($inicio, $fim)) {
+                    // Se estiver dentro do intervalo, usamos 'hoje' como a data final
+                    $fim = $hoje;
+                } else {
+                    // Caso contrário, mantemos 'fim' como estava originalmente
+                    $fim = Carbon::createFromFormat('d/m/Y', $data_fim);
+                }
+
                 $dias_uteis = $inicio->diffInWeekdays($fim);
 
                 $agendados_medio = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
@@ -895,7 +944,7 @@ class DashboardController extends Controller
                 $stats['sum_reunioes'] = $stats['sum_reunioes'] + $count;
 
                 // #########
-                // Agendamento Médio por Dia
+                // Reunião Médio por Dia
                 // #########
 
 
@@ -953,6 +1002,31 @@ class DashboardController extends Controller
 
             $output['lead_novos'] = $lead_novos;
             $output['stats'] = $stats;
+
+            $prd = Production::where('is_active', true)->first();
+            if ($prd) {
+                $output['producao'] = array();
+
+                $start_date = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
+                $end_date = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
+
+
+                $output['producao']['name'] = $prd->name;
+                $output['producao']['start_date'] = $start_date;
+                $output['producao']['end_date'] = $end_date;
+
+                $hoje = Carbon::today();
+                $inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->startOfDay();
+                $fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->startOfDay();
+                if ($hoje >= $inicio && $hoje <= $fim) {
+                    // Se estiver dentro do intervalo, usamos 'hoje' como a data final
+                    $output['producao']['dentro'] = true;
+                } else {
+                    // Caso contrário, mantemos 'fim' como estava originalmente
+                    $output['producao']['dentro'] = false;
+                }
+
+            }
 
             return view('dashboards.geral', compact('stats', 'lead_novos', 'output'));
         } else {

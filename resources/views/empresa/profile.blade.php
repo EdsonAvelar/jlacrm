@@ -128,11 +128,13 @@
                                 Editar Informações
                             </a>
                         </li>
+
                         <li class="nav-item">
                             <a href="#config" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Configurações CRM
                             </a>
                         </li>
+              
                         <li class="nav-item">
                             <a href="#marketing" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Marketing
@@ -472,24 +474,12 @@
 
                             </form>
                         </div>
+
+
+                      
+
                         <!-- end settings content-->
                         <div class="tab-pane" id="marketing">
-
-                            {{-- <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
-                                INFORMAÇÕES DE MARKETING</h5> --}}
-
-                            {{-- <div class="row">
-                                <div class="col-md-12">
-                                    <div class="mb-12">
-                                        <label for="firstname" class="form-label">Nome</label>
-
-                                        <button onclick="myFacebookLogin()" class="btn btn-primary">
-                                            Facebook</button>
-
-                                    </div>
-                                </div>
-
-                            </div> --}}
 
                             <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                 INTEGRAÇÃO LEADS COM CRM</h5>

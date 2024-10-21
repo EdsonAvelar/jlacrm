@@ -57,9 +57,6 @@ class AgendamentoController extends Controller
             }
         }
 
-
-
-
         if (Auth::user()->hasRole("admin")) {
 
             $agendamentos = Agendamento::where($query)->get();
@@ -77,10 +74,15 @@ class AgendamentoController extends Controller
             array_push($ids, \Auth::user()->id);
 
 
+            // Filtrar agendamentos onde:
+            // - O user_id está nos IDs da equipe
+            // - O dono do negócio (proprietario_id) está nos IDs da equipe
+            $agendamentos = Agendamento::whereIn('user_id', $ids)
+                ->whereHas('negocio', function ($query) use ($ids) {
+                    $query->whereIn('user_id', $ids); // Filtro para o dono do negócio
+                })
+                ->get();
 
-            ##dd($ids);
-
-            $agendamentos = Agendamento::whereIn('user_id', $ids)->where($query)->get();
         } else {
 
             $agendamentos = Agendamento::whereIn('user_id', [Auth::user()->id])->where($query)->get();
@@ -175,13 +177,13 @@ class AgendamentoController extends Controller
 
             $ids = $equipe->integrantes()->pluck('id')->toArray();
             $agendamentos = Agendamento::whereIn('user_id', $ids)->get();
-        
+
         } else {
-        
+
             $query[] = ['user_id', '=', $proprietario_id];
-           //$agendamentos = Agendamento::where($query)->get();
+            //$agendamentos = Agendamento::where($query)->get();
             $agendamentos = Agendamento::whereIn('user_id', [$proprietario_id])->where($query)->get();
-        
+
         }
 
         $calendario = array();

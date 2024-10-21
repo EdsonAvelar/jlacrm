@@ -275,7 +275,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                         
                         if (config('data_inicio') & config('data_fim')) {
                             $data_inicio = config('data_inicio');
-                            #$data_fim = config('data_fim');
+                            $data_fim = config('data_fim');
                         }
                         ?>
 
@@ -395,10 +395,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                     @if ($user->hasAnyRole(['admin']))
 
-
-
-
-
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#funcionarios" aria-expanded="false"
                             aria-controls="funcionarios" class="side-nav-link">
@@ -407,9 +403,12 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             <span class="menu-arrow"></span>
                         </a>
 
-
                         <div class="collapse" id="funcionarios">
                             <ul class="side-nav-second-level">
+
+                                <li>
+                                    <a href="{{ route('productions.index') }}">Produção</a>
+                                </li>
 
                                 @if ($user->hasAnyRole(['gerenciar_funcionarios']))
                                 <li>
@@ -419,7 +418,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 @if ($user->hasAnyRole(['gerenciar_vendas']))
                                 <li>
-
                                     <a
                                         href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                         Realizadas</a>
@@ -433,7 +431,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 @endif
                             </ul>
                         </div>
-
 
                     </li>
                     @endif

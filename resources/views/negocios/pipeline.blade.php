@@ -625,8 +625,6 @@ $protocolo_hora = 0;
 @include('templates.add_agendamento', [])
 @include('templates.add_protocolo', [])
 
-
-
 <div class="modal fade task-modal-content" id="agendamento-confirmar" tabindex="-1" role="dialog"
     aria-labelledby="NewTaskModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">

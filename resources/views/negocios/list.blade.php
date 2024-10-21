@@ -618,7 +618,7 @@
 
 $(document).ready(function() {
     let table = $('#example2').DataTable({
-        pageLength: 100,
+        pageLength: 10,
         scrollX: true
         
     });

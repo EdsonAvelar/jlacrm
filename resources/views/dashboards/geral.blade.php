@@ -7,12 +7,41 @@
 <!-- Include Date Range Picker -->
 
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+
+<style>
+    .page-title-box .page-title {
+        font-size: 18px;
+        margin: 0;
+        line-height: 35px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: inherit;
+        padding-top: 20px;
+    }
+
+    .subtitle {
+        margin-top: 1px;
+        margin-bottom: 1rem;
+        font-family: sans-serif;
+        color: rgb(65, 143, 244);
+    }
+
+    .strong {
+        font-size: 18px;
+        font-weight: 700;
+
+    }
+
+    .danger {
+        color: red;
+    }
+</style>
 @endsection
 
 @section('main_content')
 <!-- Start Content-->
 <div class="container-fluid" id="dashboard">
-
 
     @include('layouts.alert-msg')
     <div class="row">
@@ -39,6 +68,23 @@
                 (app('request')->input('data_fim') == \Carbon\Carbon::now()->format('d/m/Y') ))
                 )
                 <h4 class="page-title">Dashboard - Geral</h4>
+
+                @if ( isset($output['producao']) && ($output['producao']))
+                <p class="subtitle">Produção: <span class="strong">{{ $output['producao']['name'] }}</span> - Inicio:
+                    <span class="strong">{{
+                        $output['producao']['start_date'] }} </span>Fim: <span class="strong">{{
+                        $output['producao']['end_date'] }}</span>
+
+                    @if (!$output['producao']['dentro'])
+                    <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
+                    @endif
+
+                </p>
+
+
+                @endif
+
+
                 @else
 
                 <h4 class="page-title" style="color: rgb(89, 0, 184)">Dashboard - Geral - HOJE</h1>
@@ -112,7 +158,6 @@
         'name' => 'Agendamentos',
         'plots' => [$output['vendedores'], $output['agendamentos']],
         ])
-
 
 
 

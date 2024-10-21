@@ -36,12 +36,21 @@
                                 @endif
                                 <br>
 
+                                @if (config('protocolo_agendamento_final'))
                                 {{config('protocolo_agendamento_final')}}<br>
-                                {{config('protocolo_agendamento_empresa')}}<br>
+                                @endif
 
+                                @if (config('protocolo_agendamento_empresa'))
+                                {{config('protocolo_agendamento_empresa')}}<br>
+                                @endif
+
+                                @if (config('protocolo_agendamento_cnpj'))
                                 {{config('protocolo_agendamento_cnpj')}}<br>
-                                <br>
+                                @endif
+
+                                @if (config('protocolo_agendamento_xau'))
                                 {{config('protocolo_agendamento_xau')}}<br>
+                                @endif
                             </p>
                         </div>
                     </div>
@@ -56,20 +65,28 @@
 </div><!-- /.modal -->
 
 <script>
-    function copyProtocolo() {
+    async function copyProtocolo() {
+        try {
+            var text = document.getElementById('txt_protocolo').innerText;
 
-        var text = document.getElementById('txt_protocolo').innerText;
-        var elem = document.createElement("textarea");
-        document.body.appendChild(elem);
-        elem.value = text;
-        elem.select();
-        document.execCommand("copy");
-        document.body.removeChild(elem);
+            // Utilizando a Clipboard API para copiar o texto
+            await navigator.clipboard.writeText(text);
 
-        showAlert({
-            message: "protocolo copiado",
-            class: "success"
-        });
-        $('#agendamento-protocolo').modal('hide');
+            showAlert({
+                message: "Protocolo copiado",
+                class: "success"
+            });
+
+            // Fechar modal
+            $('#agendamento-protocolo').modal('hide');
+        } catch (err) {
+            // Tratamento de erro caso a API falhe
+            console.error('Falha ao copiar o texto: ', err);
+
+            showAlert({
+                message: "Erro ao copiar o protocolo",
+                class: "error"
+            });
+        }
     }
 </script>
