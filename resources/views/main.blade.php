@@ -407,7 +407,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                             <ul class="side-nav-second-level">
 
                                 <li>
-                                    <a href="{{ route('productions.index') }}">Produção</a>
+                                    <a href="{{ route('productions.index') }}">Produções</a>
                                 </li>
 
                                 @if ($user->hasAnyRole(['gerenciar_funcionarios']))
@@ -418,8 +418,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 @if ($user->hasAnyRole(['gerenciar_vendas']))
                                 <li>
-                                    <a
-                                        href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
+                                    <a href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                         Realizadas</a>
                                 </li>
                                 @endif

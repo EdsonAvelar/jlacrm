@@ -582,8 +582,7 @@ JSON (Application/json)
                                 {{-- COLUNA DA ESQUERDA --}}
                                 <div class="col-md-6">
 
-
-                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                    {{-- <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                         CONFIGURAÇÕES DE CRM</h5>
                                     <div class="row">
 
@@ -596,7 +595,7 @@ JSON (Application/json)
                                                 " />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="row">
                                         <div class="col-md-12">
                                             <div class="mb-12">
@@ -831,7 +830,7 @@ vermelho mais do que 5 dias parados
                                                     ➡Comprovante de Residência Atual<br>
                                                     <br>
                                                     _*Endereço:*_<br>
-                                                    📍<span
+                                                    <span
                                                         id="span_protocolo_agendamento_endereco">{{config('protocolo_agendamento_endereco')}}</span><br>
                                                     <span id="span_protocolo_agendamento_site">{{
                                                         config('protocolo_agendamento_site')}}</span><br>
