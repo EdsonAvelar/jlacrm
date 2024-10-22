@@ -10,9 +10,9 @@
                     <div class="col-md-12">
                         <div class="mb-12" class="divtext">
                             <p id="txt_protocolo" rows="22" cols="50">
-                                {{config('protocolo_agendamento_inicio')}} &nbsp*<span id="ptcl_cliente">
-                                </span>*{{config('protocolo_agendamento_pos_inicio')}} <br><br>
-                                {{config('protocolo_agendamento_titulo')}}<br>
+                                {!!config('protocolo_agendamento_inicio')!!} &nbsp*<span id="ptcl_cliente">
+                                </span>*{!!config('protocolo_agendamento_pos_inicio')!!} <br><br>
+                                {!! config('protocolo_agendamento_titulo')!!}<br>
                                 Protocolo:
                                 *{{ random_int(999, 999999) }}/{{ Carbon\Carbon::now('America/Sao_Paulo')->format('Y')
                                 }}*
@@ -26,8 +26,8 @@
                                 ➡Comprovante de Residência Atual<br>
                                 <br>
                                 _*Endereço:*_<br>
-                                📍{{config('protocolo_agendamento_endereco')}}<br>
-                                {{config('protocolo_agendamento_site')}}<br>
+                                {!! config('protocolo_agendamento_endereco')!!}<br>
+                                {!! config('protocolo_agendamento_site') !!}<br>
 
                                 <br>
                                 _*Na Recepção procurar por:*_ <br>
@@ -37,19 +37,19 @@
                                 <br>
 
                                 @if (config('protocolo_agendamento_final'))
-                                {{config('protocolo_agendamento_final')}}<br>
+                                {!!config('protocolo_agendamento_final') !!}<br>
                                 @endif
 
                                 @if (config('protocolo_agendamento_empresa'))
-                                {{config('protocolo_agendamento_empresa')}}<br>
+                                {!! config('protocolo_agendamento_empresa')!!}<br>
                                 @endif
 
                                 @if (config('protocolo_agendamento_cnpj'))
-                                {{config('protocolo_agendamento_cnpj')}}<br>
+                                {!!config('protocolo_agendamento_cnpj')!!}<br>
                                 @endif
 
                                 @if (config('protocolo_agendamento_xau'))
-                                {{config('protocolo_agendamento_xau')}}<br>
+                                {!!config('protocolo_agendamento_xau')!!}<br>
                                 @endif
                             </p>
                         </div>
