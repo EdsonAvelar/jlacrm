@@ -77,11 +77,13 @@ class AgendamentoController extends Controller
             // Filtrar agendamentos onde:
             // - O user_id está nos IDs da equipe
             // - O dono do negócio (proprietario_id) está nos IDs da equipe
-            $agendamentos = Agendamento::whereIn('user_id', $ids)
-                ->whereHas('negocio', function ($query) use ($ids) {
-                    $query->whereIn('user_id', $ids); // Filtro para o dono do negócio
-                })
-                ->get();
+            // $agendamentos = Agendamento::whereIn('user_id', $ids)
+            //     ->whereHas('negocio', function ($query) use ($ids) {
+            //         $query->whereIn('user_id', $ids); // Filtro para o dono do negócio
+            //     })
+            //     ->get();
+
+            $agendamentos = Agendamento::whereIn('user_id', $ids)->where($query)->get();
 
         } else {
 
