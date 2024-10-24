@@ -519,6 +519,7 @@ class DashboardController extends Controller
                 'reunioes_medio',
                 'aprovacoes',
                 'vendas',
+                'vendas_2',
                 'propostas',
                 'agendamentos_faltou_perc',
                 'agendamentos_faltou',
@@ -689,6 +690,17 @@ class DashboardController extends Controller
                 $stats['sum_vendas'] = $stats['sum_vendas'] + $count;
 
 
+
+                $query = [
+                    ['data_fechamento', '>=', $from],
+                    ['data_fechamento', '<=', $to],
+                    ['segundo_vendedor_id', '=', $vendedor->id],
+                    ['status', '=', 'FECHADA']
+                ];
+
+                $vendas_totais_2 = Fechamento::where($query)->sum('valor');
+
+                array_push($output['vendas_2'], $vendas_totais_2);
 
 
                 $query = [
