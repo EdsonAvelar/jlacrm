@@ -708,8 +708,8 @@ class DashboardController extends Controller
 
                 $vendas_totais = Fechamento::where($query)->sum('valor');
 
-                $this->array_push_check($output['vendas'], $vendas_totais, $exibir_zerados);
-                // array_push($output['vendas'], $vendas_totais);
+                //$this->array_push_check($output['vendas'], $vendas_totais, $exibir_zerados);
+                array_push($output['vendas'], $vendas_totais);
 
                 $count = Fechamento::where($query)->count();
 
@@ -726,8 +726,8 @@ class DashboardController extends Controller
                 $vendas_totais_2 = Fechamento::where($query)->sum('valor');
 
 
-                // array_push($output['vendas_2'], $vendas_totais_2);
-                $this->array_push_check($output['vendas_2'], $vendas_totais_2, $exibir_zerados);
+                array_push($output['vendas_2'], $vendas_totais_2);
+                //$this->array_push_check($output['vendas_2'], $vendas_totais_2, $exibir_zerados);
 
 
                 $query = [
