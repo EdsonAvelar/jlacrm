@@ -177,8 +177,12 @@ function to_data($data)
                                 <td>VENDEDOR(A):</td>
 
                                 <td><input readonly type="text" value="<?php 
-                                if ($fechamento->primeiro_vendedor_id){
-                                    echo App\Models\User::find($fechamento->primeiro_vendedor_id)->name;
+                                if ($fechamento->primeiro_vendedor_id){ 
+                                    $vendedor = App\Models\User::find($fechamento->primeiro_vendedor_id);
+                                    if ($vendedor){
+                                        echo $vendedor->name;
+                                    }
+                                    
                                 }?>">
 
 

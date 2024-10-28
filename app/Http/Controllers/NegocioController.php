@@ -658,6 +658,10 @@ class NegocioController extends Controller
 
             $fechamento->status = VendaStatus::RASCUNHO;
 
+            $fechamento->primeiro_vendedor_id = $negocio->user->id;
+
+            $fechamento->save();
+
             $negocio->conjuge_id = $conjuge->id;
         }
 
