@@ -394,11 +394,37 @@ class DashboardController extends Controller
         return view('dashboards.semanas', compact('output'));
     }
 
+    private function array_push_check($array, $value, $exibir_zerados)
+    {
+        if ($value == 0) {
+
+            if ($exibir_zerados == True) {
+                array_push($array, $value);
+            }
+
+
+        } else {
+            array_push($array, $value);
+        }
+
+
+    }
+
     public function dashboard(Request $request)
     {
 
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
+
+        $exibir_zerados = True;
+        if (config('grafico_exibir_zerados')) {
+            if (config('grafico_exibir_zerados') == "true") {
+                $exibir_zerados = True;
+            } else {
+                $exibir_zerados = False;
+            }
+        }
+
 
 
         if (is_null($data_inicio) and is_null($data_fim)) {
@@ -643,13 +669,11 @@ class DashboardController extends Controller
                 array_push($output['agendados_amanha'], $count);
 
 
-
                 $query = [
                     ['data_reuniao', '>=', $from],
                     ['data_reuniao', '<=', $to],
                     ['user_id', '=', $vendedor->id]
                 ];
-
 
 
                 $count = Reuniao::where($query)->count();
@@ -684,11 +708,12 @@ class DashboardController extends Controller
 
                 $vendas_totais = Fechamento::where($query)->sum('valor');
 
-                array_push($output['vendas'], $vendas_totais);
+                $this->array_push_check($output['vendas'], $vendas_totais, $exibir_zerados);
+                // array_push($output['vendas'], $vendas_totais);
 
                 $count = Fechamento::where($query)->count();
-                $stats['sum_vendas'] = $stats['sum_vendas'] + $count;
 
+                $stats['sum_vendas'] = $stats['sum_vendas'] + $count;
 
 
                 $query = [
@@ -700,7 +725,9 @@ class DashboardController extends Controller
 
                 $vendas_totais_2 = Fechamento::where($query)->sum('valor');
 
-                array_push($output['vendas_2'], $vendas_totais_2);
+
+                // array_push($output['vendas_2'], $vendas_totais_2);
+                $this->array_push_check($output['vendas_2'], $vendas_totais_2, $exibir_zerados);
 
 
                 $query = [

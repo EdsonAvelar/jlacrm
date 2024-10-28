@@ -134,7 +134,7 @@
                                 Configurações CRM
                             </a>
                         </li>
-              
+
                         <li class="nav-item">
                             <a href="#marketing" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0 ">
                                 Marketing
@@ -476,7 +476,7 @@
                         </div>
 
 
-                      
+
 
                         <!-- end settings content-->
                         <div class="tab-pane" id="marketing">
@@ -630,6 +630,23 @@ vermelho mais do que 5 dias parados
                                                     ?>
                                                 data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
                                                 data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
+                                                data-offstyle="danger">
+                                            </div>
+
+                                            <div class="mb-3">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="inputEmail3" class="col-form-label">Não Mostrar Zerados
+                                                        <span class="mdi mdi-information"></span>
+                                                    </label> </span>
+
+                                                <input class="toggle-event" type="checkbox" <?php if
+                                                    (array_key_exists('grafico_exibir_zerados', $empresa)) { if
+                                                    ($empresa['grafico_exibir_zerados']=='true' ) { echo 'checked' ; } }
+                                                    ?>
+                                                data-config_info="grafico_exibir_zerados" data-toggle="toggle"
+                                                data-on="Exibir Zerados" data-off="Não Exibir Zerados"
+                                                data-onstyle="success"
                                                 data-offstyle="danger">
                                             </div>
 
