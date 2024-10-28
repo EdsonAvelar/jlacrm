@@ -267,7 +267,7 @@ function to_data($data)
                                         <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true"
-                                            value="{{ to_data($negocio->lead->data_nasc) }}" name="data_nasc">
+                                            value="{{ to_data($negocio->lead->data_nasc) }}" name="data_nasc" readonly>
                                     </div>
                                 </div>
 
@@ -320,7 +320,7 @@ function to_data($data)
                                         <label for="firstname" class="form-label">DATA DE EXPEDIÇÃO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true"
-                                            value="{{ to_data($negocio->lead->data_exp) }}" name="data_exp">
+                                            value="{{ to_data($negocio->lead->data_exp) }}" name="data_exp" readonly>
                                     </div>
                                 </div>
 
@@ -399,7 +399,7 @@ function to_data($data)
                                         <label for="email" class="form-label">DATA DE NASCIMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true" name="conj_data_nasc"
-                                            value="{{ to_data($negocio->conjuge->data_nasc) }}">
+                                            value="{{ to_data($negocio->conjuge->data_nasc) }}" readonly>
                                     </div>
                                 </div>
 
@@ -433,7 +433,7 @@ function to_data($data)
                                         <label for="firstname" class="form-label">DATA DE EXPEDIÇÃO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true" value="{{ $negocio->conjuge->data_exp }}"
-                                            name="conj_data_exp">
+                                            name="conj_data_exp" readonly>
                                     </div>
                                 </div>
 
@@ -707,7 +707,7 @@ function to_data($data)
                                         <label for="email" class="form-label">DATA DA ASSEMBLÉIA</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true" name="data_assembleia"
-                                            value="{{ to_data($fechamento->data_assembleia) }}">
+                                            value="{{ to_data($fechamento->data_assembleia) }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -715,7 +715,7 @@ function to_data($data)
                                         <label for="email" class="form-label">DATA DO FECHAMENTO</label>
                                         <input type="text" class="form-control form-control-light pfechamento"
                                             data-single-date-picker="true" name="data_fechamento"
-                                            value="{{ to_data($fechamento->data_fechamento) }}">
+                                            value="{{ to_data($fechamento->data_fechamento) }}" readonly>
 
                                     </div>
                                 </div>
@@ -1225,7 +1225,7 @@ function to_data($data)
         orientation: 'top',
         todayHighlight: true,
         format: "dd/mm/yyyy",
-        defaultDate: +7
+        autoclose: true
     });
 
     $(document).ready(function() {

@@ -275,7 +275,7 @@ class CrmController extends Controller
                 // associando lead ao negócio
                 $deal_input['lead_id'] = $lead->id;
 
-                if ($input['proprietario_id']) {
+                if ($input['proprietario_id'] && $input['proprietario_id'] > 0) {
                     $deal_input['user_id'] = User::find($input['proprietario_id'])->id;
                 } else {
                     $deal_input['user_id'] = \Auth::user()->id;
@@ -361,7 +361,7 @@ class CrmController extends Controller
         // associando lead ao negócio
         $deal_input['lead_id'] = $lead->id;
 
-        if ($input['proprietario_id']) {
+        if ($input['proprietario_id'] && $input['proprietario_id'] > 0) {
             $deal_input['user_id'] = User::find($input['proprietario_id'])->id;
         } else {
             $deal_input['user_id'] = \Auth::user()->id;
