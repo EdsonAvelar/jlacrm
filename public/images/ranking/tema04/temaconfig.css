@@ -157,3 +157,12 @@ left: -11px;
 .card-vendedor {
     background-color: #735200;
 }
+
+.nome.primeiro {
+    left: 59px;
+}
+
+.nome.terceiro {
+    top: 453px;
+    left: 92px;
+}

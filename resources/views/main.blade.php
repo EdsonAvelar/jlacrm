@@ -331,6 +331,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('ranking.vendas') }}">Ranking de Vendas</a>
                                 </li>
                                 <li>
+                                    <a href="{{ route('ranking.vendas.ajuda') }}">Ranking Modo Ajuda</a>
+                                </li>
+                                <li>
                                     <a href="{{ route('ranking.agendamentos') }}">Ranking de Agendamentos</a>
                                 </li>
                                 <li>
@@ -418,7 +421,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 @if ($user->hasAnyRole(['gerenciar_vendas']))
                                 <li>
-                                    <a href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
+                                    <a
+                                        href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                         Realizadas</a>
                                 </li>
                                 @endif

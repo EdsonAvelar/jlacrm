@@ -171,11 +171,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(
         ['prefix' => 'ranking'],
         function () {
+            Route::get('/vendas/ajuda', [RankingController::class, 'vendas_ajuda'])->name('ranking.vendas.ajuda');
             Route::get('/vendas', [RankingController::class, 'vendas'])->name('ranking.vendas');
             Route::get('/vendas/equipes', [RankingController::class, 'ranking_vendas_equipe'])->name('ranking.vendas.equipe');
             Route::get('/equipes/vendas', [RankingController::class, 'equipes_vendas'])->name('ranking.equipes.vendas');
 
             Route::get('/agendamentos', [RankingController::class, 'agendamentos'])->name('ranking.agendamentos');
+            Route::get('/colaboradores/vendas/ajuda', [RankingController::class, 'colaboradores_vendas_ajuda'])->name('ranking.colaboradores.vendas.ajuda');
             Route::get('/colaboradores/vendas', [RankingController::class, 'colaboradores_vendas'])->name('ranking.colaboradores.vendas');
 
 
