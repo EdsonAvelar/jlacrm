@@ -301,7 +301,7 @@ if (!isset($float)) {
 
 
 
-    var chart1 = new ApexCharts(document.querySelector("#chart_" + $name), options);
+    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
 
 
