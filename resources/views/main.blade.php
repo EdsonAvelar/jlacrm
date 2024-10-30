@@ -687,7 +687,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     <script src="{{ url('') }}/js/app.min.js"></script>
 
     <!-- third party js -->
-    {{-- <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script> --}}
+    <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script>
 
     {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
 
