@@ -295,8 +295,10 @@ if (!isset($float)) {
 
     document.addEventListener("DOMContentLoaded", function(event) {
     
-    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-    chart1.render();
+        var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+
+        console.log("#chart_{{ $name }}");
+        chart1.render();
 
     });
 
