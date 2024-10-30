@@ -293,17 +293,13 @@ if (!isset($float)) {
 
     chart_option["{{ $name }}"] = options;
 
-    window.onload = function(){
+   
     
-        var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
 
-        console.log("#chart_{{ $name }}");
-        chart1.render();
-
-    };
-
-
-
+    console.log("#chart_{{ $name }}");
+    chart1.render();
+  
 
     function showmodal($name) {
 
