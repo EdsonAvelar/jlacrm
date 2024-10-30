@@ -689,7 +689,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     <!-- third party js -->
     {{-- <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script> --}}
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> --}}
 
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
