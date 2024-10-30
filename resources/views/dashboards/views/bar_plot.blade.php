@@ -1,3 +1,5 @@
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 <style>
     .modal-content {
         width: auto;
@@ -315,6 +317,5 @@ if (!isset($float)) {
 
         var nome = 'grafico_' + $this.toLowerCase();
         $("#" + nome).attr('class', "col-lg-12 col-xl-12 col-md-12");
-
     }
 </script>
