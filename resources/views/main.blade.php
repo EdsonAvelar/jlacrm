@@ -37,7 +37,7 @@ $user = Auth::user();
         href="https://cdn.jsdelivr.net/npm/vue-dragula@1.3.1/styles/dragula.min.css" />
 
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css"
         integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ=="
@@ -687,7 +687,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
     <script src="{{ url('') }}/js/app.min.js"></script>
 
     <!-- third party js -->
-    <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script>
+    {{-- <script src="{{ url('') }}/js/vendor/apexcharts.min.js"></script> --}}
+
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-1.2.2.min.js"></script>
     <script src="{{ url('') }}/js/vendor/jquery-jvectormap-world-mill-en.js"></script>
 
