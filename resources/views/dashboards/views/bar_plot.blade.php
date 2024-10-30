@@ -299,8 +299,8 @@ if (!isset($float)) {
 
 
 
-    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-    chart1.render();
+    // var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+    // chart1.render();
 
 
     function showmodal($name) {
