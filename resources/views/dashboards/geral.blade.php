@@ -146,7 +146,7 @@
         ]),
         ]) --}}
 
-
+        
         @include('dashboards.views.bar_plot', [
         'title' => array_sum($output['oportunidades'])." Oportunidades",
         'name' => 'Oportunidades',
