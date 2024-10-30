@@ -3,6 +3,13 @@
         width: auto;
     }
 
+    .text-muted {
+        color: #106c9a !important;
+        font-size: 21px !important;
+        font-weight: 600;
+    }
+
+    /* CSS para tornar os gráficos responsivos */
     #chart_ {
             {
             $name
@@ -60,10 +67,51 @@
 </style>
 
 <?php
-$fullname = $name;
+
+if (isset($title)) {
+
+    $fullname = $title;
+} else {
+    $fullname = $name;
+}
+
 
 $name = str_replace(' ', '_', $name);
 $name = strtolower($name);
+
+if (!isset($horizontal)) {
+    $horizontal = false;
+}
+
+if (!isset($float)) {
+    $float = false;
+}
+
+
+$x_values = $plots[0]; // array com valores de X
+$y_values = $plots[1]; // array com valores de Y
+
+// Arrays filtrados para X e Y
+$filtered_x = [];
+$filtered_y = [];
+
+if (config('grafico_exibir_zerados') == "false") {
+
+    foreach ($y_values as $index => $y) {
+        if ($y !== 0) {
+            $filtered_x[] = $x_values[$index];
+            $filtered_y[] = $y;
+        }
+    }
+
+} else {
+    $filtered_x = $plots[0];
+    $filtered_y = $plots[1];
+}
+
+
+
+
 
 ?>
 
@@ -85,11 +133,9 @@ $name = strtolower($name);
                         </div>
                     </div>
                 </a>
-            </div> <!-- end row-->
-
-        </div> <!-- end card-body -->
-
-    </div> <!-- end card -->
+            </div>
+        </div>
+    </div>
 </div> <!-- end col -->
 
 <div class="modal fade bd-example-modal-lg" id="modal_{{ $name }}" tabindex="-1" role="dialog"
@@ -118,7 +164,7 @@ $name = strtolower($name);
 <script>
     function generateColor(size_n) {
 
-        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#191970', '#800000', '#FA8072', '#FF0000',
+        var result = ['#4d3a96', '#4576b5', '#000000', '#FF4500', '#800000', '#FA8072', '#FF0000',
             '#008000', '#7FFF00', '#BDB76B', '#FFD700', '#00FFFF', '#2F4F4F', '#BC8F8F', '#FFDEAD', '#7B68EE',
             '#4B0082', '#8B008B', '#FFB6C1', '#DC143C',
             '#FAF0E6', '#FFDAB9', '#D8BFD8', '#B0E0E6', '#6A5ACD',
@@ -164,10 +210,10 @@ $name = strtolower($name);
                 },
 
             },
-            type: 'bar'
-            ,
-            height: 'auto', // Ajusta automaticamente a altura do gráfico com base no contêiner
+            type: 'bar',
+            height: '500px', // Ajusta automaticamente a altura do gráfico com base no contêiner
             width: '100%',  // Usa 100% da largura do contêiner
+
             responsive: [
                 {
                     breakpoint: 300,
@@ -186,7 +232,11 @@ $name = strtolower($name);
         },
         series: [{
             name: '{{ $name }}',
-            data: <?php echo json_encode($plots[1]); ?>,
+            data: <?php
+
+            echo json_encode($filtered_y);
+
+            ?>,
 
         }],
 
@@ -194,21 +244,28 @@ $name = strtolower($name);
             labels: {
                 rotate: -30
             },
-            categories: <?php echo json_encode($plots[0]); ?>
+            categories: <?php
+
+            echo json_encode($filtered_x);
+
+
+            ?>
         },
         plotOptions: {
             bar: {
                 distributed: true,
-                borderRadius: 10,
-                dataLabels: {
-                    position: 'top', // top, center, bottom
+                borderRadius: 3,
+                borderRadiusApplication: 'end',
+                horizontal: {{ $horizontal ?'true': 'false' }},
+    dataLabels: {
+        position: 'top', // top, center, bottom
 
                 },
             }
         },
-        dataLabels: {
-            enabled: true,
-            formatter: function (num) {
+    dataLabels: {
+        enabled: true,
+            formatter: function(num) {
                 const digits = 2;
                 const lookup = [{
                     value: 1,
@@ -253,12 +310,13 @@ $name = strtolower($name);
 
                 return nFormatter(val, 0);
             },
-            offsetY: -20,
-            style: {
-                fontSize: '16px',
-                colors: ['#338888']
-            }
+        offsetY: { { $horizontal ? 0 : -20 } },
+        offsetX: { { $horizontal ? 10 : 0 } },
+        style: {
+            fontSize: '16px',
+                colors: ['#000']
         }
+    }
     }
 
     try {
