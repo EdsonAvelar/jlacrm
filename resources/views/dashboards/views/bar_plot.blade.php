@@ -22,7 +22,7 @@ if (!isset($float)) {
 
 ?>
 
-<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
+<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}" aria-labelledby="grafico_{{ $name }}">
     <div class="card">
         <div class="card-body">
 
@@ -53,7 +53,6 @@ if (!isset($float)) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">{{ $fullname }}</h5>
-
                     </div>
                     <div class="modal-body">
 
@@ -225,7 +224,7 @@ if (!isset($float)) {
 
     chart_option["{{ $name }}"] = options;
 
-    var chart1 = new ApexCharts(document.querySelector("#grafico_{{ $name }}"), options);
+    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
 
 
