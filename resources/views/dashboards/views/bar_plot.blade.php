@@ -88,7 +88,6 @@ if (!isset($float)) {
 } 
 
 
-
 ?>
 
 <div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
@@ -208,8 +207,7 @@ if (!isset($float)) {
         },
         series: [{
             name: '{{ $name }}',
-            data:
-            <?php echo json_encode($plots[1]); ?>,
+            data: <?php echo json_encode($plots[1]); ?>,
 
         }],
 
@@ -217,8 +215,7 @@ if (!isset($float)) {
             labels: {
                 rotate: -30
             },
-            categories:
-            <?php echo json_encode($plots[0]); ?>
+            categories: <?php echo json_encode($plots[0]); ?>
         },
         plotOptions: {
             bar: {
@@ -296,9 +293,6 @@ if (!isset($float)) {
 
     chart_option["{{ $name }}"] = options;
 
-
-
-
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
     chart1.render();
 
@@ -315,5 +309,6 @@ if (!isset($float)) {
 
         var nome = 'grafico_' + $this.toLowerCase();
         $("#" + nome).attr('class', "col-lg-12 col-xl-12 col-md-12");
+
     }
 </script>
