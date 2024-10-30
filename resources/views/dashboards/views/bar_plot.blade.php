@@ -88,26 +88,26 @@ if (!isset($float)) {
 } 
 
 
-$x_values = $plots[0]; // array com valores de X
-$y_values = $plots[1]; // array com valores de Y
+// $x_values = $plots[0]; // array com valores de X
+// $y_values = $plots[1]; // array com valores de Y
 
-// Arrays filtrados para X e Y
-$filtered_x = [];
-$filtered_y = [];
+// // Arrays filtrados para X e Y
+// $filtered_x = [];
+// $filtered_y = [];
 
-if (config('grafico_exibir_zerados') == "false"){
+// if (config('grafico_exibir_zerados') == "false"){
 
-    foreach ($y_values as $index => $y) {
-        if ($y !== 0) {
-            $filtered_x[] = $x_values[$index];
-            $filtered_y[] = $y;
-        }
-    }
+//     foreach ($y_values as $index => $y) {
+//         if ($y !== 0) {
+//             $filtered_x[] = $x_values[$index];
+//             $filtered_y[] = $y;
+//         }
+//     }
 
-} else {
-    $filtered_x = $plots[0];
-    $filtered_y = $plots[1];
-}
+// } else {
+//     $filtered_x = $plots[0];
+//     $filtered_y = $plots[1];
+// }
 
 ?>
 
@@ -230,7 +230,7 @@ if (config('grafico_exibir_zerados') == "false"){
             name: '{{ $name }}',
             data: <?php 
 
-                echo json_encode($filtered_y); 
+                echo json_encode($plots[1]); 
                         
             ?>,
 
@@ -242,7 +242,7 @@ if (config('grafico_exibir_zerados') == "false"){
             },
             categories: <?php 
             
-            echo json_encode($filtered_x); 
+            echo json_encode($plots[0]); 
             
             
             ?>
@@ -324,15 +324,10 @@ if (config('grafico_exibir_zerados') == "false"){
     chart_option["{{ $name }}"] = options;
 
 
-    try {
-        var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-        chart1.render();
-    } catch (error) {
-        console.error("Erro ao renderizar o gráfico:", error);
-    }
 
-    // var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-    // chart1.render();
+
+    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+    chart1.render();
 
 
     function showmodal($name) {
