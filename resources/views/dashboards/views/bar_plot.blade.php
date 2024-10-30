@@ -1,4 +1,4 @@
-{{-- <style>
+<style>
     .modal-content {
         width: auto;
     }
@@ -64,7 +64,7 @@
             /* Ajusta para ocupar mais espaço em telas muito pequenas */
         }
     }
-</style> --}}
+</style>
 
 <?php
 
