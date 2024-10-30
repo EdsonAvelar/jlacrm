@@ -293,14 +293,14 @@ if (!isset($float)) {
 
     chart_option["{{ $name }}"] = options;
 
-    document.addEventListener("DOMContentLoaded", function(event) {
+    window.onload = function(){
     
         var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
 
         console.log("#chart_{{ $name }}");
         chart1.render();
 
-    });
+    };
 
 
 
