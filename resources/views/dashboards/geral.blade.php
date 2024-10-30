@@ -255,8 +255,15 @@
         'plots' => [$output['vendedores'], $output['vendas']],
         ])
 
+        @if (Auth::user()->hasAnyRole(['admin']))
+        @include('dashboards.views.bar_plot', [
+        'title' => "Vendas Modo Ajuda ("."R$ " . number_format(array_sum($output['vendas_2']), 2, ',', '.').")",
+        'name' => 'Vendas Modo Ajuda',
+        'plots' => [$output['vendedores'], $output['vendas_2']],
+        ])
 
-   
+        @endif
+
 
 
         @include('dashboards.views.donuts', [
