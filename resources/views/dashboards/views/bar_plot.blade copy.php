@@ -105,13 +105,16 @@ if (config('grafico_exibir_zerados') == "false") {
     }
 
 } else {
-    $filtered_x = $plots[0];
-    $filtered_y = $plots[1];
+
+
+    foreach ($y_values as $index => $y) {
+
+        $filtered_x[] = $x_values[$index];
+        $filtered_y[] = $y;
+
+    }
+
 }
-
-
-
-
 
 ?>
 
