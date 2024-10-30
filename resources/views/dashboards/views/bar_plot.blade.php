@@ -1,3 +1,71 @@
+<style>
+    .modal-content {
+        width: auto;
+    }
+
+    .text-muted {
+        color: #106c9a !important;
+        font-size: 21px !important;
+        font-weight: 600;
+    }
+
+    /* CSS para tornar os gráficos responsivos */
+    #chart_ {
+            {
+            $name
+        }
+    }
+
+    ,
+    #modal_chart_ {
+            {
+            $name
+        }
+    }
+
+        {
+        width: 80%;
+        /* Gráficos ocuparão 80% da largura do contêiner */
+        max-width: 100%;
+        height: auto;
+        /* Ajusta a altura para manter a proporção */
+        margin: 0 auto;
+        /* Centraliza o gráfico */
+    }
+
+    @media (max-width: 768px) {
+
+        /* Ajustes adicionais para telas menores */
+        #grafico_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 100%;
+        }
+
+        #chart_ {
+                {
+                $name
+            }
+        }
+
+        ,
+        #modal_chart_ {
+                {
+                $name
+            }
+        }
+
+            {
+            width: 90%;
+            /* Ajusta para ocupar mais espaço em telas muito pequenas */
+        }
+    }
+</style>
+
 <?php
 
 if (isset($title)){
@@ -22,7 +90,7 @@ if (!isset($float)) {
 
 ?>
 
-<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}" aria-labelledby="grafico_{{ $name }}">
+<div class="col-lg-6 col-xl-6 col-md-12" id="grafico_{{ $name }}">
     <div class="card">
         <div class="card-body">
 
@@ -53,6 +121,7 @@ if (!isset($float)) {
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">{{ $fullname }}</h5>
+
                     </div>
                     <div class="modal-body">
 
