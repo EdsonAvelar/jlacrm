@@ -225,7 +225,7 @@ if (!isset($float)) {
 
     chart_option["{{ $name }}"] = options;
 
-    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+    var chart1 = new ApexCharts(document.querySelector("#grafico_{{ $name }}"), options);
     chart1.render();
 
 
