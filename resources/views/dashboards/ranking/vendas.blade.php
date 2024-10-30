@@ -80,7 +80,6 @@ if ($tema == ''){
     @include('dashboards.ranking.templates.config_menu',
     ['title'=>'Ranking de vendas'])
 
-
     <div class="container2">
 
         <!-- Ranking Board Section -->
@@ -90,8 +89,6 @@ if ($tema == ''){
                     <i class="fas fa-arrow-left"></i>
                     <span>Rankings</span>
                 </div>
-
-
 
                 <div class="ranking-totals" id="header-total"
                     style="display: {{ config('ranking_mostrar_vendas') == 'true'? 'flex' : 'none' }}">
