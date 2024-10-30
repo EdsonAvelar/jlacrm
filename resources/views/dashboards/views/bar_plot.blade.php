@@ -104,14 +104,10 @@ if (config('grafico_exibir_zerados') == "false"){
         }
     }
 
-}else {
+} else {
     $filtered_x = $plots[0];
     $filtered_y = $plots[1];
 }
-
-
-
-
 
 ?>
 
@@ -327,8 +323,16 @@ if (config('grafico_exibir_zerados') == "false"){
 
     chart_option["{{ $name }}"] = options;
 
-    var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-    chart1.render();
+
+    try {
+        var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+        chart1.render();
+    } catch (error) {
+        console.error("Erro ao renderizar o gráfico:", error);
+    }
+
+    // var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
+    // chart1.render();
 
 
     function showmodal($name) {
