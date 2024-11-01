@@ -660,9 +660,17 @@ class NegocioController extends Controller
 
             $fechamento->primeiro_vendedor_id = $negocio->user->id;
 
-            $fechamento->save();
 
             $negocio->conjuge_id = $conjuge->id;
+
+
+
+            $fechamento->save();
+
+            $negocio->fechamento_id = $fechamento->id;
+            $negocio->save();
+
+
         }
 
 

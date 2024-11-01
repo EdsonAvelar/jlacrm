@@ -242,6 +242,138 @@ class DashboardController extends Controller
         return view('dashboards.equipes', compact('output'));
     }
 
+    public function dashboard_producao(Request $request)
+    {
+
+        $user_id = $request->query('user_id');
+
+        $output = [];
+        $output['oportunidades'] = [];
+        $output['agendados_medio'] = [];
+        $output['agendamentos'] = [];
+        $output['agendados_hoje'] = [];
+        $output['agendados_amanha'] = [];
+        $output['reunioes'] = [];
+        $output['reunioes_medio'] = [];
+        $output['aprovacoes'] = [];
+        $output['vendas'] = [];
+        $output['propostas'] = [];
+
+        $stats = [];
+
+        $output['producao'] = [];
+
+        $producoes = Production::all();
+
+        foreach ($producoes as $producao) {
+            array_push($output['producao'], $producao->name);
+
+            // // #########
+            // // Oportunidade
+            // // #########
+            // $ids = $equipe->integrantes()->pluck('id')->toArray();
+
+
+            $from = $producao->start_date;
+            $to = $producao->end_date;
+            $query = [
+                ['data_criacao', '>=', $from],
+                ['data_criacao', '<=', $to],
+                ['status', '=', 'ativo']
+            ];
+
+            if ($user_id) {
+                $query['user_id'] = $user_id;
+            }
+
+            $count = Negocio::where($query)->count();
+            array_push($output['oportunidades'], $count);
+
+            // // #########
+            // // Agendamentos
+            // // #########
+
+
+            $query = [
+                ['data_agendamento', '>=', $from],
+                ['data_agendamento', '<=', $to],
+
+            ];
+
+            if ($user_id) {
+                $query['user_id'] = $user_id;
+            }
+
+            $count = Agendamento::where($query)->count();
+            array_push($output['agendamentos'], $count);
+
+
+            $query = [
+                ['data_reuniao', '>=', $from],
+                ['data_reuniao', '<=', $to],
+
+            ];
+
+            if ($user_id) {
+                $query['user_id'] = $user_id;
+            }
+
+            $count = Reuniao::where($query)->count();
+            array_push($output['reunioes'], $count);
+
+
+            $query = [
+                ['data_proposta', '>=', $from],
+                ['data_proposta', '<=', $to],
+            ];
+
+            if ($user_id) {
+                $query['user_id'] = $user_id;
+            }
+
+
+            $count_proposta = Proposta::where($query)->count();
+            $count_multiproposta = Simulacao::where($query)->count();
+
+            $count = $count_proposta + $count_multiproposta;
+
+            array_push($output['propostas'], $count);
+
+
+            $query = [
+                ['data_aprovacao', '>=', $from],
+                ['data_aprovacao', '<=', $to],
+
+            ];
+
+            if ($user_id) {
+                $query['user_id'] = $user_id;
+            }
+
+            $count = Aprovacao::where($query)->count();
+
+            array_push($output['aprovacoes'], $count);
+
+
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'FECHADA']
+            ];
+
+            if ($user_id) {
+                $query['primeiro_vendedor_id'] = $user_id;
+            }
+
+            $vendas_totais = Fechamento::where($query)->sum('valor');
+
+            array_push($output['vendas'], $vendas_totais);
+
+        }
+
+        return view('dashboards.producao', compact('output'));
+    }
+
     public function dashboard_semanas(Request $request)
     {
 

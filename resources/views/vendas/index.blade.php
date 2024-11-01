@@ -137,10 +137,7 @@ use App\Enums\VendaStatus;
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php
-                                $vendas_fechadas = 0;
-                                               
-                                                        ?>
+                                <?php $vendas_fechadas = 0; ?>
 
                                 @foreach ($vendas as $venda)
                                 <tr>

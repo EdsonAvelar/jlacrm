@@ -81,6 +81,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/crm', [DashboardController::class, 'dashboard'])->name('home');
     Route::get('/equipes', [DashboardController::class, 'dashboard_equipes'])->name('dashboard_equipes');
     Route::get('/semanas', [DashboardController::class, 'dashboard_semanas'])->name('dashboard_semanas');
+    Route::get('/producao', [DashboardController::class, 'dashboard_producao'])->name('dashboard_producao');
 
     Route::get('/logout', [AdminController::class, 'logout']);
 

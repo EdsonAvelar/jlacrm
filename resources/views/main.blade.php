@@ -303,6 +303,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         href="{{ route('dashboard_semanas', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Semanal</a>
                                 </li>
 
+                                <li>
+                                    <a
+                                        href="{{ route('dashboard_producao') }}">Produções</a>
+                                </li>
+
                                 @endif
                             </ul>
                         </div>
