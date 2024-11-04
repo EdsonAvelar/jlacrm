@@ -39,8 +39,8 @@
                                             $user->name }}</a>
                                         @endforeach
 
-                                    </div>3d67
-                                                                     
+                                    </div>
+
 
 
                                 </li>
