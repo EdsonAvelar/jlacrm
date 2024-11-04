@@ -12,11 +12,9 @@ class ProductionController extends Controller
     public function index(Request $request)
     {
         // Obtém as produções com paginação
-        $productions = Production::when($request->search, function ($query) use ($request) {
-            $query->where('name', 'like', '%' . $request->search . '%');
-        })
-            ->orderBy('end_date', 'desc')  // Adiciona a ordenação por end_date de forma decrescente
-            ->paginate(5);
+        $productions = Production::orderBy('end_date', 'desc')  // Adiciona a ordenação por end_date de forma decrescente
+            ->get();
+
 
         // Renderiza a view configuracoes.blade.php
         return view('administrativo.productions', [

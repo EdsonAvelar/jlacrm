@@ -28,16 +28,34 @@
                                 <li class="dropdown notification-list d-none d-sm-inline-block">
                                     <button type="button" class="btn btn-light dropdown-toggle"
                                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Individual
+                                        <?php 
+                                        
+                                            $user = \App\Models\User::find(app('request')->user_id );
+
+                                            if ($user){
+                                                echo $user->name;
+                                            }else {
+                                                echo "Individual";
+                                            }
+                                        
+                                        ?>
+
+
+
                                     </button>
 
-                                 
+
                                     <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" target="_self"
+                                            href="{{ route('dashboard_producao') }}">Geral</a>
+                                        <hr>
                                         @foreach (\Auth::user()->vendedores() as $user)
                                         <a class="dropdown-item" target="_self"
                                             href="{{ route('dashboard_producao', ['user_id' => $user->id]) }}">{{
                                             $user->name }}</a>
                                         @endforeach
+
+
 
                                     </div>
 

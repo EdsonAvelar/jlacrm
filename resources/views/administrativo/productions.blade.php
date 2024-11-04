@@ -1,5 +1,13 @@
 @extends('main')
 
+<?php 
+
+use Carbon\Carbon;
+
+
+
+
+?>
 @section('headers')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -83,6 +91,8 @@
         </div>
     </div>
 
+
+
     <div class="row">
         <div class="col-12">
             @if (isset($productions) && !$productions->isEmpty() )
@@ -100,11 +110,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($productions as $production)
+
+                            @foreach ($productions as $production)
+
+                            @endforeach
+
+   
+
+
+                            @foreach ($productions as $production)
                             <tr>
                                 <td>{{ $production->name }}</td>
-                                <td>{{ $production->start_date }}</td>
-                                <td>{{ $production->end_date }}</td>
+                                <td>{{ Carbon::createFromFormat('Y-m-d', $production->start_date)->format('d/m/Y') }}
+                                </td>
+                                <td>{{Carbon::createFromFormat('Y-m-d', $production->end_date)->format('d/m/Y')}}</td>
                                 <td>{{ $production->is_active ? 'Sim' : 'Não' }}</td>
                                 <td>
                                     <!-- Botão "Editar" sem o `data-bs-toggle` e `data-bs-target` -->
@@ -122,11 +141,9 @@
                                     </form>
                                 </td>
                             </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5">Nenhuma produção encontrada.</td>
-                            </tr>
-                            @endforelse
+                            @endforeach
+
+
                         </tbody>
                     </table>
                     {{-- {{ $productions->links() }} --}}
@@ -185,6 +202,7 @@
     $(document).ready(function() {
        let table = $('#example3').DataTable({
         pageLength: 100,
+        order: [[3, 'asc']],
         scrollX: true
         
         });
