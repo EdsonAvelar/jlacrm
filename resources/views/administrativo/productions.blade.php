@@ -121,9 +121,9 @@ use Carbon\Carbon;
                             @foreach ($productions as $production)
                             <tr>
                                 <td>{{ $production->name }}</td>
-                                <td>{{ Carbon::createFromFormat('Y-m-d', $production->start_date)->format('d/m/Y') }}
+                                <td>{{ $production->start_date}}
                                 </td>
-                                <td>{{Carbon::createFromFormat('Y-m-d', $production->end_date)->format('d/m/Y')}}</td>
+                                <td>{{ $production->end_date }}</td>
                                 <td>{{ $production->is_active ? 'Sim' : 'Não' }}</td>
                                 <td>
                                     <!-- Botão "Editar" sem o `data-bs-toggle` e `data-bs-target` -->
