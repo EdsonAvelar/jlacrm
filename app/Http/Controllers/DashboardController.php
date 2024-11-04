@@ -263,7 +263,11 @@ class DashboardController extends Controller
 
         $output['producao'] = [];
 
-        $producoes = Production::all();
+        // $producoes = Production::all();
+
+        // Obtém as produções com paginação
+        $producoes = Production::orderBy('end_date', 'desc')->get();  // Adiciona a ordenação por end_date de forma decrescente
+
 
         foreach ($producoes as $producao) {
             array_push($output['producao'], $producao->name);
