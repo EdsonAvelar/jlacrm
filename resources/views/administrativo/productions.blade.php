@@ -202,7 +202,7 @@ use Carbon\Carbon;
     $(document).ready(function() {
        let table = $('#example3').DataTable({
         pageLength: 100,
-        order: [[3, 'asc']],
+        order: [[3, 'desc']],
         scrollX: true
         
         });
