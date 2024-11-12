@@ -8,8 +8,10 @@
     .mascote-img {
         padding-right: 50px;
         width: 250px;
-        height: 250px%;
-        padding-top: 50px;
+        height: 150px;
+        /* padding-top: 50px; */
+        position: fixed;
+        right: -50px;
 
     }
 
@@ -113,62 +115,86 @@ function convert($frase)
             <h2 style="text-align: left"> PROPOSTA DE CRÉDITO </h2>
             <hr class='titulo'>
 
-            <h4>Consultor Financeiro: <span style="font-weight: bold;">
-                    {{ $simulacao->user->name }}</span>
-            </h4>
-            <h4>Cliente: <span style="font-weight: bold;">
-                    {{ $simulacao->negocio->lead->nome }}</span>
-            </h4>
-            <h4>CPF: <span style="font-weight: bold;">
-                    <?php
-                    
-                    if (!empty($simulacao->negocio->lead->cpf)) {
-                        echo $simulacao->negocio->lead->cpf;
-                    }
-                    
-                    ?>
-                </span>
-            </h4>
-            <h4>Protocolo: <span style="font-weight: bold;">
-                    <?php echo date('Y') . '/' . $simulacao->id; ?>
-                </span>
-            </h4>
-
-            <h4>Tipo do Bem: <span style="font-weight: bold;">
-                    <?php echo ucfirst($simulacao->tipo); ?>
-                </span>
-            </h4>
-
-            @if ($simulacao->tipo != 'IMOVEL')
-            <h4>Fabricante/Modelo: <span style="font-weight: bold;">
 
 
-                    <?php 
+            <table width="100%">
+                <tr>
+                    <td align="left">
+                        <h4>Consultor Financeiro: <span style="font-weight: bold;">
+                                {{ $simulacao->user->name }}</span>
+                        </h4>
+                        <h4>Cliente: <span style="font-weight: bold;">
+                                {{ $simulacao->negocio->lead->nome }}</span>
+                        </h4>
+                        <h4>Telefone: <span style="font-weight: bold;">
+                                <?php
+                                    $telefone = $simulacao->negocio->lead->telefone;
+                                    $telefone_formatado = preg_replace('/(\d{2})(\d{1})(\d{4})(\d{4})/', '($1) $2 $3-$4', $telefone);
+                                    echo $telefone_formatado;
+                                    ?>
+                            </span></h4>
+                        <h4>CPF: <span style="font-weight: bold;">
+                                <?php
+                                            
+                                            if (!empty($simulacao->negocio->lead->cpf)) {
+                                                echo $simulacao->negocio->lead->cpf;
+                                            }
+                                            
+                                            ?>
+                            </span>
+                        </h4>
+                    </td>
+                    <td align="left">
+                        <h4>Protocolo: <span style="font-weight: bold;">
+                                <?php echo date('Y') . '/' . $simulacao->id; ?>
+                            </span>
+                        </h4>
+
+                        <h4>Tipo do Bem: <span style="font-weight: bold;">
+                                <?php echo ucfirst($simulacao->tipo); ?>
+                            </span>
+                        </h4>
+
+                        @if ($simulacao->tipo != 'IMOVEL')
+                        <h4>Fabricante/Modelo: <span style="font-weight: bold;">
+
+
+                                <?php 
+                                                
+                                                $strg = "";
+                                                
+                                                if (isset ($_POST['modelo'])){
+                                                    $strg = $_POST['modelo'];
+                                                }
                         
-                        $strg = "";
-                        
-                        if (isset ($_POST['modelo'])){
-                            $strg = $_POST['modelo'];
-                        }
-
-                        if (isset ($_POST['ano'])){
-                            $strg = $strg.' - Ano: ' . $_POST['ano'];;
-                        }
-                        echo $strg;
-                        ?>
-                </span>
-            </h4>
-            @endif
+                                                if (isset ($_POST['ano'])){
+                                                    $strg = $strg.' - Ano: ' . $_POST['ano'];;
+                                                }
+                                                echo $strg;
+                                                ?>
+                            </span>
+                        </h4>
+                        @endif
 
 
-            <h4>Data da Criação: <span style="font-weight: bold;">
-                    <?php echo \Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y - H:m'); ?>
-                </span>
-            </h4>
-            <h4>Validade da Proposta: <span style="font-weight: bold;">
-                    <?php echo date('d/m/Y'); ?>
-                </span>
-            </h4>
+                        <h4>Data da Criação: <span style="font-weight: bold;">
+                                <?php echo \Carbon\Carbon::now('America/Sao_Paulo')->format('d/m/Y - H:m'); ?>
+                            </span>
+                        </h4>
+                        <h4>Validade da Proposta: <span style="font-weight: bold;">
+                                <?php echo date('d/m/Y'); ?>
+                            </span>
+                        </h4>
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+
+
+
 
 
 
@@ -212,7 +238,8 @@ function convert($frase)
                     </td>
                     <td align="left">
                         @if ($simulacao->tipo == 'IMOVEL')
-                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">{{ $financiamento['fin-cartorio'] }}
+                        <h4>Despesas Cartoriais/ITBI: <span style="font-weight: bold;">{{ $financiamento['fin-cartorio']
+                                }}
                             </span></h4>
                         <h4>Tarifa de avaliação, reavaliação: <span style="font-weight: bold;">R$
                                 2.400,00</span> </h4>
@@ -283,6 +310,7 @@ function convert($frase)
                                 {{ $consorcio['con-lance'] }}
                             </span>
                         </h3>
+                        <h4>Crédito após Contemplação</h4>
                         <br><br>
                         @else
                         @endif

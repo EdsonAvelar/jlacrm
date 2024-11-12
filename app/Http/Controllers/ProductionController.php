@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Production;
 use Carbon\Carbon;
 use App\Models\Empresa;
+use App\Models\User;
+
+use App\Models\Fechamento;
 
 class ProductionController extends Controller
 {
@@ -20,6 +23,77 @@ class ProductionController extends Controller
         return view('administrativo.productions', [
             'productions' => $productions,
         ]);
+    }
+
+    public function bordero(Request $request)
+    {
+        $data_inicio = config('data_inicio');
+        $data_fim = config('data_fim');
+
+        $vendas = null;
+        if (!is_null($data_inicio) and !is_null($data_fim)) {
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'FECHADA']
+            ];
+
+            $vendas = Fechamento::where($query)->get();
+        }
+
+        $comissao_principal = 0.6;
+        $comissao_modo_ajuda = 0.3;
+
+        $bordero = [];
+
+        foreach ($vendas as $venda) {
+
+            $vendedor = $venda->primeiro_vendedor_id;
+
+            if (!array_key_exists($vendedor, $bordero)) {
+                $bordero[$vendedor] = [];
+            }
+
+            $nova_venda['contrato'] = $venda->numero_contrato;
+            $nova_venda['participacao'] = "Vendedor Principal";
+            $nova_venda['cliente'] = $venda->negocio->lead->nome;
+            $nova_venda['credito'] = $venda->valor;
+            $nova_venda['percentagem'] = 0.3;
+            $nova_venda['comissao'] = ((float) $venda->valor) * 0.3;
+            $nova_venda['data_fechamento'] = Carbon::parse($venda['data_fechamento'])->format('d/m/Y');
+
+            $bordero[$vendedor][] = $nova_venda;
+        }
+
+
+        foreach ($vendas as $venda) {
+
+            $vendedor = $venda->segundo_vendedor_id;
+
+            if ($vendedor == "") {
+                continue;
+            }
+
+            if (!array_key_exists($vendedor, $bordero)) {
+                $bordero[$vendedor] = [];
+            }
+
+            $nova_venda['contrato'] = $venda->numero_contrato;
+            $nova_venda['participacao'] = "Vendedor Principal";
+            $nova_venda['cliente'] = $venda->negocio->lead->nome;
+            $nova_venda['credito'] = $venda->valor;
+            $nova_venda['percentagem'] = 0.3;
+            $nova_venda['comissao'] = ((float) $venda->valor) * 0.3;
+            $nova_venda['data_fechamento'] = Carbon::parse($venda['data_fechamento'])->format('d/m/Y');
+
+            $bordero[$vendedor][] = $nova_venda;
+        }
+
+        dd($bordero);
+        return view('administrativo.bordero', compact('vendas', 'bordero'));
     }
 
     public function create()
@@ -59,6 +133,14 @@ class ProductionController extends Controller
             $validatedData['is_active'] = true;
             // Desativa todas as produções ativas antes de criar uma nova produção
             Production::where('is_active', true)->update(['is_active' => false]);
+
+            $data_inicio = Carbon::createFromFormat('Y-m-d', $validatedData['start_date'])->format('d/m/Y');
+            $data_fim = Carbon::createFromFormat('Y-m-d', $validatedData['end_date'])->format('d/m/Y');
+
+            $this->save_config('data_inicio', $data_inicio);
+            $this->save_config('data_fim', $data_fim);
+
+
         } else {
             $validatedData['is_active'] = false;
         }
@@ -70,18 +152,6 @@ class ProductionController extends Controller
             // Se não, cria uma nova produção
             Production::create($validatedData);
         }
-
-        $data_inicio = Carbon::createFromFormat('Y-m-d', $validatedData['start_date'])->format('d/m/Y');
-        $data_fim = Carbon::createFromFormat('Y-m-d', $validatedData['end_date'])->format('d/m/Y');
-
-        $this->save_config('data_inicio', $data_inicio);
-        $this->save_config('data_fim', $data_fim);
-
-        // // Define a nova produção como ativa
-        // $validatedData['is_active'] = true;
-
-        // // Cria a produção
-        // Production::create($validatedData);
 
         // Redireciona para o index com uma mensagem de sucesso
         return redirect()->route('productions.index')->with('success', 'Produção criada com sucesso!');

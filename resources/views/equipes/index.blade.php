@@ -7,6 +7,26 @@
 
 
 <style>
+    /* Estilo para o modal ocupar 80% da largura e altura da tela */
+    #organogramModal .modal-dialog {
+        max-width: 80%;
+        /* Define a largura máxima como 80% da tela */
+        max-height: 80%;
+        /* Define a altura máxima como 80% da tela */
+    }
+
+    #organogramModal .modal-content {
+        height: 100%;
+        /* Garante que o conteúdo do modal ocupe toda a altura disponível */
+    }
+
+    #organogramModal .modal-body {
+        overflow-y: auto;
+        /* Adiciona rolagem caso o conteúdo ultrapasse a altura */
+    }
+</style>
+
+<style>
     @media screen and (max-width: 767px) {
         #equipe_logo {
             display: block;
@@ -41,8 +61,9 @@
                 <div class="page-title-right">
                     <ul class="list-unstyled topbar-menu float-end mb-0">
                         <li class="dropdown notification-list d-none d-sm-inline-block">
-                            <a class="nav-link dropdown-toggle arrow-none" href="#" role="button">
-                                <i class="dripicons-view-apps noti-icon"></i>
+                            <a class="nav-link dropdown-toggle arrow-none" href="#" role="button"
+                                onclick="fetchOrganogramData()">
+                                <i class="fas fa-project-diagram"></i>
                             </a>
                         </li>
                     </ul>
@@ -329,6 +350,22 @@
 </form>
 
 
+<!-- Modal para o Organograma -->
+<div class="modal fade" id="organogramModal" tabindex="-1" aria-labelledby="organogramModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="organogramModalLabel">Organograma da Empresa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="organogramContainer" style="max-width: 800px; height: 600px; margin: auto;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @include('templates.escolher_img', [
 'action' => url('equipes/change/image'),
 'titulo' => "Editar Imagem da Equipe",
@@ -343,6 +380,63 @@
 <script src="{{ url('') }}/js/vendor/dragula.min.js"></script>
 <!-- demo js -->
 <script src="{{ url('') }}/js/ui/component.dragula.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/apextree"></script>
+
+<script>
+    function fetchOrganogramData() {
+        $.ajax({
+            url: "{{ url('equipes/organograma') }}",  // endpoint que retorna o JSON do organograma
+            type: 'GET',
+            success: function(data) {
+                $('#organogramModal').modal('show');
+                initializeOrganogram(data);
+            },
+            error: function(xhr, status, error) {
+                console.error("Erro ao buscar o organograma:", error);
+            }
+        });
+    }
+
+    function initializeOrganogram(data) {
+
+        // Remove o conteúdo existente antes de renderizar o novo gráfico
+        const container = document.getElementById("organogramContainer");
+        container.innerHTML = "";
+
+        const options = {
+            contentKey: 'data',
+            width: 800,
+            height: 600,
+            nodeWidth: 150,
+            nodeHeight: 100,
+            fontColor: '#fff',
+            borderColor: '#333',
+            childrenSpacing: 50,
+            siblingSpacing: 20,
+            direction: 'top',
+            enableExpandCollapse: true,
+            nodeTemplate: (content) =>
+                `<div style='display: flex; flex-direction: column; gap: 10px; justify-content: center; align-items: center; height: 100%;'>
+                    <img style='width: 50px; height: 50px; border-radius: 50%;' src='${content.imageURL}' alt='' />
+                    <div style="font-weight: bold; font-family: Arial; font-size: 14px">${content.name}</div>
+                </div>`,
+            canvasStyle: 'border: 1px solid black; background: #f6f6f6;width: 100%;',
+            enableToolbar: true,
+        };
+
+        const tree = new ApexTree(container, options);
+        tree.render(data);
+
+        // Quando o modal é fechado, destrua o gráfico para evitar múltiplos renders
+        $('#organogramModal').on('hidden.bs.modal', function () {
+            container.innerHTML = "";
+        });
+    }
+</script>
+
+
 
 <script>
     function image_save($folder, $imgname,$editar_equipe_id) {
@@ -477,6 +571,7 @@
             //set_columns_height();
         }
         document.addEventListener("DOMContentLoaded", function() {
+
 
             change_max_height()
         });

@@ -68,11 +68,31 @@
 
 <?php
 
-if (isset($title)) {
+$filterzero = $filterzero == "true";
 
-    $fullname = $title;
-} else {
-    $fullname = $name;
+// Inicializar categorias e dados
+$categories = $plots[0];
+$data = $plots[1];
+
+$filteredCategories = [];
+$filteredData = [];
+
+// Filtrar categorias e dados com base no valor de filterzero
+foreach ($data as $key => $value) {
+    
+    if (!$filterzero && $value == 0) {
+        continue; // Se filterzero é true e o valor é zero, pula para o próximo item
+    }
+
+    $filteredCategories[] = $categories[$key];
+    $filteredData[] = $value;
+}
+
+if (isset($title)){
+    
+    $fullname = $title ;
+}else {
+   $fullname = $name;
 }
 
 
@@ -81,40 +101,14 @@ $name = strtolower($name);
 
 if (!isset($horizontal)) {
     $horizontal = false;
-}
+} 
 
 if (!isset($float)) {
     $float = false;
-}
+} 
 
 
-$x_values = $plots[0]; // array com valores de X
-$y_values = $plots[1]; // array com valores de Y
 
-// Arrays filtrados para X e Y
-$filtered_x = [];
-$filtered_y = [];
-
-if (config('grafico_exibir_zerados') == "false") {
-
-    foreach ($y_values as $index => $y) {
-        if ($y !== 0) {
-            $filtered_x[] = $x_values[$index];
-            $filtered_y[] = $y;
-        }
-    }
-
-} else {
-
-
-    foreach ($y_values as $index => $y) {
-
-        $filtered_x[] = $x_values[$index];
-        $filtered_y[] = $y;
-
-    }
-
-}
 
 ?>
 
@@ -188,7 +182,7 @@ if (config('grafico_exibir_zerados') == "false") {
     }
 
 
-    var a = <?php echo json_encode($plots[1]); ?>;
+    var a = <?php echo json_encode($filteredData); ?>;
 
 
     var options = {
@@ -216,7 +210,7 @@ if (config('grafico_exibir_zerados') == "false") {
             type: 'bar',
             height: '500px', // Ajusta automaticamente a altura do gráfico com base no contêiner
             width: '100%',  // Usa 100% da largura do contêiner
-
+            
             responsive: [
                 {
                     breakpoint: 300,
@@ -235,11 +229,7 @@ if (config('grafico_exibir_zerados') == "false") {
         },
         series: [{
             name: '{{ $name }}',
-            data: <?php
-
-            echo json_encode($filtered_y);
-
-            ?>,
+            data: <?php echo json_encode($filteredData); ?>,
 
         }],
 
@@ -247,63 +237,58 @@ if (config('grafico_exibir_zerados') == "false") {
             labels: {
                 rotate: -30
             },
-            categories: <?php
-
-            echo json_encode($filtered_x);
-
-
-            ?>
+            categories: <?php echo json_encode($filteredCategories); ?>
         },
         plotOptions: {
             bar: {
                 distributed: true,
                 borderRadius: 3,
                 borderRadiusApplication: 'end',
-                horizontal: {{ $horizontal ?'true': 'false' }},
-    dataLabels: {
-        position: 'top', // top, center, bottom
+                horizontal: {{ $horizontal ? 'true' : 'false' }},
+                dataLabels: {
+                    position: 'top', // top, center, bottom
 
                 },
             }
         },
-    dataLabels: {
-        enabled: true,
+        dataLabels: {
+            enabled: true,
             formatter: function(num) {
                 const digits = 2;
                 const lookup = [{
-                    value: 1,
-                    symbol: ""
-                },
-                {
-                    value: 1e3,
-                    symbol: "K"
-                },
-                {
-                    value: 1e6,
-                    symbol: "M"
-                },
-                {
-                    value: 1e9,
-                    symbol: "G"
-                },
-                {
-                    value: 1e12,
-                    symbol: "T"
-                },
-                {
-                    value: 1e15,
-                    symbol: "P"
-                },
-                {
-                    value: 1e18,
-                    symbol: "E"
-                }
+                        value: 1,
+                        symbol: ""
+                    },
+                    {
+                        value: 1e3,
+                        symbol: "K"
+                    },
+                    {
+                        value: 1e6,
+                        symbol: "M"
+                    },
+                    {
+                        value: 1e9,
+                        symbol: "G"
+                    },
+                    {
+                        value: 1e12,
+                        symbol: "T"
+                    },
+                    {
+                        value: 1e15,
+                        symbol: "P"
+                    },
+                    {
+                        value: 1e18,
+                        symbol: "E"
+                    }
                 ];
 
 
 
                 const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-                var item = lookup.slice().reverse().find(function (item) {
+                var item = lookup.slice().reverse().find(function(item) {
 
                     return num >= item.value;
                 });
@@ -313,13 +298,13 @@ if (config('grafico_exibir_zerados') == "false") {
 
                 return nFormatter(val, 0);
             },
-        offsetY: { { $horizontal ? 0 : -20 } },
-        offsetX: { { $horizontal ? 10 : 0 } },
-        style: {
-            fontSize: '16px',
+            offsetY: {{ $horizontal ? 0 : -20 }},
+            offsetX: {{ $horizontal ? 10 : 0 }},
+            style: {
+                fontSize: '16px',
                 colors: ['#000']
+            }
         }
-    }
     }
 
     try {
@@ -330,9 +315,13 @@ if (config('grafico_exibir_zerados') == "false") {
 
     chart_option["{{ $name }}"] = options;
 
+   
+    
     var chart1 = new ApexCharts(document.querySelector("#chart_{{ $name }}"), options);
-    chart1.render();
 
+    console.log("#chart_{{ $name }}");
+    chart1.render();
+  
 
     function showmodal($name) {
 

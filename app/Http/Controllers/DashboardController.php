@@ -101,7 +101,6 @@ class DashboardController extends Controller
             $query = [
                 ['data_criacao', '>=', $from],
                 ['data_criacao', '<=', $to]
-
             ];
             $sql = Negocio::where($query)->whereIn('user_id', $ids)->toSql();
 
@@ -133,9 +132,6 @@ class DashboardController extends Controller
             $media_agendamentos = $dias_uteis > 0 ? $count / $dias_uteis : 0; // Evita divisão por zero
 
             array_push($output['agendados_medio'], $media_agendamentos);
-
-
-
 
             // #########
             // Agendados para hoje

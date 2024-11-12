@@ -19,6 +19,187 @@ class EquipeController extends Controller
 
         return view('equipes.index', compact('equipes', 'semequipes', 'users'));
     }
+    function getRandomColor()
+    {
+        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
+    }
+
+    public function organograma()
+    {
+
+        // Obter todas as equipes e seus líderes
+        $equipes = Equipe::all();
+
+        // Array para armazenar o organograma
+        $organogramData = [
+            'id' => 'SEM EQUIPE',
+            'data' => [
+                "imageURL" => url('') . "/images/users/user_" . 1 . "/avatar.png",
+                'name' => User::find(1)->name,
+            ],
+            'options' => [
+                'nodeBGColor' => $this->getRandomColor(),
+                'nodeBGColorHover' => '#cdb4db',
+            ],
+            'children' => []
+        ];
+
+        foreach ($equipes as $equipe) {
+            // Estrutura do líder da equipe como nó principal
+            $liderNode = [
+                'id' => 'equipe_' . $equipe->id,
+                'data' => [
+                    "imageURL" => url('') . "/images/users/user_" .  $equipe->lider->id . "/avatar.png",
+                    'name' => $equipe->lider->name,
+                ],
+                'options' => [
+                    'nodeBGColor' => $this->getRandomColor(),
+                    'nodeBGColorHover' => '#cdb4db',
+                ],
+                'children' => []
+            ];
+
+            // Adicionar os integrantes da equipe como filhos do líder
+            foreach ($equipe->integrantes as $integrante) {
+                // Evitar adicionar o líder novamente como integrante
+                if ($integrante->id !== $equipe->lider->id) {
+                    $liderNode['children'][] = [
+                        'id' => 'integrante_' . $integrante->id,
+                        'data' => [
+                            // 'imageURL' => url('images/avatars/' . $integrante->avatar),
+                            "imageURL" => url('')."/images/users/user_". $integrante->id."/avatar.png",
+                            'name' => $integrante->name,
+                        ],
+                        'options' => [
+                            'nodeBGColor' => $this->getRandomColor(),
+                            'nodeBGColorHover' => '#ffafcc',
+                        ]
+                    ];
+                }
+            }
+
+            // Adicionar o nó do líder e seus filhos ao organograma principal
+            $organogramData['children'][] = $liderNode;
+        }
+
+
+        // Estrutura de dados do organograma
+        $data = [
+            "id" => "ms",
+            "data" => [
+                "imageURL" => "https://i.pravatar.cc/300?img=68",
+                "name" => "Margret Swanson"
+            ],
+            "options" => [
+                "nodeBGColor" => "#cdb4db",
+                "nodeBGColorHover" => "#cdb4db"
+            ],
+            "children" => [
+                [
+                    "id" => "mh",
+                    "data" => [
+                        "imageURL" => "https://i.pravatar.cc/300?img=69",
+                        "name" => "Mark Hudson"
+                    ],
+                    "options" => [
+                        "nodeBGColor" => "#ffafcc",
+                        "nodeBGColorHover" => "#ffafcc"
+                    ],
+                    "children" => [
+                        [
+                            "id" => "kb",
+                            "data" => [
+                                "imageURL" => "https://i.pravatar.cc/300?img=65",
+                                "name" => "Karyn Borbas"
+                            ],
+                            "options" => [
+                                "nodeBGColor" => "#f8ad9d",
+                                "nodeBGColorHover" => "#f8ad9d"
+                            ]
+                        ],
+                        [
+                            "id" => "cr",
+                            "data" => [
+                                "imageURL" => "https://i.pravatar.cc/300?img=60",
+                                "name" => "Chris Rup"
+                            ],
+                            "options" => [
+                                "nodeBGColor" => "#c9cba3",
+                                "nodeBGColorHover" => "#c9cba3"
+                            ]
+                        ]
+                    ]
+                ],
+                [
+                    "id" => "cs",
+                    "data" => [
+                        "imageURL" => "https://i.pravatar.cc/300?img=59",
+                        "name" => "Chris Lysek"
+                    ],
+                    "options" => [
+                        "nodeBGColor" => "#00afb9",
+                        "nodeBGColorHover" => "#00afb9"
+                    ],
+                    "children" => [
+                        [
+                            "id" => "Noah_Chandler",
+                            "data" => [
+                                "imageURL" => "https://i.pravatar.cc/300?img=57",
+                                "name" => "Noah Chandler"
+                            ],
+                            "options" => [
+                                "nodeBGColor" => "#84a59d",
+                                "nodeBGColorHover" => "#84a59d"
+                            ]
+                        ],
+                        [
+                            "id" => "Felix_Wagner",
+                            "data" => [
+                                "imageURL" => "https://i.pravatar.cc/300?img=52",
+                                "name" => "Felix Wagner"
+                            ],
+                            "options" => [
+                                "nodeBGColor" => "#0081a7",
+                                "nodeBGColorHover" => "#0081a7"
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        ];
+
+        $data = [
+            "id" => "ms",
+            "data" => [
+                "imageURL" => "https://i.pravatar.cc/300?img=68",
+                "name" => "Margret Swanson"
+            ],
+            "options" => [
+                "nodeBGColor" => "#cdb4db",
+                "nodeBGColorHover" => "#cdb4db"
+            ],
+            "children" => [
+                [
+                    "id" => "mh",
+                    "data" => [
+                        "imageURL" => "https://i.pravatar.cc/300?img=69",
+                        "name" => "Mark Hudson"
+                    ],
+                    "options" => [
+                        "nodeBGColor" => "#ffafcc",
+                        "nodeBGColorHover" => "#ffafcc"
+                    ],
+
+                ],
+
+            ]
+        ];
+
+
+        // Retornar o organograma em formato JSON
+        return response()->json($organogramData);
+
+    }
 
 
     public function equipe_get(Request $request)

@@ -61,6 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'productions'],
         function () {
             Route::get('/index', [ProductionController::class, 'index'])->name('productions.index');
+            Route::get('/bordero', [ProductionController::class, 'bordero'])->name('productions.bordero');
+
+
             Route::get('/edit', [ProductionController::class, 'index'])->name('productions.edit');
             Route::delete('/delete/{id}', [ProductionController::class, 'destroy'])->name('productions.destroy');
             Route::post('/store', [ProductionController::class, 'store'])->name('productions.store');
@@ -119,6 +122,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::post('/notificacao', [FechamentoController::class, 'notificacao'])->name('vendas.notificacao');
             Route::get('/index', [FechamentoController::class, 'index'])->name('vendas.lista');
+
             Route::post('/perdida', [FechamentoController::class, 'venda_perdida'])->name('vendas.perdida');
 
         }
@@ -232,6 +236,8 @@ Route::group(['middleware' => ['auth', 'role:gerenciar_equipe']], function () {
         ['prefix' => 'equipes'],
         function () {
             Route::get('/index', [EquipeController::class, 'index'])->name('equipes.index');
+            Route::get('/organograma', [EquipeController::class, 'organograma'])->name('equipes.organograma');
+
             Route::post('/drag_update', [EquipeController::class, 'drag_update']);
             Route::post('/excluir', [EquipeController::class, 'excluir']);
             Route::post('/create', [EquipeController::class, 'create']);

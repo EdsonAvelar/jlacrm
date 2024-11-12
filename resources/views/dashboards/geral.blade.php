@@ -249,11 +249,15 @@
         'plots' => [$output['vendedores'], $output['aprovacoes']],
         ])
 
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => "Vendas ("."R$ " . number_format(array_sum($output['vendas']), 2, ',', '.').")",
         'name' => 'Vendas',
         'plots' => [$output['vendedores'], $output['vendas']],
+        'filterzero' =>  config("grafico_exibir_zerados")
         ])
+
+        Zerados: {{ config("grafico_exibir_zerados") }}
+
 
         @if (Auth::user()->hasAnyRole(['admin']))
         @include('dashboards.views.bar_plot', [

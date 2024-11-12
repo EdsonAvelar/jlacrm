@@ -636,7 +636,8 @@ vermelho mais do que 5 dias parados
                                             <div class="mb-3">
                                                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
                                                     title="">
-                                                    <label for="inputEmail3" class="col-form-label">Não Mostrar Zerados
+                                                    <label for="inputEmail3" class="col-form-label">Exibir ou Não
+                                                        Valores Zerado nos gráficos ?
                                                         <span class="mdi mdi-information"></span>
                                                     </label> </span>
 
