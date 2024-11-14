@@ -523,7 +523,13 @@ if ($tema == ''){
                                 <div class="progress">
                                     <div class="progress-bar" style="width: ${colaborador.percentual}%;"></div>
                                 </div>
-                                <div class="missing-value">Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}</div>
+                           
+
+                                <div class="missing-value">` +
+                                    (colaborador.total <= colaborador.meta ? `Faltam: R$ ${(colaborador.meta - colaborador.total).toLocaleString()}` :
+                                        `Estraçalhou a meta em: R$ ${(colaborador.total - colaborador.meta).toLocaleString()}` ) + `</div>
+                                
+
                             </div>
                             <div class="percentage">${Math.round(colaborador.percentual)}%</div>
                             ${html_colaborador}

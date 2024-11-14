@@ -1043,10 +1043,9 @@
 
     .equipe-meta-batida {
         background-color: #973838;
+        background-image: url("{{ url('') }}/images/empresa/logos/empresa_ranking_fera.png");
+        background-size: cover;
     }
-
-
-
 
 
     @keyframes rotate {

@@ -7,7 +7,7 @@ use App\Models\Production;
 use Carbon\Carbon;
 use App\Models\Empresa;
 use App\Models\User;
-
+use App\Models\CommissionRule;
 use App\Models\Fechamento;
 
 class ProductionController extends Controller
@@ -25,7 +25,108 @@ class ProductionController extends Controller
         ]);
     }
 
+    public function saveRules(Request $request)
+    {
+        $rules = $request->input('rules'); // Recebe as regras do formulário via AJAX
+
+        foreach ($rules as $ruleData) {
+
+            CommissionRule::updateOrCreate(
+                [
+                    'id' => $ruleData['id'] ?? null, // Atualiza se o ID existir
+                ],
+                [
+                    'first_seller_role' => $ruleData['first_seller_role'],
+                    'second_seller_role' => $ruleData['second_seller_role'],
+                    'condition_type' => $ruleData['condition_type'], // "Venda Solitária" ou "Venda com Assistência"
+                    'commission_first' => $ruleData['commission_first'],
+                    'commission_second' => $ruleData['commission_second'] ?? 0,
+                ]
+            );
+        }
+
+        return response()->json(['success' => true, 'message' => 'Regras salvas com sucesso!']);
+    }
+
     public function bordero(Request $request)
+    {
+        $data_inicio = config('data_inicio');
+        $data_fim = config('data_fim');
+
+        $vendas = null;
+        if (!is_null($data_inicio) and !is_null($data_fim)) {
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['status', '=', 'FECHADA']
+            ];
+
+            $vendas = Fechamento::where($query)->get();
+        }
+
+        $bordero = [];
+        $rules = CommissionRule::all(); // Obtém as regras de comissão salvas
+
+        foreach ($vendas as $venda) {
+            $firstSellerId = $venda->primeiro_vendedor_id;
+            $secondSellerId = $venda->segundo_vendedor_id;
+
+            // Define uma regra padrão, caso nenhuma regra se aplique
+            $firstSellerCommission = 0.6;
+            $secondSellerCommission = 0.0;
+
+            foreach ($rules as $rule) {
+                // Checa as condições da regra para definir a comissão
+                if ($rule->condition_type == 'Venda Solitária' && !$secondSellerId) {
+                    $firstSellerCommission = $rule->commission_first;
+                } elseif ($rule->condition_type == 'Venda com Assistência' && $secondSellerId) {
+                    if ($rule->second_seller_role == 'telemarketing' && $venda->segundoVendedor->cargo == 'telemarketing') {
+                        $firstSellerCommission = $rule->commission_first;
+                        $secondSellerCommission = $rule->commission_second;
+                    } elseif ($rule->second_seller_role != 'telemarketing') {
+                        $firstSellerCommission = $rule->commission_first;
+                        $secondSellerCommission = $rule->commission_second;
+                    }
+                }
+            }
+
+            // Calcula a comissão do primeiro vendedor
+            $comissaoPrimeiro = ((float) $venda->valor) * $firstSellerCommission;
+            $bordero[$firstSellerId][] = [
+                'contrato' => $venda->numero_contrato,
+                'participacao' => "Vendedor Principal",
+                'cliente' => $venda->negocio->lead->nome,
+                'credito' => $venda->valor,
+                'percentagem' => $firstSellerCommission,
+                'comissao' => $comissaoPrimeiro,
+                'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+            ];
+
+            // Calcula a comissão do segundo vendedor, se existir
+            if ($secondSellerId) {
+                $comissaoSegundo = $venda->valor * $secondSellerCommission;
+                $bordero[$secondSellerId][] = [
+                    'contrato' => $venda->numero_contrato,
+                    'participacao' => "Assistente",
+                    'cliente' => $venda->negocio->lead->nome,
+                    'credito' => $venda->valor,
+                    'percentagem' => $secondSellerCommission,
+                    'comissao' => $comissaoSegundo,
+                    'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+                ];
+            }
+        }
+
+
+
+        return view('administrativo.bordero', compact('vendas', 'bordero','rules'));
+    }
+
+
+    public function bordero2(Request $request)
     {
         $data_inicio = config('data_inicio');
         $data_fim = config('data_fim');
@@ -92,7 +193,6 @@ class ProductionController extends Controller
             $bordero[$vendedor][] = $nova_venda;
         }
 
-        dd($bordero);
         return view('administrativo.bordero', compact('vendas', 'bordero'));
     }
 
