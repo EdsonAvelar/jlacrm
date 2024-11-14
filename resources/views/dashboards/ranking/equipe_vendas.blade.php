@@ -173,6 +173,13 @@ if ($tema == ''){
         <!-- Info Panel Section -->
         <div class="info-panel">
 
+            <h4 style="
+                                        color: white;
+                                        font-size: xx-large;
+                                        font-weight: bold;
+                                        font-family: sans-serif;
+                                    ">Ranking de Equipes</h4>
+
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking Vendas por Equipe</h1>
 

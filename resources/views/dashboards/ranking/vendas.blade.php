@@ -177,6 +177,14 @@ if ($tema == ''){
                 </div>
             </div>
             --}}
+
+            <h4 style="
+                color: white;
+                font-size: xx-large;
+                font-weight: bold;
+                font-family: sans-serif;
+            ">Ranking de Vendas</h4>
+
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking de Vendas</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
@@ -785,21 +793,10 @@ if ($tema == ''){
 
     
 
-    // const params = new URLSearchParams(window.location.search);
-    // // Verifica se o parâmetro 'atributo' existe
-    // if (params.has('carrossel')) {
-
-    //     set_tofullscreen()
-        
-    //     setTimeout(() => {
-    //     window.location.href = "{{url('')}}/ranking/vendas/equipes?carrossel=true" ; // Substitua pela URL desejada
-    //     }, 10000);
-    // } 
-
     </script>
 
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/ajuda'])
 
 </body>
 

@@ -159,26 +159,12 @@ if ($tema == ''){
 
         <!-- Info Panel Section -->
         <div class="info-panel">
-            {{-- <div class="header-panel">
-                <select name="update-interval" id="update-interval">
-                    <option value="5000">5s</option>
-                    <option value="15000">15s</option>
-                    <option value="30000">30s</option>
-                    <option value="60000">1m</option>
-                    <option value="180000">3m</option>
-                    <option value="300000">5m</option>
-                </select>
-                <div class="pagination-controls">
-                    <i class="fas fa-arrow-left"></i>
-                    <i class="fas fa-play"></i>
-                    <i class="fas fa-arrow-right"></i>
-                    <span>
-                        <?= $page ?> /
-                        <?= $pages ?>
-                    </span>
-                </div>
-            </div>
-            --}}
+            <h4 style="
+                                        color: white;
+                                        font-size: xx-large;
+                                        font-weight: bold;
+                                        font-family: sans-serif;
+                                    ">Ranking de Modo Ajuda</h4>
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking de Vendas</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">

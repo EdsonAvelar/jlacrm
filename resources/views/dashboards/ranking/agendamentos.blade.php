@@ -193,6 +193,14 @@ if ($tema == ''){
                     </span>
                 </div>
             </div>
+
+            <h4 style="
+                            color: white;
+                            font-size: xx-large;
+                            font-weight: bold;
+                            font-family: sans-serif;
+                        ">Ranking de Agendamentos</h4>
+
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking de Agendamentos</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
