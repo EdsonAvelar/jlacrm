@@ -310,7 +310,7 @@ function convert($frase)
                                 {{ $consorcio['con-lance'] }}
                             </span>
                         </h3>
-                        <h4>Crédito após Contemplação</h4>
+
                         <br><br>
                         @else
                         @endif

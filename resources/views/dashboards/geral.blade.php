@@ -256,8 +256,7 @@
         'filterzero' =>  config("grafico_exibir_zerados")
         ])
 
-        Zerados: {{ config("grafico_exibir_zerados") }}
-
+   
 
         @if (Auth::user()->hasAnyRole(['admin']))
         @include('dashboards.views.bar_plot', [
