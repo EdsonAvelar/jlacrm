@@ -308,6 +308,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         href="{{ route('dashboard_producao') }}">Produções</a>
                                 </li>
 
+                                
+
                                 @endif
                             </ul>
                         </div>
@@ -418,25 +420,33 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('productions.index') }}">Produções</a>
                                 </li>
 
-                                @if ($user->hasAnyRole(['gerenciar_funcionarios']))
+                                
+
+                                <li>
+                                    <a href="{{ route('productions.bordero') }}">Bordero</a>
+                                </li>
+
+                               
+
+                               
                                 <li>
                                     <a href="{{ route('users.funcionarios') }}">Funcionários</a>
                                 </li>
-                                @endif
+                                
 
-                                @if ($user->hasAnyRole(['gerenciar_vendas']))
+                                
                                 <li>
                                     <a
                                         href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                         Realizadas</a>
                                 </li>
-                                @endif
+                                
 
-                                @if ($user->hasAnyRole(['gerenciar_funcionarios']))
+                             
                                 <li>
                                     <a href="{{ route('equipes.index') }}">Equipes</a>
                                 </li>
-                                @endif
+                                
                             </ul>
                         </div>
 

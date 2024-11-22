@@ -27,10 +27,18 @@ class ProductionController extends Controller
 
     public function saveRules(Request $request)
     {
-        $rules = $request->input('rules'); // Recebe as regras do formulário via AJAX
+        $rules = $request->input('rules');
+
+        $request->validate([
+            'rules.*.first_seller_role' => 'nullable|string',
+            'rules.*.second_seller_role' => 'nullable|string',
+            'rules.*.third_seller_role' => 'nullable|string',
+            'rules.*.commission_first' => 'required|numeric|min:0|max:1',
+            'rules.*.commission_second' => 'nullable|numeric|min:0|max:1',
+            'rules.*.commission_third' => 'nullable|numeric|min:0|max:1',
+        ]);
 
         foreach ($rules as $ruleData) {
-
             CommissionRule::updateOrCreate(
                 [
                     'id' => $ruleData['id'] ?? null, // Atualiza se o ID existir
@@ -38,15 +46,67 @@ class ProductionController extends Controller
                 [
                     'first_seller_role' => $ruleData['first_seller_role'],
                     'second_seller_role' => $ruleData['second_seller_role'],
-                    'condition_type' => $ruleData['condition_type'], // "Venda Solitária" ou "Venda com Assistência"
+                    'third_seller_role' => $ruleData['third_seller_role'],
+                    'condition_type' => $ruleData['condition_type'],
                     'commission_first' => $ruleData['commission_first'],
                     'commission_second' => $ruleData['commission_second'] ?? 0,
+                    'commission_third' => $ruleData['commission_third'] ?? 0,
                 ]
             );
         }
 
         return response()->json(['success' => true, 'message' => 'Regras salvas com sucesso!']);
     }
+
+    public function deleteRule($id)
+    {
+        // Tenta encontrar a regra no banco
+        $rule = CommissionRule::findOrFail($id);
+
+        // Exclui a regra
+        $rule->delete();
+
+        return response()->json(['success' => true, 'message' => 'Regra excluída com sucesso!']);
+    }
+
+    private function calculateCommission($venda, $rules)
+    {
+        $firstSellerCommission = 0.6;
+        $secondSellerCommission = 0.3;
+        $thirdSellerCommission = 0.1;
+
+        foreach ($rules as $rule) {
+            // Verifica se a regra corresponde à venda atual
+            if ($rule->condition_type === 'Venda Solitária' && !$venda->segundo_vendedor_id && !$venda->terceiro_vendedor_id) {
+                $firstSellerCommission = $rule->commission_first;
+            } elseif ($rule->condition_type === 'Venda com Assistência' && $venda->segundo_vendedor_id && !$venda->terceiro_vendedor_id) {
+                if (
+                    ($rule->first_seller_role === $venda->primeiroVendedor->cargo || $rule->first_seller_role === null) &&
+                    ($rule->second_seller_role === $venda->segundoVendedor->cargo || $rule->second_seller_role === null)
+                ) {
+                    $firstSellerCommission = $rule->commission_first;
+                    $secondSellerCommission = $rule->commission_second;
+                }
+            } elseif ($rule->condition_type === 'Venda Tripla' && $venda->terceiro_vendedor_id) {
+                if (
+                    ($rule->first_seller_role === $venda->primeiroVendedor->cargo || $rule->first_seller_role === null) &&
+                    ($rule->second_seller_role === $venda->segundoVendedor->cargo || $rule->second_seller_role === null) &&
+                    ($rule->third_seller_role === $venda->terceiroVendedor->cargo || $rule->third_seller_role === null)
+                ) {
+                    $firstSellerCommission = $rule->commission_first;
+                    $secondSellerCommission = $rule->commission_second;
+                    $thirdSellerCommission = $rule->commission_third;
+                }
+            }
+        }
+
+        return [
+            'first_seller_commission' => $firstSellerCommission,
+            'second_seller_commission' => $secondSellerCommission,
+            'third_seller_commission' => $thirdSellerCommission,
+        ];
+    }
+
 
     public function bordero(Request $request)
     {
@@ -71,130 +131,50 @@ class ProductionController extends Controller
         $rules = CommissionRule::all(); // Obtém as regras de comissão salvas
 
         foreach ($vendas as $venda) {
-            $firstSellerId = $venda->primeiro_vendedor_id;
-            $secondSellerId = $venda->segundo_vendedor_id;
+            $commissions = $this->calculateCommission($venda, $rules);
 
-            // Define uma regra padrão, caso nenhuma regra se aplique
-            $firstSellerCommission = 0.6;
-            $secondSellerCommission = 0.0;
-
-            foreach ($rules as $rule) {
-                // Checa as condições da regra para definir a comissão
-                if ($rule->condition_type == 'Venda Solitária' && !$secondSellerId) {
-                    $firstSellerCommission = $rule->commission_first;
-                } elseif ($rule->condition_type == 'Venda com Assistência' && $secondSellerId) {
-                    if ($rule->second_seller_role == 'telemarketing' && $venda->segundoVendedor->cargo == 'telemarketing') {
-                        $firstSellerCommission = $rule->commission_first;
-                        $secondSellerCommission = $rule->commission_second;
-                    } elseif ($rule->second_seller_role != 'telemarketing') {
-                        $firstSellerCommission = $rule->commission_first;
-                        $secondSellerCommission = $rule->commission_second;
-                    }
-                }
-            }
-
-            // Calcula a comissão do primeiro vendedor
-            $comissaoPrimeiro = ((float) $venda->valor) * $firstSellerCommission;
-            $bordero[$firstSellerId][] = [
+            // Comissão do primeiro vendedor
+            $bordero[$venda->primeiro_vendedor_id][] = [
                 'contrato' => $venda->numero_contrato,
                 'participacao' => "Vendedor Principal",
                 'cliente' => $venda->negocio->lead->nome,
                 'credito' => $venda->valor,
-                'percentagem' => $firstSellerCommission,
-                'comissao' => $comissaoPrimeiro,
+                'percentagem' => $commissions['first_seller_commission'],
+                'comissao' => ((float) $venda->valor) * $commissions['first_seller_commission'],
                 'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
             ];
 
-            // Calcula a comissão do segundo vendedor, se existir
-            if ($secondSellerId) {
-                $comissaoSegundo = $venda->valor * $secondSellerCommission;
-                $bordero[$secondSellerId][] = [
+            // Comissão do segundo vendedor (se existir)
+            if ($venda->segundo_vendedor_id) {
+                $bordero[$venda->segundo_vendedor_id][] = [
                     'contrato' => $venda->numero_contrato,
                     'participacao' => "Assistente",
                     'cliente' => $venda->negocio->lead->nome,
                     'credito' => $venda->valor,
-                    'percentagem' => $secondSellerCommission,
-                    'comissao' => $comissaoSegundo,
+                    'percentagem' => $commissions['second_seller_commission'],
+                    'comissao' => ((float) $venda->valor) * $commissions['second_seller_commission'],
+                    'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+                ];
+            }
+
+            // Comissão do terceiro vendedor (se existir)
+            if ($venda->terceiro_vendedor_id) {
+                $bordero[$venda->terceiro_vendedor_id][] = [
+                    'contrato' => $venda->numero_contrato,
+                    'participacao' => "Assistente Secundário",
+                    'cliente' => $venda->negocio->lead->nome,
+                    'credito' => $venda->valor,
+                    'percentagem' => $commissions['third_seller_commission'],
+                    'comissao' => ((float) $venda->valor) * $commissions['third_seller_commission'],
                     'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
                 ];
             }
         }
 
-
-
-        return view('administrativo.bordero', compact('vendas', 'bordero','rules'));
+        return view('administrativo.bordero', compact('vendas', 'bordero', 'rules'));
     }
 
 
-    public function bordero2(Request $request)
-    {
-        $data_inicio = config('data_inicio');
-        $data_fim = config('data_fim');
-
-        $vendas = null;
-        if (!is_null($data_inicio) and !is_null($data_fim)) {
-            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
-
-            $query = [
-                ['data_fechamento', '>=', $from],
-                ['data_fechamento', '<=', $to],
-                ['status', '=', 'FECHADA']
-            ];
-
-            $vendas = Fechamento::where($query)->get();
-        }
-
-        $comissao_principal = 0.6;
-        $comissao_modo_ajuda = 0.3;
-
-        $bordero = [];
-
-        foreach ($vendas as $venda) {
-
-            $vendedor = $venda->primeiro_vendedor_id;
-
-            if (!array_key_exists($vendedor, $bordero)) {
-                $bordero[$vendedor] = [];
-            }
-
-            $nova_venda['contrato'] = $venda->numero_contrato;
-            $nova_venda['participacao'] = "Vendedor Principal";
-            $nova_venda['cliente'] = $venda->negocio->lead->nome;
-            $nova_venda['credito'] = $venda->valor;
-            $nova_venda['percentagem'] = 0.3;
-            $nova_venda['comissao'] = ((float) $venda->valor) * 0.3;
-            $nova_venda['data_fechamento'] = Carbon::parse($venda['data_fechamento'])->format('d/m/Y');
-
-            $bordero[$vendedor][] = $nova_venda;
-        }
-
-
-        foreach ($vendas as $venda) {
-
-            $vendedor = $venda->segundo_vendedor_id;
-
-            if ($vendedor == "") {
-                continue;
-            }
-
-            if (!array_key_exists($vendedor, $bordero)) {
-                $bordero[$vendedor] = [];
-            }
-
-            $nova_venda['contrato'] = $venda->numero_contrato;
-            $nova_venda['participacao'] = "Vendedor Principal";
-            $nova_venda['cliente'] = $venda->negocio->lead->nome;
-            $nova_venda['credito'] = $venda->valor;
-            $nova_venda['percentagem'] = 0.3;
-            $nova_venda['comissao'] = ((float) $venda->valor) * 0.3;
-            $nova_venda['data_fechamento'] = Carbon::parse($venda['data_fechamento'])->format('d/m/Y');
-
-            $bordero[$vendedor][] = $nova_venda;
-        }
-
-        return view('administrativo.bordero', compact('vendas', 'bordero'));
-    }
 
     public function create()
     {

@@ -6,7 +6,7 @@
 @endsection
 
 @section('main_content')
-<div class="container mt-5">
+<div class="container">
     <ul class="nav nav-tabs" id="borderoTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="bordero-tab" data-bs-toggle="tab" data-bs-target="#bordero"
@@ -14,7 +14,7 @@
         </li>
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="add-rule-tab" data-bs-toggle="tab" data-bs-target="#add-rule" type="button"
-                role="tab" aria-controls="add-rule" aria-selected="false">Adicionar Regra</button>
+                role="tab" aria-controls="add-rule" aria-selected="false">Regras de Comissionamento</button>
         </li>
     </ul>
     <div class="tab-content" id="borderoTabContent">
@@ -69,7 +69,7 @@
                 <div class="card-body">
                     <h4 class="card-title mb-4">Adicionar Regra de Comissão</h4>
                     <form id="ruleForm" class="row g-3">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="sellerRole" class="form-label">Cargo do Primeiro Vendedor</label>
                             <select id="sellerRole" class="form-select">
                                 <option value="">Qualquer Cargo</option>
@@ -78,7 +78,7 @@
                                 <option value="coordenador">Coordenador</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="helperRole" class="form-label">Cargo do Segundo Vendedor</label>
                             <select id="helperRole" class="form-select">
                                 <option value="">Nenhum (Venda Solitária)</option>
@@ -87,18 +87,36 @@
                                 <option value="coordenador">Coordenador</option>
                             </select>
                         </div>
-                        <div class="col-md-6">
+
+                        <div class="col-md-4">
+                            <label for="thirdRole" class="form-label">Cargo do Terceiro Vendedor</label>
+                            <select id="thirdRole" class="form-select">
+                                <option value="">Nenhum (Venda Solitária ou Dupla)</option>
+                                <option value="vendedor">Vendedor</option>
+                                <option value="telemarketing">Telemarketing</option>
+                                <option value="coordenador">Coordenador</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4">
                             <label for="commissionFirstSeller" class="form-label">Comissão para o Primeiro Vendedor
                                 (%)</label>
                             <input type="number" class="form-control" id="commissionFirstSeller" step="0.001"
                                 placeholder="0.6">
                         </div>
-                        <div class="col-md-6" id="secondSellerCommissionContainer">
+                        <div class="col-md-4" id="secondSellerCommissionContainer">
                             <label for="commissionSecondSeller" class="form-label">Comissão para o Segundo Vendedor
                                 (%)</label>
                             <input type="number" class="form-control" id="commissionSecondSeller" step="0.001"
                                 placeholder="0.3">
                         </div>
+                        <div class="col-md-4" id="thirdSellerCommissionContainer">
+                            <label for="commissionThirdSeller" class="form-label">Comissão para o Terceiro Vendedor
+                                (%)</label>
+                            <input type="number" class="form-control" id="commissionThirdSeller" step="0.001"
+                                placeholder="0.2">
+                        </div>
+
                         <div class="col-12">
                             <button type="button" id="addRule" class="btn btn-primary w-100 mt-3">Adicionar
                                 Regra</button>
@@ -112,6 +130,7 @@
                                     <th>Condições</th>
                                     <th>Comissão Primeiro Vendedor (%)</th>
                                     <th>Comissão Segundo Vendedor (%)</th>
+                                    <th>Comissão Terceiro Vendedor (%)</th>
                                     <th>Ações</th>
                                 </tr>
                             </thead>
@@ -127,12 +146,19 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
     const initialRules = @json($rules);
 
 
     $(document).ready(function () {
-        let rules = [];
+        let rules = initialRules || [];
+
+        renderRulesTable();
 
         $('#helperRole').on('change', function () {
             const helperRole = $(this).val();
@@ -148,15 +174,32 @@
             const rule = {
                 first_seller_role:  $('#sellerRole').val(),       // Corrigido para first_seller_role
                 second_seller_role: $('#helperRole').val(),      // Corrigido para second_seller_role
-                condition_type:     $('#helperRole').val() ? "Venda com Assistência" : "Venda Solitária",  // Corrigido para condition_type
-                commission_first:   $('#commissionFirstSeller').val(), // Corrigido para commission_first
-                commission_second:  $('#commissionSecondSeller').val() // Corrigido para commission_second
+                third_seller_role: $('#thirdRole').val(),
+
+                condition_type: $('#helperRole').val() && $('#thirdRole').val()
+                ? "Venda Tripla"
+                : $('#helperRole').val()
+                ? "Venda com Assistência"
+                : "Venda Solitária",
+                commission_first: $('#commissionFirstSeller').val(),
+                commission_second: $('#commissionSecondSeller').val(),
+                commission_third: $('#commissionThirdSeller').val(),
             };
 
             rules.push(rule);
             renderRulesTable();
             clearForm();
         });
+
+        $('#thirdRole').on('change', function () {
+            const thirdRole = $(this).val();
+            if (thirdRole) {
+                $('#thirdSellerCommissionContainer').show();
+            } else {
+                $('#thirdSellerCommissionContainer').hide();
+                $('#commissionThirdSeller').val('');
+            }
+        }).trigger('change');
 
         // Função para renderizar a tabela de regras
         function renderRulesTable() {
@@ -166,12 +209,14 @@
                 const conditions = `
                     Cargo Primeiro Vendedor: ${rule.first_seller_role || "Qualquer"}<br>
                     Cargo Segundo Vendedor: ${rule.second_seller_role || "Nenhum"}<br>
+                    Cargo Terceiro Vendedor: ${rule.third_seller_role || "Nenhum"}<br>
                     Tipo de Venda: ${rule.condition_type}
                 `;
                 const row = `<tr>
                     <td>${conditions}</td>
                     <td>${rule.commission_first || 0}</td>
                     <td>${rule.commission_second || 0}</td>
+                    <td>${rule.commission_third || 0}</td>
                     <td>
                         <button onclick="editRule(${index})" class="btn btn-sm btn-outline-secondary">Editar</button>
                         <button onclick="deleteRule(${index})" class="btn btn-sm btn-outline-danger">Excluir</button>
@@ -180,6 +225,7 @@
                 tbody.append(row);
             });
         }
+
 
         // Função para limpar o formulário após adicionar uma regra
         function clearForm() {
@@ -200,8 +246,30 @@
 
         // Função para excluir uma regra
         window.deleteRule = function (index) {
-            rules.splice(index, 1);
-            renderRulesTable();
+            if (confirm('Tem certeza que deseja excluir esta regra?')) {
+                const ruleId = rules[index].id; // Pegue o ID da regra (se existir)
+
+                // Caso a regra esteja salva no banco, envie uma requisição para excluir
+                if (ruleId) {
+                    $.ajax({
+                        url: `/productions/rules/${ruleId}`, // Endpoint de exclusão
+                        method: 'DELETE',
+                        data: { _token: '{{ csrf_token() }}' },
+                        success: function () {
+                            rules.splice(index, 1); // Remove a regra localmente
+                            renderRulesTable(); // Atualiza a tabela
+                            alert('Regra excluída com sucesso!');
+                        },
+                        error: function () {
+                            alert('Erro ao excluir a regra. Tente novamente.');
+                        }
+                    });
+                } else {
+                    // Caso não esteja no banco, remova apenas localmente
+                    rules.splice(index, 1);
+                    renderRulesTable();
+                }
+            }
         }
 
         // Enviar regras para o backend
@@ -215,7 +283,7 @@
                 },
                 success: function (response) {
                     alert(response.message);
-                    rules = [];
+                    //rules = [];
                     renderRulesTable();
                 },
                 error: function () {

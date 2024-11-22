@@ -63,8 +63,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/index', [ProductionController::class, 'index'])->name('productions.index');
             Route::get('/bordero', [ProductionController::class, 'bordero'])->name('productions.bordero');
             Route::post('/save-rules', [ProductionController::class, 'saveRules'])->name('productions.saveRules');
+            Route::delete('/rules/{id}', [ProductionController::class, 'deleteRule'])->name('rules.delete');
 
-            
+
             Route::get('/edit', [ProductionController::class, 'index'])->name('productions.edit');
             Route::delete('/delete/{id}', [ProductionController::class, 'destroy'])->name('productions.destroy');
             Route::post('/store', [ProductionController::class, 'store'])->name('productions.store');

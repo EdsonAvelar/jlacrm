@@ -115,7 +115,7 @@ use Carbon\Carbon;
 
                             @endforeach
 
-   
+
 
 
                             @foreach ($productions as $production)
@@ -126,6 +126,7 @@ use Carbon\Carbon;
                                 <td>{{ $production->end_date }}</td>
                                 <td>{{ $production->is_active ? 'Sim' : 'Não' }}</td>
                                 <td>
+
                                     <!-- Botão "Editar" sem o `data-bs-toggle` e `data-bs-target` -->
                                     <button type="button" class="btn btn-sm btn-primary edit-btn"
                                         data-id="{{ $production->id }}" data-name="{{ $production->name }}"
@@ -138,7 +139,9 @@ use Carbon\Carbon;
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">Deletar</button>
+
                                     </form>
+
                                 </td>
                             </tr>
                             @endforeach
