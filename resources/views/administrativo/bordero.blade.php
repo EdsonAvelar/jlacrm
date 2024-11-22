@@ -46,7 +46,9 @@
                                     <td>{{ $venda['contrato'] }}</td>
                                     <td>{{ $venda['cliente'] }}</td>
                                     <td>{{ $venda['participacao'] }}</td>
-                                    <td>{{ $venda['credito'] }}</td>
+                                    <td>R$ {{
+                                        number_format(
+                                        (float)$venda['credito'], 2, ',', '.') }}</td>
                                     <td>{{ $venda['percentagem'] }}</td>
                                     <td>R$ {{ number_format($venda['comissao'], 2, ',', '.') }}</td>
                                     <td>{{ $venda['data_fechamento'] }}</td>

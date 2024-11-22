@@ -4,9 +4,6 @@
 
 use Carbon\Carbon;
 
-
-
-
 ?>
 @section('headers')
 <meta name="csrf-token" content="{{ csrf_token() }}">

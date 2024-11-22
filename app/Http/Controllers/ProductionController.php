@@ -29,14 +29,14 @@ class ProductionController extends Controller
     {
         $rules = $request->input('rules');
 
-        $request->validate([
-            'rules.*.first_seller_role' => 'nullable|string',
-            'rules.*.second_seller_role' => 'nullable|string',
-            'rules.*.third_seller_role' => 'nullable|string',
-            'rules.*.commission_first' => 'required|numeric|min:0|max:1',
-            'rules.*.commission_second' => 'nullable|numeric|min:0|max:1',
-            'rules.*.commission_third' => 'nullable|numeric|min:0|max:1',
-        ]);
+        // $request->validate([
+        //     'rules.*.first_seller_role' => 'nullable|string',
+        //     'rules.*.second_seller_role' => 'nullable|string',
+        //     'rules.*.third_seller_role' => 'nullable|string',
+        //     'rules.*.commission_first' => 'required|numeric|min:0|max:1',
+        //     'rules.*.commission_second' => 'nullable|numeric|min:0|max:1',
+        //     'rules.*.commission_third' => 'nullable|numeric|min:0|max:1',
+        // ]);
 
         foreach ($rules as $ruleData) {
             CommissionRule::updateOrCreate(
@@ -48,9 +48,9 @@ class ProductionController extends Controller
                     'second_seller_role' => $ruleData['second_seller_role'],
                     'third_seller_role' => $ruleData['third_seller_role'],
                     'condition_type' => $ruleData['condition_type'],
-                    'commission_first' => $ruleData['commission_first'],
-                    'commission_second' => $ruleData['commission_second'] ?? 0,
-                    'commission_third' => $ruleData['commission_third'] ?? 0,
+                    'commission_first' => ($ruleData['commission_first']) / 100,
+                    'commission_second' => ($ruleData['commission_second'] ?? 0) / 100,
+                    'commission_third' => ($ruleData['commission_third'] ?? 0) / 100,
                 ]
             );
         }
@@ -71,9 +71,9 @@ class ProductionController extends Controller
 
     private function calculateCommission($venda, $rules)
     {
-        $firstSellerCommission = 0.6;
-        $secondSellerCommission = 0.3;
-        $thirdSellerCommission = 0.1;
+        $firstSellerCommission = 0.6 / 100;
+        $secondSellerCommission = 0.3 / 100;
+        $thirdSellerCommission = 0.1 / 100;
 
         foreach ($rules as $rule) {
             // Verifica se a regra corresponde à venda atual
@@ -139,7 +139,7 @@ class ProductionController extends Controller
                 'participacao' => "Vendedor Principal",
                 'cliente' => $venda->negocio->lead->nome,
                 'credito' => $venda->valor,
-                'percentagem' => $commissions['first_seller_commission'],
+                'percentagem' => ($commissions['first_seller_commission'] * 100) . " %",
                 'comissao' => ((float) $venda->valor) * $commissions['first_seller_commission'],
                 'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
             ];
@@ -151,7 +151,7 @@ class ProductionController extends Controller
                     'participacao' => "Assistente",
                     'cliente' => $venda->negocio->lead->nome,
                     'credito' => $venda->valor,
-                    'percentagem' => $commissions['second_seller_commission'],
+                    'percentagem' => ($commissions['second_seller_commission'] * 100) . " %",
                     'comissao' => ((float) $venda->valor) * $commissions['second_seller_commission'],
                     'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
                 ];
@@ -164,7 +164,7 @@ class ProductionController extends Controller
                     'participacao' => "Assistente Secundário",
                     'cliente' => $venda->negocio->lead->nome,
                     'credito' => $venda->valor,
-                    'percentagem' => $commissions['third_seller_commission'],
+                    'percentagem' => ($commissions['third_seller_commission'] * 100) . " %",
                     'comissao' => ((float) $venda->valor) * $commissions['third_seller_commission'],
                     'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
                 ];
