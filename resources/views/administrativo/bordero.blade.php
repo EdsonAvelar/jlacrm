@@ -76,10 +76,18 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><b>Total em Crédito</b></td>
-                                    <td>{{ number_format($credito_total, 2, ',', '.') }}</td>
-                                    <td><b>Total em Comissão</b></td>
-                                    <td>{{ number_format($comissao_total, 2, ',', '.') }}</td>
+                                    <td>
+                                        <b>Total em Crédito</b>
+                                    </td>
+                                    <td>
+                                        <b class="text-info">R$ {{ number_format($credito_total, 2, ',', '.') }}</b>
+                                    </td>
+                                    <td>
+                                        <b>Total em Comissão</b>
+                                    </td>
+                                    <td>
+                                        <b class="text-success">R$ {{ number_format($comissao_total, 2, ',', '.') }}</b>
+                                    </td>
 
                                 </tr>
 
