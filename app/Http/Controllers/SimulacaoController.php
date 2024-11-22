@@ -106,6 +106,8 @@ class SimulacaoController extends Controller
                 $sim_tipo['con-parcela-reduzida'] = $input['con-parcela-reduzida'][$i];
                 $sim_tipo['con-prazo'] = $input['con-prazo'][$i];
                 $sim_tipo['con-lance'] = $input['con-lance'][$i];
+                $sim_tipo['con-credito-poscontemplacao'] = $input['con-credito-poscontemplacao'][$i];
+
                 $sim_tipo['con-rendaexigida'] = $input['con-rendaexigida'][$i];
                 $sim_tipo['con-valor-pago'] = $input['con-valor-pago'][$i];
                 $sim_tipo['con-parcelas_embutidas'] = $input['con-parcelas_embutidas'][$i];

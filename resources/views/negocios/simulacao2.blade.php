@@ -324,31 +324,7 @@ use App\Enums\NegocioTipo;
                 </div>
             </div>
             <div class="col-md-6">
-                <!--div class="form-group row">
-                    <span class="text-danger"> *inserir parcela cheia, marque aqui caso queira reduzir 30% na
-                        proposta
-                        final</span>
 
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Valor Reduzido</label>
-                    <div class="col-sm-6">
-
-                        <input data-mask='R$ #.##0,00' type="text" name="con-parcelas[]"
-                            class="form-control fakedisabled" id="vConParcelaReduzida"
-                            placeholder="Valor da Parcela reduzida" value="" >
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-check">
-
-                            <input type="checkbox" id="vConParcelaReduzidaCheck" name="reduzido[]"
-                                data-toggle="toggle" data-on="Com Redução" data-off="Sem Redução"
-                                data-onstyle="success" data-offstyle="warning">
-
-                            <label class="form-check-label">
-                                Redução 30% ?
-                            </label>
-                        </div>
-                    </div>
-                </div -->
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Lance</label>
@@ -357,6 +333,16 @@ use App\Enums\NegocioTipo;
                             id="vConLance" placeholder="Lance">
                     </div>
                 </div>
+
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-3 col-form-label">Crédito Após Contemplação</label>
+                    <div class="col-sm-6">
+                        <input data-mask='R$ #.##0,00' type="text" name="con-credito-poscontemplacao[]"
+                            class="form-control" id="vConAposCont" placeholder="Digite o Valor ou Deixe em branco">
+                    </div>
+                </div>
+
+
 
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Prazo</label>
@@ -611,51 +597,6 @@ use App\Enums\NegocioTipo;
         $section_id = $(this).closest('.section_consorcio').attr('id')
         fillCon($section_id);
     })
-
-
-
-    // $("#vCredito").focusout(function() {
-    //     preencherValores('vCredito');
-    // })
-
-    // $("#finJuros").focusout(function() {
-    //     preencherValores("finJuros");
-    // })
-
-    // $("#finPrazo").focusout(function() {
-    //     preencherValores(false);
-    // })
-
-    // $("#vFinEntrada").focusout(function() {
-    //     preencherValores('vFinEntrada');
-    // })
-
-    // $("#vFinParcela").focusout(function() {
-    //     preencherValores("vFinParcela");
-    // })
-
-    // $("#vConPrazo").focusout(function() {
-    //     preencherValoresConsorcio();
-    // })
-
-    // $("#vConCredito").focusout(function() {
-    //     preencherValoresConsorcio();
-    // })
-
-    // $("#vConEntrada").focusout(function() {
-    //     preencherValoresConsorcio();
-    // })
-
-    // $("#vConParcela").focusout(function() {
-    //     preencherValoresConsorcio();
-    // })
-    // $("#vConAdesao").focusout(function() {
-    //     preencherValoresConsorcio();
-    // })
-
-    // $("#vConEmbutidas").change(function() {
-    //     preencherValoresConsorcio();
-    // });
 
 
     function fillCon($section_id) {
@@ -953,34 +894,7 @@ use App\Enums\NegocioTipo;
 
     }
 
-    // $('#btAutoManual').change(function() {
 
-    //     const nomes = ['vFinEntrada', 'finJuros', 'vCredito', 'vFinParcela', 'finPrazo', 'vConPrazo']
-
-    //     if (this.checked) {
-    //         globalThis.automatic = true;
-    //         nomes.forEach(function(nome, i) {
-    //             $('#' + nome).addClass('input-auto')
-    //         });
-
-    //         $('#jumb').removeClass('jumb-manual');
-    //         $('#jumb').addClass('jumb-auto');
-    //         $('#content').removeClass('content-manual');
-    //         $('#content').addClass('content-auto');
-
-    //     } else {
-    //         globalThis.automatic = false;
-    //         nomes.forEach(function(nome, i) {
-    //             $('#' + nome).removeClass('input-auto')
-    //         })
-
-    //         $('#jumb').removeClass('jumb-auto')
-    //         $('#jumb').addClass('jumb-manual')
-    //         $('#content').removeClass('content-auto');
-    //         $('#content').addClass('content-manual');
-    //     }
-
-    // });
 
     $('#vConParcelaReduzidaCheck').change(function() {
 

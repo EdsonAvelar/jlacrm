@@ -306,15 +306,20 @@ function convert($frase)
                     <td align="left">
 
                         @if ($consorcio['con-lance'])
-                        <h3> *Lance: <span style="font-weight: bold;">
+                        <h4> *Lance: <span style="font-weight: bold;">
                                 {{ $consorcio['con-lance'] }}
                             </span>
-                        </h3>
+                        </h4>
 
-                        <br><br>
-                        @else
+                        @if ($consorcio['con-credito-poscontemplacao'])
+                        <h4>Crédito Após Contemplação: <span style="font-weight: bold;">
+                                {{ $consorcio['con-credito-poscontemplacao'] }}</span>
+                        </h4>
                         @endif
 
+                        @else
+                        @endif
+                        <br>
 
                         @if ($simulacao->tipo == 'IMOVEL')
                         <h4>Despesas Cartoriais: <span style="font-weight: bold;">até 10% do Crédito
