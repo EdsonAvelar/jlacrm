@@ -30,34 +30,64 @@
                         <table class="table table-bordered table-hover">
                             <thead class="table-light">
                                 <tr>
+                                    <th>Data Fechamento</th>
                                     <th>Contrato</th>
                                     <th>Cliente</th>
                                     <th>Participação</th>
                                     <th>Crédito</th>
                                     <th>Porcentagem</th>
                                     <th>Comissão</th>
-                                    <th>Data Fechamento</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                @php $vendas_fechadas = 0; @endphp
+                                @php
+                                $comissao_total = 0;
+                                $credito_total = 0;
+                                @endphp
+
                                 @foreach ($bordero_vendedor as $venda)
                                 <tr>
+                                    <td>{{ $venda['data_fechamento'] }}</td>
                                     <td>{{ $venda['contrato'] }}</td>
-                                    <td>{{ $venda['cliente'] }}</td>
+                                    <td><a href="{{ route('negocio_fechamento', ['id' => $venda['cliente_id']]) }}">{{
+                                            $venda['cliente'] }}
+
+                                    </td>
                                     <td>{{ $venda['participacao'] }}</td>
                                     <td>R$ {{
                                         number_format(
                                         (float)$venda['credito'], 2, ',', '.') }}</td>
                                     <td>{{ $venda['percentagem'] }}</td>
                                     <td>R$ {{ number_format($venda['comissao'], 2, ',', '.') }}</td>
-                                    <td>{{ $venda['data_fechamento'] }}</td>
+
+
+                                    @php
+
+                                    $comissao_total += $venda['comissao'];
+                                    $credito_total += (float)$venda['credito'];
+
+                                    @endphp
                                 </tr>
-                                @php $vendas_fechadas += $venda['comissao']; @endphp
+
+
                                 @endforeach
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Total em Crédito</b></td>
+                                    <td>{{ number_format($credito_total, 2, ',', '.') }}</td>
+                                    <td><b>Total em Comissão</b></td>
+                                    <td>{{ number_format($comissao_total, 2, ',', '.') }}</td>
+
+                                </tr>
+
+
                             </tbody>
                         </table>
-                        <h6 class="text-success">Total: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h6>
+                        {{-- <h6 class="text-success">Total: R$ {{ number_format($vendas_fechadas, 2, ',', '.') }}</h6>
+                        --}}
                     </div>
                 </div>
                 @endforeach
