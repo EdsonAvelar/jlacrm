@@ -304,11 +304,10 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
 
                                 <li>
-                                    <a
-                                        href="{{ route('dashboard_producao') }}">Produções</a>
+                                    <a href="{{ route('dashboard_producao') }}">Produções</a>
                                 </li>
 
-                                
+
 
                                 @endif
                             </ul>
@@ -339,6 +338,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 </li>
                                 <li>
                                     <a href="{{ route('ranking.vendas.ajuda') }}">Ranking Modo Ajuda</a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('ranking.vendas.telemarketing') }}">Ranking Telemarketing</a>
                                 </li>
                                 <li>
                                     <a href="{{ route('ranking.agendamentos') }}">Ranking de Agendamentos</a>
@@ -420,33 +422,33 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('productions.index') }}">Produções</a>
                                 </li>
 
-                                
+
 
                                 <li>
                                     <a href="{{ route('productions.bordero') }}">Bordero</a>
                                 </li>
 
-                               
 
-                               
+
+
                                 <li>
                                     <a href="{{ route('users.funcionarios') }}">Funcionários</a>
                                 </li>
-                                
 
-                                
+
+
                                 <li>
                                     <a
                                         href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
                                         Realizadas</a>
                                 </li>
-                                
 
-                             
+
+
                                 <li>
                                     <a href="{{ route('equipes.index') }}">Equipes</a>
                                 </li>
-                                
+
                             </ul>
                         </div>
 

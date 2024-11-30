@@ -251,7 +251,7 @@
 
         @include('dashboards.views.bar_plot_zerofree', [
         'title' => "Vendas ("."R$ " . number_format(array_sum($output['vendas']), 2, ',', '.').")",
-        'name' => 'Vendas',
+        'name' => 'Vendas Totais',
         'plots' => [$output['vendedores'], $output['vendas']],
         'filterzero' => config("grafico_exibir_zerados")
         ])
