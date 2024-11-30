@@ -92,7 +92,7 @@ if ($tema == ''){
                 <div class="ranking-totals" id="header-total"
                     style="display: {{ config('ranking_mostrar_vendas') == 'true'? 'flex' : 'none' }}">
 
-                    <span style="color:gray">Total em Vendas: </span> <span class="total-time">R$ 0</span>
+                    <span class="total-vendas-title">Total em Vendas: </span> <span class="total-time">R$ 0</span>
                     {{-- <span style="color:gray">Total do top 3: </span> <span class="total-top3">R$106.508,00</span>
                     --}}
                 </div>

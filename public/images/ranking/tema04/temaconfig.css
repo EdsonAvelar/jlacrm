@@ -84,7 +84,18 @@ background-color: #95733f;
     }
 
     .ranking-totals {
-    display: none !important
+        display: flex;
+        gap: 20px;
+        font-weight: bold;
+        color: greenyellow;
+        font-size: large;
+        padding: 10px;
+        border-radius: 10px;
+        background: #722e2e;
+    }
+
+    .total-vendas-title {
+    color: #ffffff;
     }
 
     .header-panel select {

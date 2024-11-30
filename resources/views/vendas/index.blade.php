@@ -127,8 +127,9 @@ use App\Enums\VendaStatus;
                                     </th>
                                     <th>Cliente </th>
                                     <th>Contrato </th>
-                                    <th>Vendedor Principal </th>
-                                    <th>Vendedor Secundário</th>
+                                    <th>Vendedor </th>
+                                    <th>Ajudante</th>
+                                    <th>Telemarketing</th>
                                     <th>Data Fechamento</th>
                                     <th>Primeira Assembleia</th>
                                     <th>Valor</th>
@@ -162,6 +163,11 @@ use App\Enums\VendaStatus;
                                     <td>
                                         @if ($venda->segundo_vendedor_id)
                                         {{ User::find($venda->segundo_vendedor_id)->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($venda->terceiro_vendedor_id)
+                                        {{ User::find($venda->terceiro_vendedor_id)->name }}
                                         @endif
                                     </td>
 
@@ -213,8 +219,9 @@ use App\Enums\VendaStatus;
                                     </th>
                                     <th>Cliente </th>
                                     <th>Contrato </th>
-                                    <th>Vendedor Principal </th>
-                                    <th>Vendedor Secundário</th>
+                                    <th>Vendedor </th>
+                                    <th>Ajudante</th>
+                                    <th>Telemarketing</th>
                                     <th>Data Fechamento</th>
                                     <th>Primeira Assembleia</th>
                                     <th>Valor</th>
@@ -251,6 +258,11 @@ use App\Enums\VendaStatus;
                                     <td>
                                         @if ($venda->segundo_vendedor_id)
                                         {{ User::find($venda->segundo_vendedor_id)->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($venda->terceiro_vendedor_id)
+                                        {{ User::find($venda->terceiro_vendedor_id)->name }}
                                         @endif
                                     </td>
 
@@ -293,8 +305,9 @@ use App\Enums\VendaStatus;
                                     </th>
                                     <th>Cliente </th>
                                     <th>Contrato </th>
-                                    <th>Vendedor Principal </th>
-                                    <th>Vendedor Secundário</th>
+                                    <th>Vendedor </th>
+                                    <th>Ajudante</th>
+                                    <th>Telemarketing</th>
                                     <th>Data Fechamento</th>
                                     <th>Primeira Assembleia</th>
                                     <th>Valor</th>
@@ -331,6 +344,11 @@ use App\Enums\VendaStatus;
                                     <td>
                                         @if ($venda->segundo_vendedor_id)
                                         {{ User::find($venda->segundo_vendedor_id)->name }}
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if ($venda->terceiro_vendedor_id)
+                                        {{ User::find($venda->terceiro_vendedor_id)->name }}
                                         @endif
                                     </td>
 
