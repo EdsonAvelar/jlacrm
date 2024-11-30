@@ -179,6 +179,9 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'ranking'],
         function () {
             Route::get('/vendas/ajuda', [RankingController::class, 'vendas_ajuda'])->name('ranking.vendas.ajuda');
+            Route::get('/vendas/telemarketing', [RankingController::class, 'telemarketing_vendas'])->name('ranking.vendas.telemarketing');
+            Route::get('/colaboradores/vendas/telemarketing', [RankingController::class, 'colaboradores_vendas_telemarketing'])->name('ranking.colaboradores.vendas.telemarketing');
+
             Route::get('/vendas', [RankingController::class, 'vendas'])->name('ranking.vendas');
             Route::get('/vendas/equipes', [RankingController::class, 'ranking_vendas_equipe'])->name('ranking.vendas.equipe');
             Route::get('/equipes/vendas', [RankingController::class, 'equipes_vendas'])->name('ranking.equipes.vendas');

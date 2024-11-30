@@ -657,6 +657,7 @@ class DashboardController extends Controller
                 'aprovacoes',
                 'vendas',
                 'vendas_2',
+                'vendas_telemarketing',
                 'propostas',
                 'agendamentos_faltou_perc',
                 'agendamentos_faltou',
@@ -839,8 +840,18 @@ class DashboardController extends Controller
 
                 array_push($output['vendas_2'], $vendas_totais_2);
 
+                
+                $query = [
+                    ['data_fechamento', '>=', $from],
+                    ['data_fechamento', '<=', $to],
+                    ['terceiro_vendedor_id', '=', $vendedor->id],
+                    ['status', '=', 'FECHADA']
+                ];
 
+                $vendas_telemarketing = Fechamento::where($query)->sum('valor');
+                array_push($output['vendas_telemarketing'], $vendas_telemarketing);
 
+  
                 $query = [
                     ['data_proposta', '>=', $from],
                     ['data_proposta', '<=', $to],

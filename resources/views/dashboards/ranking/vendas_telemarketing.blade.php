@@ -18,7 +18,7 @@ $tema = app('request')->tema;
 
 #$tema = config('ranking_tema_vendas')
 if ($tema == ''){
-    $tema = 'tema04';
+    $tema = 'tema05';
 }
 ?>
 
@@ -29,7 +29,7 @@ if ($tema == ''){
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking Modo Ajuda</title>
+    <title>Ranking Telemarketing</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -75,10 +75,10 @@ if ($tema == ''){
     </div>
 
     @include('dashboards.ranking.templates.menu_bar',
-    ['title'=>'Ranking de Modo Ajuda'])
+    ['title'=>'Ranking de Telemarketing'])
 
     @include('dashboards.ranking.templates.config_menu',
-    ['title'=>'Ranking de Modo Ajuda'])
+    ['title'=>'Ranking de Telemarketing'])
 
     <div class="container2">
 
@@ -89,9 +89,6 @@ if ($tema == ''){
                     <i class="fas fa-arrow-left"></i>
                     <span>Rankings</span>
                 </div>
-
-
-
                 <div class="ranking-totals" id="header-total"
                     style="display: {{ config('ranking_mostrar_vendas') == 'true'? 'flex' : 'none' }}">
 
@@ -164,9 +161,9 @@ if ($tema == ''){
                                         font-size: xx-large;
                                         font-weight: bold;
                                         font-family: sans-serif;
-                                    ">Ranking de Modo Ajuda</h4>
+                                    ">Ranking de Telemarketing</h4>
             <div class="logo-empresa">
-                <h1 class="titulo-logo" style="display: none">Ranking de Vendas</h1>
+                <h1 class="titulo-logo" style="display: none">Ranking de Telemarketing</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
 
@@ -323,7 +320,7 @@ if ($tema == ''){
                 equipe= "flex";
             }
             $.ajax({
-                url: "{{ url('ranking/colaboradores/vendas/ajuda') }}" ,
+                url: "{{ url('ranking/colaboradores/vendas/telemarketing') }}" ,
                 method: 'GET',
                 success: function(data) {
                     let colaboradores = data.colaboradores;
@@ -787,7 +784,7 @@ if ($tema == ''){
     </script>
 
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/telemarketing'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
 
 </body>
 

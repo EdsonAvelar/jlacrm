@@ -22,6 +22,11 @@ class RankingController extends Controller
         return view('dashboards.ranking.vendas_ajuda');
     }
 
+    public function telemarketing_vendas()
+    {
+        return view('dashboards.ranking.vendas_telemarketing');
+    }
+
     public function vendas()
     {
 
@@ -232,6 +237,73 @@ class RankingController extends Controller
                 ['data_fechamento', '>=', $from],
                 ['data_fechamento', '<=', $to],
                 ['segundo_vendedor_id', '=', $vendedor->id],
+                ['status', '=', 'FECHADA']
+            ];
+
+            $vendas_totais = Fechamento::where($query)->sum('valor');
+
+            $avatar = asset("images/sistema/user-padrao.png");
+            if (
+                $vendedor->avatar
+            ) {
+                $avatar = $vendedor->avatar;
+            }
+            $valor = (float) config("racing_vendas_max");
+
+            if (!$valor) {
+                $valor = 1000000;
+            }
+
+            $user_info = [
+                "name" => $vendedor->name,
+                "total" => $vendas_totais,
+                'meta' => $valor,
+                'percentual' => ($vendas_totais / $valor) * 100,
+                "avatar" => asset($avatar),
+            ];
+
+            if ($vendedor->equipe) {
+                $user_info["equipe_name"] = $vendedor->equipe->descricao;
+                $user_info["equipe_logo"] = url('') . '/images/equipes/' . $vendedor->equipe->id . '/' . $vendedor->equipe->logo;
+            }
+
+            $total = $total + $vendas_totais;
+
+            array_push($output['colaboradores'], $user_info);
+        }
+
+        $output['total_vendas'] = $total;
+
+        usort($output['colaboradores'], function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
+
+
+        return response()->json($output);
+    }
+
+    public function colaboradores_vendas_telemarketing()
+    {
+
+        $output = array();
+        $output['colaboradores'] = array();
+
+        $data_inicio = config('data_inicio');
+        $data_fim = config('data_fim');
+
+        $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+        $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+
+        $cargos = Cargo::where(['nome' => 'Vendedor'])->orWhere(['nome' => 'Coordenador'])->pluck('id');
+        $users = User::whereIn('cargo_id', $cargos)->where(['status' => UserStatus::ativo])->get();
+
+
+        $total = 0;
+        foreach ($users as $vendedor) {
+            $query = [
+                ['data_fechamento', '>=', $from],
+                ['data_fechamento', '<=', $to],
+                ['terceiro_vendedor_id', '=', $vendedor->id],
                 ['status', '=', 'FECHADA']
             ];
 

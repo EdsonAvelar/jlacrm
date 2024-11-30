@@ -14,9 +14,12 @@
     <div class="actions">
 
         <button class="settings-vendas"><i class="fas fa-trophy"></i></button>
-        <button class="settings-agendamentos"><i class="fas fa-phone"></i></button>
-        <button class="settings-times"><i class="fas fa-futbol"></i></button>
         <button class="settings-ajuda"><i class="fas fa-hands-helping"></i></button>
+        <button class="settings-telemarketing"><i class="fas fa-phone"></i></button>
+
+        <button class="settings-agendamentos"><i class="fas fa-calendar"></i></button>
+        <button class="settings-times"><i class="fas fa-futbol"></i></button>
+
 
         @if (app('request')->has('carrossel') )
         <button class="carrossel-stop"><i class="fas fa-stop"></i></button>
@@ -48,6 +51,10 @@
 
             document.querySelector('.settings-ajuda').addEventListener('click', function () {
             window.location.href = "{{ route('ranking.vendas.ajuda') }}";
+            });
+
+            document.querySelector('.settings-telemarketing').addEventListener('click', function () {
+            window.location.href = "{{ route('ranking.vendas.telemarketing') }}";
             });
         });
 

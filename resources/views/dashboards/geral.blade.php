@@ -253,10 +253,10 @@
         'title' => "Vendas ("."R$ " . number_format(array_sum($output['vendas']), 2, ',', '.').")",
         'name' => 'Vendas',
         'plots' => [$output['vendedores'], $output['vendas']],
-        'filterzero' =>  config("grafico_exibir_zerados")
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
-   
+
 
         @if (Auth::user()->hasAnyRole(['admin']))
         @include('dashboards.views.bar_plot', [
@@ -265,7 +265,15 @@
         'plots' => [$output['vendedores'], $output['vendas_2']],
         ])
 
+        @include('dashboards.views.bar_plot', [
+        'title' => "Vendas Telemarketing ("."R$ " . number_format(array_sum($output['vendas_telemarketing']), 2, ',',
+        '.').")",
+        'name' => 'Vendas Telemarketing',
+        'plots' => [$output['vendedores'], $output['vendas_telemarketing']],
+        ])
+
         @endif
+
 
 
 
