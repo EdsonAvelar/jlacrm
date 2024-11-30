@@ -263,6 +263,7 @@
         'title' => "Vendas Modo Ajuda ("."R$ " . number_format(array_sum($output['vendas_2']), 2, ',', '.').")",
         'name' => 'Vendas Modo Ajuda',
         'plots' => [$output['vendedores'], $output['vendas_2']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
         @include('dashboards.views.bar_plot', [
@@ -270,6 +271,7 @@
         '.').")",
         'name' => 'Vendas Telemarketing',
         'plots' => [$output['vendedores'], $output['vendas_telemarketing']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
         @endif
