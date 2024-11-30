@@ -1083,9 +1083,9 @@ function to_data($data)
 
                             <div class="text-center mt-sm-0 mt-3 text-sm-start no-print">
                                 @if( config('broadcast_fechamento') == "true")
-                                <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
+                                {{-- <button type="text" class="btn btn-danger mt-2" id="gerar_broadcast"><i
                                         class="mdi mdi-content-save"></i> Notificar Venda
-                                </button>
+                                </button> --}}
 
                                 <button type="text" class="btn btn-info mt-2" id="btn_notificar_venda"><i
                                         class="mdi mdi-content-save"></i> Salvar e Notificar
