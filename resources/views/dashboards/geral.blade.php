@@ -259,14 +259,14 @@
 
 
         @if (Auth::user()->hasAnyRole(['admin']))
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => "Vendas Modo Ajuda ("."R$ " . number_format(array_sum($output['vendas_2']), 2, ',', '.').")",
         'name' => 'Vendas Modo Ajuda',
         'plots' => [$output['vendedores'], $output['vendas_2']],
         'filterzero' => config("grafico_exibir_zerados")
         ])
 
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => "Vendas Telemarketing ("."R$ " . number_format(array_sum($output['vendas_telemarketing']), 2, ',',
         '.').")",
         'name' => 'Vendas Telemarketing',
