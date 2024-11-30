@@ -75,10 +75,10 @@ if ($tema == ''){
     </div>
 
     @include('dashboards.ranking.templates.menu_bar',
-    ['title'=>'Ranking de Telemarketing'])
+    ['title'=>'Ranking Telemarketing'])
 
     @include('dashboards.ranking.templates.config_menu',
-    ['title'=>'Ranking de Telemarketing'])
+    ['title'=>'Ranking Telemarketing'])
 
     <div class="container2">
 
@@ -161,9 +161,9 @@ if ($tema == ''){
                                         font-size: xx-large;
                                         font-weight: bold;
                                         font-family: sans-serif;
-                                    ">Ranking de Telemarketing</h4>
+                                    ">Ranking Telemarketing</h4>
             <div class="logo-empresa">
-                <h1 class="titulo-logo" style="display: none">Ranking de Telemarketing</h1>
+                <h1 class="titulo-logo" style="display: none">Ranking Telemarketing</h1>
                 <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
 
