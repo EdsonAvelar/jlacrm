@@ -6,6 +6,10 @@
 
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
+
+
 <style>
     input[type=checkbox] {
         /* Double-sized Checkboxes */
@@ -89,6 +93,7 @@
         /* Espaçamento entre o nome da coluna e o ícone */
         cursor: pointer;
         /* Cursor de mão para indicar que o ícone é clicável */
+        float: inline-end;
     }
 
     th.select-checkbox-header {
@@ -103,6 +108,24 @@
         /* Ajuste este valor conforme necessário */
         text-align: left;
         /* Centraliza o conteúdo */
+    }
+
+    .pagination .page-item .page-link {
+        color: #007bff;
+        /* Cor personalizada */
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: white;
+    }
+
+    .sort-icon {
+        cursor: pointer;
+        margin-left: 5px;
+        color: #007bff;
+        /* Ajuste a cor conforme o tema */
     }
 </style>
 @endsection
@@ -224,100 +247,39 @@
                 <!-- end page title -->
 
                 <div class="row">
-                    <div class="col-12">
 
-                        <label id="info_label"></label>
-
-                        <table id="example2" class="table table-striped" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th class="short">
-                                        <input type="checkbox" id="selectall" class="select-checkbox">
-                                    </th>
-                                    <th class="select-checkbox-header">Título <i class="fas fa-filter filter-icon"
-                                            data-column="1"></i></th>
-                                    <th class="select-checkbox-header">Cliente <i class="fas fa-filter filter-icon"
-                                            data-column="2"></i></th>
-                                    <th class="select-checkbox-header">Telefone <i class="fas fa-filter filter-icon"
-                                            data-column="3"></i></th>
-                                    <th class="select-checkbox-header">Valor <i class="fas fa-filter filter-icon"
-                                            data-column="4"></i></th>
-                                    <th class="select-checkbox-header">Etapa <i class="fas fa-filter filter-icon"
-                                            data-column="5"></i></th>
-                                    <th class="select-checkbox-header">Proprietário <i class="fas fa-filter filter-icon"
-                                            data-column="6"></i></th>
-                                    <th class="select-checkbox-header">Origem <i class="fas fa-filter filter-icon"
-                                            data-column="7"></i></th>
-                                    <th class="select-checkbox-header">Status <i class="fas fa-filter filter-icon"
-                                            data-column="8"></i></th>
-                                    <th class="select-checkbox-header">Criado em <i class="fas fa-filter filter-icon"
-                                            data-column="9"></i></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (isset($negocios))
-                                @foreach ($negocios as $negocio)
-                                <tr>
-                                    <td><input type="checkbox" id="chkBSA" name="negocios[]" value="{{ $negocio->id }}"
-                                            class="select-checkbox"></td>
-                                    <td><a href="{{ route('negocio_edit', ['id' => $negocio->id]) }}">{{
-                                            $negocio->titulo }}</a>
-                                    </td>
-                                    <td>{{ $negocio->lead->nome }}</td>
-                                    <td><a href="tel:{{ $negocio->lead->telefone }}">{{ $negocio->lead->telefone }}</a>
-                                    </td>
-                                    <td>{{ $negocio->valor }}</td>
-
-                                    <td>{{ $negocio->etapa_funil->nome }}</td>
-
-                                    <td>
-                                        @if (is_null($negocio->user))
-                                        Não Atribuido
-                                        @else
-                                        {{ $negocio->user->name }}
-                                        @endif
-
-                                    </td>
-                                    <td>
-                                        <?php
-
-                                        if ( $negocio['origem']){
-                                        
-                                            echo $negocio['origem'];
-                                        }else {
-
-                                            echo "SEM ORIGEM";
-                                            
-                                        }
-                                    ?>
-                                    </td>
-
-                                    <td>
-
-                                        <?php
-                                            if ($negocio->status == 'ATIVO') {
-                                                echo "<span class=\"badge bg-info float-begin\">ATIVO</span>";
-                                            } elseif ($negocio->status == 'PERDIDO') {
-                                                echo "<span class=\"badge bg-danger float-begin\" style='color: black;'> PERDIDO</span>";
-                                            } elseif ($negocio->status == 'VENDIDO') {
-                                                echo "<span class=\"badge bg-success float-begin\">VENDIDO</span>";
-                                            } else {
-                                                echo "<span class=\"badge bg-warning float-begin\">" . $negocio->status . '</span>';
-                                            }
-                                        ?>
-                                    </td>
-                                    <td>{{ $negocio->created_at }}</td>
-                                </tr>
-                                @endforeach
-                                @endif
-                            </tbody>
-                        </table>
+                    <table id="example3" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th class="short">
+                                    <input type="checkbox" id="selectall" class="select-checkbox">
+                                </th>
+                                <th class="select-checkbox-header">Título <i class="fas fa-filter filter-icon"
+                                        data-column="negocios.titulo"></i></th>
+                                <th class="select-checkbox-header">Cliente <i class="fas fa-filter filter-icon"
+                                        data-column="leads.nome"></i></th>
+                                <th class="select-checkbox-header">Telefone <i class="fas fa-filter filter-icon"
+                                        data-column="leads.telefone"></i></th>
+                                <th class="select-checkbox-header">Valor <i class="fas fa-filter filter-icon"
+                                        data-column="negocios.valor"></i></th>
+                                <th class="select-checkbox-header">Etapa <i class="fas fa-filter filter-icon"
+                                        data-column="etapa_funils.nome"></i></th>
+                                <th class="select-checkbox-header">Proprietário <i class="fas fa-filter filter-icon"
+                                        data-column="users.name"></i></th>
+                                <th class="select-checkbox-header">Origem <i class="fas fa-filter filter-icon"
+                                        data-column="negocios.origem"></i></th>
+                                <th class="select-checkbox-header">Status <i class="fas fa-filter filter-icon"
+                                        data-column="negocios.status"></i></th>
+                                <th class="select-checkbox-header">Criado em <i class="fas fa-filter filter-icon"
+                                        data-column="negocios.data_criacao" data-type="daterange"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
 
 
 
-
-
-                    </div>
                 </div>
             </div>
         </div>
@@ -509,6 +471,9 @@
 <script src="{{ url('') }}/js/vendor/jquery.dataTables.min.js"></script>
 <script src="{{ url('') }}/js/vendor/dataTables.bootstrap5.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/moment/min/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
 
 <script>
@@ -606,60 +571,76 @@
             });
             $('.telefone').mask('(00) 00000-0000');
 
-            $('#pfechamento').datepicker({
-                orientation: 'top',
-                todayHighlight: true,
-                format: "dd/mm/yyyy",
-                defaultDate: +7
-            });
         });
 
 
 
 $(document).ready(function() {
-    let table = $('#example2').DataTable({
-        pageLength: 10,
-        scrollX: true
-        
+   
+    var filter_content = {};
+
+    let table = $('#example3').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: "{{ route('pipeline_list', ['id' => $curr_funil_id, 'view' => 'list']) }}",
+            data: function (d) {
+                d.filters = filter_content; // Envia os filtros para o backend
+                d.status = "{{ request('status') }}"; // Filtro de status
+                d.proprietario = "{{ request('proprietario') }}"; // Filtro de proprietário
+             
+            }
+        },
+        language: {
+        processing: '<i class="fas fa-spinner fa-spin"></i> Carregando...' // Substitui a palavra "Processing"
+        },
+        columns: [
+            { data: 'select', orderable: false, searchable: false },
+            { data: 'titulo', name: 'negocios.titulo', orderable: false , searchable: true},
+            { data: 'cliente_nome', name: 'leads.nome', orderable: false, searchable: true},
+            { data: 'telefone', name: 'leads.telefone', orderable: false },
+            { data: 'valor', name: 'negocios.valor', orderable: false },
+            { data: 'etapa', name: 'etapa_funils.nome', orderable: false },
+            { data: 'proprietario', name: 'users.name', orderable: false },
+            { data: 'origem', name: 'negocios.origem', orderable: false },
+            { data: 'status', name: 'negocios.status', orderable: false },
+            { data: 'data_criacao', name: 'negocios.data_criacao',orderable: true },
+            
+        ],
+        dom: "lrtip", // Remove o campo de busca global
+        pageLength: 25,
+        order: [[9, 'desc']], // Ordenação pela data de criação
+    
     });
+
+   
 
     // Criar a estrutura do dropdown de filtro
    $('body').append(`
     <div class="filter-dropdown">
+       
         <input type="text" id="filter-input" placeholder="Digite para filtrar">
+       
         <button id="filter-btn">Filtrar</button>
         <button id="clear-filter-btn">Limpar Filtro</button>
+
+        <p style="color:#aaa">Use hífen para exclusão. <br>Ex. -banana</p>
+       
     </div>
     `);
 
     let $filterDropdown = $('.filter-dropdown');
-    var filter_content = {};
-
-
-    // Abrir o dropdown ao clicar no ícone de filtro
-    $('.filter-icon').on('click', function(e) {
-        let column = $(this).data('column');
-        let position = $(this).offset();
-
-        $("#filter-input").val(filter_content[column]);
-
-        $filterDropdown.data('column', column);
-        $filterDropdown.data('icon', $(this));
-        $filterDropdown.css({
-            top: position.top + 30 + 'px',
-            left: (position.left -80) + 'px'
-        }).show();
-    });
+   
 
     // Aplicar o filtro ao clicar no botão de filtrar
-    $('#filter-btn').on('click', function() {
-        let column = $filterDropdown.data('column');
-        let value = $('#filter-input').val();
+    $('#filter-btn').on('click', function () {
+        let column = $filterDropdown.data('column'); // Nome da coluna a ser filtrada
+        let value = $('#filter-input').val(); // Valor do filtro
         let $icon = $filterDropdown.data('icon');
 
-        filter_content[column] = value;
+        filter_content[column] = value; // Armazena o valor do filtro
 
-        table.column(column).search(value).draw();
+        table.ajax.reload(null, false);
 
         // Alterar a cor do ícone se o filtro for aplicado
         if (value) {
@@ -672,20 +653,138 @@ $(document).ready(function() {
     });
 
     // Limpar o filtro ao clicar no botão de limpar filtro
-    $('#clear-filter-btn').on('click', function() {
-        let column = $filterDropdown.data('column');
+    $('#clear-filter-btn').on('click', function () {
+        let column = $filterDropdown.data('column'); // Nome da coluna a ser filtrada
         let $icon = $filterDropdown.data('icon');
 
-        filter_content[column] = '';
+        filter_content[column] = ''; // Remove o valor do filtro
 
-        // Limpar o campo de filtro e remover o filtro aplicado
-        $('#filter-input').val('');
-        table.column(column).search('').draw();
+
+        delete filter_content[column];
+
+
+        table.ajax.reload(null, false);
 
         // Remover a cor do ícone
         $icon.removeClass('filter-applied');
 
         $filterDropdown.hide();
+    });
+
+$('body').append(`
+<div id="daterange-dropdown" style="display: none; position: absolute; z-index: 1000;">
+    <input type="text" id="daterange-filter" class="form-control" placeholder="Selecione um intervalo de datas">
+</div>
+`);
+
+    
+    // Inicializando o Daterangepicker
+    let $daterangePicker = $('#daterange-filter');
+
+    $daterangePicker.daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Limpar',
+            applyLabel: 'Aplicar',
+            format: 'DD/MM/YYYY',
+        }
+    });
+
+    
+
+
+    // Limpar filtro do Daterangepicker
+    $daterangePicker.on('cancel.daterangepicker', function () {
+        let column = $daterangePicker.data('column');
+        delete filter_content[column]; // Remove o filtro da coluna
+        table.ajax.reload(); // Recarrega os dados da tabela
+        //$daterangePicker.hide();
+    });
+
+
+
+    // Quando o ícone de filtro é clicado
+    // Mostrar o daterange-picker ao clicar no filtro "Criado em"
+    $('.filter-icon').on('click', function (e) {
+        let column = $(this).data('column');
+        let filterType = $(this).data('type') || 'text'; // Determina se é texto ou intervalo de datas
+        let position = $(this).offset();
+
+        $filterDropdown.data('column', column);
+        $filterDropdown.data('icon', $(this));
+
+
+        console.log(column, filterType);
+        
+        if (filterType === 'daterange') {
+            // Mostra o daterange-picker para "Criado em"
+            $('#daterange-dropdown').css({
+            top: position.top + 30 + 'px',
+            left: position.left - 80 + 'px',
+            }).show();
+            
+            $('#daterange-dropdown').data('column', column);
+
+            $daterangePicker.trigger('click');;
+        } else {
+            // Mostra o dropdown normal
+            $("#filter-input").val(filter_content[column] || '');
+            $filterDropdown.data('column', column);
+            $filterDropdown.css({
+                top: position.top + 30 + 'px',
+                left: position.left - 80 + 'px',
+            }).show();
+        }
+    });
+
+
+    // Aplicar o filtro do daterange-picker
+    $daterangePicker.on('apply.daterangepicker', function (ev, picker) {
+        let column = $daterangePicker.data('column');
+        let startDate = picker.startDate.format('YYYY-MM-DD');
+        let endDate = picker.endDate.format('YYYY-MM-DD');
+
+        column = 'negocios.data_criacao';
+
+        console.log('daterange-filte', column, startDate, endDate)
+        
+       
+
+        // Atualiza o filtro para essa coluna
+        filter_content[column] = { start: startDate, end: endDate };
+
+        // Atualiza a tabela
+        table.ajax.reload();
+
+        let $icon = $filterDropdown.data('icon');
+        $icon.addClass('filter-applied');
+
+        // $daterangePicker.hide();
+
+        $('#daterange-dropdown').hide()  
+
+    });
+
+
+    $daterangePicker.on('cancel.daterangepicker', function (ev, picker) {
+        let column = $daterangePicker.data('column');
+
+        column = 'negocios.data_criacao';
+
+        let $icon = $filterDropdown.data('icon');
+        $icon.removeClass('filter-applied');
+        
+
+        // Remove o filtro dessa coluna
+        delete filter_content[column];
+
+        // Atualiza a tabela
+        table.ajax.reload();
+
+        //$daterangePicker.hide();
+
+        $('#daterange-dropdown').hide()
+    
     });
 
 
@@ -694,6 +793,8 @@ $(document).ready(function() {
     $(document).on('click', function(e) {
         if (!$(e.target).closest('.filter-icon, .filter-dropdown').length) {
             $filterDropdown.hide();
+           // $daterangePicker.hide();
+            
         }
     });
 });

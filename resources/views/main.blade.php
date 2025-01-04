@@ -373,6 +373,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista</a>
                                 </li>
+                                <li>
+                                    <a
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list2', 'status' => 'ativo']) }}">Lista
+                                        2</a>
+                                </li>
 
                                 <li>
                                     <a

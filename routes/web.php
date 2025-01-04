@@ -145,6 +145,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/reativar', [CrmController::class, 'reativar'])->name('reativar');
             Route::get('/atribuir/one', [CrmController::class, 'atribui_one'])->name('atribui_one');
             Route::get('/pipeline', [CrmController::class, 'pipeline_index'])->name('pipeline_index');
+            Route::get('/pipeline/list', [CrmController::class, 'pipeline_list'])->name('pipeline_list');
+
             Route::get('/list', [CrmController::class, 'list_index'])->name('list_index');
             Route::get('/get', [NegocioController::class, 'negocio_get'])->name('negocio_get');
 

@@ -30,6 +30,8 @@ use App\Models\Fechamento;
 use App\Models\Auditoria;
 use App\Models\Aprovacao;
 
+use Yajra\DataTables\Facades\DataTables;
+
 #use App\Models\Lead;
 
 class CrmController extends Controller
@@ -72,6 +74,7 @@ class CrmController extends Controller
 
         $curr_funil_id = intval($request->query('id'));
         $proprietario_id = intval($request->query('proprietario'));
+        $perPage = intval($request->query('perPage', 10));
 
 
         $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
@@ -160,14 +163,19 @@ class CrmController extends Controller
             array_push($query, $status_arr);
         }
 
-        if ($proprietario_id == -2 and $equipe_exists == -1) {
-
-            $negocios = Negocio::whereIn('user_id', $ids)->where($query)->get();
+        if ($proprietario_id == -2 && $equipe_exists == -1) {
+            $negocios = Negocio::whereIn('user_id', $ids)->where($query)->orderBy('created_at', 'desc');
         } else {
-            $negocios = Negocio::where($query)->get();
+            $negocios = Negocio::where($query)->orderBy('created_at', 'desc');
         }
 
-        $negocios = $negocios->sortByDesc('created_at');
+
+
+        if ($view == 'list') {
+            $negocios = $negocios->paginate($perPage);
+        } else {
+            $negocios = $negocios->get();
+        }
 
 
 
@@ -189,7 +197,6 @@ class CrmController extends Controller
         $motivos = MotivoPerda::all();
 
 
-
         if ($view == 'list') {
 
             if (!$negocios->first()) {
@@ -197,6 +204,13 @@ class CrmController extends Controller
             }
 
             return view('negocios/list', compact('funils', 'etapa_funils', 'negocios', 'curr_funil_id', 'users', 'proprietarios', 'proprietario', 'motivos'));
+        } elseif ($view == 'list2') {
+
+            if (!$negocios->first()) {
+                return view('negocios/list2', compact('funils', 'etapa_funils', 'curr_funil_id', 'users', 'proprietarios', 'proprietario', 'motivos'));
+            }
+
+            return view('negocios/list2', compact('funils', 'etapa_funils', 'negocios', 'curr_funil_id', 'users', 'proprietarios', 'proprietario', 'motivos'));
         } else {
 
             if (!$negocios->first()) {
@@ -204,8 +218,156 @@ class CrmController extends Controller
             }
             return view('negocios/pipeline', compact('funils', 'etapa_funils', 'negocios', 'curr_funil_id', 'users', 'proprietarios', 'proprietario', 'motivos'));
         }
-
     }
+
+
+    public function pipeline_list(Request $request)
+    {
+        $query = Negocio::query()
+            ->join('etapa_funils', 'negocios.etapa_funil_id', '=', 'etapa_funils.id')
+            ->join('leads', 'negocios.lead_id', '=', 'leads.id')
+            ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
+            ->select([
+                    'negocios.*',
+                    'etapa_funils.nome as etapa_nome',
+                    'leads.nome as cliente_nome',
+                    'leads.telefone as cliente_telefone',
+                    'users.name as proprietario_nome',
+                ])
+            ->where('negocios.funil_id', $request->query('id'));
+
+        if ($filters = $request->input('filters')) {
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    // Verifica se é um filtro de intervalo de datas
+                    if (is_array($value) && isset($value['start'], $value['end'])) {
+
+                        $start = $value['start'];//Carbon::createFromFormat('Y-m-d', $value['start'])->startOfDay();
+                        $end = $value['end'];//Carbon::createFromFormat('Y-m-d', $value['end'])->endOfDay();
+
+                        switch ($column) {
+                            case 'negocios.data_criacao':
+                                $query->whereBetween('negocios.data_criacao', [$start, $end]);
+
+                                break;
+                            default:
+                                $query->whereBetween($column, [$start, $end]);
+                                break;
+                        }
+                    } else {
+
+
+                        if (str_starts_with($value, '-')) {
+                            // Remove o "-" do início para usar o restante como valor
+                            $value = substr($value, 1);
+
+                            switch ($column) {
+                                case 'leads.nome':
+                                    $query->where('leads.nome', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'leads.telefone':
+                                    $query->where('leads.telefone', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'users.name':
+                                    $query->where('users.name', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'etapa_funils.nome':
+                                    $query->where('etapa_funils.nome', 'not like', '%' . $value . '%');
+                                    break;
+                                default:
+                                    $query->where($column, 'not like', '%' . $value . '%');
+                                    break;
+                            }
+                        } else {
+                            // Filtro normal com LIKE
+                            switch ($column) {
+                                case 'leads.nome':
+                                    $query->where('leads.nome', 'like', '%' . $value . '%');
+                                    break;
+                                case 'leads.telefone':
+                                    $query->where('leads.telefone', 'like', '%' . $value . '%');
+                                    break;
+                                case 'users.name':
+                                    $query->where('users.name', 'like', '%' . $value . '%');
+                                    break;
+                                case 'etapa_funils.nome':
+                                    $query->where('etapa_funils.nome', 'like', '%' . $value . '%');
+                                    break;
+                                default:
+                                    $query->where($column, 'like', '%' . $value . '%');
+                                    break;
+                            }
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+
+        if ($request->has('order')) {
+            $order = $request->input('order')[0];
+            $columns = $request->input('columns');
+            $columnIndex = $order['column'];
+            $columnName = $columns[$columnIndex]['data'];
+            $direction = $order['dir'];
+
+            if ($columnName && in_array($columnName, ['titulo', 'cliente_nome', 'valor', 'etapa', 'proprietario', 'status', 'data_criacao'])) {
+                $query->orderBy($columnName, $direction);
+            }
+        }
+
+        // Filtro por status
+        if ($status = $request->query('status')) {
+            $query->where('negocios.status', strtoupper($status));
+        }
+
+        // Filtro por proprietário
+        if ($proprietario_id = $request->query('proprietario')) {
+            if ($proprietario_id === '-1') {
+                $query->whereNull('negocios.user_id');
+            } elseif ($proprietario_id !== '-2') {
+                $query->where('negocios.user_id', $proprietario_id);
+            }
+        }
+
+        return DataTables::of($query)
+            ->addColumn('select', function ($negocio) {
+                return '<input type="checkbox" class="select-checkbox" name="negocios[]" value="' . $negocio->id . '">';
+            })
+            ->addColumn('etapa', function ($negocio) {
+                return $negocio->etapa_nome ?? 'N/A';
+            })
+            ->addColumn('cliente', function ($negocio) {
+                return $negocio->cliente_nome ?? 'N/A';
+            })
+            ->addColumn('telefone', function ($negocio) {
+                return '<a href="tel:' . ($negocio->cliente_telefone ?? '') . '">' . ($negocio->cliente_telefone ?? 'N/A') . '</a>';
+            })
+            ->addColumn('proprietario', function ($negocio) {
+                return $negocio->proprietario_nome ?? 'Não Atribuído';
+            })
+            ->editColumn('status', function ($negocio) {
+                $statusBadge = match (strtoupper($negocio->status)) {
+                    'ATIVO' => '<span class="badge bg-info">ATIVO</span>',
+                    'PERDIDO' => '<span class="badge bg-danger">PERDIDO</span>',
+                    'VENDIDO' => '<span class="badge bg-success">VENDIDO</span>',
+                    default => '<span class="badge bg-warning">' . $negocio->status . '</span>',
+                };
+                return $statusBadge;
+            })
+            ->editColumn('data_criacao', function ($negocio) {
+                return Carbon::createFromFormat('Y-m-d', $negocio->data_criacao)->format('d/m/Y');
+
+            })
+            ->rawColumns(['select', 'telefone', 'status'])
+            ->make(true);
+    }
+
+
+
+
 
     public function add_negocio_massiva(Request $request)
     {

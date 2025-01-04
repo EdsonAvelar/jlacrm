@@ -70,12 +70,12 @@ class Negocio extends Model
 
     public function etapa_funil()
     {
-        return $this->belongsTo("App\Models\EtapaFunil");
+        return $this->belongsTo("App\Models\EtapaFunil", "etapa_funil_id");
     }
 
     public function lead()
     {
-        return $this->belongsTo("App\Models\Lead");
+        return $this->belongsTo("App\Models\Lead", "lead_id");
     }
     public function conjuge()
     {
@@ -90,6 +90,6 @@ class Negocio extends Model
 
     public function user()
     {
-        return $this->belongsTo("App\Models\User");
+        return $this->belongsTo("App\Models\User", "user_id");
     }
 }
