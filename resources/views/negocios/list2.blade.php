@@ -127,6 +127,13 @@
         color: #007bff;
         /* Ajuste a cor conforme o tema */
     }
+
+    .container-fluid {
+        overflow-y: auto;
+        /* Adiciona rolagem vertical quando o conteúdo exceder a altura */
+        height: 90vh;
+        /* Define altura total da viewport */
+    }
 </style>
 @endsection
 
