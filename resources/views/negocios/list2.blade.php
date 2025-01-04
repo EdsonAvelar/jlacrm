@@ -174,30 +174,30 @@
                                         <div class="dropdown-menu dropdown-menu-end">
                                             @foreach ($proprietarios as $proprietario_id => $value)
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => $proprietario_id, 'view' => 'list', 'status' => 'ativo']) }}">{{
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => $proprietario_id, 'view' => 'list2', 'status' => 'ativo']) }}">{{
                                                 $value }}</a>
                                             @endforeach
 
                                             @if (Auth::user()->hasAnyRole(['admin']))
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-1', 'view' => 'list', 'status' => 'ativo']) }}">Não
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-1', 'view' => 'list2', 'status' => 'ativo']) }}">Não
                                                 Atribuido</a>
 
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'inativo']) }}">Inativos</a>
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2', 'status' => 'inativo']) }}">Inativos</a>
                                             @endif
 
                                             @if (Auth::user()->hasAnyRole(['gerenciar_equipe']))
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list', 'status' => 'perdido']) }}">Perdidos</a>
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list2', 'status' => 'perdido']) }}">Perdidos</a>
 
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'ativo']) }}">Ativos</a>
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2', 'status' => 'ativo']) }}">Ativos</a>
 
                                             <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list']) }}">Todos</a>
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2']) }}">Todos</a>
                                             @endif
 
                                         </div>
