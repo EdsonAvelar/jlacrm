@@ -108,7 +108,8 @@ class WebhookController extends Controller
 
         if (NegocioImportado::where('telefone', $telefone)->exists()) {
 
-            throw new Exception("Lead duplicado");
+            #throw new Exception("Lead duplicado");
+            return "[Webhook] Negocio " . $dados['nome'] ." (". $telefone ." )". " já existe no CRM";
         }
 
 
@@ -131,8 +132,6 @@ class WebhookController extends Controller
             return "Erro ao importar Negocio: " . $e->getMessage();
 
         }
-
-
 
         // $deal_input['titulo'] = "Negócio " . $dados['nome'] . "-" . $dados['tipo_credito'];
 

@@ -228,12 +228,12 @@ class CrmController extends Controller
             ->join('leads', 'negocios.lead_id', '=', 'leads.id')
             ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
             ->select([
-                    'negocios.*',
-                    'etapa_funils.nome as etapa_nome',
-                    'leads.nome as cliente_nome',
-                    'leads.telefone as cliente_telefone',
-                    'users.name as proprietario_nome',
-                ])
+                'negocios.*',
+                'etapa_funils.nome as etapa_nome',
+                'leads.nome as cliente_nome',
+                'leads.telefone as cliente_telefone',
+                'users.name as proprietario_nome',
+            ])
             ->where('negocios.funil_id', $request->query('id'));
 
         if ($filters = $request->input('filters')) {
@@ -327,7 +327,30 @@ class CrmController extends Controller
         if ($proprietario_id = $request->query('proprietario')) {
             if ($proprietario_id === '-1') {
                 $query->whereNull('negocios.user_id');
-            } elseif ($proprietario_id !== '-2') {
+            } elseif ($proprietario_id === '-2') {
+
+                if (Auth::user()->hasRole('admin')) {
+
+                    #$query->where('negocios.user_id', $proprietario_id);
+
+                } elseif (Auth::user()->hasRole('gerenciar_equipe')) {
+
+                    $equipe = Equipe::where('lider_id', \Auth::user()->id)->first();
+
+                    $ids = [];
+
+                    if ($equipe) {
+                        $ids = $equipe->integrantes()->pluck('id')->toArray();
+                    }
+
+                    array_push($ids, \Auth::user()->id);
+
+                    $query->whereIn('negocios.user_id', $ids);
+
+                }
+
+
+            } else {
                 $query->where('negocios.user_id', $proprietario_id);
             }
         }

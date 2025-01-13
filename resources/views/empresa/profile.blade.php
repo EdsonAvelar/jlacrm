@@ -525,12 +525,20 @@
                                         É possível conectar qualquer plataforma via make (<a
                                             href="https://www.make.com/">https://www.make.com/</a>)
                                         <pre class="text-example">
+Crie um Eevento do Tipo Facebook lead Ads, 
+configura o webhook da conta do facebook
+e da sua página, depois selecione o formulario e salve.
+
+Após isso, adicione outro modulo
+
 Tipo de Trigger: <b>HTTP</b>
+
+Actions: <b>Make a Request</b>
 
 PRECHA AS INFORMAÇÕES ABAIXO
 
 <b>URL: </b>
-{{url('')}}
+{{url('')}}/api/webhook/newlead
 
 <b>Method: </b>
 POST
@@ -548,11 +556,13 @@ Raw
 <b>Content type: </b>
 JSON (Application/json)
 
+Mude o que está em asterisco pelo campo do formulario do 
+facebook:
 <b>Request content</b>
 {
-    "nome": " *campo_nome* }} ",
-    "telefone": " *campo_telefone* ",
-    "email": " *email* ",
+    "nome": "*campo nome*",
+    "telefone": "*campo telefone*",
+    "email": "*email* ",
     "campanha": " *camapanha* ",
     "fonte": " *platforma* ",
     "tipo_do_bem": "IMOVEL",
