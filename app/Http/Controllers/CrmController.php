@@ -778,6 +778,7 @@ class CrmController extends Controller
                 $negocio->created_at = now();
                 $negocio->data_criacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
                 $negocio->updated_at = now();
+                $negocio->status = NegocioStatus::ATIVO;
                 $negocio->save();
 
                 Atividade::add_atividade(\Auth::user()->id, "Cliente Redistribuido para " . User::find($negocio->user_id)->name, $negocio->id);
