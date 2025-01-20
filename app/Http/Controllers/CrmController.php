@@ -775,8 +775,8 @@ class CrmController extends Controller
                 $negocio->user_id = $usuarios[$user_count_dist];
                 $negocio->etapa_funil_id = $etapa_funils[1];
 
-                $nome_a = explode(' ', $$negocio->lead->nome);
-                $nome = $neg[0];
+                $nome_a = explode(' ', $negocio->lead->nome);
+                $nome = $negocio->lead->nome;
                 if (count($nome_a) > 2) {
                     $nome = $nome_a[0];
                 }
