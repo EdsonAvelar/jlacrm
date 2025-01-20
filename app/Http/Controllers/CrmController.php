@@ -319,8 +319,22 @@ class CrmController extends Controller
         }
 
         // Filtro por status
-        if ($status = $request->query('status')) {
-            $query->where('negocios.status', strtoupper($status));
+        // if ($status = $request->query('status')) {
+        //     $query->where('negocios.status', strtoupper($status));
+        // }
+
+        // Verificar se o filtro "negócios parados" foi solicitado
+
+        if ($request->query('status') === 'parado') {
+            $dias_parados = 3;
+            $query->whereRaw('DATEDIFF(NOW(), negocios.updated_at) > ?', [$dias_parados])
+
+                ->where('negocios.status', '!=', 'VENDIDO');
+        } else {
+
+            if ($status = $request->query('status')) {
+                $query->where('negocios.status', strtoupper($status));
+            }
         }
 
         // Filtro por proprietário
@@ -359,6 +373,10 @@ class CrmController extends Controller
             ->addColumn('select', function ($negocio) {
                 return '<input type="checkbox" class="select-checkbox" name="negocios[]" value="' . $negocio->id . '">';
             })
+            ->addColumn('titulo', function ($negocio) {
+                $link = route('negocio_edit', ['id' => $negocio->id]);
+                return '<a href="' . $link . '" class="text-primary">' . htmlspecialchars($negocio->titulo) . '</a>';
+            })
             ->addColumn('etapa', function ($negocio) {
                 return $negocio->etapa_nome ?? 'N/A';
             })
@@ -384,13 +402,9 @@ class CrmController extends Controller
                 return Carbon::createFromFormat('Y-m-d', $negocio->data_criacao)->format('d/m/Y');
 
             })
-            ->rawColumns(['select', 'telefone', 'status'])
+            ->rawColumns(['select', 'titulo','telefone', 'status'])
             ->make(true);
     }
-
-
-
-
 
     public function add_negocio_massiva(Request $request)
     {
