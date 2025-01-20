@@ -774,7 +774,15 @@ class CrmController extends Controller
 
                 $negocio->user_id = $usuarios[$user_count_dist];
                 $negocio->etapa_funil_id = $etapa_funils[1];
-                $negocio->titulo = "Negócio " . $negocio->lead->nome . " - " . $negocio->tipo;
+
+                $nome_a = explode(' ', $$negocio->lead->nome);
+                $nome = $neg[0];
+                if (count($nome_a) > 2) {
+                    $nome = $nome_a[0];
+                }
+
+
+                $negocio->titulo = "Negócio " . $nome . " - " . $negocio->tipo;
                 $negocio->created_at = now();
                 $negocio->data_criacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
                 $negocio->updated_at = now();
