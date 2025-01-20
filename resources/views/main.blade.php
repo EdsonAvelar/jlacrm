@@ -368,14 +368,17 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a
                                         href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'status' => 'ativo', 'view_card' => 'compact']) }}">Pipeline</a>
                                 </li>
-                                <li>
-                                    <a
-                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista</a>
-                                </li>
+
                                 <li>
                                     <a
                                         href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list2', 'status' => 'ativo']) }}">Lista
-                                        2</a>
+                                        <span class="badge bg-success">new</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a
+                                        href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista
+                                        (Antiga)</a>
                                 </li>
 
                                 <li>

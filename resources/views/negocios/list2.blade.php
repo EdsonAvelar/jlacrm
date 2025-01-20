@@ -131,8 +131,12 @@
     .container-fluid {
         overflow-y: auto;
         /* Adiciona rolagem vertical quando o conteúdo exceder a altura */
-        height: 90vh;
+        height: 100vh;
         /* Define altura total da viewport */
+    }
+
+    .content-page {
+        padding: 0px 12px 0px 0px;
     }
 </style>
 @endsection
@@ -162,6 +166,8 @@
                                             Inativos
                                             @elseif (app('request')->status == 'perdido')
                                             Perdidos
+                                            @elseif (app('request')->status == 'parado' )
+                                            Negócios Parados
                                             @elseif (app('request')->proprietario == -2)
                                             Todos
                                             @else
@@ -196,6 +202,11 @@
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2', 'status' => 'ativo']) }}">Ativos</a>
 
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2', 'status' => 'parado']) }}">
+                                                Negócios Parados ({{config('negocio_parado')}} dias)
+                                            </a>
+                                            <hr>
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2']) }}">Todos</a>
                                             @endif

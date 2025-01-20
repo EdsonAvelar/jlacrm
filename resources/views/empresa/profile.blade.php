@@ -608,59 +608,69 @@ facebook:
                                     </div> --}}
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <div class="mb-12">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="
-verde - criado hoje
-branco - dentro da janela de 2 dias
-amarelo - de 3 a  5 dias parados
-vermelho mais do que 5 dias parados
-                                                ">
-                                                    <label for="inputEmail3" class="col-form-label">Cards Coloridos
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
 
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('card_colorido', $empresa)) { if
-                                                    ($empresa['card_colorido']=='true' ) { echo 'checked' ; } } ?>
-                                                data-config_info="card_colorido" data-toggle="toggle" data-on="colorido"
-                                                data-off="sem cor" data-onstyle="success" data-offstyle="danger">
-                                            </div>
+
+
 
                                             <div class="mb-3">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="inputEmail3" class="col-form-label">Gráficos Cor
-                                                        Aleatória
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
+                                                <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                                    GRÁFICOS E CARDS</h5>
+                                                <div class="row">
 
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('grafico_cor_aleatoria', $empresa)) { if
-                                                    ($empresa['grafico_cor_aleatoria']=='true' ) { echo 'checked' ; } }
-                                                    ?>
-                                                data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
-                                                data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
-                                                data-offstyle="danger">
+                                                    <div class="col-md-4">
+
+                                                        <label for="inputEmail3" class="col-form-label">Cards Coloridos
+                                                            <span class="mdi mdi-information"></span>
+                                                        </label> </span>
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('card_colorido', $empresa)) { if
+                                                            ($empresa['card_colorido']=='true' ) { echo 'checked' ; } }
+                                                            ?>
+                                                        data-config_info="card_colorido" data-toggle="toggle"
+                                                        data-on="colorido"
+                                                        data-off="sem cor" data-onstyle="success"
+                                                        data-offstyle="danger">
+
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="inputEmail3" class="col-form-label">Gráficos Cor
+                                                                Aleatória
+                                                                <span class="mdi mdi-information"></span>
+                                                            </label> </span>
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('grafico_cor_aleatoria', $empresa)) { if
+                                                            ($empresa['grafico_cor_aleatoria']=='true' ) {
+                                                            echo 'checked' ; } } ?>
+                                                        data-config_info="grafico_cor_aleatoria" data-toggle="toggle"
+                                                        data-on="aleatoria" data-off="cor fixa" data-onstyle="success"
+                                                        data-offstyle="danger">
+
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="inputEmail3" class="col-form-label">Exibir
+                                                                Vendedores Zerados
+                                                                <span class="mdi mdi-information"></span>
+                                                            </label> </span>
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('grafico_exibir_zerados', $empresa)) { if
+                                                            ($empresa['grafico_exibir_zerados']=='true' ) {
+                                                            echo 'checked' ; } } ?>
+                                                        data-config_info="grafico_exibir_zerados" data-toggle="toggle"
+                                                        data-on="Exibir Zerados" data-off="Não Exibir Zerados"
+                                                        data-onstyle="success"
+                                                        data-offstyle="danger">
+
+                                                    </div>
+                                                </div>
                                             </div>
-
-                                            <div class="mb-3">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="inputEmail3" class="col-form-label">Exibir ou Não
-                                                        Valores Zerado nos gráficos ?
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
-
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('grafico_exibir_zerados', $empresa)) { if
-                                                    ($empresa['grafico_exibir_zerados']=='true' ) { echo 'checked' ; } }
-                                                    ?>
-                                                data-config_info="grafico_exibir_zerados" data-toggle="toggle"
-                                                data-on="Exibir Zerados" data-off="Não Exibir Zerados"
-                                                data-onstyle="success"
-                                                data-offstyle="danger">
-                                            </div>
-
 
                                             <div class="mb-3">
                                                 <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
@@ -725,22 +735,50 @@ vermelho mais do que 5 dias parados
 
 
                                             <div class="mb-3">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
-                                                    title="">
-                                                    <label for="inputEmail3" class="col-form-label">Permitir Deletar
-                                                        Negócio
-                                                        <span class="mdi mdi-information"></span>
-                                                    </label> </span>
+                                                <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
+                                                    CONFIGURAÇÃO LISTAS DE NEGÓCIOS</h5>
+                                                <div class="row">
 
-                                                <input class="toggle-event" type="checkbox" <?php if
-                                                    (array_key_exists('permitir_deletar_negocio', $empresa)) { if
-                                                    ($empresa['permitir_deletar_negocio']=='true' ) { echo 'checked' ; }
-                                                    } ?>
-                                                data-config_info="permitir_deletar_negocio" data-toggle="toggle"
-                                                data-on="deleção ligado" data-off="deleção desligado"
-                                                data-onstyle="success"
-                                                data-offstyle="danger">
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="inputEmail3" class="col-form-label">Permitir
+                                                                Deletar
+                                                                Negócio
+                                                                <span class="mdi mdi-information"></span>
+                                                            </label> </span>
+
+                                                        <input class="toggle-event" type="checkbox" <?php if
+                                                            (array_key_exists('permitir_deletar_negocio', $empresa)) {
+                                                            if ($empresa['permitir_deletar_negocio']=='true' ) {
+                                                            echo 'checked' ; } } ?>
+                                                        data-config_info="permitir_deletar_negocio" data-toggle="toggle"
+                                                        data-on="deleção ligado" data-off="deleção desligado"
+                                                        data-onstyle="success"
+                                                        data-offstyle="danger">
+
+                                                    </div>
+                                                    <div class="col-md-4">
+
+                                                        <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                            title="">
+                                                            <label for="lastname" class="form-label">Negócio Parado
+                                                                (dias)</label>
+                                                            </label> </span>
+                                                        <input class="form-control" type="number" name="negocio_parado"
+                                                            id="negocio_parado" value="{{config('negocio_parado')}}" />
+
+                                                    </div>
+                                                    <div class="col-md-4">
+
+
+                                                    </div>
+                                                </div>
                                             </div>
+
+
+
 
 
                                         </div>
@@ -1118,6 +1156,7 @@ vermelho mais do que 5 dias parados
                 'racing_vendas_max',
                 'permitir_deletar_negocio',
                 'broadcast_canal',
+                'negocio_parado',
                 'racing_vendas_equipe',
                 'broadcast_audio'           
             ];

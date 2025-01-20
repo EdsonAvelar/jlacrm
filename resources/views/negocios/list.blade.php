@@ -176,17 +176,7 @@
 
 
                                     </li>
-                                    {{-- <button type="button" class="btn btn-light dropdown-toggle"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Funils
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        @foreach ($funils as $id => $value)
-                                        <a class="dropdown-item"
-                                            href="{{ route('pipeline_index', ['pipeline_id' => $id, 'view' => 'list']) }}">{{
-                                            $value }}</a>
-                                        @endforeach
-                                    </div> --}}
+                
                                 </div>
                             </div>
                             <h4 class="page-title">Negócios

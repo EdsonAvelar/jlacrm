@@ -171,7 +171,7 @@ class CrmController extends Controller
 
 
 
-        if ($view == 'list') {
+        if ($view == 'list2') {
             $negocios = $negocios->paginate($perPage);
         } else {
             $negocios = $negocios->get();
@@ -326,9 +326,8 @@ class CrmController extends Controller
         // Verificar se o filtro "negócios parados" foi solicitado
 
         if ($request->query('status') === 'parado') {
-            $dias_parados = 3;
+            $dias_parados = config('negocio_parado') ?? 3;
             $query->whereRaw('DATEDIFF(NOW(), negocios.updated_at) > ?', [$dias_parados])
-
                 ->where('negocios.status', '!=', 'VENDIDO');
         } else {
 
@@ -402,7 +401,7 @@ class CrmController extends Controller
                 return Carbon::createFromFormat('Y-m-d', $negocio->data_criacao)->format('d/m/Y');
 
             })
-            ->rawColumns(['select', 'titulo','telefone', 'status'])
+            ->rawColumns(['select', 'titulo', 'telefone', 'status'])
             ->make(true);
     }
 
