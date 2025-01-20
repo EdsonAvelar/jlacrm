@@ -81,10 +81,6 @@ if (app('request')->view_card == 'compact') {
                 </div>
             </div>
 
-
-
-
-
             <a class="float-end text-muted" href="tel:{{ $telefone }}">{{ $telefone }}</a>
 
             <?php
