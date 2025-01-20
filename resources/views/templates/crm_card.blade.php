@@ -91,9 +91,9 @@ if (app('request')->view_card == 'compact') {
         
         if ($negocio->status == 'ATIVO') {
             if ($last_update < 1) {
-                echo "<span class=\"badge bg-success float-begin\">RECENTE</span>";
-            } elseif ($last_update < 3) {
                 echo "<span class=\"badge bg-info float-begin\">NOVO</span>";
+            } elseif ($last_update < 3) {
+                echo "<span class=\"badge bg-success float-begin\">RECENTE</span>";
             } elseif ($last_update < 5) {
                 echo "<span class=\"badge bg-warning float-begin\">ATENÇÃO</span>";
             } else {

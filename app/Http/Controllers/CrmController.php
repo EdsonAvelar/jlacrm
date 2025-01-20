@@ -174,7 +174,7 @@ class CrmController extends Controller
         if ($view == 'list2') {
             $negocios = $negocios->paginate($perPage);
         } else {
-            $negocios = $negocios->get();
+            $negocios = $negocios->orderBy('created_at', 'desc')->get();
         }
 
 
@@ -776,6 +776,8 @@ class CrmController extends Controller
                 $negocio->etapa_funil_id = $etapa_funils[1];
                 $negocio->titulo = "Negócio " . $negocio->lead->nome . " - " . $negocio->tipo;
                 $negocio->created_at = now();
+                $negocio->data_criacao = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
+                $negocio->updated_at = now();
                 $negocio->save();
 
                 Atividade::add_atividade(\Auth::user()->id, "Cliente Redistribuido para " . User::find($negocio->user_id)->name, $negocio->id);
