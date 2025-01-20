@@ -775,7 +775,7 @@ class CrmController extends Controller
                 $negocio->user_id = $usuarios[$user_count_dist];
                 $negocio->etapa_funil_id = $etapa_funils[1];
                 $negocio->titulo = "Negócio " . $negocio->lead->nome . " - " . $negocio->tipo;
-
+                $negocio->created_at = now();
                 $negocio->save();
 
                 Atividade::add_atividade(\Auth::user()->id, "Cliente Redistribuido para " . User::find($negocio->user_id)->name, $negocio->id);
