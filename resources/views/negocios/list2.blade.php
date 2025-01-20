@@ -231,6 +231,10 @@
                                     id="distribuir_btn" data-bs-toggle="modal" data-bs-target="#distribuirModal">
                                     Distribuir</a>
 
+                                <a type="button" class="btn btn-warning btn-sm ms-3 checkbox_sensitive"
+                                    id="redistribuir_btn" data-bs-toggle="modal" data-bs-target="#redistribuirModal">
+                                    Redistribuir</a>
+
                                 @if (Auth::user()->hasRole('admin'))
                                 <a type="button" class="btn btn-warning btn-sm ms-3 checkbox_sensitive"
                                     id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
@@ -466,6 +470,45 @@
         </div>
     </div>
 
+    <div class="modal fade" id="redistribuirModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ReDistribuir Negócios</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="row">
+                        <div class="col-4">
+
+                            <h3 id="selected_qnt" class="child"></h3>
+
+                        </div>
+                        <div class="col-4">
+                            <img src="{{ url('') }}/images/sistema/redistribuicao.png" width="200px">
+                        </div>
+                        <div class="col-4 scroll">
+
+
+                            @foreach ($users as $user_id => $name)
+                            <input type="checkbox" name="usuarios[]" value="{{ $user_id }}" class="select-user" /> {{
+                            $name }}<br>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="distribuir-div">
+                    <input type="text" name="id" hidden value="{{ app('request')->id }}">
+                    <input type="submit" class="btn btn-success mt-2" value="Enviar">
+                    <input type="button" class="btn btn-danger mt-2 distribuir" data-bs-dismiss="modal"
+                        value="Cancelar">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <input type="text" name="modo" id="modo" hidden value="">
 </form>
 
@@ -491,6 +534,9 @@
             $("#distribuir_btn").on("click", function() {
                 document.getElementById('modo').value = 'distribuir';
             });
+            $("#redistribuir_btn").on("click", function() {
+            document.getElementById('modo').value = 'redistribuir';
+            });
             $("#desativar_btn").on("click", function() {
                 document.getElementById('modo').value = 'desativar';
             });
@@ -507,6 +553,19 @@
             // let example = $('#example').DataTable({
             //     pageLength: 100
             // });
+
+
+            $('#example3').on('draw.dt', function () {
+        
+            
+            // Bind para os checkboxes
+            $('input.select-checkbox').off('click').on('click', function () {
+            // console.log("Checkbox clicado! ID:", $(this).val());
+            handleTableClick();
+            });
+            });
+
+
             let selectall = false;
 
             function handleTableClick() {
@@ -514,7 +573,7 @@
                 const status = urlParams.get('status');
 
                 numberNotChecked = $('input:checkbox:checked').length;
-                console.log("Checked:" + $('input:checkbox:checked').length);
+                //console.log("Checked:" + $('input:checkbox:checked').length);
                 if (selectall) {
                     numberNotChecked = numberNotChecked - 1;
                     selectall = false;
@@ -544,6 +603,7 @@
                     
                     $('#deletar_btn').show();
                     $('#atribuir_btn').show();
+                    $('#redistribuir_btn').show();
                 }
 
                 if (numberNotChecked == 0) {
@@ -552,7 +612,12 @@
                 }
             }
 
+        
+
+
             $(document).on("click", "#selectall", function() {
+
+                // console.log("click all row")
 
                 if ($("input:checkbox").prop("checked")) {
                     $("input:checkbox[class='select-checkbox']").prop("checked", true);
@@ -620,11 +685,13 @@ $(document).ready(function() {
     
     });
 
+       
+
    
 
     // Criar a estrutura do dropdown de filtro
-   $('body').append(`
-    <div class="filter-dropdown">
+   $('body').append(
+    `<div class="filter-dropdown">
        
         <input type="text" id="filter-input" placeholder="Digite para filtrar">
        
@@ -633,8 +700,8 @@ $(document).ready(function() {
 
         <p style="color:#aaa">Use hífen para exclusão. <br>Ex. -banana</p>
        
-    </div>
-    `);
+    </div>`
+    );
 
     let $filterDropdown = $('.filter-dropdown');
    
@@ -678,11 +745,11 @@ $(document).ready(function() {
         $filterDropdown.hide();
     });
 
-$('body').append(`
-<div id="daterange-dropdown" style="display: none; position: absolute; z-index: 1000;">
+$('body').append(
+`<div id="daterange-dropdown" style="display: none; position: absolute; z-index: 1000;">
     <input type="text" id="daterange-filter" class="form-control" placeholder="Selecione um intervalo de datas">
-</div>
-`);
+</div>`
+);
 
     
     // Inicializando o Daterangepicker
@@ -721,7 +788,7 @@ $('body').append(`
         $filterDropdown.data('icon', $(this));
 
 
-        console.log(column, filterType);
+        // console.log(column, filterType);
         
         if (filterType === 'daterange') {
             // Mostra o daterange-picker para "Criado em"
@@ -753,7 +820,7 @@ $('body').append(`
 
         column = 'negocios.data_criacao';
 
-        console.log('daterange-filte', column, startDate, endDate)
+        // console.log('daterange-filte', column, startDate, endDate)
         
        
 

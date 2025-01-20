@@ -12,13 +12,12 @@ $user = Auth::user();
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
     <meta name="facebook-domain-verification" content="2v42l4jph9cgfkrorr6gejjod4bqx6" />
 
     <title>{{ config('nome') }}</title>
 
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.33">
     <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
     <meta content="Coderthemes" name="author">
     <!-- App favicon -->
@@ -978,7 +977,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }     
 
     // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        Pusher.logToConsole = false;
     
         var pusher = new Pusher('ae35a6a0e6cd96def27f', {
           cluster: 'sa1'

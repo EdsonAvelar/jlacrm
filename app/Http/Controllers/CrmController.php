@@ -727,6 +727,51 @@ class CrmController extends Controller
             }
             return back()->with('status', "Distribuidos " . $negocio_count . " negócios para " . $user_count . " usuários.");
 
+        } elseif ($input['modo'] == "redistribuir") {
+
+            $usuarios = $input['usuarios'];
+            $user_count = count($usuarios);
+            $negocio_count = count($input['negocios']);
+
+            $negocios = $input['negocios'];
+            $negocios = Negocio::whereIn('id', $negocios)->get();
+
+            $user_count_dist = 0;
+
+            if ($user_count == 0) {
+                return back()->with('error', "Nenhum usuário disponível para redistribuição.");
+            }
+
+
+            foreach ($negocios as $negocio) {
+
+                $maxAttempts = $user_count; // Número máximo de tentativas para encontrar um usuário válido
+                $attempts = 0;
+
+
+                while ($negocio->user_id == $usuarios[$user_count_dist]) {
+                    $user_count_dist = ($user_count_dist + 1) % $user_count; // Próximo usuário
+                    $attempts++;
+
+                    if ($attempts >= $maxAttempts) {
+                        // Não encontrou um usuário válido, pule este negócio
+                        continue 2; // Sai do `while` e passa para o próximo negócio no `foreach`
+                    }
+                }
+
+                $negocio->user_id = $usuarios[$user_count_dist];
+                $negocio->etapa_funil_id = $etapa_funils[1];
+                $negocio->titulo = "Negócio " . $negocio->lead->nome . " - " . $negocio->tipo;
+
+                $negocio->save();
+
+                Atividade::add_atividade(\Auth::user()->id, "Cliente Redistribuido para " . User::find($negocio->user_id)->name, $negocio->id);
+
+                // Avança para o próximo usuário na lista
+                $user_count_dist = ($user_count_dist + 1) % $user_count;
+            }
+            return back()->with('status', "Distribuidos " . $negocio_count . " negócios para " . $user_count . " usuários.");
+
         } elseif ($input['modo'] == "desativar") {
             $negocios = $input['negocios'];
             $negocios = Negocio::whereIn('id', $negocios)->get();
