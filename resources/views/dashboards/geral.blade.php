@@ -36,6 +36,59 @@
     .danger {
         color: red;
     }
+
+     /* Estilo para o título */
+    h4.p-1 {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #34495e;
+        /* Azul escuro */
+        border-bottom: 2px solid #2ecc71;
+        /* Verde vibrante */
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
+        /* Fonte moderna */
+    }
+
+    /* Estilo para o subtítulo */
+    p.subtitle {
+        font-size: 1.1em;
+        font-weight: 500;
+        color: #7f8c8d;
+        /* Cinza elegante */
+        margin-bottom: 0.5rem;
+        font-family: 'Roboto', sans-serif;
+        /* Fonte complementar */
+        background-color: #f9f9f9;
+        /* Fundo leve */
+        padding: 0.8rem;
+        border-radius: 0.5rem;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para texto forte */
+    p.subtitle .strong {
+        font-weight: bold;
+        color: #2c3e50;
+        /* Azul mais escuro */
+    }
+
+    /* Estilo para o badge */
+    p.subtitle .badge {
+        font-size: 0.9em;
+        padding: 0.4em 0.6em;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+    }
+
+    p.subtitle .badge.bg-danger {
+        background-color: #e74c3c;
+        /* Vermelho vibrante */
+        color: #fff;
+        /* Texto branco */
+    }
 </style>
 @endsection
 

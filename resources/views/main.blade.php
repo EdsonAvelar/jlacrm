@@ -431,9 +431,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
 
-                                {{-- <li>
+                                <li>
                                     <a href="{{ route('productions.bordero') }}">Bordero</a>
-                                </li> --}}
+                                </li>
 
 
 
@@ -920,13 +920,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
         }
     </script>
 
-
-
-
-
     @yield('specific_scripts')
-
-
 
 </body>
 

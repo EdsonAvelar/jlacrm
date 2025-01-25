@@ -245,12 +245,31 @@ class FechamentoController extends Controller
         $venda->segundo_vendedor_id = $input['segundo_vendedor_id'];
         $venda->terceiro_vendedor_id = $input['terceiro_vendedor_id'];
 
+
+        // CHECAGEM DO ADMINISTRATIVO
+        $comissoes = [
+            'comissao_1',
+            'comissao_2',
+            'comissao_3',
+
+        ];
+
+        foreach ($comissoes as $comissao) {
+            $percentual_comissao = str_replace(',', '.', $input[$comissao]);
+            if ($request->has($comissao) && $percentual_comissao) {
+                $venda[$comissao] = $percentual_comissao;
+            }
+        }
+
+
+
+
         $venda->status = $input['status'];
 
 
         $venda->save();
 
-        
+
         if ($negocio->lead_id) {
             $lead = Lead::find($negocio->lead_id);
         } else {
@@ -330,7 +349,7 @@ class FechamentoController extends Controller
             if ($venda) {
                 $venda->delete();
             }
-            return back()->with('status_error', "Erro: ".$th->getMessage());
+            return back()->with('status_error', "Erro: " . $th->getMessage());
         }
 
         Atividade::add_atividade(\Auth::user()->id, "Fechamento Concluido", $negocio_id);

@@ -3,25 +3,121 @@
 @section('headers')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
+
+<style>
+    /* Destaque para os totais */
+    .total-highlight {
+        font-weight: bold;
+        font-size: 1.2em;
+        background-color: #f8f9fa;
+        /* Cinza claro */
+        color: #212529;
+        /* Texto escuro */
+        text-align: center;
+        border-radius: 0.25rem;
+        /* Bordas arredondadas */
+        padding: 0.5rem;
+    }
+
+    .total-highlight-success {
+        background-color: #d4edda;
+        /* Verde claro */
+        color: #155724;
+        /* Verde escuro */
+    }
+
+    .total-highlight-info {
+        background-color: #cce5ff;
+        /* Azul claro */
+        color: #004085;
+        /* Azul escuro */
+    }
+
+    .total-highlight-warning {
+        background-color: #fff3cd;
+        /* Amarelo claro */
+        color: #856404;
+        /* Amarelo escuro */
+    }
+
+    /* Estilo para o título */
+    h4.p-1 {
+        font-size: 1.8em;
+        font-weight: bold;
+        color: #34495e; /* Azul escuro */
+        border-bottom: 2px solid #2ecc71; /* Verde vibrante */
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif; /* Fonte moderna */
+    }
+
+    /* Estilo para o subtítulo */
+    p.subtitle {
+        font-size: 1.1em;
+        font-weight: 500;
+        color: #7f8c8d; /* Cinza elegante */
+        margin-bottom: 0.5rem;
+        font-family: 'Roboto', sans-serif; /* Fonte complementar */
+        background-color: #f9f9f9; /* Fundo leve */
+        padding: 0.8rem;
+        border-radius: 0.5rem;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para texto forte */
+    p.subtitle .strong {
+        font-weight: bold;
+        color: #2c3e50; /* Azul mais escuro */
+    }
+
+    /* Estilo para o badge */
+    p.subtitle .badge {
+        font-size: 0.9em;
+        padding: 0.4em 0.6em;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 0.25rem;
+    }
+
+    p.subtitle .badge.bg-danger {
+        background-color: #e74c3c; /* Vermelho vibrante */
+        color: #fff; /* Texto branco */
+    }
+
+</style>
 @endsection
 
 @section('main_content')
 <div class="container">
-    <ul class="nav nav-tabs" id="borderoTab" role="tablist">
+    {{-- <ul class="nav nav-tabs" id="borderoTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="bordero-tab" data-bs-toggle="tab" data-bs-target="#bordero"
                 type="button" role="tab" aria-controls="bordero" aria-selected="true">Borderô</button>
         </li>
-        <li class="nav-item" role="presentation">
+         <li class="nav-item" role="presentation">
             <button class="nav-link" id="add-rule-tab" data-bs-toggle="tab" data-bs-target="#add-rule" type="button"
                 role="tab" aria-controls="add-rule" aria-selected="false">Regras de Comissionamento</button>
-        </li>
-    </ul>
+        </li> 
+    </ul> --}}
     <div class="tab-content" id="borderoTabContent">
         <!-- Aba de Borderô -->
         <div class="tab-pane fade show active" id="bordero" role="tabpanel" aria-labelledby="bordero-tab">
             <div class="mt-4">
-                <h4 class="mb-3">Gerenciamento de Borderô</h4>
+                <h4 class="p-1">Gerenciamento de Borderô</h4>
+                @if ( isset($info['producao']) && ($info['producao']))
+                <p class="subtitle">Produção: <span class="strong">{{ $info['producao']['name'] }}</span> - Inicio:
+                    <span class="strong">{{
+                        $info['producao']['start_date'] }} </span>Fim: <span class="strong">{{
+                        $info['producao']['end_date'] }}</span>
+                
+                    @if (!$info['producao']['dentro'])
+                    <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
+                    @endif
+                </p>
+                
+                
+                @endif
+
                 @if (isset($bordero))
                 @foreach ($bordero as $vendedor => $bordero_vendedor)
                 <div class="card mb-4">
@@ -30,7 +126,7 @@
                         <table class="table table-bordered table-hover">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Data Fechamento</th>
+                                    <th>Data</th>
                                     <th>Contrato</th>
                                     <th>Cliente</th>
                                     <th>Participação</th>
@@ -55,11 +151,18 @@
 
                                     </td>
                                     <td>{{ $venda['participacao'] }}</td>
-                                    <td>R$ {{
+                                    <td class="credito">R$ {{
                                         number_format(
                                         (float)$venda['credito'], 2, ',', '.') }}</td>
-                                    <td>{{ $venda['percentagem'] }}</td>
-                                    <td>R$ {{ number_format($venda['comissao'], 2, ',', '.') }}</td>
+                                    {{-- <td>{{ $venda['percentagem'] }}</td> --}}
+                                    <td class="editable " data-id="{{ $venda['id'] }}"
+                                        data-participacao="{{ $venda['participacao'] }}" data-name="{{$vendedor}}"
+                                        data-value="{{ $venda['percentagem'] }}">
+                                        {{ $venda['percentagem'] }}%
+                                    </td>
+
+                                    <td class="value_{{ $vendedor }}_fechados">R$ {{ number_format($venda['comissao'],
+                                        2, ',', '.') }}</td>
 
 
                                     @php
@@ -77,20 +180,21 @@
                                     <td></td>
                                     <td></td>
                                     <td>
-                                        <b>Total em Crédito</b>
+                                        <b>Crédito</b>
                                     </td>
-                                    <td>
+                                    <td class="total-highlight total-highlight-info">
                                         <b class="text-info">R$ {{ number_format($credito_total, 2, ',', '.') }}</b>
                                     </td>
                                     <td>
-                                        <b>Total em Comissão</b>
+                                        <b>Comissão</b>
                                     </td>
-                                    <td>
-                                        <b class="text-success">R$ {{ number_format($comissao_total, 2, ',', '.') }}</b>
-                                    </td>
+
+                                    <td id="total_value_{{ $vendedor }}_fechados"
+                                        class="comissoes_totais total-highlight total-highlight-success">R$ {{
+                                        number_format($comissao_total, 2, ',', '.')
+                                        }}</td>
 
                                 </tr>
-
 
                             </tbody>
                         </table>
@@ -101,6 +205,36 @@
                 @endforeach
                 @endif
             </div>
+
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h4 class="mb-3">Resumo Geral</h4>
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+
+                                <th>Número de Cotas</th>
+                                <th>Valor Total de Créditos</th>
+                                <th>Comissão Total Paga</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="total-highlight total-highlight-warning">{{ $info['cotas'] }}</td>
+                                <td id="total_creditos" class="total-highlight total-highlight-info">
+                                    R$ {{ number_format($info['credito_vendidos'], 2, ',', '.') }}
+                                </td>
+                                <td id="comissao_total_paga" class="total-highlight total-highlight-success">
+                                    R$ 0,00
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                </div>
+            </div>
+
         </div>
 
         <!-- Aba de Adição de Regras -->
@@ -196,6 +330,9 @@
 
 
     $(document).ready(function () {
+
+        
+
         let rules = initialRules || [];
 
         renderRulesTable();
@@ -332,5 +469,182 @@
             });
         });
     });
+
+    
+
+
+    function formatString(input) {
+        // Remove espaços do início e do final da string
+        const trimmed = input.trim();
+        
+        // Substitui espaços por underlines
+        const formatted = trimmed.replace(/ /g, '_');
+        
+        return formatted;
+        }
+
+
+      function formatCurrencyBRL(value) {
+        return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+        }).format(value);
+        }
+
+        function currencyStringToFloat(currencyString) {
+        // Remove o símbolo de moeda e espaços
+        let numberString = currencyString.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.');
+        
+        // Converte a string para um número float
+        return parseFloat(numberString);
+        }
+
+    
+    // Função para atualizar o total de comissões
+        function updateTotalComissao(className) {
+            let total = 0;
+
+            // Soma os valores de comissões de células com a classe específica
+            $(`.${className}`).each(function () {
+                const value = currencyStringToFloat($(this).text());
+                console.log(value)
+                if (!isNaN(value)) {
+                    total += value;
+                }
+            });
+
+            const totalFormatted = formatCurrencyBRL(total);
+
+            // Atualiza a célula de Total em Comissão para o funcionário específico
+            $(`#total_${className}`).text(`${totalFormatted}`);
+        }
+
+       function atualizarResumoGeral() {
+           
+          
+            let totalComissao = 0;
+
+            // Calcula o total de cotas, créditos e comissões
+            $('table tbody tr').each(function () {
+                // Soma apenas células com a classe "credito"
+               
+
+                // Soma apenas células com a classe "comissoes_totais"
+                const comissaoCell = $(this).find('td.comissoes_totais');
+                if (comissaoCell.length > 0) {
+                    const comissao = currencyStringToFloat(comissaoCell.text());
+                    if (!isNaN(comissao)) {
+                        totalComissao += comissao;
+                    }
+                }
+            });
+
+            // Atualiza os valores na tabela de resumo geral
+            $('#comissao_total_paga').text(formatCurrencyBRL(totalComissao));
+        }
+
+      
+
+        $(document).ready(function () {
+
+            atualizarResumoGeral();
+
+            // Função para transformar o campo em input ao clicar
+            $('.editable').on('click', function () {
+                const $cell = $(this);
+                const originalValue =$cell.text().replace('%', '').trim();
+                const id = $cell.data('id'); // ID do registro
+                const participacao = $cell.data('participacao'); // Tipo de participação
+    
+                // Evita múltiplos inputs no mesmo campo
+                if ($cell.find('input').length > 0) return;
+    
+                // Cria o campo input
+                const $input = $('<input>', {
+                    type: 'number',
+                    value: originalValue,
+                    min: 0,
+                    max: 100,
+                    step: 0.01,
+                    class: 'form-control',
+                    blur: function () {
+                        const newValue = parseFloat($input.val().replace(',', '.')).toFixed(2);
+
+
+    
+                        if (newValue !== originalValue) {
+                            // Envia a alteração via AJAX
+                            $.ajax({
+                                url: '/productions/bordero/update-porcentagem',
+                                method: 'POST',
+                                data: {
+                                    id: id,
+                                    percentagem: newValue,
+                                    participacao: participacao,
+                                    _token: $('meta[name="csrf-token"]').attr('content')
+                                },
+                                success: function (response) {
+
+                                    const name = $cell.data('name'); 
+                                    // Atualiza o valor na célula de porcentagem
+                                    $cell.data('value', newValue).text(`${newValue}%`);
+    
+                                    // Atualiza a célula de comissão
+
+                                    
+                                    // console.log("Credito Original: "+  )
+                                    const credito = currencyStringToFloat( $cell.closest('tr').find('td:nth-child(5)').text() ) //parseFloat($cell.closest('tr').find('td:nth-child(5)').text().replace('R$', '').replace('.', '').replace(',', '.'));
+                                    // console.log("credito: "+credito)
+                                    
+                                    const comissao = formatCurrencyBRL( (credito * newValue/100 ) );
+                                    $cell.closest('tr').find('td:nth-child(7)').text(`${comissao}`);
+    
+                                    // Atualiza o total de comissões
+                                    updateTotalComissao(`value_${name}_fechados`);
+
+                                    // Atualiza o resumo geral
+                                    atualizarResumoGeral();
+    
+                                    showAlert({
+                                    message: "Porcentagem atualizada com sucesso!",
+                                    class: "success"
+                                    });
+                                },
+                                error: function (xhr) {
+                                    // Reverte para o valor original em caso de erro
+                                    $cell.text(`${originalValue}%`);
+                                    let errorMessage = 'Erro ao atualizar a porcentagem. ';
+                                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                                    errorMessage += `Detalhes: ${xhr.responseJSON.message}`;
+                                    } else {
+                                    errorMessage += 'Por favor, tente novamente.';
+                                    }
+                                    
+                                    showAlert({
+                                    message: errorMessage,
+                                    class: "danger"
+                                    });
+                                }
+                            });
+                        } else {
+                            // Reverte para o valor original se não houve alteração
+                            $cell.text(`${originalValue}%`);
+                        }
+                    },
+                    keyup: function (e) {
+                        if (e.which === 13) { // Salva ao pressionar Enter
+                            $(this).blur();
+                        }
+                    }
+                });
+    
+                // Substitui o texto pelo input e foca nele
+                $cell.empty().append($input);
+                $input.focus();
+            });
+    
+    
+        });
+   
 </script>
 @endsection

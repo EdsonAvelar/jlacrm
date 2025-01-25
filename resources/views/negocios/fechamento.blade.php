@@ -968,28 +968,31 @@ function to_data($data)
                                     </select>
                                 </div>
                             </div>
-                            {{--
-                            TODO isso será definido na aba de borderô
+
+                            {{-- TODO isso será definido na aba de borderô --}}
                             <div class="row no-print">
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">COMISSÃO VENDEDOR 1</label>
-                                        <input type="text" class="form-control" value="{{ $fechamento->comissao }}">
+                                        <input type="text" class="form-control" name="comissao_1"
+                                            value="{{ $fechamento->comissao_1 }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">COMISSÃO VENDEDOR 2</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" name="comissao_2"
+                                            value="{{ $fechamento->comissao_2 }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="firstname" class="form-label">COMISSÃO VENDEDOR 3</label>
-                                        <input type="text" class="form-control" value="">
+                                        <input type="text" class="form-control" name="comissao_3"
+                                            value="{{ $fechamento->comissao_3 }}">
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             </br>
                             <h5 class="mb-3 text-uppercase text-white bg-success p-2 no-print"><i
                                     class="mdi mdi-office-building me-1"></i>

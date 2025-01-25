@@ -107,6 +107,35 @@ class ProductionController extends Controller
         ];
     }
 
+    public function updatePercentagem(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'percentagem' => 'required|numeric|min:0|max:100',
+            'participacao' => 'required|string', // Valida o tipo de participação
+        ]);
+
+        $venda = Fechamento::find($request->id);
+
+        // Atualiza a comissão com base no tipo de participação
+        switch ($request->participacao) {
+            case "Vendedor Principal":
+                $venda->comissao_1 = (float) $request->percentagem;
+                break;
+            case "Modo Ajuda":
+                $venda->comissao_1 = (float) $request->percentagem;
+                break;
+            case "Telemarketing":
+                $venda->comissao_1 = (float) $request->percentagem;
+                break;
+        }
+
+
+        $venda->save();
+
+        return response()->json(['message' => 'Porcentagem atualizada com sucesso!'], 200);
+    }
+
 
     public function bordero(Request $request)
     {
@@ -130,31 +159,59 @@ class ProductionController extends Controller
         $bordero = [];
         $rules = CommissionRule::all(); // Obtém as regras de comissão salvas
 
+        $info = array();
+        $info['credito_vendidos'] =  0;
+        $info['cotas'] =  0;
+
+        $prd = Production::where('is_active', true)->first();
+        if ($prd) {
+            $start_date = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
+            $end_date = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
+            $info['producao']['name'] = $prd->name;
+            $info['producao']['start_date'] = $start_date;
+            $info['producao']['end_date'] = $end_date;
+            $hoje = Carbon::today();
+            $inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->startOfDay();
+            $fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->startOfDay();
+            if ($hoje >= $inicio && $hoje <= $fim) {
+                // Se estiver dentro do intervalo, usamos 'hoje' como a data final
+                $info['producao']['dentro'] = true;
+            } else {
+                // Caso contrário, mantemos 'fim' como estava originalmente
+                $info['producao']['dentro'] = false;
+            }
+        }
+
+
         foreach ($vendas as $venda) {
             $commissions = $this->calculateCommission($venda, $rules);
 
+            $info['credito_vendidos'] = $info['credito_vendidos'] + (float) $venda->valor;
+            $info['cotas'] = $info['cotas'] + 1;
             // Comissão do primeiro vendedor
             $bordero[$venda->primeiro_vendedor_id][] = [
+                'id' => $venda->id,
                 'contrato' => $venda->numero_contrato,
                 'participacao' => "Vendedor Principal",
                 'cliente' => $venda->negocio->lead->nome,
                 'cliente_id' => $venda->negocio->id,
                 'credito' => $venda->valor,
-                'percentagem' => ($commissions['first_seller_commission'] * 100) . " %",
-                'comissao' => ((float) $venda->valor) * $commissions['first_seller_commission'],
+                'percentagem' => ($venda->comissao_1),
+                'comissao' => ((float) $venda->valor) * $venda->comissao_1 / 100,
                 'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
             ];
 
             // Comissão do segundo vendedor (se existir)
             if ($venda->segundo_vendedor_id) {
                 $bordero[$venda->segundo_vendedor_id][] = [
+                    'id' => $venda->id,
                     'contrato' => $venda->numero_contrato,
-                    'participacao' => "Assistente",
+                    'participacao' => "Modo Ajuda",
                     'cliente' => $venda->negocio->lead->nome,
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
-                    'percentagem' => ($commissions['second_seller_commission'] * 100) . " %",
-                    'comissao' => ((float) $venda->valor) * $commissions['second_seller_commission'],
+                    'percentagem' => ($venda->comissao_2),
+                    'comissao' => ((float) $venda->valor) * $venda->comissao_2 / 100,
                     'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
                 ];
             }
@@ -162,19 +219,20 @@ class ProductionController extends Controller
             // Comissão do terceiro vendedor (se existir)
             if ($venda->terceiro_vendedor_id) {
                 $bordero[$venda->terceiro_vendedor_id][] = [
+                    'id' => $venda->id,
                     'contrato' => $venda->numero_contrato,
-                    'participacao' => "Assistente Secundário",
+                    'participacao' => "Telemarketing",
                     'cliente' => $venda->negocio->lead->nome,
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
-                    'percentagem' => ($commissions['third_seller_commission'] * 100) . " %",
-                    'comissao' => ((float) $venda->valor) * $commissions['third_seller_commission'],
+                    'percentagem' => ($venda->comissao_3),
+                    'comissao' => ((float) $venda->valor) * $venda->comissao_3 / 100,
                     'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
                 ];
             }
         }
 
-        return view('administrativo.bordero', compact('vendas', 'bordero', 'rules'));
+        return view('administrativo.bordero', compact('vendas', 'bordero', 'info', 'rules'));
     }
 
 
