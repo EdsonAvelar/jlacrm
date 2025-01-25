@@ -969,8 +969,8 @@ function to_data($data)
                                 </div>
                             </div>
 
-                            
-                            {{-- TODO isso será definido na aba de borderô --}}
+                            {{-- @if (\Auth::user()->hasRole('gerenciar_bordero') ) --}}
+    
                             <div class="row no-print">
                                 <div class="col-md-4">
                                     <div class="mb-3" id="comissao_1">
@@ -995,7 +995,7 @@ function to_data($data)
                                 </div>
                             </div>
 
-                            
+                            {{-- @endif --}}
                             </br>
                             <h5 class="mb-3 text-uppercase text-white bg-success p-2 no-print"><i
                                     class="mdi mdi-office-building me-1"></i>
