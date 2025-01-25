@@ -44,21 +44,52 @@
     h4.p-1 {
         font-size: 1.8em;
         font-weight: bold;
-        color: #34495e; /* Azul escuro */
-        border-bottom: 2px solid #2ecc71; /* Verde vibrante */
+        color: #34495e;
+        /* Azul escuro */
+        /* border-bottom: 2px solid #ccb22e; */
+        /* Verde vibrante */
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
-        font-family: 'Poppins', sans-serif; /* Fonte moderna */
+        font-family: 'Poppins', sans-serif;
+        /* Fonte moderna */
+    }
+
+    .vendedor-name {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #0c8d26;
+        /* Azul escuro */
+        border-bottom: 2px solid #2ecc71;
+        /* Verde vibrante */
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
+        /* Fonte moderna */
+    }
+
+    .resumo {
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #0675a8;
+        /* Azul escuro */
+        border-bottom: 2px solid #2e58cc;
+        /* Verde vibrante */
+        padding-bottom: 0.5rem;
+        margin-bottom: 1rem;
+        font-family: 'Poppins', sans-serif;
     }
 
     /* Estilo para o subtítulo */
     p.subtitle {
         font-size: 1.1em;
         font-weight: 500;
-        color: #7f8c8d; /* Cinza elegante */
+        color: #7f8c8d;
+        /* Cinza elegante */
         margin-bottom: 0.5rem;
-        font-family: 'Roboto', sans-serif; /* Fonte complementar */
-        background-color: #f9f9f9; /* Fundo leve */
+        font-family: 'Roboto', sans-serif;
+        /* Fonte complementar */
+        background-color: #f9f9f9;
+        /* Fundo leve */
         padding: 0.8rem;
         border-radius: 0.5rem;
         box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -67,7 +98,8 @@
     /* Estilo para texto forte */
     p.subtitle .strong {
         font-weight: bold;
-        color: #2c3e50; /* Azul mais escuro */
+        color: #2c3e50;
+        /* Azul mais escuro */
     }
 
     /* Estilo para o badge */
@@ -80,10 +112,11 @@
     }
 
     p.subtitle .badge.bg-danger {
-        background-color: #e74c3c; /* Vermelho vibrante */
-        color: #fff; /* Texto branco */
+        background-color: #e74c3c;
+        /* Vermelho vibrante */
+        color: #fff;
+        /* Texto branco */
     }
-
 </style>
 @endsection
 
@@ -94,10 +127,10 @@
             <button class="nav-link active" id="bordero-tab" data-bs-toggle="tab" data-bs-target="#bordero"
                 type="button" role="tab" aria-controls="bordero" aria-selected="true">Borderô</button>
         </li>
-         <li class="nav-item" role="presentation">
+        <li class="nav-item" role="presentation">
             <button class="nav-link" id="add-rule-tab" data-bs-toggle="tab" data-bs-target="#add-rule" type="button"
                 role="tab" aria-controls="add-rule" aria-selected="false">Regras de Comissionamento</button>
-        </li> 
+        </li>
     </ul> --}}
     <div class="tab-content" id="borderoTabContent">
         <!-- Aba de Borderô -->
@@ -109,24 +142,24 @@
                     <span class="strong">{{
                         $info['producao']['start_date'] }} </span>Fim: <span class="strong">{{
                         $info['producao']['end_date'] }}</span>
-                
+
                     @if (!$info['producao']['dentro'])
                     <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
                     @endif
                 </p>
-                
-                
+
+
                 @endif
 
                 @if (isset($bordero))
                 @foreach ($bordero as $vendedor => $bordero_vendedor)
                 <div class="card mb-4">
                     <div class="card-body">
-                        <h5 class="text-success">{{ \App\Models\User::find($vendedor)->name }}</h5>
+                        <h5 class="vendedor-name">{{ \App\Models\User::find($vendedor)->name }}</h5>
                         <table class="table table-bordered table-hover">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Data</th>
+                                    <th>Fechamento</th>
                                     <th>Contrato</th>
                                     <th>Cliente</th>
                                     <th>Participação</th>
@@ -208,7 +241,7 @@
 
             <div class="card mt-4">
                 <div class="card-body">
-                    <h4 class="mb-3">Resumo Geral</h4>
+                    <h4 class="mb-3 resumo">Resumo Geral</h4>
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
