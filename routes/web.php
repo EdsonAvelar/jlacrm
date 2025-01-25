@@ -61,8 +61,7 @@ Route::group(['middleware' => 'auth'], function () {
         ['prefix' => 'productions'],
         function () {
             Route::get('/index', [ProductionController::class, 'index'])->name('productions.index');
-            Route::get('/bordero', [ProductionController::class, 'bordero'])->name('productions.bordero');
-            Route::post('/bordero/update-porcentagem', [ProductionController::class, 'updatePercentagem'])->name('productions.bordero.update');
+
             Route::post('/save-rules', [ProductionController::class, 'saveRules'])->name('productions.saveRules');
             Route::delete('/rules/{id}', [ProductionController::class, 'deleteRule'])->name('rules.delete');
 
@@ -223,6 +222,17 @@ Route::group(['middleware' => 'auth'], function () {
     );
 });
 
+
+Route::group(['middleware' => ['auth', 'role:gerenciar_bordero']], function () {
+    Route::group(
+        ['prefix' => 'bordero'],
+        function () {
+            Route::get('/', [ProductionController::class, 'bordero'])->name('productions.bordero');
+            Route::post('/update-porcentagem', [ProductionController::class, 'updatePercentagem'])->name('productions.bordero.update');
+
+        }
+    );
+});
 
 
 

@@ -228,7 +228,7 @@
 
                                         </div>
                                     </div>
-                                    @if (\Auth::user()->hasRole('admin') & app('request')->id != 1 )
+                                    @if (\Auth::user()->hasRole('admin') )
                                     <div class="col-md-6">
 
                                         <label for="task-title" class="form-label">Permissões
@@ -241,10 +241,21 @@
                                         <br>
                                         @if ($user->roles())
                                         @foreach ($user->roles as $role)
+
+                                        @if(app('request')->id == 1)
+
+                                        <span class="badge badge-info-lighten">{{
+                                            $role->name }}</span>
+
+
+                                        @else
                                         <a href="#" class="confirm-delete" data-id="{{ $role->id }}"
                                             data-name="{{ $role->name }}"><span class="badge badge-info-lighten">{{
                                                 $role->name }}</span>
                                         </a>
+
+                                        @endif
+
                                         @endforeach
                                         @endif
                                     </div>

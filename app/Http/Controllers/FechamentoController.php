@@ -255,14 +255,17 @@ class FechamentoController extends Controller
         ];
 
         foreach ($comissoes as $comissao) {
-            $percentual_comissao = str_replace(',', '.', $input[$comissao]);
-            if ($request->has($comissao) && $percentual_comissao) {
-                $venda[$comissao] = $percentual_comissao;
+
+            if ($request->has($comissao)) {
+
+                $percentual_comissao = str_replace(',', '.', $input[$comissao]);
+                // $percentual_comissao = str_replace('%', '', $percentual_comissao);
+
+                if ($request->has($comissao) && $percentual_comissao) {
+                    $venda[$comissao] = $percentual_comissao;
+                }
             }
         }
-
-
-
 
         $venda->status = $input['status'];
 

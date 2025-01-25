@@ -954,7 +954,7 @@ function to_data($data)
                                 </div>
                                 <div class="col-md-4">
                                     <label for="task-title" class="form-label">Terceiro Vendedor</label>
-                                    <select class="form-select form-control-light" id="vendedor_secundario"
+                                    <select class="form-select form-control-light" id="vendedor_terciario"
                                         name="terceiro_vendedor_id">
                                         <option selected value="">Selecione</option>
                                         @foreach (\Auth::user()->vendedores() as $user)
@@ -969,30 +969,33 @@ function to_data($data)
                                 </div>
                             </div>
 
+                            @if (\Auth::user()->hasRole('gerenciar_bordero') )
                             {{-- TODO isso será definido na aba de borderô --}}
                             <div class="row no-print">
                                 <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="firstname" class="form-label">COMISSÃO VENDEDOR 1</label>
-                                        <input type="text" class="form-control" name="comissao_1"
+                                    <div class="mb-3" id="comissao_1">
+                                        <label for="firstname" class="form-label">COMISSÃO VENDEDOR (%)</label>
+                                        <input type="text" class="form-control " name="comissao_1"
                                             value="{{ $fechamento->comissao_1 }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="firstname" class="form-label">COMISSÃO VENDEDOR 2</label>
-                                        <input type="text" class="form-control" name="comissao_2"
+                                    <div class="mb-3" id="comissao_2">
+                                        <label for="firstname" class="form-label">COMISSÃO MODO AJUDA(%)</label>
+                                        <input type="text" class="form-control " name="comissao_2"
                                             value="{{ $fechamento->comissao_2 }}">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="mb-3">
-                                        <label for="firstname" class="form-label">COMISSÃO VENDEDOR 3</label>
-                                        <input type="text" class="form-control" name="comissao_3"
+                                    <div class="mb-3" id="comissao_3">
+                                        <label for="firstname" class="form-label">COMISSÃO TELEMARKETING(%)</label>
+                                        <input type="text" class="form-control " name="comissao_3"
                                             value="{{ $fechamento->comissao_3 }}">
                                     </div>
                                 </div>
                             </div>
+
+                            @endif
                             </br>
                             <h5 class="mb-3 text-uppercase text-white bg-success p-2 no-print"><i
                                     class="mdi mdi-office-building me-1"></i>
@@ -1090,10 +1093,14 @@ function to_data($data)
                                         class="mdi mdi-content-save"></i> Notificar Venda
                                 </button> --}}
 
+                                @if (\Auth::user()->hasRole('enviar_notificacao') )
+
                                 <button type="text" class="btn btn-info mt-2" id="btn_notificar_venda"><i
                                         class="mdi mdi-content-save"></i> Salvar e Notificar
                                     Venda
                                 </button>
+
+                                @endif
 
 
                                 @endif
@@ -1207,6 +1214,84 @@ function to_data($data)
     headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
     }
+    });
+
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Mapear os campos de comissão com seus respectivos selects
+        const mapping = [
+            { selectId: "vendedor_principal", inputId: "comissao_1" },
+            { selectId: "vendedor_secundario", inputId: "comissao_2" },
+            { selectId: "vendedor_terciario", inputId: "comissao_3" },
+        ];
+
+        // Adicionar eventos aos selects
+        mapping.forEach(({ selectId, inputId }) => {
+            const select = document.getElementById(selectId);
+            const input = document.querySelector(`input[name="${inputId}"]`);
+
+
+            // Função para atualizar a visibilidade e estado do campo
+            const updateInputVisibility = () => {
+                if (select.value && select.value !== "") {
+                    input.disabled = false;
+                    input.closest(".mb-3").style.display = "block"; // Mostrar campo
+                } else {
+                    input.disabled = true;
+                    input.value = ""; // Limpar valor se desabilitado
+                    input.closest(".mb-3").style.display = "none"; // Ocultar campo
+                }
+            };
+
+            // Adicionar evento de mudança ao select
+            select.addEventListener("change", updateInputVisibility);
+
+            // Verificar estado inicial ao carregar a página
+            updateInputVisibility();
+        });
+    });
+
+
+
+     document.addEventListener("DOMContentLoaded", function () {
+        // Função para formatar o valor como porcentagem
+        function formatAsPercentage(input) {
+            // Remove caracteres não numéricos, exceto pontos e vírgulas
+            let value = input.value.replace(/[^\d,]/g, '').replace(',', '.');
+
+            // Converte para número
+            let numericValue = parseFloat(value);
+
+            // Garante que o valor seja um número válido
+            if (!isNaN(numericValue)) {
+                // Adiciona o símbolo de porcentagem
+                input.value = `${numericValue.toFixed(2)}%`;
+            } else {
+                // Reseta caso o valor seja inválido
+                input.value = '';
+            }
+        }
+
+        // Seleciona todos os inputs com a classe "porcentagem-mask"
+        const percentageInputs = document.querySelectorAll(".porcentagem-mask");
+
+        // Adiciona os eventos de formatação
+        percentageInputs.forEach(input => {
+
+            formatAsPercentage(input);
+
+            // Ao perder o foco, formata o valor
+            input.addEventListener("blur", function () {
+                formatAsPercentage(input);
+            });
+
+            // Remove o símbolo de porcentagem ao focar no input
+            input.addEventListener("focus", function () {
+                input.value = input.value.replace('%', '');
+            });
+
+        
+        });
     });
 
     function copyProtocolo() {

@@ -145,6 +145,18 @@ class DatabaseSeeder extends Seeder
 		$role_employee->name = 'gerenciar_vendas';
 		$role_employee->save();
 
+		$role_employee = new Role();
+		$role_employee->name = 'gerenciar_financeiro';
+		$role_employee->save();
+
+		$role_employee = new Role();
+		$role_employee->name = 'gerenciar_bordero';
+		$role_employee->save();
+
+		$role_employee = new Role();
+		$role_employee->name = 'enviar_notificacao';
+		$role_employee->save();
+
 	}
 
 	private function save_config($config_name, $config_value)
@@ -189,8 +201,6 @@ class DatabaseSeeder extends Seeder
 		$this->save_config('racing_agendamento_max', 10);
 		$this->save_config('racing_vendas_max', 1500000);
 		$this->save_config('racing_vendas_equipe', 3000000);
-
-
 	}
 
 
@@ -201,6 +211,9 @@ class DatabaseSeeder extends Seeder
 		$importar_leads = Role::where('name', 'importar_leads')->first();
 		$gerenciar_equipe = Role::where('name', 'gerenciar_equipe')->first();
 		$gerenciar_vendas = Role::where('name', 'gerenciar_vendas')->first();
+		$gerenciar_financeiro = Role::where('name', 'gerenciar_financeiro')->first();
+		$gerenciar_bordero = Role::where('name', 'gerenciar_bordero')->first();
+		$enviar_notificacao = Role::where('name', 'enviar_notificacao')->first();
 
 		$cargo_gerente = Cargo::where('nome', 'Gerente Geral')->first();
 
@@ -227,6 +240,9 @@ class DatabaseSeeder extends Seeder
 		$user->roles()->attach($importar_leads);
 		$user->roles()->attach($gerenciar_equipe);
 		$user->roles()->attach($gerenciar_vendas);
+		$user->roles()->attach($gerenciar_financeiro);
+		$user->roles()->attach($enviar_notificacao);
+		$user->roles()->attach($gerenciar_bordero);
 
 
 		$this->command->info('Usuario Gerente criado com email: ' . $user->email . ' e senha: ' . $senha_padrao);

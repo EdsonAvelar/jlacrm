@@ -575,7 +575,7 @@
                         if (newValue !== originalValue) {
                             // Envia a alteração via AJAX
                             $.ajax({
-                                url: '/productions/bordero/update-porcentagem',
+                                url: '/bordero/update-porcentagem',
                                 method: 'POST',
                                 data: {
                                     id: id,
