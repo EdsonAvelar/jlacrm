@@ -123,10 +123,10 @@ class ProductionController extends Controller
                 $venda->comissao_1 = (float) $request->percentagem;
                 break;
             case "Modo Ajuda":
-                $venda->comissao_1 = (float) $request->percentagem;
+                $venda->comissao_2 = (float) $request->percentagem;
                 break;
             case "Telemarketing":
-                $venda->comissao_1 = (float) $request->percentagem;
+                $venda->comissao_3 = (float) $request->percentagem;
                 break;
         }
 
@@ -160,8 +160,8 @@ class ProductionController extends Controller
         $rules = CommissionRule::all(); // Obtém as regras de comissão salvas
 
         $info = array();
-        $info['credito_vendidos'] =  0;
-        $info['cotas'] =  0;
+        $info['credito_vendidos'] = 0;
+        $info['cotas'] = 0;
 
         $prd = Production::where('is_active', true)->first();
         if ($prd) {
