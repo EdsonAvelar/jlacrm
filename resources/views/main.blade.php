@@ -250,7 +250,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
             <div class="h-100" id="leftside-menu-container" data-simplebar="">
 
 
-                @if ($user->hasAnyRole(['admin', 'gerenciar_equipe']))
+
                 <!--- Sidemenu -->
                 <ul class="side-nav">
 
@@ -316,7 +316,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     </li>
 
 
-                @endif
+
 
                     @if ($user->hasAnyRole(['admin', 'gerenciar_ranking']))
                     <li class="side-nav-item">
