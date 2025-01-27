@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.0.2",
         "bensampo/laravel-enum": "^6.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.6",
         "igorescobar/jquery-mask-plugin": "^1.14",
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",

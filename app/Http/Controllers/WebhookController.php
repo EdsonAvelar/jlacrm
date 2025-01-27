@@ -133,32 +133,7 @@ class WebhookController extends Controller
 
         }
 
-        // $deal_input['titulo'] = "Negócio " . $dados['nome'] . "-" . $dados['tipo_credito'];
-
-        // $deal_input['funil_id'] = 1;
-        // $deal_input['etapa_funil_id'] = 1;
-        // $deal_input['tipo'] = $dados['tipo_credito'];
-
-        // $lead = new Lead();
-        // $lead->nome = $dados['nome'];
-        // $lead->telefone = $dados['telefone'];
-        // $lead->whatsapp = $dados['whatsapp'];
-        // $lead->save();
-
-        // // associando lead ao negócio
-        // $deal_input['lead_id'] = $lead->id;
-
-
-        // $deal_input['user_id'] = (int) ($dados['id']);
-
-        // $deal_input['data_criacao'] = Carbon::now('America/Sao_Paulo')->format('Y-m-d');
-
-        // //criando o negócio
-        // $negocio = Negocio::create($deal_input);
-
-        // Atividade::add_atividade($deal_input['user_id'], "Cliente criado via webhook", $negocio->id);
-
-        //return "Negocio " . $dados['nome'] . " Criado com sucesso";
+      
     }
     public function handle(Request $request)
     {

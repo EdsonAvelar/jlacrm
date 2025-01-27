@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Fechamento;
 use App\Models\Agendamento;
 use App\Models\Equipe;
+use GuzzleHttp\Client;
 
 use Validator;
 class RankingController extends Controller
@@ -80,6 +81,49 @@ class RankingController extends Controller
 
 
         return back()->with("status", "Imagem salva com sucesso");
+    }
+
+    public function vendas_filiais()
+    {
+
+        try {
+
+            $client = new Client([
+                'base_uri' => 'https://jlasolucoesfinanceiras.com/', // Define a URL base do sistema
+                'timeout' => 5.0, // Tempo máximo para a requisição (em segundos)
+            ]);
+
+            $data_inicio = config('data_inicio');
+            $data_fim = config('data_fim');
+
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('d/m/Y');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('d/m/Y');
+
+            // Define os dados para a requisição
+            $data = [
+                'data_inicio' => $from,
+                'data_fim' => $to,
+                'tipo_dados' => 'venda_equipe',
+            ];
+
+            // Faz a requisição POST
+            $response = $client->post('/api/vendas', [
+                'headers' => [
+                    'Authorization' => 'Bearer 175e2d3ab475dbc55f7db04c4af5a4529064bdff',
+                    'Content-Type' => 'application/json',
+                ],
+                'json' => $data, // Envia os dados no corpo da requisição como JSON
+            ]);
+
+            // Converte a resposta JSON em array
+            $result = json_decode($response->getBody()->getContents(), true);
+            return response()->json($result);
+        } catch (\Exception $e) {
+            // Em caso de erro, registra e retorna a mensagem
+            \Log::error('Erro ao buscar vendas: ' . $e->getMessage());
+            return response()->json(['error' => 'Erro ao buscar vendas' . $e->getMessage()], 500);
+        }
+
     }
 
     public function equipes_vendas()

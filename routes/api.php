@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebhookController;
-
+use App\Http\Controllers\ApiController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,3 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/webhook/newlead', [WebhookController::class, 'handle']);
+// Rota principal para obter dados de vendas
+Route::post('/vendas', [ApiController::class, 'getVendas']);
