@@ -157,6 +157,11 @@ class DatabaseSeeder extends Seeder
 		$role_employee->name = 'enviar_notificacao';
 		$role_employee->save();
 
+
+		$role_employee = new Role();
+		$role_employee->name = 'gerenciar_rankings';
+		$role_employee->save();
+
 	}
 
 	private function save_config($config_name, $config_value)
@@ -214,6 +219,7 @@ class DatabaseSeeder extends Seeder
 		$gerenciar_financeiro = Role::where('name', 'gerenciar_financeiro')->first();
 		$gerenciar_bordero = Role::where('name', 'gerenciar_bordero')->first();
 		$enviar_notificacao = Role::where('name', 'enviar_notificacao')->first();
+		$gerenciar_rankings = Role::where('name', 'gerenciar_rankings')->first();
 
 		$cargo_gerente = Cargo::where('nome', 'Gerente Geral')->first();
 
@@ -243,6 +249,7 @@ class DatabaseSeeder extends Seeder
 		$user->roles()->attach($gerenciar_financeiro);
 		$user->roles()->attach($enviar_notificacao);
 		$user->roles()->attach($gerenciar_bordero);
+		$user->roles()->attach($gerenciar_rankings);
 
 
 		$this->command->info('Usuario Gerente criado com email: ' . $user->email . ' e senha: ' . $senha_padrao);
