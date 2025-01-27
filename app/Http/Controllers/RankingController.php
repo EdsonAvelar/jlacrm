@@ -109,7 +109,7 @@ class RankingController extends Controller
             // Faz a requisição POST
             $response = $client->post('/api/vendas', [
                 'headers' => [
-                    'Authorization' => 'Bearer 175e2d3ab475dbc55f7db04c4af5a4529064bdff',
+                    'Authorization' => 'Bearer ',
                     'Content-Type' => 'application/json',
                 ],
                 'json' => $data, // Envia os dados no corpo da requisição como JSON
