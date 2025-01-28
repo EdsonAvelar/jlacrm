@@ -795,8 +795,14 @@ if ($tema == ''){
 
     </script>
 
+    @if (config('ranking_filiais') or 1==1)
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/ajuda'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'filiais/vendas/equipes'])
+    @else
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+    @endif
+
+
 
 </body>
 

@@ -1,0 +1,179 @@
+.time1 {
+            background-image: url(https://via.placeholder.com/80);
+    height: 120px;
+    width: 120px;
+    position: relative;
+    left: 120px;
+    top: -174px;
+    border-radius: 100%;
+    background-size: cover;
+        border: 1px solid #9da0a0;
+    box-shadow: 9px -4px 8px 0px rgba(0, 0, 0, 0.6);
+    animation: subtleScale1 5s infinite ease-in-out
+
+    }
+
+    .time2 {
+       background-image: url(https://via.placeholder.com/80);
+       height: 120px;
+        width: 120px;
+        position: relative;
+        left: 87px;
+    top: 31px;
+        border-radius: 100%;
+        background-size: cover;
+        background-position: center;
+        border: 1px solid #9da0a0;
+        box-shadow: 9px -4px 8px 0px rgba(0, 0, 0, 0.6);
+        animation: subtleScale1 5s infinite ease-in-out
+  
+    }
+
+    .time3 {
+        background-image: url('https://via.placeholder.com/80');
+        height: 120px;
+        width: 120px;
+        position: relative;
+        left: 103px;
+        top: 29px;
+        border-radius: 100%;
+        /* transform: rotateY(324deg); */
+        background-size: cover;
+        border: 1px solid #9da0a0;
+        box-shadow: 9px -4px 8px 0px rgba(0, 0, 0, 0.6);
+        animation: subtleScale1 5s infinite ease-in-out
+    }
+
+
+    @keyframes subtleScale1 {
+
+        0%,
+        100% {
+            transform: scale(1.05);
+        }
+
+        50% {
+            transform: scale(1.15);
+        }
+    }
+
+body {
+        background-color: #cda971
+      }
+
+.container2 {
+    background-color: #312310;
+    }
+
+    .menu-bar {
+background-color: #312510;
+    }
+    .info-panel {
+background-color: #4f3921;
+    }
+    .logo-empresa>img { 
+background-color: #6b4d2f;
+    }
+
+   .collaborator-card .position {
+background-color: #95733f;
+    }
+
+    .collaborator-card {
+    background-color: #6b442f;
+    }
+
+    .ranking-totals {
+        display: flex;
+        gap: 20px;
+        font-weight: bold;
+        color: greenyellow;
+        font-size: large;
+        padding: 10px;
+        border-radius: 10px;
+        background: #722e2e;
+    }
+
+    .total-vendas-title {
+    color: #ffffff;
+    }
+
+    .header-panel select {
+        background-color: #6b3e2f;
+    }
+
+    .titulo-ranking {
+    width: 100%; /* Ocupa 100% da largura da container2 */
+    text-align: center; /* Centraliza o texto */
+    background-color: #ffffff; /* Cor de fundo (pode ser ajustada conforme o design) */
+    color: #333333; /* Cor do texto */
+    padding: 15px 0; /* Espaçamento interno */
+    margin-bottom: 20px; /* Espaçamento abaixo do título */
+    font-size: 28px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    border-radius: 5px; /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar o título */
+}
+
+.ranking {
+    flex: 2;
+    }
+
+    .titulo-logo {
+        color: white;
+    font-size: xx-large;
+    font-family: sans-serif;
+    font-weight: 700;
+    text-align: center;
+    }
+
+
+.card-vendedor {
+       background-color: #214e4f;
+       }
+
+
+       .nome {
+    background-color: #5a2d0df5;
+    width: 200px;
+    left: 70px;
+    top: 319px;
+    padding: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+    border-radius: 20px;
+    position: absolute;
+}
+
+.nome.segundo {
+    background-color: #1c3414f5;
+    top: 445px;
+    left: 30px;
+}
+
+.ranking {
+    flex: 2;
+}
+
+.position-wrapper2 {
+left: -11px;
+}
+
+.nome.terceiro {
+
+    top: 453px;
+}
+
+.card-vendedor {
+    background-color: #735200;
+}
+
+.nome.primeiro {
+    left: 59px;
+}
+
+.nome.terceiro {
+    top: 453px;
+    left: 92px;
+}

@@ -185,7 +185,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/colaboradores/vendas/telemarketing', [RankingController::class, 'colaboradores_vendas_telemarketing'])->name('ranking.colaboradores.vendas.telemarketing');
 
             Route::get('/vendas', [RankingController::class, 'vendas'])->name('ranking.vendas');
-            Route::get('/vendas/filiais', [RankingController::class, 'vendas_filiais'])->name('ranking.vendas.filiais');
+
             Route::get('/vendas/equipes', [RankingController::class, 'ranking_vendas_equipe'])->name('ranking.vendas.equipe');
             Route::get('/equipes/vendas', [RankingController::class, 'equipes_vendas'])->name('ranking.equipes.vendas');
 
@@ -196,6 +196,13 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/colaboradores/agendamentos', [RankingController::class, 'colaboradores_agendamentos'])->name('ranking.colaboradores.agendamentos');
             Route::post('/image/save', [RankingController::class, 'ranking_premiacoes'])->name('ranking_premiacoes');
+
+
+
+            //Filiais
+            Route::get('/filiais/vendas/equipes/get', [RankingController::class, 'filiais_vendas_equipe'])->name('ranking.filiais.vendas.equipe');
+            Route::get('/filiais/vendas/equipes/', [RankingController::class, 'filiais_vendas_equipe_index'])->name('ranking.filiais.vendas.equipe.index');
+
         }
     );
 

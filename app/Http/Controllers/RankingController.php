@@ -35,6 +35,14 @@ class RankingController extends Controller
         return view('dashboards.ranking.vendas');
     }
 
+    public function filiais_vendas_equipe_index()
+    {
+
+
+        return view('dashboards.ranking.filiais_vendas_equipes');
+    }
+
+
     public function agendamentos()
     {
         return view('dashboards.ranking.agendamentos');
@@ -83,47 +91,63 @@ class RankingController extends Controller
         return back()->with("status", "Imagem salva com sucesso");
     }
 
-    public function vendas_filiais()
+    public function filiais_vendas_equipe()
     {
+        $filiais = [
+            ['https://jlasolucoesfinanceiras.com/', '175e2d3ab475dbc55f7db04c4af5a4529064bdff'],
+            ['https://nmarquesintermediacao.com.br/', '9e59d42533de13285d6ef99427563967a25bfcf7']
+        ];
 
-        try {
+        $resultados = []; // Array para armazenar os resultados das requisições
 
-            $client = new Client([
-                'base_uri' => 'https://jlasolucoesfinanceiras.com/', // Define a URL base do sistema
-                'timeout' => 5.0, // Tempo máximo para a requisição (em segundos)
-            ]);
+        foreach ($filiais as $filial) {
+            $base_uri = $filial[0];
+            $token = $filial[1];
 
-            $data_inicio = config('data_inicio');
-            $data_fim = config('data_fim');
+            try {
+                $client = new Client([
+                    'base_uri' => $base_uri,
+                    'timeout' => 5.0, // Tempo máximo para a requisição (em segundos)
+                ]);
 
-            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('d/m/Y');
-            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('d/m/Y');
+                $data_inicio = config('data_inicio');
+                $data_fim = config('data_fim');
 
-            // Define os dados para a requisição
-            $data = [
-                'data_inicio' => $from,
-                'data_fim' => $to,
-                'tipo_dados' => 'venda_equipe',
-            ];
+                $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('d/m/Y');
+                $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('d/m/Y');
 
-            // Faz a requisição POST
-            $response = $client->post('/api/vendas', [
-                'headers' => [
-                    'Authorization' => 'Bearer ',
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => $data, // Envia os dados no corpo da requisição como JSON
-            ]);
+                $data = [
+                    'data_inicio' => $from,
+                    'data_fim' => $to,
+                    'tipo_dados' => 'venda_equipe',
+                ];
 
-            // Converte a resposta JSON em array
-            $result = json_decode($response->getBody()->getContents(), true);
-            return response()->json($result);
-        } catch (\Exception $e) {
-            // Em caso de erro, registra e retorna a mensagem
-            \Log::error('Erro ao buscar vendas: ' . $e->getMessage());
-            return response()->json(['error' => 'Erro ao buscar vendas' . $e->getMessage()], 500);
+                $response = $client->post('/api/vendas', [
+                    'headers' => [
+                        'Authorization' => 'Bearer ' . $token,
+                        'Content-Type' => 'application/json',
+                    ],
+                    'json' => $data,
+                ]);
+
+                $resultado = json_decode($response->getBody()->getContents(), true);
+
+                if (isset($resultado['equipes'])) {
+                    // Adiciona o resultado ao array de resultados
+                    $resultados = array_merge($resultados, $resultado['equipes']);
+                }
+            } catch (\Exception $e) {
+                \Log::error('Erro ao buscar vendas na filial ' . $base_uri . ': ' . $e->getMessage());
+            }
         }
 
+        // Ordena o array pelo campo "total" em ordem decrescente
+        usort($resultados, function ($a, $b) {
+            return $b['total'] <=> $a['total'];
+        });
+
+        // Retorna os resultados ordenados
+        return response()->json($resultados);
     }
 
     public function equipes_vendas()
@@ -173,6 +197,7 @@ class RankingController extends Controller
                 'meta' => $valor,
                 "total" => $vendas_totais,
                 'percentual' => ($vendas_totais / $valor) * 100,
+                'empresa_logo' => url('') . '/images/empresa/logos/empresa_logo_circular.png'
 
             ];
 
