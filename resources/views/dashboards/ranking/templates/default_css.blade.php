@@ -317,7 +317,7 @@
         margin-bottom: 10px;
         position: relative;
         width: 100%;
-        padding: 30px 10px 30px 10px;
+        
     }
 
 
