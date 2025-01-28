@@ -169,7 +169,7 @@ if ($tema == ''){
                                         font-size: xx-large;
                                         font-weight: bold;
                                         font-family: sans-serif;
-                                    ">Ranking de Equipes</h4>
+                                    ">Ranking de Equipes - Grupo JLA</h4>
 
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking Vendas por Equipe</h1>
