@@ -200,7 +200,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
             //Filiais
-            Route::get('/filiais/vendas/equipes/get', [RankingController::class, 'filiais_vendas_equipe'])->name('ranking.filiais.vendas.equipe');
+            Route::get('/filiais/vendas/equipes/get', [RankingController::class, 'filiais_vendas_equipe']);
             Route::get('/filiais/vendas/equipes/', [RankingController::class, 'filiais_vendas_equipe_index'])->name('ranking.filiais.vendas.equipe.index');
 
         }

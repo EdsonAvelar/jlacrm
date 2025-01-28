@@ -353,6 +353,12 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('ranking.vendas.equipe') }}">Ranking Equipes</a>
                                 </li>
 
+                                <li>
+                                    <a href="{{ route('ranking.filiais.vendas.equipe.index') }}">Filiais Equipes</a>
+                                </li>
+
+
+
                             </ul>
                         </div>
                     </li>
