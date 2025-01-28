@@ -171,7 +171,7 @@ if ($tema == ''){
                                         font-family: sans-serif;
                                     ">Ranking de Equipes - Grupo JLA</h4>
 
-            <div class="logo-empresa">
+            <div class="logo-empresa brilho">
                 <h1 class="titulo-logo" style="display: none">Ranking Vendas por Equipe</h1>
 
                 <img id="logo-empresa-ranking" src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
@@ -544,6 +544,10 @@ if ($tema == ''){
                         if (index == 0){
                             console.log("empresa ranking: "+colaboradores[index].empresa_ranking)
                             $('#logo-empresa-ranking').attr('src', colaboradores[index].empresa_ranking);
+                            
+                            
+
+
                         }
 
                         var valorFormatado = new Intl.NumberFormat('pt-BR', {
