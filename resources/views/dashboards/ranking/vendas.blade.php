@@ -790,19 +790,13 @@ if ($tema == ''){
         document.getElementById(this.dataset.content).classList.remove('hidden');
         });
         });
-
-    
-
     </script>
 
     @if (config('ranking_filiais'))
-
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'filiais/vendas/equipes'])
+        @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'filiais/vendas/equipes'])
     @else
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+        @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
     @endif
-
-
 
 </body>
 

@@ -18,7 +18,7 @@ $tema = app('request')->tema;
 
 #$tema = config('ranking_tema_vendas')
 if ($tema == ''){
-    $tema = 'tema05';
+    $tema = 'tema06';
 }
 ?>
 

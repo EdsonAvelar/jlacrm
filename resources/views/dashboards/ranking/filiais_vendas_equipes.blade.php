@@ -174,7 +174,7 @@ if ($tema == ''){
             <div class="logo-empresa">
                 <h1 class="titulo-logo" style="display: none">Ranking Vendas por Equipe</h1>
 
-                <img src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
+                <img id="logo-empresa-ranking" src="{{ url('') }}/images/empresa/logos/empresa_ranking.png" alt="Logo">
             </div>
 
             <div class="body-panel">
@@ -541,6 +541,11 @@ if ($tema == ''){
 
                     for (let index = 0; index < num_coladores; index++) {
 
+                        if (index == 0){
+                            console.log("empresa ranking: "+colaboradores[index].empresa_ranking)
+                            $('#logo-empresa-ranking').attr('src', colaboradores[index].empresa_ranking);
+                        }
+
                         var valorFormatado = new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
@@ -553,8 +558,8 @@ if ($tema == ''){
 
 
                         if (colaboradores[index].total >= colaboradores[index].meta){
-                                        $('#collaborator-photo-'+(index+1)).addClass('brilho')
-                                    }
+                            $('#collaborator-photo-'+(index+1)).addClass('brilho')
+                        }
                     }
 
                     var valorFormatado = new Intl.NumberFormat('pt-BR', {
@@ -935,7 +940,7 @@ if ($tema == ''){
        
     </script>
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'agendamentos'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/ajuda'])
 </body>
 
 </html>

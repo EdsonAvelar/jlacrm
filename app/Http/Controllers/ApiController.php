@@ -93,7 +93,8 @@ class ApiController extends Controller
                 'meta' => $valor_meta,
                 'total' => $vendas_totais,
                 'percentual' => ($valor_meta > 0) ? ($vendas_totais / $valor_meta) * 100 : 0,
-                'empresa_logo' => url('') . '/images/empresa/logos/empresa_logo_circular.png'
+                'empresa_logo' => url('') . '/images/empresa/logos/empresa_logo_circular.png',
+                'empresa_ranking' => url('') . '/images/empresa/logos/empresa_ranking.png',
             ];
 
             $output[] = $equipe_info;

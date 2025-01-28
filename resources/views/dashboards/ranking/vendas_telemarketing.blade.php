@@ -784,7 +784,7 @@ if ($tema == ''){
     </script>
 
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'agendamentos'])
 
 </body>
 
