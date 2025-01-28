@@ -972,6 +972,11 @@ facebook:
                                             data-on="ordenado" data-off="não ordenado" data-onstyle="success"
                                             data-offstyle="danger">
                                         </div>
+
+
+
+
+
                                     </div>
 
                                     <div class="row">
@@ -1003,6 +1008,20 @@ facebook:
                                                 ($empresa['agendamento_ordenar']=='true' ) { echo 'checked' ; } } ?>
                                             data-config_info="agendamento_ordenar" data-toggle="toggle"
                                             data-on="ordenado" data-off="não ordenado" data-onstyle="success"
+                                            data-offstyle="danger">
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                <label for="inputEmail3" class="col-form-label">Ranking Filiais
+                                                    <span class="mdi mdi-information"></span>
+                                                </label> </span>
+
+                                            <input class="toggle-event" type="checkbox" <?php if
+                                                (array_key_exists('ranking_filiais', $empresa)) { if
+                                                ($empresa['ranking_filiais']=='true' ) { echo 'checked' ; } } ?>
+                                            data-config_info="ranking_filiais" data-toggle="toggle"
+                                            data-on="habilitado" data-off="desabilitado" data-onstyle="success"
                                             data-offstyle="danger">
                                         </div>
 
