@@ -32,7 +32,7 @@
 
             // Configurações da barra de progresso
             const barraProgresso = document.getElementById('barra-progresso');
-            const tempoTotal = "{{config('ranking_carrossel_timer') ?? 12000}}" ; // 10 segundos (10000 ms)
+            const tempoTotal = "{{config('ranking_carrossel_timer') ?? 120000}}" ; // 10 segundos (10000 ms)
             console.log("Iniciando carrossel após "+(tempoTotal/1000)+" segundos")
             const interval = 500; // Atualiza a barra a cada 500ms
             const fadeOutStart = 2000; // Inicia o fade-out nos últimos 2 segundos

@@ -84,7 +84,7 @@ if ($tema == ''){
 
         <div class="ranking">
 
-          
+
             <div class="ranking-board">
 
 
@@ -512,7 +512,7 @@ if ($tema == ''){
                         html += `
                         <div class="collaborator-card ${colaborador.total >= colaborador.meta ? 'equipe-meta-batida' : ''}">
                             <div class="position">${index + 1}</div>
-                            <div class="photo ${colaborador.total >= colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.equipe_logo}');"></div>
+                            <div class="photo ${colaborador.total >= colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.empresa_logo}');"></div>
                             <div class="collaborator-info">
                                 <div class="name">${colaborador.equipe_name}</div>
                                 <div class="meta">Meta: R$ ${colaborador.meta.toLocaleString()} | Total: R$ ${colaborador.total.toLocaleString()}</div>
@@ -648,8 +648,6 @@ if ($tema == ''){
         var channel = pusher.subscribe("{{ config('broadcast_canal') }}");
         console.log('pusher' + channel);
         channel.bind('nova-venda', function (data) {
-
-
 
             console.log(JSON.stringify(data));
 

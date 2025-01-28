@@ -197,7 +197,7 @@ class RankingController extends Controller
                 'meta' => $valor,
                 "total" => $vendas_totais,
                 'percentual' => ($vendas_totais / $valor) * 100,
-                'empresa_logo' => url('') . '/images/empresa/logos/empresa_logo_circular.png'
+                
 
             ];
 
