@@ -37,7 +37,7 @@
         color: red;
     }
 
-     /* Estilo para o título */
+    /* Estilo para o título */
     h4.p-1 {
         font-size: 1.8em;
         font-weight: bold;
@@ -184,32 +184,18 @@
         ])
 
 
-
-
-        {{-- @include('dashboards.views.card', [
-        'card_name' => 'Leads Sem Dono',
-        'card_value' => $output['lead_novos'],
-        'card_porc' => '5%',
-        'card_href' => route('pipeline_index', [
-        'id' => 1,
-        'proprietario' => \Auth::user()->id,
-        'view' => 'list',
-        'proprietario' => '-1',
-        'status' => 'ativo',
-        ]),
-        ]) --}}
-
-
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => array_sum($output['oportunidades'])." Oportunidades",
         'name' => 'Oportunidades',
         'plots' => [$output['vendedores'], $output['oportunidades']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => array_sum($output['agendamentos'])." Agendamentos",
         'name' => 'Agendamentos',
         'plots' => [$output['vendedores'], $output['agendamentos']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
 
@@ -284,22 +270,28 @@
 
         @endif
 
-        @include('dashboards.views.bar_plot', [
+
+
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => array_sum($output['reunioes'])." Reuniões",
         'name' => 'Reuniões',
         'plots' => [$output['vendedores'], $output['reunioes']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
-        @include('dashboards.views.bar_plot', [
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => array_sum($output['propostas'])." Propostas",
         'name' => 'Propostas',
         'plots' => [$output['vendedores'], $output['propostas']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
-        @include('dashboards.views.bar_plot', [
+
+        @include('dashboards.views.bar_plot_zerofree', [
         'title' => array_sum($output['aprovacoes'])." Aprovações",
         'name' => 'Aprovações',
         'plots' => [$output['vendedores'], $output['aprovacoes']],
+        'filterzero' => config("grafico_exibir_zerados")
         ])
 
         @include('dashboards.views.bar_plot_zerofree', [

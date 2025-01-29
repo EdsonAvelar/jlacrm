@@ -356,13 +356,9 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 <li>
                                     <a href="{{ route('ranking.filiais.vendas.equipe.index') }}">Filiais Equipes</a>
                                 </li>
-
-
-
                             </ul>
                         </div>
                     </li>
-
 
                     @endif
 
@@ -446,8 +442,6 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('productions.bordero') }}">Bordero</a>
                                 </li>
                                 @endif
-
-
 
                                 <li>
                                     <a href="{{ route('users.funcionarios') }}">Funcionários</a>
