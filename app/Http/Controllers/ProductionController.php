@@ -184,7 +184,7 @@ class ProductionController extends Controller
 
 
         foreach ($vendas as $venda) {
-            $commissions = $this->calculateCommission($venda, $rules);
+
 
             $info['credito_vendidos'] = $info['credito_vendidos'] + (float) $venda->valor;
             $info['cotas'] = $info['cotas'] + 1;
