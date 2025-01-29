@@ -248,6 +248,7 @@
 
                                 <th>Número de Cotas</th>
                                 <th>Valor Total de Créditos</th>
+                                <th>Previssão de Receita</th>
                                 <th>Comissão Total Paga</th>
                             </tr>
                         </thead>
@@ -257,6 +258,10 @@
                                 <td id="total_creditos" class="total-highlight total-highlight-info">
                                     R$ {{ number_format($info['credito_vendidos'], 2, ',', '.') }}
                                 </td>
+                                <td id="previsao_receita" class="total-highlight total-highlight-success">
+                                    R$ {{ number_format(($info['credito_vendidos'] * 0.22) , 2, ',', '.') }}
+                                </td>
+
                                 <td id="comissao_total_paga" class="total-highlight total-highlight-success">
                                     R$ 0,00
                                 </td>
@@ -571,6 +576,8 @@
                     }
                 }
             });
+
+
 
             // Atualiza os valores na tabela de resumo geral
             $('#comissao_total_paga').text(formatCurrencyBRL(totalComissao));
