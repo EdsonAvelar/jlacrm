@@ -259,7 +259,7 @@
                                     R$ {{ number_format($info['credito_vendidos'], 2, ',', '.') }}
                                 </td>
                                 <td id="previsao_receita" class="total-highlight total-highlight-success">
-                                    R$ {{ number_format(($info['credito_vendidos'] * 0.22) , 2, ',', '.') }}
+                                    R$ {{ number_format(($info['credito_vendidos'] * 0.022) , 2, ',', '.') }}
                                 </td>
 
                                 <td id="comissao_total_paga" class="total-highlight total-highlight-success">
