@@ -225,9 +225,22 @@ function convert($frase)
                         <h4>Entrada: <span style="font-weight: bold;">
                                 {{ $financiamento['fin-entrada'] }}</span>
                         </h4>
+
+                  
+                        @if ( $financiamento['fin-ultimaparcela'] == 0)
                         <h4>Parcela: <span style="font-weight: bold;">
                                 {{ $financiamento['fin-parcelas'] }}</span>
                         </h4>
+                        @else
+                        <h4>Primeira Parcela: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-parcelas'] }}</span>
+                        </h4>
+                        <h4>Última Parcela: <span style="font-weight: bold;">
+                                {{ $financiamento['fin-ultimaparcela'] }}</span>
+                        </h4>
+                        @endif
+
+
                         <h4>Prazo: <span style="font-weight: bold;">
                                 {{ $financiamento['fin-prazo'] }} Meses (
                                 <?php echo round($financiamento['fin-prazo'] / 12); ?> Anos )

@@ -94,6 +94,43 @@ use App\Enums\NegocioTipo;
             margin-top: 12px;
         }
     </style>
+
+    <style>
+        .toggleUltimaParcela {
+            appearance: none;
+            width: 50px;
+            height: 26px;
+            margin: -4px !important;
+            background-color: #ccc;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            outline: none;
+
+            transition: background-color 0.3s ease;
+        }
+
+        .toggleUltimaParcela:before {
+            content: '';
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggleUltimaParcela:checked {
+            background-color: #28a745;
+        }
+
+        .toggleUltimaParcela:checked:before {
+            transform: translateX(24px);
+        }
+    </style>
 </head>
 </body>
 
@@ -180,15 +217,38 @@ use App\Enums\NegocioTipo;
                 </div>
 
                 <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-3 col-form-label">Valor Parcelas</label>
+                    <label for="inputEmail3" class="col-sm-3 col-form-label">Parcela</label>
                     <div class="col-sm-6">
                         <input data-mask='R$ #.##0,00' type="text" name="fin-parcelas[]"
-                            class="form-control input-auto fin-parcelas" id="vFinParcela" placeholder="Parcelas"
+                            class="form-control input-auto fin-parcelas" id="vFinParcela" placeholder="Valor Parcela"
                             required>
                     </div>
 
+
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-6 col-form-label">Exibir Ultima Parcela</label>
+                    <div class="col-sm-6">
+
+                        <input type="checkbox" class="toggleUltimaParcela" data-toggle="toggle"
+                            data-on="Exibir Última Parcela" data-off="Esconder Última Parcela" data-onstyle="success"
+                            data-offstyle="danger">
+                    </div>
                 </div>
 
+
+                <div class="form-group row vFinUltimaParcela-container" style="display: none">
+                    <label for="inputEmail3" class="col-sm-3 col-form-label ">Última Parcela</label>
+                    <div class="col-sm-6">
+                        <input data-mask='R$ #.##0,00' type="text" name="fin-ultimaparcela[]"
+                            class="form-control input-auto fin-parcelas fakedisabled vFinUltimaParcela"
+                            id="vFinUltimaParcela" placeholder="Valor Parcela" required disabled>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-6">
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Prazo</label>
                     <div class="col-sm-6">
@@ -196,13 +256,6 @@ use App\Enums\NegocioTipo;
                             id="finPrazo" placeholder="Prazo" required>
                     </div>
                 </div>
-
-
-            </div>
-
-
-            <div class="col-md-6">
-
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Renda Exigida</label>
                     <div class="col-sm-6">
@@ -330,7 +383,7 @@ use App\Enums\NegocioTipo;
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Lance</label>
                     <div class="col-sm-6">
                         <input data-mask='R$ #.##0,00' type="text" name="con-lance[]" class="form-control"
-                            id="vConLance" placeholder="Lance">
+                            id="vConLance" placeholder="Lance ou Em Branco">
                     </div>
                 </div>
 
@@ -338,7 +391,7 @@ use App\Enums\NegocioTipo;
                     <label for="inputEmail3" class="col-sm-3 col-form-label">Crédito Após Contemplação</label>
                     <div class="col-sm-6">
                         <input data-mask='R$ #.##0,00' type="text" name="con-credito-poscontemplacao[]"
-                            class="form-control" id="vConAposCont" placeholder="Digite o Valor ou Deixe em branco">
+                            class="form-control" id="vConAposCont" placeholder="Valor ou Deixe em branco">
                     </div>
                 </div>
 
@@ -651,7 +704,7 @@ use App\Enums\NegocioTipo;
 
         let vConParcelaReduzida = vConParcela;
 
-        console.log('vConEmbutidas: ' + vConEmbutidas)
+        // console.log('vConEmbutidas: ' + vConEmbutidas)
 
         let vConEntrada = 0;
         if (vConEmbutidas > 0) {
@@ -694,8 +747,10 @@ use App\Enums\NegocioTipo;
         let $prestacao = $amortizacao + $valorJuros
 
         let $juros = $valorJuros;
+        let $ultima_parcela = 0;
+
         for (let a = 1; a < $prazo; a++) {
-            //console.log($prestacao)
+            
 
             $saldo_devedor = $saldo_atualizado - $prestacao
             $saldo_inicial = $saldo_devedor
@@ -705,9 +760,11 @@ use App\Enums\NegocioTipo;
             $prestacao = $amortizacao + $valorJuros
 
             $juros += $valorJuros
+            // console.log($prestacao)
+            
         }
 
-        return [$juros, $juros + $vFinanciado]
+        return [$juros, $juros + $vFinanciado, $prestacao]
     }
 
     function financiarPrice($vFinanciado, $taxa, $prazo) {
@@ -766,13 +823,17 @@ use App\Enums\NegocioTipo;
 
 
         let financ = 0;
+        let ultimaparcela = 0;
+        
         if (sistema_amortizacao == "sac") {
             financ = financiarSac(vFinanciado, taxa, finPrazo);
             vParcela = vAmort + vJuros;
+            ultimaparcela = financ[2];
 
         } else {
             financ = financiarPrice(vFinanciado, taxa, finPrazo)
             vParcela = financ[2]
+            ultimaparcela = vParcela;
         }
 
         var itbi = vCredito / 2 * 0.1;
@@ -789,6 +850,8 @@ use App\Enums\NegocioTipo;
                 $('#' + $section_id).find('#vFinParcela').val(to_m(vParcela))
             }
 
+            $('#' + $section_id).find("#vFinUltimaParcela").val(to_m(ultimaparcela))
+
 
             $('#' + $section_id).find('#vFinRendaExigida').val(to_m(rendaExigida))
             $('#' + $section_id).find('#vITBI').val(to_m(itbi))
@@ -797,6 +860,7 @@ use App\Enums\NegocioTipo;
 
             $('#' + $section_id).find("#vFinJuros").val(to_m(financ[0]))
             $('#' + $section_id).find("#vFinTotal").val(to_m(financ[1] + vFinEntrada))
+
 
         } else {
             let vFinTotal = vParcela * finPrazo
@@ -990,8 +1054,6 @@ use App\Enums\NegocioTipo;
 
         if (this.value.toLowerCase() === "imovel") {
 
-            //sistema_amortizacao = "sac";
-
             $('#itbiDiv').css('display', 'block');
 
             $('#veiculoModelo').css('display', 'none');
@@ -1000,9 +1062,6 @@ use App\Enums\NegocioTipo;
             $('#finPrazo').val('360');
 
         } else {
-
-            //sistema_amortizacao = "price";
-
 
             $('#veiculoModelo').css('display', 'block');
             $('#veiculoAno').css('display', 'block');
@@ -1013,15 +1072,14 @@ use App\Enums\NegocioTipo;
 
         }
 
-
-
         if (globalThis.automatic == true) {
             preencherValores("vCredito");
         }
-
-
     });
+
 </script>
+
+
 
 <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script>
 <script type="text/javascript"
@@ -1030,10 +1088,27 @@ use App\Enums\NegocioTipo;
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="https://jsuites.net/v4/jsuites.js"></script>
 
-<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
-    rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 
+
+
+<script>
+    $(document).ready(function() {
+        $('.toggleUltimaParcela').change(function() {
+            var section = $(this).closest('.section_financiamento');
+            var ultimaParcelaContainer = section.find('.vFinUltimaParcela-container');
+            var ultimaParcelaInput = section.find('.vFinUltimaParcela');
+            
+            if ($(this).prop('checked')) {
+                ultimaParcelaContainer.show();
+                ultimaParcelaInput.prop('disabled', false);
+            } else {
+                ultimaParcelaContainer.hide();
+                ultimaParcelaInput.prop('disabled', true);
+                ultimaParcelaInput.val('0');
+            }
+        });
+    });
+</script>
 
 </body>
 

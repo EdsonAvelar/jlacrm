@@ -911,6 +911,7 @@ class NegocioController extends Controller
         $proposta['credito'] = $input['credito'];
         $proposta['fin-entrada'] = $input['fin-entrada'];
         $proposta['fin-parcelas'] = $input['fin-parcelas'];
+        
         $proposta['fin-prazo'] = $input['fin-prazo'];
         $proposta['fin-rendaexigida'] = $input['fin-rendaexigida'];
         $proposta['cartorio'] = $input['cartorio'];

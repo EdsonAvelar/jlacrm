@@ -75,6 +75,11 @@ class SimulacaoController extends Controller
                 $sim_tipo['fin-credito'] = $input['fin-credito'][$i];
                 $sim_tipo['fin-entrada'] = $input['fin-entrada'][$i];
                 $sim_tipo['fin-parcelas'] = $input['fin-parcelas'][$i];
+
+
+                $sim_tipo['fin-ultimaparcela'] = $input['fin-ultimaparcela'][$i] ?? 0;
+
+
                 $sim_tipo['fin-prazo'] = $input['fin-prazo'][$i];
                 $sim_tipo['fin-rendaexigida'] = $input['fin-rendaexigida'][$i];
                 $sim_tipo['fin-cartorio'] = $input['fin-cartorio'][$i];
