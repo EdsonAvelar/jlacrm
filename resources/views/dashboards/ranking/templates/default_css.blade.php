@@ -317,7 +317,7 @@
         margin-bottom: 10px;
         position: relative;
         width: 100%;
-        
+
     }
 
 
@@ -1038,6 +1038,12 @@
     .vendas-meta-batida {
         background-color: #2f6b34;
         background-image: url("{{ url('') }}/images/empresa/logos/empresa_ranking_fera.png");
+        background-size: cover;
+    }
+
+    .vendas-fera-gold {
+        background-color: #2f6b34;
+        background-image: url("{{ url('') }}/images/empresa/logos/empresa_ranking_feragold.png");
         background-size: cover;
     }
 

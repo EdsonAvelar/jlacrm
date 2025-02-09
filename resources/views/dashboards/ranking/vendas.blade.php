@@ -366,8 +366,17 @@ if ($tema == ''){
                                 </div>
                             </div>`
                         }
+                        
+                        let class_meta = ''
+                        if (colaborador.total >= colaborador.meta_gold){
+                            class_meta = 'vendas-fera-gold'
+                        }else if (colaborador.total >= colaborador.meta){
+                            class_meta = 'vendas-meta-batida'
+                        }
+
+
                         html += `
-                        <div class="collaborator-card ${colaborador.total >= colaborador.meta ? 'vendas-meta-batida' : ''}">
+                        <div class="collaborator-card ${class_meta}">
                             <div class="position">${index + 1}</div>
                             <div class="photo ${colaborador.total >= colaborador.meta ? 'brilho ' : ''}" style="background-image: url('${colaborador.avatar}');"></div>
                             <div class="collaborator-info">
@@ -793,9 +802,9 @@ if ($tema == ''){
     </script>
 
     @if (config('ranking_filiais'))
-        @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'filiais/vendas/equipes'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'filiais/vendas/equipes'])
     @else
-        @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/equipes'])
     @endif
 
 </body>

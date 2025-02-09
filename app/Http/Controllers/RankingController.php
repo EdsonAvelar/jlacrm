@@ -197,7 +197,7 @@ class RankingController extends Controller
                 'meta' => $valor,
                 "total" => $vendas_totais,
                 'percentual' => ($vendas_totais / $valor) * 100,
-                
+
 
             ];
 
@@ -249,17 +249,23 @@ class RankingController extends Controller
             ) {
                 $avatar = $vendedor->avatar;
             }
-            $valor = (float) config("racing_vendas_max");
+            $meta_fera = (float) config("racing_vendas_max");
+            $meta_feragold = (float) config("racing_vendas_gold_max");
 
-            if (!$valor) {
-                $valor = 1000000;
+            if (!$meta_fera) {
+                $meta_fera = 1500000;
+            }
+
+            if (!$meta_feragold) {
+                $meta_feragold = 2000000;
             }
 
             $user_info = [
                 "name" => $vendedor->name,
                 "total" => $vendas_totais,
-                'meta' => $valor,
-                'percentual' => ($vendas_totais / $valor) * 100,
+                'meta' => $meta_fera,
+                'meta_gold' => $meta_feragold,
+                'percentual' => ($vendas_totais / $meta_fera) * 100,
                 "avatar" => asset($avatar),
             ];
 

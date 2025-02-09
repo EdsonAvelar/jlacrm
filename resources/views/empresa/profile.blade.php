@@ -257,6 +257,21 @@
                                     </div> <!-- end card -->
                                 </div>
 
+                                <div class="col-md-4">
+                                    <div class="card text-center">
+                                        <h5>Logo Fera Gold de Vendas - Ranking - 350 x 90 (PNG) </h5>
+                                        <div class="card-body">
+                                
+                                            <p><a href="#" onclick="image_save('logos','/empresa_ranking_feragold.png','retangular','350','90')"
+                                                    class="text-muted font-14">
+                                                    <img src="{{ url('') }}/images/empresa/logos/empresa_ranking_feragold.png?{{ \Carbon\Carbon::now()->timestamp }}"
+                                                        class="avatar-lx img-thumbnail" alt="Logo Ranking Fera Gold">
+                                                </a></p>
+                                
+                                        </div> <!-- end card-body -->
+                                    </div> <!-- end card -->
+                                </div>
+
 
 
                                 <h5 class="mb-3 text-uppercase text-white bg-info p-2"><i
@@ -936,11 +951,19 @@ facebook:
                                             <div class="mb-12">
                                                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
                                                     title="">
-                                                    <label for="lastname" class="form-label">Meta de Vendas por
-                                                        Vendedor</label>
-                                                    </label> </span>
+                                                    <label for="lastname" class="form-label">Meta Fera de Vendas (Vendedor)</label> </span>
                                                 <input class="form-control" type="number" name="racing_vendas_max"
                                                     id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="mb-12">
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
+                                                    <label for="lastname" class="form-label">Meta Fera Gold ( Vendedor )</label>
+                                                    </label> </span>
+                                                <input class="form-control" type="number" name="racing_vendas_gold_max" id="racing_vendas_gold_max"
+                                                    value="{{config('racing_vendas_gold_max')}}" />
                                             </div>
                                         </div>
 
@@ -1173,6 +1196,7 @@ facebook:
                 'token_webhook',
                 'racing_agendamento_max',
                 'racing_vendas_max',
+                'racing_vendas_gold_max',
                 'permitir_deletar_negocio',
                 'broadcast_canal',
                 'negocio_parado',
