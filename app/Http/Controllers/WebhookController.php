@@ -97,6 +97,10 @@ class WebhookController extends Controller
 
             $proprietaio_id = (int) $dados['proprietario_id'];
 
+            if ($proprietaio_id < 0) {
+                $proprietaio_id = null;
+            }
+
             // if ($proprietaio_id > 0) {
             //     return $this->create_negocio($dados);
             // }
