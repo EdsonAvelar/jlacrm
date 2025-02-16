@@ -353,9 +353,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                     <a href="{{ route('ranking.vendas.equipe') }}">Ranking Equipes</a>
                                 </li>
 
-                                <li>
-                                    <a href="{{ route('ranking.filiais.vendas.equipe.index') }}">Filiais Equipes</a>
-                                </li>
+
                             </ul>
                         </div>
                     </li>
@@ -468,6 +466,33 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                     @endif
 
 
+                    @if ($user->hasRole('gerenciar_filiais'))
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#filiais" aria-expanded="false" aria-controls="filiais"
+                            class="side-nav-link">
+                            <i class="fas fa-city"></i>
+                            <span> Filiais </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+
+                        <div class="collapse" id="filiais">
+                            <ul class="side-nav-second-level">
+                                <li>
+                                    <a href="{{ route('ranking.filiais.vendas.equipe.index') }}">Ranking Equipes</a>
+                                </li>
+                                <li>
+                                    <a href="{{route('filiais.config')}}">Configurações
+
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    @endif
+
+
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#perfil" aria-expanded="false" aria-controls="perfil"
                             class="side-nav-link">
@@ -502,14 +527,8 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
                     </li>
-                    {{--
-                    <li class="side-nav-item">
 
-                        <a class="side-nav-link" id="btnModoTV">
-                            <i class="uil-home-alt"></i>
-                            <span> Modo TV </span>
-                        </a>
-                    </li> --}}
+
 
 
                     <!-- Help Box -->

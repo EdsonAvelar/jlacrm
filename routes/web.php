@@ -16,6 +16,7 @@ use App\Http\Controllers\EquipeController;
 use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductionController;
+use App\Http\Controllers\FilialController;
 
 
 /*
@@ -218,6 +219,11 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 
+
+
+
+
+
     Route::group(
         ['prefix' => 'empresa'],
         function () {
@@ -229,6 +235,21 @@ Route::group(['middleware' => 'auth'], function () {
         }
     );
 });
+
+Route::group(['middleware' => ['auth', 'role:gerenciar_filiais']], function () {
+
+    Route::group(
+        ['prefix' => 'filiais'],
+        function () {
+            Route::get('/config', [FilialController::class, 'config'])->name('filiais.config');
+            Route::get('/', [FilialController::class, 'index'])->name('filiais.index');
+            Route::post('/', [FilialController::class, 'store'])->name('filiais.store');
+            Route::delete('/{id}', [FilialController::class, 'destroy'])->name('filiais.destroy');
+
+        }
+    );
+});
+
 
 
 Route::group(['middleware' => ['auth', 'role:gerenciar_bordero']], function () {

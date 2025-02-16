@@ -27,9 +27,31 @@ use App\Enums\NegocioStatus;
 
 class NegocioController extends Controller
 {
-    public function importar_index()
+    public function importar_index(Request $request)
     {
-        $negocios_importados = NegocioImportado::all();
+
+        $proprietario_id = $request->query('proprietario_id');
+
+        if ($proprietario_id > 0) {
+            $negocios_importados = NegocioImportado::where("user_id", $proprietario_id)->get();
+        } else {
+
+            if (Auth::user()->hasRole("admin")) {
+                $negocios_importados = NegocioImportado::all();
+            } else {
+                $negocios_importados = NegocioImportado::where("user_id", Auth::user()->id)->get();
+            }
+
+        }
+        $proprietarios = null;
+        if (Auth::user()->hasRole('admin')) {
+            $proprietarios = User::where('status', UserStatus::ativo)->pluck('name', 'id');
+        }
+
+        $proprietario = User::find($proprietario_id);
+
+
+        // $negocios_importados = NegocioImportado::all();
 
         $users = User::where('status', UserStatus::ativo)->pluck('name', 'id');
 
@@ -40,7 +62,7 @@ class NegocioController extends Controller
         $etapa_funils = $pipeline->first()->etapa_funils()->pluck('nome', 'ordem')->toArray();
         ksort($etapa_funils);
 
-        return view('negocios/importar', compact('negocios_importados', 'etapa_funils', 'users'));
+        return view('negocios/importar', compact('proprietarios', 'proprietario', 'negocios_importados', 'etapa_funils', 'users'));
     }
 
     public function negocio_levantamento(Request $request)
@@ -521,6 +543,7 @@ class NegocioController extends Controller
             $negocio->fonte = $fonte;
             $negocio->data_conversao = $create_time;
             $negocio->origem = "IMPORTACAO_PLANILHA";
+            $negocio->user_id = Auth::user()->id;
 
             try {
                 $negocio->save();
@@ -911,7 +934,7 @@ class NegocioController extends Controller
         $proposta['credito'] = $input['credito'];
         $proposta['fin-entrada'] = $input['fin-entrada'];
         $proposta['fin-parcelas'] = $input['fin-parcelas'];
-        
+
         $proposta['fin-prazo'] = $input['fin-prazo'];
         $proposta['fin-rendaexigida'] = $input['fin-rendaexigida'];
         $proposta['cartorio'] = $input['cartorio'];

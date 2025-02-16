@@ -27,7 +27,6 @@
 @endsection
 @section('main_content')
 
-
 <!-- Start Content-->
 <div class="container-fluid">
 
@@ -37,7 +36,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Serapado por ',' ou ';') ou Excel (xlsx)</h4>
+                    <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Serapado por ',' ou ';') ou
+                        Excel (xlsx)</h4>
                     <p class="text-muted font-14">
                         <strong>Passo 1: </strong>Coloque os leads no formado da planilha do link: <a
                             href="https://docs.google.com/spreadsheets/d/1xOgu3MoZhYFgwy3Zd0n_DPe1Hbc731ceNL5dY6DBzf0/edit?usp=sharing"
@@ -96,6 +96,57 @@
                 <div class="card">
                     <div class="card-body left">
                         <h4 class="header-title m-t-0" id="importados">Negócios Importados</h4>
+                        {{-- Criar um select box com o array proprietario --}}
+
+                        {{-- Se o usuário logado tem permissão de admin --}}
+                        @if (Auth::user()->hasRole('admin'))
+
+                        <div class="page-title-box">
+                            <div class="page-title-left">
+                                <div class="dropdown">
+                                    <li class="dropdown notification-list d-none d-sm-inline-block">
+                                        <button type="button" class="btn btn-light dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                            @if (!is_null($proprietario))
+                                            {{ $proprietario->name }}
+                                            @elseif (app('request')->status == 'inativo')
+                                            Inativos
+                                            @elseif (app('request')->status == 'perdido')
+                                            Perdidos
+                                            @elseif (app('request')->proprietario == -2)
+                                            Todos
+                                            @else
+                                            Todos
+                                            @endif
+
+                                        </button>
+
+                                        @if (!is_null($proprietario))
+
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            @foreach ($proprietarios as $proprietario_id => $value)
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{ route('importar.negocios.index', ['proprietario_id' => $proprietario_id]) }}">
+                                                {{ $value }}
+                                            </a>
+                                            @endforeach
+                                            <hr>
+                                            {{-- todos --}}
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{ route('importar.negocios.index', ['proprietario_id' => -2]) }}">
+                                                Todos</a>
+                                        </div>
+
+                                        @endif
+                                    </li>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
+
+
                         <div class="mb-3">
                             <a class="btn btn-primary checkbox_sensitive" data-bs-toggle="modal" id="atribuir_btn"
                                 data-bs-target="#exampleModal">Atribuir</a>
@@ -119,13 +170,14 @@
                                     <th>
                                         <input type="checkbox" id="selectall" class="select-checkbox">
                                     </th>
-                                    <th>Nome</th>
+                                    <th>Nome do Lead</th>
                                     <th>Telefone</th>
                                     <th>E-mail</th>
                                     <th>Tipo do Bem</th>
                                     <th>Fonte</th>
                                     <th>Campanha</th>
                                     <th>Origem</th>
+                                    <th>Proprietario</th>
                                     <th>Data Conversao</th>
                                 </tr>
                             </thead>
@@ -143,6 +195,15 @@
                                     <td>{{ $data['fonte'] }}</td>
                                     <td>{{ $data['campanha'] }}</td>
                                     <td>{{ $data['origem'] }}</td>
+
+                                    @if (\App\Models\User::find($data['user_id']))
+                                    <td>{{ \App\Models\User::find($data['user_id'])->name }}</td>
+                                    @else
+                                    <td> Sem Proprietário</td>
+                                    @endif
+
+
+
                                     <td>{{ $data['data_conversao'] }}</td>
 
                                 </tr>

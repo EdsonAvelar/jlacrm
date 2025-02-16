@@ -830,6 +830,7 @@ function to_data($data)
                                             value="{{ $fechamento->total_pago }}">
                                     </div>
                                 </div>
+
                             </div>
                             </br>
 
@@ -1182,7 +1183,7 @@ function to_data($data)
                                 👥Grupo: *{{ $fechamento->grupo }}<br>
                                 👥Cota: *{{ $fechamento->cota }}* <br>
                                 💰Crédito: *R$ {{ $fechamento->valor }}* <br>
-                                ✅Adesão: *R$ {{ $fechamento->adesao }}* <br>
+                                ✅Adesão: *R$ {{ $fechamento->total_pago }}* <br>
                                 🟢Parcelas: *R$ {{ $fechamento->parcela }}* <br>
                                 🧰Renda Declarada: *R$ {{ $negocio->lead->renda_liquida }}* <br>
                                 <br>

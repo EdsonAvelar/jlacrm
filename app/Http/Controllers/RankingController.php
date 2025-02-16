@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Fechamento;
 use App\Models\Agendamento;
 use App\Models\Equipe;
+use App\Models\Filial;
 use GuzzleHttp\Client;
 
 use Validator;
@@ -93,10 +94,21 @@ class RankingController extends Controller
 
     public function filiais_vendas_equipe()
     {
-        $filiais = [
-            ['https://jlasolucoesfinanceiras.com/', '175e2d3ab475dbc55f7db04c4af5a4529064bdff'],
-            ['https://nmarquesintermediacao.com.br/', '9e59d42533de13285d6ef99427563967a25bfcf7']
-        ];
+
+        
+
+        // $filiais = [
+        //     ['https://jlasolucoesfinanceiras.com/', '175e2d3ab475dbc55f7db04c4af5a4529064bdff'],
+        //     ['https://nmarquesintermediacao.com.br/', '9e59d42533de13285d6ef99427563967a25bfcf7']
+        // ];
+
+        $filiais_model = Filial::all();
+
+        $filiais = $filiais_model->map(function ($filial) {
+            return [$filial->url, $filial->token];
+        })->toArray();
+
+
 
         $resultados = []; // Array para armazenar os resultados das requisições
 

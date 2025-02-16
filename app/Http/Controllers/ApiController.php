@@ -14,6 +14,17 @@ class ApiController extends Controller
 {
     private function validateToken(Request $request)
     {
+
+        $key = 'api-rate-limit';
+        $rateLimit = 1; // Limite de 1 segundo
+
+        if (Cache::has($key)) {
+            return response()->json(['message' => 'Too many requests. Please wait.'], 429);
+        }
+
+        Cache::put($key, true, $rateLimit);
+
+
         $token = $request->bearerToken();
 
         $token_webhook = config('token_webhook');
@@ -33,6 +44,8 @@ class ApiController extends Controller
 
     public function getVendas(Request $request)
     {
+
+
         // Valida o token antes de processar a requisição
         $tokenValidation = $this->validateToken($request);
         if ($tokenValidation) {

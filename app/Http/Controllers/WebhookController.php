@@ -91,14 +91,15 @@ class WebhookController extends Controller
     public function create_lead($dados)
     {
 
+        $proprietaio_id = null;
 
         if (array_key_exists('proprietario_id', $dados)) {
 
             $proprietaio_id = (int) $dados['proprietario_id'];
 
-            if ($proprietaio_id > 0) {
-                return $this->create_negocio($dados);
-            }
+            // if ($proprietaio_id > 0) {
+            //     return $this->create_negocio($dados);
+            // }
         }
 
         $negocio = new NegocioImportado();
@@ -109,9 +110,10 @@ class WebhookController extends Controller
         if (NegocioImportado::where('telefone', $telefone)->exists()) {
 
             #throw new Exception("Lead duplicado");
-            return "[Webhook] Negocio " . $dados['nome'] ." (". $telefone ." )". " já existe no CRM";
+            return "[Webhook] Negocio " . $dados['nome'] . " (" . $telefone . " )" . " já existe no CRM";
         }
 
+        $negocio->user_id = $proprietaio_id;
 
         //Obrigatorios
         $negocio->nome = $dados['nome'];
@@ -133,7 +135,7 @@ class WebhookController extends Controller
 
         }
 
-      
+
     }
     public function handle(Request $request)
     {
