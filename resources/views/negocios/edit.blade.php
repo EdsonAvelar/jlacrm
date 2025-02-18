@@ -227,12 +227,16 @@ use App\Enums\LevantamentoStatus;
                                 Levantamento
                             </a>
                         </li>
+
+                        @if (\Auth::user()->hasRole('admin'))
                         <li class="nav-item">
                             <a href="#atividades" data-bs-toggle="tab" aria-expanded="false"
                                 class="nav-link rounded-0 ">
                                 Atividades
                             </a>
                         </li>
+                        @endif
+
                         <li class="nav-item">
                             <a href="#propostas" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
                                 Propostas
@@ -612,6 +616,8 @@ use App\Enums\LevantamentoStatus;
                             @endforeach
                         </div>
 
+                        @if (\Auth::user()->hasRole('admin'))
+
                         <div class="tab-pane" id="atividades">
                             @if (isset($negocio->atividades))
                             <div class="timeline-alt pb-0">
@@ -637,6 +643,9 @@ use App\Enums\LevantamentoStatus;
                             @endif
                             <!-- end timeline -->
                         </div> <!-- end tab-pane -->
+                        @endif
+
+
 
                         <?php $nenhum = true; ?>
 

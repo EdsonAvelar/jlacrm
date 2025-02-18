@@ -157,7 +157,6 @@ class DatabaseSeeder extends Seeder
 		$role_employee->name = 'enviar_notificacao';
 		$role_employee->save();
 
-
 		$role_employee = new Role();
 		$role_employee->name = 'gerenciar_rankings';
 		$role_employee->save();
