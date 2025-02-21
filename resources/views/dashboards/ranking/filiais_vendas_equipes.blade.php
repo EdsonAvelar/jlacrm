@@ -29,7 +29,7 @@ if ($tema == ''){
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ranking de Equipes -= Grupo JLA =- </title>
+    <title>Ranking de Equipes Geral </title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -77,7 +77,7 @@ if ($tema == ''){
     </div>
 
     @include('dashboards.ranking.templates.menu_bar',
-    ['title'=>'Ranking de Equipes -= Grupo JLA =-'])
+    ['title'=>'Ranking de Equipes Geral'])
 
     <div class="container2">
 
@@ -169,7 +169,7 @@ if ($tema == ''){
                                         font-size: xx-large;
                                         font-weight: bold;
                                         font-family: sans-serif;
-                                    ">Ranking de Equipes - Grupo JLA</h4>
+                                    ">Ranking de Equipes - Filiais</h4>
 
             <div class="logo-empresa brilho">
                 <h1 class="titulo-logo" style="display: none">Ranking Vendas por Equipe</h1>

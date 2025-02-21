@@ -625,13 +625,10 @@ use App\Enums\LevantamentoStatus;
                                 <div class="timeline-item">
                                     <i class="mdi mdi-circle bg-info-lighten text-info timeline-icon"></i>
                                     <div class="timeline-item-info">
-
                                         <h5 class="mt-0 mb-0">author: {{ $atividade->user->name }}</h5>
-
                                         <p class="font-14">{{ $atividade->descricao }} <br><span class="ms-0 font-12">{{
                                                 $atividade->data_atividade }}</span>
                                         </p>
-
                                     </div>
                                 </div>
                                 @endforeach

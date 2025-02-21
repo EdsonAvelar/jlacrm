@@ -44,10 +44,10 @@ depois.
 ## Criando htacces 
 Vamos criar um htaccess para ignorar a pasta public
 
-Cuidado ao copiar, as vezes come letras na copia
+Já existe um htaccess (sem o ponto inicial) local que vai com o projeto, basta mover ou 
+copiar ele para ".htaccess"
 
 $cp htaccess .htaccess
-$vi .htaccess$
 
 
 ```
