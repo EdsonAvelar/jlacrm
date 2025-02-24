@@ -364,7 +364,7 @@
                                         <h5>Login - Background</h5>
                                         <div class="card-body">
 
-                                            <p><a href="#" onclick="image_save('outros','/background.png','retangular')"
+                                            <p><a href="#" onclick="image_save('outros','/background.png','livre')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/outros/background.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="profile-image">
