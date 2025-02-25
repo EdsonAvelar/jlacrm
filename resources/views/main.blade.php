@@ -406,7 +406,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
                                 @if ($user->hasAnyRole(['importar_leads']))
                                 <li>
-                                    <a href="{{ route('importar.negocios.index') }}">Importar</a>
+                                    <a href="{{ route('importar.negocios.index',['proprietario_id' => Auth::user()->id ]) }}">Importar</a>
                                 </li>
                                 @endif
 

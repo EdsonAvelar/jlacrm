@@ -122,7 +122,7 @@
 
                                         </button>
 
-                                        @if (!is_null($proprietario))
+                                        @if (!is_null($proprietarios))
 
                                         <div class="dropdown-menu dropdown-menu-end">
                                             @foreach ($proprietarios as $proprietario_id => $value)
