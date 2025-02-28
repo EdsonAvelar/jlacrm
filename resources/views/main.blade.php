@@ -405,9 +405,22 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 @endif
 
                                 @if ($user->hasAnyRole(['importar_leads']))
+
+                                @if(Auth::user()->hasRole("admin"))
                                 <li>
-                                    <a href="{{ route('importar.negocios.index',['proprietario_id' => Auth::user()->id ]) }}">Importar</a>
+                                    <a
+                                        href="{{ route('importar.negocios.index',['proprietario_id' => -1 ]) }}">Importar</a>
                                 </li>
+                                @else
+                                <li>
+                                    <a
+                                        href="{{ route('importar.negocios.index',['proprietario_id' => Auth::user()->id ]) }}">Importar</a>
+                                </li>
+
+                                @endif
+
+
+
                                 @endif
 
                                 <li>

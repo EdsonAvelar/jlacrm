@@ -39,8 +39,19 @@ class NegocioController extends Controller
 
             if (Auth::user()->hasRole("admin")) {
 
-                $negocios_importados = NegocioImportado::all();
-                
+                if ($proprietario_id == -1) {
+
+                    $negocios_importados = NegocioImportado::where(function ($query) use ($proprietario_id) {
+                        $query->where("user_id", $proprietario_id)
+                              ->orWhereNull("user_id");
+                    })->get();
+
+                } else {
+                    $negocios_importados = NegocioImportado::all();
+                }
+
+
+
             } else {
                 $negocios_importados = NegocioImportado::where("user_id", Auth::user()->id)->get();
             }
