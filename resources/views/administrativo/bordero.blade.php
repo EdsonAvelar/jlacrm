@@ -4,6 +4,10 @@
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
 
+
+<!-- Bootstrap Bundle com Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <style>
     /* Destaque para os totais */
     .total-highlight {
@@ -137,7 +141,10 @@
         <div class="tab-pane fade show active" id="bordero" role="tabpanel" aria-labelledby="bordero-tab">
             <div class="mt-4">
                 <h4 class="p-1">Gerenciamento de Borderô</h4>
+
+                {{--
                 @if ( isset($info['producao']) && ($info['producao']))
+
                 <p class="subtitle">Produção: <span class="strong">{{ $info['producao']['name'] }}</span> - Inicio:
                     <span class="strong">{{
                         $info['producao']['start_date'] }} </span>Fim: <span class="strong">{{
@@ -147,9 +154,57 @@
                     <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
                     @endif
                 </p>
-
-
                 @endif
+
+                <!-- Select para escolher uma produção das últimas 6 -->
+                <div class="mb-3">
+                    <label for="productionSelect" class="form-label">Selecionar Produção</label>
+                    <select id="productionSelect" class="form-select">
+                        <option value="">Selecione uma Produção</option>
+                        @foreach ($productions as $prod)
+                        <option
+                            value="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->start_date)->format('d/m/Y') }}|{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }}">
+                            {{ $prod->name }} ({{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                            $prod->start_date)->format('d/m/Y') }} - {{
+                            \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }})
+                        </option>
+                        @endforeach
+                    </select>
+                </div> --}}
+
+
+
+                {{-- Dropdown unindo o label com o select --}}
+                <div class="dropdown mb-3">
+                    <button class="btn btn-secondary dropdown-toggle w-100 text-start" type="button"
+                        id="productionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        @if(isset($info['producao']) && $info['producao'])
+                        Produção: <span class="strong">{{ $info['producao']['name'] }}</span> - Início:
+                        <span class="strong">{{ $info['producao']['start_date'] }}</span> - Fim:
+                        <span class="strong">{{ $info['producao']['end_date'] }}</span>
+                        @if(!$info['producao']['dentro'])
+                        <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
+                        @endif
+                        @else
+                        Selecione uma produção
+                        @endif
+                    </button>
+                    <ul class="dropdown-menu w-100" aria-labelledby="productionDropdown">
+                        @foreach ($productions as $prod)
+                        <li>
+                            <a class="dropdown-item" href="#"
+                                data-start="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->start_date)->format('d/m/Y') }}"
+                                data-end="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }}"
+                                data-name="{{ $prod->name }}">
+                                {{ $prod->name }} ({{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                                $prod->start_date)->format('d/m/Y') }} -
+                                {{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }})
+                            </a>
+                        </li>
+                        @endforeach
+                    </ul>
+                </div>
+
 
                 @if (isset($bordero))
                 @foreach ($bordero as $vendedor => $bordero_vendedor)
@@ -605,12 +660,10 @@
                     value: originalValue,
                     min: 0,
                     max: 100,
-                    step: 0.01,
+                    step: 0.0001,
                     class: 'form-control',
                     blur: function () {
-                        const newValue = parseFloat($input.val().replace(',', '.')).toFixed(2);
-
-
+                        const newValue = parseFloat($input.val().replace(',', '.')).toFixed(4);
     
                         if (newValue !== originalValue) {
                             // Envia a alteração via AJAX
@@ -684,6 +737,24 @@
             });
     
     
+        });
+
+        // Script para redirecionar ao selecionar uma produção no dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dataInicio = this.getAttribute('data-start');
+                    const dataFim = this.getAttribute('data-end');
+                    const productionName = this.getAttribute('data-name');
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('data_inicio', dataInicio);
+                    url.searchParams.set('data_fim', dataFim);
+                    url.searchParams.set('production_name', productionName);
+                    window.location.href = url.toString();
+                });
+            });
         });
    
 </script>

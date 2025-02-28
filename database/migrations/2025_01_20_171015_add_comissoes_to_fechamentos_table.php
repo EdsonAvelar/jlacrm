@@ -13,9 +13,9 @@ return new class extends Migration {
     public function up()
     {
         Schema::table('fechamentos', function (Blueprint $table) {
-            $table->decimal('comissao_1', 15, 2)->nullable()->after('terceiro_vendedor_id'); // Substitua 'existing_column' pelo nome da última coluna da tabela
-            $table->decimal('comissao_2', 15, 2)->nullable()->after('comissao_1');
-            $table->decimal('comissao_3', 15, 2)->nullable()->after('comissao_2');
+            $table->decimal('comissao_1', 15, 4)->nullable()->after('terceiro_vendedor_id'); // Substitua 'existing_column' pelo nome da última coluna da tabela
+            $table->decimal('comissao_2', 15, 4)->nullable()->after('comissao_1');
+            $table->decimal('comissao_3', 15, 4)->nullable()->after('comissao_2');
         });
     }
 

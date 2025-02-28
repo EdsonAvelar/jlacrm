@@ -139,55 +139,87 @@ class ProductionController extends Controller
 
     public function bordero(Request $request)
     {
-        $data_inicio = config('data_inicio');
-        $data_fim = config('data_fim');
+        // Obtém as datas da query, se existirem
+        $data_inicio = $request->query('data_inicio');
+        $data_fim = $request->query('data_fim');
+        $productionName = $request->query('production_name');
 
-        $vendas = null;
-        if (!is_null($data_inicio) and !is_null($data_fim)) {
-            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
-            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
+        // Se qualquer uma das datas não estiver presente, busca uma produção ativa
+        if (is_null($data_inicio) || is_null($data_fim)) {
+            $prd = Production::where('is_active', true)->first();
 
-            $query = [
-                ['data_fechamento', '>=', $from],
-                ['data_fechamento', '<=', $to],
-                ['status', '=', 'FECHADA']
-            ];
-
-            $vendas = Fechamento::where($query)->get();
-        }
-
-        $bordero = [];
-        $rules = CommissionRule::all(); // Obtém as regras de comissão salvas
-
-        $info = array();
-        $info['credito_vendidos'] = 0;
-        $info['cotas'] = 0;
-
-        $prd = Production::where('is_active', true)->first();
-        if ($prd) {
-            $start_date = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
-            $end_date = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
-            $info['producao']['name'] = $prd->name;
-            $info['producao']['start_date'] = $start_date;
-            $info['producao']['end_date'] = $end_date;
-            $hoje = Carbon::today();
-            $inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->startOfDay();
-            $fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->startOfDay();
-            if ($hoje >= $inicio && $hoje <= $fim) {
-                // Se estiver dentro do intervalo, usamos 'hoje' como a data final
-                $info['producao']['dentro'] = true;
+            if ($prd) {
+                $data_inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
+                $data_fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
+                $productionName = $prd->name;
             } else {
-                // Caso contrário, mantemos 'fim' como estava originalmente
-                $info['producao']['dentro'] = false;
+                $data_inicio = config('data_inicio');
+                $data_fim = config('data_fim');
+                $productionName = 'Produção Padrão';
             }
         }
 
+        // Busca as vendas dentro do intervalo definido, considerando apenas vendas com status FECHADA
+        $vendas = collect();
+        if ($data_inicio && $data_fim) {
+            $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
+            $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
 
+            $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])
+                ->where('status', 'FECHADA')
+                ->get();
+        }
+
+        $bordero = [];
+        $rules = CommissionRule::all();
+
+        // Inicializa o array de informações agregadas
+        $info = [
+            'credito_vendidos' => 0,
+            'cotas' => 0,
+        ];
+
+        // Recupera a produção ativa para exibir informações complementares na view (se existir)
+        // $prdActive = Production::where('is_active', true)->first();
+        // if ($prdActive) {
+        //     $start_date = Carbon::createFromFormat('Y-m-d', $prdActive->start_date)->format('d/m/Y');
+        //     $end_date = Carbon::createFromFormat('Y-m-d', $prdActive->end_date)->format('d/m/Y');
+
+        //     $info['producao'] = [
+        //         'name' => $prdActive->name,
+        //         'start_date' => $start_date,
+        //         'end_date' => $end_date,
+        //         'dentro' => false,
+        //     ];
+
+        //     $hoje = Carbon::today();
+        //     $inicio = Carbon::createFromFormat('Y-m-d', $prdActive->start_date)->startOfDay();
+        //     $fim = Carbon::createFromFormat('Y-m-d', $prdActive->end_date)->endOfDay();
+
+        //     if ($hoje->between($inicio, $fim)) {
+        //         $info['producao']['dentro'] = true;
+        //     }
+        // }
+
+        // Calcula se a data atual está dentro do período definido
+        $start = Carbon::createFromFormat('d/m/Y', $data_inicio);
+        $end = Carbon::createFromFormat('d/m/Y', $data_fim);
+        $hoje = Carbon::today();
+        $dentro = $hoje->between($start, $end);
+
+        $info['producao'] = [
+            'name' => $productionName,
+            'start_date' => $data_inicio,
+            'end_date' => $data_fim,
+            'dentro' => $dentro,
+        ];
+
+
+        // Processa as vendas para compor o array de comissões (borderô)
         foreach ($vendas as $venda) {
+            $info['credito_vendidos'] += (float) $venda->valor;
+            $info['cotas']++;
 
-
-            $info['credito_vendidos'] = $info['credito_vendidos'] + (float) $venda->valor;
-            $info['cotas'] = $info['cotas'] + 1;
             // Comissão do primeiro vendedor
             $bordero[$venda->primeiro_vendedor_id][] = [
                 'id' => $venda->id,
@@ -196,9 +228,9 @@ class ProductionController extends Controller
                 'cliente' => $venda->negocio->lead->nome,
                 'cliente_id' => $venda->negocio->id,
                 'credito' => $venda->valor,
-                'percentagem' => ($venda->comissao_1),
+                'percentagem' => $venda->comissao_1,
                 'comissao' => ((float) $venda->valor) * $venda->comissao_1 / 100,
-                'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+                'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
             ];
 
             // Comissão do segundo vendedor (se existir)
@@ -210,9 +242,9 @@ class ProductionController extends Controller
                     'cliente' => $venda->negocio->lead->nome,
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
-                    'percentagem' => ($venda->comissao_2),
+                    'percentagem' => $venda->comissao_2,
                     'comissao' => ((float) $venda->valor) * $venda->comissao_2 / 100,
-                    'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+                    'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
                 ];
             }
 
@@ -225,15 +257,19 @@ class ProductionController extends Controller
                     'cliente' => $venda->negocio->lead->nome,
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
-                    'percentagem' => ($venda->comissao_3),
+                    'percentagem' => $venda->comissao_3,
                     'comissao' => ((float) $venda->valor) * $venda->comissao_3 / 100,
-                    'data_fechamento' => Carbon::parse($venda['data_fechamento'])->format('d/m/Y'),
+                    'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
                 ];
             }
         }
 
-        return view('administrativo.bordero', compact('vendas', 'bordero', 'info', 'rules'));
+        // Recupera as últimas 6 produções para popular o select na view
+        $productions = Production::orderBy('start_date', 'desc')->take(6)->get();
+
+        return view('administrativo.bordero', compact('vendas', 'bordero', 'info', 'rules', 'productions'));
     }
+
 
 
 

@@ -251,7 +251,6 @@ class FechamentoController extends Controller
             'comissao_1',
             'comissao_2',
             'comissao_3',
-
         ];
 
         foreach ($comissoes as $comissao) {

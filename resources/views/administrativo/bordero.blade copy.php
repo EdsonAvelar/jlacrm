@@ -144,7 +144,7 @@ use App\Enums\VendaStatus;
                                     <td>{{ $vendedor['participacao'] }}</td>
                                     <td>{{ $vendedor['credito'] }}</td>
                                     <td>{{ $vendedor['percentagem'] }}</td>
-                                    <td>R$ {{ number_format($vendedor['comissao'], 2, ',', '.') }} </td>
+                                    <td>R$ {{ number_format($vendedor['comissao'], 4, ',', '.') }} </td>
                                     <td>{{ $vendedor['data_fechamento'] }}</td>
 
                                 </tr>
