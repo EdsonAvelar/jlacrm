@@ -85,12 +85,44 @@ use App\Enums\VendaStatus;
                 </div>
             </div>
 
+            {{-- Dropdown unindo o label com o select --}}
+            <div class="dropdown mb-3">
+                <button class="btn btn-secondary dropdown-toggle w-100 text-start" type="button" id="productionDropdown"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    @if(isset($info['producao']) && $info['producao'])
+                    Produção: <span class="strong">{{ $info['producao']['name'] }}</span> - Início:
+                    <span class="strong">{{ $info['producao']['start_date'] }}</span> - Fim:
+                    <span class="strong">{{ $info['producao']['end_date'] }}</span>
+                    @if(!$info['producao']['dentro'])
+                    <span class="badge bg-danger">*Dia de Hoje está fora do intervalo da Produção!</span>
+                    @endif
+                    @else
+                    Selecione uma produção
+                    @endif
+                </button>
+                <ul class="dropdown-menu w-100" aria-labelledby="productionDropdown">
+                    @foreach ($productions as $prod)
+                    <li>
+                        <a class="dropdown-item" href="#"
+                            data-start="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->start_date)->format('d/m/Y') }}"
+                            data-end="{{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }}"
+                            data-name="{{ $prod->name }}">
+                            {{ $prod->name }} ({{ \Carbon\Carbon::createFromFormat('Y-m-d',
+                            $prod->start_date)->format('d/m/Y') }} -
+                            {{ \Carbon\Carbon::createFromFormat('Y-m-d', $prod->end_date)->format('d/m/Y') }})
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+            </div>
+
+            {{--
             <div class="col-md-4">
 
                 <input class="form-control btn btn-primary" type="text" name="daterange"
                     value="{{ app('request')->input('data_inicio') }} - {{ app('request')->input('data_fim') }}" />
 
-            </div>
+            </div> --}}
 
         </div>
 
@@ -574,5 +606,23 @@ use App\Enums\VendaStatus;
             
             handleTableClick();
             })
+
+               // Script para redirecionar ao selecionar uma produção no dropdown
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            dropdownItems.forEach(function(item) {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const dataInicio = this.getAttribute('data-start');
+                    const dataFim = this.getAttribute('data-end');
+                    const productionName = this.getAttribute('data-name');
+                    const url = new URL(window.location.href);
+                    url.searchParams.set('data_inicio', dataInicio);
+                    url.searchParams.set('data_fim', dataFim);
+                    url.searchParams.set('production_name', productionName);
+                    window.location.href = url.toString();
+                });
+            });
+        });
 </script>
 @endsection

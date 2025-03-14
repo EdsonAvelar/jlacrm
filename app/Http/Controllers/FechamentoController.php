@@ -12,30 +12,42 @@ use App\Enums\NegocioStatus;
 use App\Models\Atividade;
 use App\Events\NewSaleEvent;
 use App\Models\User;
+use App\Models\Production;
 
 class FechamentoController extends Controller
 {
     public function index(Request $request)
     {
 
+        // Obtém as datas da query, se existirem
         $data_inicio = $request->query('data_inicio');
         $data_fim = $request->query('data_fim');
+        $productionName = $request->query('production_name');
 
+        // Se qualquer uma das datas não estiver presente, busca uma produção ativa
+        if (is_null($data_inicio) || is_null($data_fim)) {
+            $prd = Production::where('is_active', true)->first();
 
-        $vendas = null;
-        if (!is_null($data_inicio) and !is_null($data_fim)) {
+            if ($prd) {
+                $data_inicio = Carbon::createFromFormat('Y-m-d', $prd->start_date)->format('d/m/Y');
+                $data_fim = Carbon::createFromFormat('Y-m-d', $prd->end_date)->format('d/m/Y');
+                $productionName = $prd->name;
+            } else {
+                $data_inicio = config('data_inicio');
+                $data_fim = config('data_fim');
+                $productionName = 'Produção Padrão';
+            }
+        }
+
+        // Busca as vendas dentro do intervalo definido, considerando apenas vendas com status FECHADA
+        $vendas = collect();
+        if ($data_inicio && $data_fim) {
             $from = Carbon::createFromFormat('d/m/Y', $data_inicio)->format('Y-m-d');
             $to = Carbon::createFromFormat('d/m/Y', $data_fim)->format('Y-m-d');
 
-            $query = [
-                ['data_fechamento', '>=', $from],
-                ['data_fechamento', '<=', $to],
-                ['status', '=', 'FECHADA']
-            ];
-
-
-            $vendas = Fechamento::where($query)->get();
-
+            $vendas = Fechamento::whereBetween('data_fechamento', [$from, $to])
+                ->where('status', 'FECHADA')
+                ->get();
         }
 
         $vendas_canceladas = null;
@@ -70,7 +82,22 @@ class FechamentoController extends Controller
 
         }
 
-        return view('vendas.index', compact('vendas', 'vendas_canceladas', 'vendas_rascunho'));
+        $start = Carbon::createFromFormat('d/m/Y', $data_inicio);
+        $end = Carbon::createFromFormat('d/m/Y', $data_fim);
+        $hoje = Carbon::today();
+        $dentro = $hoje->between($start, $end);
+
+        $info['producao'] = [
+            'name' => $productionName,
+            'start_date' => $data_inicio,
+            'end_date' => $data_fim,
+            'dentro' => $dentro,
+        ];
+
+        // Recupera as últimas 6 produções para popular o select na view
+        $productions = Production::orderBy('start_date', 'desc')->take(6)->get();
+
+        return view('vendas.index', compact('info','productions', 'vendas', 'vendas_canceladas', 'vendas_rascunho'));
     }
 
     public function delete_fechamento(Request $request)

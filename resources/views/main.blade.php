@@ -457,21 +457,14 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                 <li>
                                     <a href="{{ route('users.funcionarios') }}">Funcionários</a>
                                 </li>
-
-
-
                                 <li>
                                     <a
-                                        href="{{ route('vendas.lista', ['data_inicio' => $data_inicio, 'data_fim' => $data_fim]) }}">Vendas
+                                        href="{{ route('vendas.lista') }}">Vendas
                                         Realizadas</a>
                                 </li>
-
-
-
                                 <li>
                                     <a href="{{ route('equipes.index') }}">Equipes</a>
                                 </li>
-
                             </ul>
                         </div>
 
