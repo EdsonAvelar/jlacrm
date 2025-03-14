@@ -948,7 +948,7 @@ if ($tema == ''){
        
     </script>
 
-    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'telemarketing'])
+    @include('dashboards.ranking.templates.carrossel', ['proximaUrl' => 'vendas/telemarketing'])
 </body>
 
 </html>
