@@ -1,5 +1,21 @@
 @extends('main')
 
+
+@php
+
+
+function toFloat($valorString){
+
+return floatval(str_replace(',', '.', $valorString));
+}
+
+function toMoney($valorString) {
+$valorFloat = toFloat($valorString);
+return "R$ ". number_format($valorFloat, 2, ',', '.');
+}
+
+@endphp
+
 @section('headers')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link href="{{ url('') }}/css/vendor/dataTables.bootstrap5.css" rel="stylesheet" type="text/css" />
@@ -231,6 +247,9 @@
                                 @endphp
 
                                 @foreach ($bordero_vendedor as $venda)
+
+
+
                                 <tr>
                                     <td>{{ $venda['data_fechamento'] }}</td>
                                     <td>{{ $venda['contrato'] }}</td>
@@ -239,10 +258,15 @@
 
                                     </td>
                                     <td>{{ $venda['participacao'] }}</td>
-                                    <td class="credito">R$ {{
+
+                                    {{-- <td class="credito">R$ {{
                                         number_format(
-                                        (float)$venda['credito'], 2, ',', '.') }}</td>
-                                    {{-- <td>{{ $venda['percentagem'] }}</td> --}}
+                                        (float)$venda['credito'], 2, ',', '.') }}</td> --}}
+                                    <td class="credito">
+                                        @php
+                                        echo "R$ ".toMoney( $venda['credito'] ); // Saída: R$ 213.686,23
+                                        @endphp
+                                    </td>
                                     <td class="editable " data-id="{{ $venda['id'] }}"
                                         data-participacao="{{ $venda['participacao'] }}" data-name="{{$vendedor}}"
                                         data-value="{{ $venda['percentagem'] }}">
@@ -251,12 +275,10 @@
 
                                     <td class="value_{{ $vendedor }}_fechados">R$ {{ number_format($venda['comissao'],
                                         2, ',', '.') }}</td>
-
-
                                     @php
 
                                     $comissao_total += $venda['comissao'];
-                                    $credito_total += (float)$venda['credito'];
+                                    $credito_total += toFloat( $venda['credito'] );
 
                                     @endphp
                                 </tr>
@@ -271,15 +293,15 @@
                                         <b>Crédito</b>
                                     </td>
                                     <td class="total-highlight total-highlight-info">
-                                        <b class="text-info">R$ {{ number_format($credito_total, 2, ',', '.') }}</b>
+                                        <b class="text-info">{{ toMoney($credito_total) }}</b>
                                     </td>
                                     <td>
                                         <b>Comissão</b>
                                     </td>
 
                                     <td id="total_value_{{ $vendedor }}_fechados"
-                                        class="comissoes_totais total-highlight total-highlight-success">R$ {{
-                                        number_format($comissao_total, 2, ',', '.')
+                                        class="comissoes_totais total-highlight total-highlight-success">{{
+                                        toMoney($comissao_total)
                                         }}</td>
 
                                 </tr>
@@ -293,6 +315,8 @@
                 @endforeach
                 @endif
             </div>
+
+            @if( Auth::user()->hasRole('admin'))
 
             <div class="card mt-4">
                 <div class="card-body">
@@ -311,7 +335,7 @@
                             <tr>
                                 <td class="total-highlight total-highlight-warning">{{ $info['cotas'] }}</td>
                                 <td id="total_creditos" class="total-highlight total-highlight-info">
-                                    R$ {{ number_format($info['credito_vendidos'], 2, ',', '.') }}
+                                    {{ toMoney($info['credito_vendidos']) }}
                                 </td>
                                 <td id="previsao_receita" class="total-highlight total-highlight-success">
                                     R$ {{ number_format(($info['credito_vendidos'] * 0.022) , 2, ',', '.') }}
@@ -327,6 +351,8 @@
 
                 </div>
             </div>
+
+            @endif
 
         </div>
 

@@ -136,6 +136,12 @@ class ProductionController extends Controller
         return response()->json(['message' => 'Porcentagem atualizada com sucesso!'], 200);
     }
 
+    private function toFloat($valorString)
+    {
+
+        return floatval(str_replace(',', '.', $valorString));
+    }
+
 
     public function bordero(Request $request)
     {
@@ -217,7 +223,7 @@ class ProductionController extends Controller
 
         // Processa as vendas para compor o array de comissões (borderô)
         foreach ($vendas as $venda) {
-            $info['credito_vendidos'] += (float) $venda->valor;
+            $info['credito_vendidos'] += $this->toFloat($venda->valor);
             $info['cotas']++;
 
             // Comissão do primeiro vendedor
@@ -229,7 +235,7 @@ class ProductionController extends Controller
                 'cliente_id' => $venda->negocio->id,
                 'credito' => $venda->valor,
                 'percentagem' => $venda->comissao_1,
-                'comissao' => ((float) $venda->valor) * $venda->comissao_1 / 100,
+                'comissao' => ($this->toFloat($venda->valor)) * $venda->comissao_1 / 100,
                 'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
             ];
 
@@ -243,7 +249,7 @@ class ProductionController extends Controller
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
                     'percentagem' => $venda->comissao_2,
-                    'comissao' => ((float) $venda->valor) * $venda->comissao_2 / 100,
+                    'comissao' => ($this->toFloat($venda->valor)) * $venda->comissao_2 / 100,
                     'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
                 ];
             }
@@ -258,7 +264,7 @@ class ProductionController extends Controller
                     'cliente_id' => $venda->negocio->id,
                     'credito' => $venda->valor,
                     'percentagem' => $venda->comissao_3,
-                    'comissao' => ((float) $venda->valor) * $venda->comissao_3 / 100,
+                    'comissao' => ($this->toFloat($venda->valor)) * $venda->comissao_3 / 100,
                     'data_fechamento' => Carbon::parse($venda->data_fechamento)->format('d/m/Y'),
                 ];
             }
