@@ -230,7 +230,10 @@
                                     </div> --}}
                                 </div>
                             </div>
-                            <h4 class="page-title">Negócios
+                            <h4 class="page-title">
+                            
+                            @include('partials.mobile-sidebar', ['title' => 'Negócios'])
+
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model" id="add_button"
                                     class="btn btn-info btn-sm ms-3">+ Add</a>
 

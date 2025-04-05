@@ -120,7 +120,9 @@
                 @if ( !((app('request')->input('data_inicio') == \Carbon\Carbon::now()->format('d/m/Y') ) &
                 (app('request')->input('data_fim') == \Carbon\Carbon::now()->format('d/m/Y') ))
                 )
-                <h4 class="page-title">Dashboard - Geral</h4>
+                {{-- <h4 class="page-title">Dashboard - Geral</h4> --}}
+                @include('partials.mobile-sidebar', ['title' => 'Dashboard Geral', 'class' => "fs-4
+                fw-semibold p-2"])
 
                 @if ( isset($output['producao']) && ($output['producao']))
                 <p class="subtitle">Produção: <span class="strong">{{ $output['producao']['name'] }}</span> - Inicio:
@@ -140,7 +142,9 @@
 
                 @else
 
-                <h4 class="page-title" style="color: rgb(89, 0, 184)">Dashboard - Geral - HOJE</h1>
+                {{-- <h4 class="page-title" style="color: rgb(89, 0, 184)">Dashboard - Geral - HOJE</h1> --}}
+                    @include('partials.mobile-sidebar', ['title' => 'Dashboard Geral - HOJE', 'class' => "fs-4
+                    fw-semibold text-purple p-2"])
                     @endif
             </div>
         </div>

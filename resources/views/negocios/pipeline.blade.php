@@ -91,6 +91,30 @@ $protocolo_hora = 0;
         user-select: none;
         /* Standard */
     }
+
+    /* Mobile sidebar styles */
+    @media (max-width: 767.98px) {
+        .leftside-menu {
+            display: none;
+            transform: none !important;
+        }
+
+        #toggle-sidebar-button {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        #toggle-sidebar-button .mdi-menu-right {
+            font-size: 24px;
+            margin-right: 5px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        #toggle-sidebar-button .mdi-menu-right {
+            display: none;
+        }
+    }
 </style>
 @endsection
 
@@ -254,7 +278,11 @@ $protocolo_hora = 0;
                     </ul>
                 </div>
 
-                <h4 class="page-title" style="line-height: 110px">Negócios
+                <h4 class="page-title" style="line-height: 110px">
+                    <a href="#" id="toggle-sidebar-button" class="text-reset"
+                        style="text-decoration: none; cursor: pointer;">
+                        <i class="mdi mdi-menu-right d-md-none me-1"></i>Negócios
+                    </a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model"
                         class="btn btn-success btn-sm ms-3">+ Add</a>
                     <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-massive"
@@ -681,8 +709,6 @@ $protocolo_hora = 0;
 <script src="{{ url('') }}/js/jquery.mask.js"></script>
 <script src="{{ url('') }}/js/jquery.timepicker.min.js"></script>
 
-
-
 <script>
     var cont = [];
         var arr = Array($('.container-drag').data('containers'))[0];
@@ -1063,5 +1089,67 @@ $protocolo_hora = 0;
                 }
             });
         });
+</script>
+
+<script>
+    // Menu móvel simplificado sem overlay que bloqueia interação
+$(document).ready(function() {
+    $('#toggle-sidebar-button').on('click', function(e) {
+        e.preventDefault();
+        
+        // Aplicar estilos inline para garantir funcionamento
+        if ($('.leftside-menu').hasClass('mobile-visible')) {
+            // Esconder o menu
+            $('.leftside-menu').removeClass('mobile-visible');
+            $('.leftside-menu').css({
+                'display': 'none'
+            });
+        } else {
+            // Mostrar o menu
+            $('.leftside-menu').addClass('mobile-visible');
+            $('.leftside-menu').css({
+                'display': 'block',
+                'position': 'fixed',
+                'top': '0',
+                'left': '0',
+                'bottom': '0',
+                'width': '250px',
+                'z-index': '1031',
+                'overflow-y': 'auto',
+                'box-shadow': '0 0 35px 0 rgba(0,0,0,0.25)'
+            });
+        }
+    });
+    
+    // Fechar o menu quando um item é selecionado
+    $('.leftside-menu a:not([data-bs-toggle="collapse"])').on('click', function() {
+        if ($(window).width() < 768) {
+            $('.leftside-menu').removeClass('mobile-visible');
+            $('.leftside-menu').css({
+                'display': 'none'
+            });
+        }
+    });
+    
+    // Lidar com cliques fora do menu para fechá-lo 
+    $(document).on('click touchstart', function(e) {
+        // Verificar se o menu está visível e o clique foi fora dele e fora do botão de toggle
+        if ($('.leftside-menu').hasClass('mobile-visible') && 
+            !$(e.target).closest('.leftside-menu').length && 
+            !$(e.target).is('#toggle-sidebar-button') &&
+            !$(e.target).closest('#toggle-sidebar-button').length) {
+            
+            $('.leftside-menu').removeClass('mobile-visible');
+            $('.leftside-menu').css({
+                'display': 'none'
+            });
+        }
+    });
+    
+    // Impedir que cliques dentro do menu propaguem para o documento
+    $('.leftside-menu').on('click touchstart', function(e) {
+        e.stopPropagation();
+    });
+});
 </script>
 @endsection

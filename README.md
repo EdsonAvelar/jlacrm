@@ -27,14 +27,26 @@ Fazer a criação da chave publica/privada de SSH no CPANEL
 Criar o banco de dados no cpanel, guardar o nome do usario, nome do banco 
 e senha
 
+## ALL IN ONE COMMAND
+
+rm -rf .htaccess .well-known/ default.html cgi-bin/
+git clone https://github.com/EdsonAvelar/jlacrm.git .
+cp htaccess .htaccess
+curl -sS https://getcomposer.org/installer | php
+composer install --no-dev --optimize-autoloader
+cp .env.example .env
+vi .env
+
 
 ## Acessar via Putty
 Acesse o ssh do site com o ip publico do cpanel e usuário do cpanel
 
 https://www.youtube.com/watch?v=CoofUC9sr_o
 
-clonar na pasta public_html o clone do git
-Pegar o url do clone
+Acessar public_html
+Remover pastas padrão
+` rm -rf .htaccess .well-known/ default.html cgi-bin/`
+
 
 Primeiramente remova tudo que tem dentro de public_html
 depois.
@@ -93,9 +105,9 @@ DB_PASSWORD=
 BROADCAST_DRIVER=pusher
 
 
-PUSHER_APP_ID=1234
-PUSHER_APP_KEY=asdfdf
-PUSHER_APP_SECRET=asdfd
+PUSHER_APP_ID=1835710
+PUSHER_APP_KEY=ae35a6a0e6cd96def27f
+PUSHER_APP_SECRET=6c6ef2f5af5370949aa4
 PUSHER_HOST=
 PUSHER_PORT=443
 PUSHER_SCHEME=https
