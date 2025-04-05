@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Upload;
+use App\Models\Atividade;
 
 class UploadController extends Controller
 {
@@ -35,8 +36,12 @@ class UploadController extends Controller
         $upload->description = $request->input('description');
         $upload->save();
 
+
+        Atividade::add_atividade(\Auth::user()->id, "Arquivo " . $upload->file_name . " ( " . $upload->description . ") " . "foi adicionado", $upload->negocio_id);
+
+
         return back()->with('success', 'Arquivo enviado com sucesso!')->with('aba', "#upload");
-        ;
+
     }
 
     public function destroy($id)
@@ -48,12 +53,16 @@ class UploadController extends Controller
 
         $upload->delete();
 
+        Atividade::add_atividade(\Auth::user()->id, "Arquivo " . $upload->file_name . " ( " . $upload->description . ") " . "foi deletado", $upload->negocio_id);
+
+
         return back()->with('success', 'Arquivo deletado com sucesso!');
     }
 
     public function download($id)
     {
         $upload = Upload::findOrFail($id);
+
 
         // Aqui você pode adicionar lógica de autorização se desejar.
         return Storage::disk('protected')->download($upload->file_path, $upload->file_name);

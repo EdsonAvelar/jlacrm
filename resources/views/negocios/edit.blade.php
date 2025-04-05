@@ -637,7 +637,8 @@ use App\Enums\LevantamentoStatus;
                                         <!-- Envie o id do negócio -->
                                         <input type="hidden" name="negocio_id" value="{{ $negocio->id }}">
                                         <div class="mb-3">
-                                            <label for="file" class="form-label">Selecione o arquivo</label>
+                                            <label for="file" class="form-label">Selecione o arquivo (Tamanho Máximo:
+                                                2MB</label>
                                             <input type="file" class="form-control" id="file" name="file" required
                                                 accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
                                             <!-- Preview do arquivo selecionado -->
@@ -646,7 +647,7 @@ use App\Enums\LevantamentoStatus;
                                         <div class="mb-3">
                                             <label for="description" class="form-label">Descrição</label>
                                             <input type="text" class="form-control" id="description" name="description"
-                                                placeholder="Digite uma descrição para o arquivo">
+                                                placeholder="Digite uma descrição para o arquivo" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Fazer Upload</button>
 
