@@ -588,7 +588,7 @@ use App\Enums\LevantamentoStatus;
                                     <textarea rows="3" class="form-control border-0 resize-none"
                                         placeholder="Escreva uma observação...." name="comentario"></textarea>
                                     <div class="p-2 bg-light d-flex justify-content-between align-items-center">
-                                        <div>
+                                        {{-- <div>
                                             <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
                                                     class="mdi mdi-account-circle"></i></a>
                                             <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
@@ -597,7 +597,7 @@ use App\Enums\LevantamentoStatus;
                                                     class="mdi mdi-camera"></i></a>
                                             <a href="#" class="btn btn-sm px-2 font-16 btn-light"><i
                                                     class="mdi mdi-emoticon-outline"></i></a>
-                                        </div>
+                                        </div> --}}
                                         <input hidden name="negocio_id" value="{{ $negocio->id }}" />
                                         <input hidden name="user_id" value="{{ \Auth::user()->id }}" />
                                         <button type="submit" class="btn btn-sm btn-dark waves-effect">Salvar</button>
