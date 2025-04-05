@@ -34,6 +34,10 @@
     <div class="row">
 
         <div class="col-12">
+
+            @include('partials.mobile-sidebar', ['title' => 'Importar', 'class' => "fs-4
+            fw-semibold p-2"])
+
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title m-t-0">Importação de Leads via Arquivo CSV ( Serapado por ',' ou ';') ou

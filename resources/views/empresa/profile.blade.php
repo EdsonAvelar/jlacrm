@@ -490,9 +490,6 @@
                             </form>
                         </div>
 
-
-
-
                         <!-- end settings content-->
                         <div class="tab-pane" id="marketing">
 

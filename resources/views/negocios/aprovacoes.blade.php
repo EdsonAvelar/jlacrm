@@ -158,7 +158,8 @@ function formatString($input) {
                         </li>
                     </ul>
                 </div>
-                <h4 class="page-title">Produção</h4>
+                @include('partials.mobile-sidebar', ['title' => 'Produção', 'class' => "fs-4
+                fw-semibold p-2"])
             </div>
         </div>
 

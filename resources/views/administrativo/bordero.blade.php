@@ -156,7 +156,8 @@ return "R$ ". number_format($valorFloat, 2, ',', '.');
         <!-- Aba de Borderô -->
         <div class="tab-pane fade show active" id="bordero" role="tabpanel" aria-labelledby="bordero-tab">
             <div class="mt-4">
-                <h4 class="p-1">Gerenciamento de Borderô</h4>
+                @include('partials.mobile-sidebar', ['title' => 'Gerenciamento de Borderô', 'class' => "fs-4
+                fw-semibold p-2"])
 
                 {{--
                 @if ( isset($info['producao']) && ($info['producao']))

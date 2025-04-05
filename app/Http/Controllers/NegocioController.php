@@ -660,8 +660,10 @@ class NegocioController extends Controller
             $levantamento = new Levantamento();
         }
 
+        $uploads = \App\Models\Upload::where('negocio_id', $negocio->id)->get();
+  
 
-        return view('negocios.edit', compact('negocio', 'levantamento'));
+        return view('negocios.edit', compact('negocio', 'levantamento','uploads'));
     }
 
     public function negocio_fechamento(Request $request)

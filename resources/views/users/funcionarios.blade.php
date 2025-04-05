@@ -66,8 +66,9 @@ use Illuminate\Support\Facades\Hash;?>
             <div class="page-title-right"></div>
             <div class="card">
                 <div class="card-body left">
-                    <h4 class="header-title m-t-0">Funcionários Ativos</h4>
-                    </h4>
+                    @include('partials.mobile-sidebar', ['title' => 'Funcionários Ativos', 'class' => "fs-4
+                    fw-semibold p-2"])
+
                     <div class="mb-3">
                         <a class="btn btn-success" data-bs-toggle="modal" data-bs-target="#add-new-task-modal">+
                             Adicionar</a>

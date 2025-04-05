@@ -69,10 +69,16 @@
                     </ul>
                 </div>
 
-                <h4 class="page-title">Titulo
+                <div class="row">
+
+                    @include('partials.mobile-sidebar', ['title' => 'Gerenciamento de Equipes', 'class' => "fs-4
+                    fw-semibold p-2"])
+                </div>
+              
+
                     <a href="#" data-bs-toggle="modal" data-bs-target="#criar_equipe"
                         class="btn btn-success btn-sm ms-3">Criar Equipe</a>
-                </h4>
+               
             </div>
         </div>
 

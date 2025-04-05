@@ -112,6 +112,8 @@ use App\Enums\LevantamentoStatus;
 
 
                                 </div>
+
+
                             </div>
                         </div> <!-- end col-->
                     </div> <!-- end row -->
@@ -123,7 +125,7 @@ use App\Enums\LevantamentoStatus;
     </div>
 
     <div class="row">
-        <div class="col-xl-4 col-lg-5">
+        <div class="col-xl-3 col-lg-6">
             <div class="card text-center">
                 <div class="card-body">
                     <div class="text-start mt-3">
@@ -222,6 +224,11 @@ use App\Enums\LevantamentoStatus;
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="#upload" data-bs-toggle="tab" aria-expanded="false" class="nav-link rounded-0">
+                                Arquivos
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="#levantamento" data-bs-toggle="tab" aria-expanded="true"
                                 class="nav-link rounded-0 ">
                                 Levantamento
@@ -249,12 +256,12 @@ use App\Enums\LevantamentoStatus;
                                 Adminstrativo
                             </a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="#administrativo" data-bs-toggle="tab_inativa" aria-expanded="false"
                                 class="nav-link rounded-0">
                                 Pós-venda
                             </a>
-                        </li>
+                        </li> --}}
                     </ul>
                     <div class="tab-content">
 
@@ -616,6 +623,109 @@ use App\Enums\LevantamentoStatus;
                             @endforeach
                         </div>
 
+                        <!-- Nova tab-pane para upload de arquivos -->
+                        <!-- Nova tab-pane para upload de arquivos -->
+                        <div class="tab-pane" id="upload">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="mb-3 text-uppercase bg-light p-2">
+                                        <i class="mdi mdi-upload me-1"></i> Upload de Arquivos
+                                    </h5>
+                                    <form action="{{ route('upload_file') }}" method="POST"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        <!-- Envie o id do negócio -->
+                                        <input type="hidden" name="negocio_id" value="{{ $negocio->id }}">
+                                        <div class="mb-3">
+                                            <label for="file" class="form-label">Selecione o arquivo</label>
+                                            <input type="file" class="form-control" id="file" name="file" required
+                                                accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                                            <!-- Preview do arquivo selecionado -->
+                                            <div id="file-preview" class="mt-2"></div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="description" class="form-label">Descrição</label>
+                                            <input type="text" class="form-control" id="description" name="description"
+                                                placeholder="Digite uma descrição para o arquivo">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Fazer Upload</button>
+
+                                    </form>
+                                    <hr>
+                                    <h5 class="mb-3 text-uppercase">
+                                        <i class="mdi mdi-file-outline me-1"></i> Arquivos Enviados
+                                    </h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome do Arquivo</th>
+                                                    <th>Descrição</th>
+                                                    <th>Miniatura</th>
+                                                    <th>Data de Upload</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse($uploads as $upload)
+                                                <tr>
+                                                    <td>{{ $upload->file_name }}</td>
+                                                    <td>{{ $upload->description }}</td>
+                                                    <td>
+                                                        @if(in_array($upload->extension, ['jpg', 'jpeg', 'png', 'gif']))
+
+                                                        <img src="{{ route('upload.preview', $upload->id) }}"
+                                                            alt="{{ $upload->file_name }}" width="50"
+                                                            data-bs-toggle="popover" data-bs-html="true"
+                                                            data-bs-trigger="hover" data-bs-placement="top"
+                                                            data-bs-content='<img src="{{ route("upload.preview",
+                                                            $upload->id) }}" class="img-fluid"
+                                                        style="max-width:300px;">'>
+
+                                                        @elseif($upload->extension == 'pdf')
+                                                        <i class="mdi mdi-file-pdf-outline"
+                                                            style="font-size: 32px; color: red;"></i>
+                                                        @elseif(in_array($upload->extension, ['doc', 'docx']))
+                                                        <i class="mdi mdi-file-word-outline"
+                                                            style="font-size: 32px; color: blue;"></i>
+                                                        @else
+                                                        <i class="mdi mdi-file-outline" style="font-size: 32px;"></i>
+                                                        @endif
+                                                    </td>
+
+
+                                                    <td>{{ $upload->created_at->format('d/m/Y H:i') }}</td>
+                                                    <td>
+                                                        <!-- Download -->
+                                                        <a href="{{ route('upload.download', $upload->id) }}"
+                                                            class="btn btn-sm btn-secondary" title="Download">
+                                                            <i class="mdi mdi-download"></i>
+                                                        </a>
+                                                        <!-- Delete com confirmação -->
+                                                        <form action="{{ route('upload.destroy', $upload->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger"
+                                                                title="Excluir"
+                                                                onclick="return confirm('Tem certeza que deseja excluir este arquivo?')">
+                                                                <i class="mdi mdi-delete"></i>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @empty
+                                                <tr>
+                                                    <td colspan="4">Nenhum arquivo enviado.</td>
+                                                </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         @if (\Auth::user()->hasRole('admin'))
 
                         <div class="tab-pane" id="atividades">
@@ -896,6 +1006,16 @@ use App\Enums\LevantamentoStatus;
         });
     });
 
+    document.getElementById('file').addEventListener('change', function(e) {
+    var fileName = e.target.files[0].name;
+    document.getElementById('file-preview').innerHTML = '<p>Arquivo selecionado: ' + fileName + '</p>';
+    });
 
+    document.addEventListener('DOMContentLoaded', function() {
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+    return new bootstrap.Popover(popoverTriggerEl)
+    });
+    });
 </script>
 @endsection

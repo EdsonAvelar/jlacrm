@@ -37,14 +37,14 @@
                 @if ( !((app('request')->input('data_inicio') == \Carbon\Carbon::now()->format('d/m/Y') ) &
                 (app('request')->input('data_fim') == \Carbon\Carbon::now()->format('d/m/Y') ))
                 )
-                <h4 class="page-title">Dashboard - Equipes</h4>
+                {{-- <h4 class="page-title">Dashboard - Geral</h4> --}}
+                    @include('partials.mobile-sidebar', ['title' => 'Dashboard Geral', 'class' => "fs-4
+                    fw-semibold p-2"])
                 @else
 
-                <h4 class="page-title" style="color: rgb(89, 0, 184)">Dashboard - Equipes - HOJE</h1>
+                @include('partials.mobile-sidebar', ['title' => 'Dashboard Equipes - HOJE', 'class' => "fs-4
+                fw-semibold text-purple p-2"])
                     @endif
-
-
-
             </div>
         </div>
 

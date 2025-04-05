@@ -69,8 +69,6 @@ use App\Enums\VendaStatus;
     @csrf
     <!-- Start Content-->
     <div class="container-fluid">
-
-
         <div class="row">
             <div class="col-12">
                 <div class="page-title-box">
@@ -81,7 +79,8 @@ use App\Enums\VendaStatus;
                             </li>
                         </ul>
                     </div>
-                    <h4 class="page-title">Gerenciamento de Vendas</h4>
+                    @include('partials.mobile-sidebar', ['title' => 'Gerenciamento de Vendas', 'class' => "fs-4
+                    fw-semibold p-2"])
                 </div>
             </div>
 

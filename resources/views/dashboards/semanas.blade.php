@@ -38,7 +38,8 @@
                         </a>
                     </form>
                 </div>
-                <h4 class="page-title">Dashboard - Semanas</h4>
+                @include('partials.mobile-sidebar', ['title' => 'Dashboard Semanal', 'class' => "fs-4
+                fw-semibold p-2"])
             </div>
         </div>
 

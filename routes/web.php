@@ -17,7 +17,7 @@ use App\Http\Controllers\AgendamentoController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProductionController;
 use App\Http\Controllers\FilialController;
-
+use App\Http\Controllers\UploadController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +55,17 @@ Route::group(
         Route::get('/proposta', [SimulacaoController::class, 'ver_proposta'])->name('simulacao.ver_proposta');
     }
 );
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::post('/upload-file', [UploadController::class, 'store'])->name('upload_file');
+    Route::delete('/upload/{id}', [UploadController::class, 'destroy'])->name('upload.destroy');
+    Route::get('/upload/download/{id}', [UploadController::class, 'download'])->name('upload.download');
+    Route::get('/upload/preview/{id}', [UploadController::class, 'preview'])->name('upload.preview');
+});
+
+
 
 Route::group(['middleware' => 'auth'], function () {
 
