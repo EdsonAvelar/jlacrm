@@ -1053,7 +1053,8 @@ facebook:
 
                                     </div>
 
-                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1 pt-5"></i>
+                                    <h5 class="text-uppercase" style="
+    padding-top: 30px;"><i class=" mdi mdi-briefcase me-1 pt-5"></i>
                                         MOTIVOS DE PERDA</h5>
                                     <div class="row">
                                         <div class="col-12">
