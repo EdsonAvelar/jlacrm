@@ -220,6 +220,28 @@ class CrmController extends Controller
         }
     }
 
+    // 2) INSERT: recebe o nome do motivo e adiciona na tabela
+    public function insertMotivoPerda(Request $request)
+    {
+        $request->validate([
+            'motivo' => 'required|string|max:255'
+        ]);
+
+        MotivoPerda::create([
+            'motivo' => $request->motivo
+        ]);
+
+        return redirect()->back()->with('success', 'Motivo de perda adicionado.');
+    }
+
+    // 3) DELETE: deleta o motivo pelo ID
+    public function deleteMotivoPerda($id)
+    {
+        MotivoPerda::destroy($id);
+
+        return redirect()->back()->with('success', 'Motivo de perda removido.');
+    }
+
 
     public function pipeline_list(Request $request)
     {

@@ -151,6 +151,16 @@ Route::group(['middleware' => 'auth'], function () {
             Route::post('/add', [CrmController::class, 'add_negocio']);
             Route::post('/massive/add', [CrmController::class, 'add_negocio_massiva']);
 
+            Route::get('/crm/config', [CrmController::class, 'showConfig'])->name('crm.config');
+
+            // insere um novo motivo de perda
+            Route::post('/crm/motivos', [CrmController::class, 'insertMotivoPerda'])
+                ->name('crm.motivos.insert');
+
+            // deleta um motivo de perda
+            Route::delete('/crm/motivos/{id}', [CrmController::class, 'deleteMotivoPerda'])
+                ->name('crm.motivos.delete');
+
 
             Route::post('/comentario', [CrmController::class, 'inserir_comentario'])->name('inserir_comentario');
             Route::post('/changemassive', [CrmController::class, 'massive_change'])->name('massive_change');

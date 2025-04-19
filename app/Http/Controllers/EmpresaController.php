@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Empresa;
 use App\Models\Equipe;
+use App\Models\MotivoPerda;
 use App\Models\Role;
 use App\Models\User;
 use Auth;
@@ -29,10 +30,12 @@ class EmpresaController extends Controller
             $empresa[$empresa__->settings] = $empresa__->value;
         }
 
+        $motivos = MotivoPerda::all();
+
 
 
         if (Auth::user()->id == $id or Auth::user()->hasAnyRole(['gerente', 'gerenciar_funcionarios'])) {
-            return view('empresa.profile', compact('user', 'equipes', 'roles', 'empresa'));
+            return view('empresa.profile', compact('user', 'motivos', 'equipes', 'roles', 'empresa'));
         } else {
             return abort(401);
         }

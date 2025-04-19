@@ -261,13 +261,14 @@
                                     <div class="card text-center">
                                         <h5>Logo Fera Gold de Vendas - Ranking - 350 x 90 (PNG) </h5>
                                         <div class="card-body">
-                                
-                                            <p><a href="#" onclick="image_save('logos','/empresa_ranking_feragold.png','retangular','350','90')"
+
+                                            <p><a href="#"
+                                                    onclick="image_save('logos','/empresa_ranking_feragold.png','retangular','350','90')"
                                                     class="text-muted font-14">
                                                     <img src="{{ url('') }}/images/empresa/logos/empresa_ranking_feragold.png?{{ \Carbon\Carbon::now()->timestamp }}"
                                                         class="avatar-lx img-thumbnail" alt="Logo Ranking Fera Gold">
                                                 </a></p>
-                                
+
                                         </div> <!-- end card-body -->
                                     </div> <!-- end card -->
                                 </div>
@@ -948,7 +949,8 @@ facebook:
                                             <div class="mb-12">
                                                 <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
                                                     title="">
-                                                    <label for="lastname" class="form-label">Meta Fera de Vendas (Vendedor)</label> </span>
+                                                    <label for="lastname" class="form-label">Meta Fera de Vendas
+                                                        (Vendedor)</label> </span>
                                                 <input class="form-control" type="number" name="racing_vendas_max"
                                                     id="racing_vendas_max" value="{{config('racing_vendas_max')}}" />
                                             </div>
@@ -956,10 +958,13 @@ facebook:
 
                                         <div class="col-md-12">
                                             <div class="mb-12">
-                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
-                                                    <label for="lastname" class="form-label">Meta Fera Gold ( Vendedor )</label>
+                                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                                    title="">
+                                                    <label for="lastname" class="form-label">Meta Fera Gold ( Vendedor
+                                                        )</label>
                                                     </label> </span>
-                                                <input class="form-control" type="number" name="racing_vendas_gold_max" id="racing_vendas_gold_max"
+                                                <input class="form-control" type="number" name="racing_vendas_gold_max"
+                                                    id="racing_vendas_gold_max"
                                                     value="{{config('racing_vendas_gold_max')}}" />
                                             </div>
                                         </div>
@@ -998,6 +1003,7 @@ facebook:
 
 
                                     </div>
+
 
                                     <div class="row">
                                         <div class="col-md-12">
@@ -1046,7 +1052,53 @@ facebook:
                                         </div>
 
                                     </div>
+
+                                    <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1 pt-5"></i>
+                                        MOTIVOS DE PERDA</h5>
+                                    <div class="row">
+                                        <div class="col-12">
+
+                                            {{-- Botão para abrir modal de criação --}}
+                                            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                                data-bs-target="#modalAddMotivo">
+                                                <i class="mdi mdi-plus"></i> Adicionar Motivo de Perda
+                                            </button>
+
+                                            {{-- Tabela de motivos --}}
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Nome do Motivo</th>
+                                                        <th width="100px">Ações</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    @foreach($motivos as $motivo)
+                                                    <tr>
+                                                        <td>{{ $motivo->motivo }}</td>
+                                                        <td>
+                                                            <form
+                                                                action="{{ route('crm.motivos.delete', $motivo->id) }}"
+                                                                method="POST" style="display:inline">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button type="submit" class="btn btn-danger btn-sm"
+                                                                    onclick="return confirm('Deseja realmente remover este motivo?')">
+                                                                    <i class="mdi mdi-delete"></i>
+                                                                </button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
                                 </div>
+
+
 
                                 {{-- TERCEIRA COLUNA VAZIA --}}
                             </div>
@@ -1060,6 +1112,31 @@ facebook:
 </div> <!-- container -->
 
 
+
+{{-- Modal de Adicionar Motivo --}}
+<div class="modal fade" id="modalAddMotivo" tabindex="-1" aria-labelledby="modalAddMotivoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="{{ route('crm.motivos.insert') }}" method="POST">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAddMotivoLabel">Adicionar Motivo de Perda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nome_motivo" class="form-label">Nome do Motivo</label>
+                        <input type="text" class="form-control" id="nome_motivo" name="motivo" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @include('templates.escolher_img', [
 'action' => route('empresa_images'),
