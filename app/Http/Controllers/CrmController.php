@@ -249,18 +249,27 @@ class CrmController extends Controller
             ->join('etapa_funils', 'negocios.etapa_funil_id', '=', 'etapa_funils.id')
             ->join('leads', 'negocios.lead_id', '=', 'leads.id')
             ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
+            ->leftJoin('perdas', 'negocios.id', '=', 'perdas.negocio_id')
+            ->leftJoin('motivo_perdas', 'perdas.motivo_perdas_id', '=', 'motivo_perdas.id')
             ->select([
                 'negocios.*',
                 'etapa_funils.nome as etapa_nome',
                 'leads.nome as cliente_nome',
                 'leads.telefone as cliente_telefone',
                 'users.name as proprietario_nome',
+                'motivo_perdas.motivo as motivo_perda',
             ])
             ->where('negocios.funil_id', $request->query('id'));
 
         if ($filters = $request->input('filters')) {
             foreach ($filters as $column => $value) {
                 if (!empty($value)) {
+
+                    if ($column === 'perdas.motivo_perdas_id') {
+                        $query->where('perdas.motivo_perdas_id', $value);
+                        continue;
+                    }
+
                     // Verifica se é um filtro de intervalo de datas
                     if (is_array($value) && isset($value['start'], $value['end'])) {
 
@@ -410,6 +419,8 @@ class CrmController extends Controller
             ->addColumn('proprietario', function ($negocio) {
                 return $negocio->proprietario_nome ?? 'Não Atribuído';
             })
+            ->addColumn('motivo_perda', fn($n) =>
+                $n->motivo_perda ? e($n->motivo_perda) : 'Sem motivo')
             ->editColumn('status', function ($negocio) {
                 $statusBadge = match (strtoupper($negocio->status)) {
                     'ATIVO' => '<span class="badge bg-info">ATIVO</span>',

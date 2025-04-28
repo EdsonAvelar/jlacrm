@@ -92,4 +92,9 @@ class Negocio extends Model
     {
         return $this->belongsTo("App\Models\User", "user_id");
     }
+
+    public function perda()
+    {
+        return $this->hasOne(Perda::class, 'negocio_id');
+    }
 }

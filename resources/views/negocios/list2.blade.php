@@ -231,8 +231,8 @@
                                 </div>
                             </div>
                             <h4 class="page-title">
-                            
-                            @include('partials.mobile-sidebar', ['title' => 'Negócios'])
+
+                                @include('partials.mobile-sidebar', ['title' => 'Negócios'])
 
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#add-negocio-model" id="add_button"
                                     class="btn btn-info btn-sm ms-3">+ Add</a>
@@ -293,8 +293,16 @@
                                         data-column="users.name"></i></th>
                                 <th class="select-checkbox-header">Origem <i class="fas fa-filter filter-icon"
                                         data-column="negocios.origem"></i></th>
+
                                 <th class="select-checkbox-header">Status <i class="fas fa-filter filter-icon"
                                         data-column="negocios.status"></i></th>
+                                <th class="select-checkbox-header">
+                                    Motivo de Perda
+                                    {{-- data-column igual ao que filtra no Controller --}}
+                                    <i class="fas fa-filter filter-icon" data-column="perdas.motivo_perdas_id"
+                                        data-type="motive"></i>
+                                </th>
+
                                 <th class="select-checkbox-header">Criado em <i class="fas fa-filter filter-icon"
                                         data-column="negocios.data_criacao" data-type="daterange"></i></th>
                             </tr>
@@ -660,115 +668,86 @@
         });
 
 
-
 $(document).ready(function() {
-   
     var filter_content = {};
+    const statusParam = "{{ request('status') }}";
 
+    // 1) Inicializa o DataTable
     let table = $('#example3').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
             url: "{{ route('pipeline_list', ['id' => $curr_funil_id, 'view' => 'list']) }}",
             data: function (d) {
-                d.filters = filter_content; // Envia os filtros para o backend
-                d.status = "{{ request('status') }}"; // Filtro de status
-                d.proprietario = "{{ request('proprietario') }}"; // Filtro de proprietário
-             
+                d.filters      = filter_content;
+                d.status       = statusParam;
+                d.proprietario = "{{ request('proprietario') }}";
             }
         },
         language: {
-        processing: '<i class="fas fa-spinner fa-spin"></i> Carregando...' // Substitui a palavra "Processing"
+            processing: '<i class="fas fa-spinner fa-spin"></i> Carregando...'
         },
         columns: [
-            { data: 'select', orderable: false, searchable: false },
-            { data: 'titulo', name: 'negocios.titulo', orderable: false , searchable: true},
-            { data: 'cliente_nome', name: 'leads.nome', orderable: false, searchable: true},
-            { data: 'telefone', name: 'leads.telefone', orderable: false },
-            { data: 'valor', name: 'negocios.valor', orderable: false },
-            { data: 'etapa', name: 'etapa_funils.nome', orderable: false },
-            { data: 'proprietario', name: 'users.name', orderable: false },
-            { data: 'origem', name: 'negocios.origem', orderable: false },
-            { data: 'status', name: 'negocios.status', orderable: false },
-            { data: 'data_criacao', name: 'negocios.data_criacao',orderable: true },
-            
+            { data: 'select',        orderable: false, searchable: false },
+            { data: 'titulo',        name: 'negocios.titulo',      orderable: false, searchable: true },
+            { data: 'cliente_nome',  name: 'leads.nome',           orderable: false, searchable: true },
+            { data: 'telefone',      name: 'leads.telefone',       orderable: false },
+            { data: 'valor',         name: 'negocios.valor',       orderable: false },
+            { data: 'etapa',         name: 'etapa_funils.nome',    orderable: false },
+            { data: 'proprietario',  name: 'users.name',           orderable: false },
+            { data: 'origem',        name: 'negocios.origem',      orderable: false },
+            { data: 'status',        name: 'negocios.status',      orderable: false },
+            {
+                data: 'motivo_perda',
+                name: 'motivo_perdas.motivo',
+                orderable: false,
+                searchable: false,
+                visible: statusParam === 'perdido'
+            },
+            { data: 'data_criacao',  name: 'negocios.data_criacao', orderable: true }
         ],
-        dom: "lrtip", // Remove o campo de busca global
+        dom: "lrtip",
         pageLength: 25,
-        order: [[9, 'desc']], // Ordenação pela data de criação
-    
+        order: [[ statusParam === 'perdido' ? 10 : 9, 'desc' ]]
     });
 
-       
+    // 2) Cria e insere os três dropdowns no body
 
-   
-
-    // Criar a estrutura do dropdown de filtro
-   $('body').append(
-    `<div class="filter-dropdown">
-       
+    // Text-filter dropdown
+    $('body').append(`
+    <div id="text-filter-dropdown" class="filter-dropdown">
         <input type="text" id="filter-input" placeholder="Digite para filtrar">
-       
-        <button id="filter-btn">Filtrar</button>
-        <button id="clear-filter-btn">Limpar Filtro</button>
+        <button id="filter-btn" class="btn btn-success btn-sm w-100">Filtrar</button>
+        <button id="clear-filter-btn" class="btn btn-danger btn-sm w-100">Limpar Filtro</button>
+        <p style="color:#aaa;font-size:0.8em">Use hífen para exclusão. Ex. -banana</p>
+    </div>`);
+    var $textFilterDropdown = $('#text-filter-dropdown');
+    var $textFilterInput    = $('#filter-input');
 
-        <p style="color:#aaa">Use hífen para exclusão. <br>Ex. -banana</p>
-       
-    </div>`
-    );
+    // Motive-filter dropdown
+    $('body').append(`
+    <div id="motive-dropdown" class="filter-dropdown">
+        <ul class="list-unstyled mb-2">
+            @foreach($motivos as $m)
+                <li>
+                    <button class="btn btn-light btn-sm motive-item"
+                            data-id="{{ $m->id }}">{{ $m->motivo }}</button>
+                </li>
+            @endforeach
+        </ul>
+        <button id="clear-motive-filter-btn" class="btn btn-danger btn-sm w-100">Limpar Filtro</button>
+    </div>`);
+    var $motiveDropdown = $('#motive-dropdown');
 
-    let $filterDropdown = $('.filter-dropdown');
-   
+    // Date-range dropdown
+    $('body').append(`
+    <div id="daterange-dropdown" style="display:none; position:absolute; z-index:1000;">
+        <input type="text" id="daterange-filter" class="form-control" placeholder="Selecione um intervalo de datas">
+    </div>`);
+    var $daterangeDropdown = $('#daterange-dropdown');
+    var $daterangePicker   = $('#daterange-filter');
 
-    // Aplicar o filtro ao clicar no botão de filtrar
-    $('#filter-btn').on('click', function () {
-        let column = $filterDropdown.data('column'); // Nome da coluna a ser filtrada
-        let value = $('#filter-input').val(); // Valor do filtro
-        let $icon = $filterDropdown.data('icon');
-
-        filter_content[column] = value; // Armazena o valor do filtro
-
-        table.ajax.reload(null, false);
-
-        // Alterar a cor do ícone se o filtro for aplicado
-        if (value) {
-            $icon.addClass('filter-applied');
-        } else {
-            $icon.removeClass('filter-applied');
-        }
-
-        $filterDropdown.hide();
-    });
-
-    // Limpar o filtro ao clicar no botão de limpar filtro
-    $('#clear-filter-btn').on('click', function () {
-        let column = $filterDropdown.data('column'); // Nome da coluna a ser filtrada
-        let $icon = $filterDropdown.data('icon');
-
-        filter_content[column] = ''; // Remove o valor do filtro
-
-
-        delete filter_content[column];
-
-
-        table.ajax.reload(null, false);
-
-        // Remover a cor do ícone
-        $icon.removeClass('filter-applied');
-
-        $filterDropdown.hide();
-    });
-
-$('body').append(
-`<div id="daterange-dropdown" style="display: none; position: absolute; z-index: 1000;">
-    <input type="text" id="daterange-filter" class="form-control" placeholder="Selecione um intervalo de datas">
-</div>`
-);
-
-    
-    // Inicializando o Daterangepicker
-    let $daterangePicker = $('#daterange-filter');
-
+    // Inicializa o daterangepicker
     $daterangePicker.daterangepicker({
         autoUpdateInput: false,
         locale: {
@@ -778,114 +757,125 @@ $('body').append(
         }
     });
 
-    
+    // 3) Handler unificado para o clique no ícone de filtro
+    $('body').on('click', '.filter-icon', function(e) {
+        e.stopPropagation();
+        var column = $(this).data('column'),
+            type   = $(this).data('type') || 'text',
+            pos    = $(this).offset(),
+            icon   = $(this);
 
+        // Esconde todos os dropdowns antes de abrir o correto
+        $textFilterDropdown.hide();
+        $motiveDropdown.hide();
+        $daterangeDropdown.hide();
 
-    // Limpar filtro do Daterangepicker
-    $daterangePicker.on('cancel.daterangepicker', function () {
-        let column = $daterangePicker.data('column');
-        delete filter_content[column]; // Remove o filtro da coluna
-        table.ajax.reload(); // Recarrega os dados da tabela
-        //$daterangePicker.hide();
-    });
+        if (type === 'text') {
+            $textFilterInput.val(filter_content[column] || '');
+            $textFilterDropdown
+                .css({ top: pos.top + 30 + 'px', left: pos.left - 80 + 'px' })
+                .show()
+                .data('column', column)
+                .data('icon', icon);
 
+        } else if (type === 'daterange') {
+            $daterangeDropdown
+                .css({ top: pos.top + 30 + 'px', left: pos.left - 80 + 'px' })
+                .show()
+                .data('column', column);
+            $daterangePicker
+                .data('column', column)
+                .trigger('click');
 
-
-    // Quando o ícone de filtro é clicado
-    // Mostrar o daterange-picker ao clicar no filtro "Criado em"
-    $('.filter-icon').on('click', function (e) {
-        let column = $(this).data('column');
-        let filterType = $(this).data('type') || 'text'; // Determina se é texto ou intervalo de datas
-        let position = $(this).offset();
-
-        $filterDropdown.data('column', column);
-        $filterDropdown.data('icon', $(this));
-
-
-        // console.log(column, filterType);
-        
-        if (filterType === 'daterange') {
-            // Mostra o daterange-picker para "Criado em"
-            $('#daterange-dropdown').css({
-            top: position.top + 30 + 'px',
-            left: position.left - 80 + 'px',
-            }).show();
-            
-            $('#daterange-dropdown').data('column', column);
-
-            $daterangePicker.trigger('click');;
-        } else {
-            // Mostra o dropdown normal
-            $("#filter-input").val(filter_content[column] || '');
-            $filterDropdown.data('column', column);
-            $filterDropdown.css({
-                top: position.top + 30 + 'px',
-                left: position.left - 80 + 'px',
-            }).show();
+        } else if (type === 'motive' && statusParam === 'perdido') {
+            $motiveDropdown
+                .css({ top: pos.top + 30 + 'px', left: pos.left - 80 + 'px' })
+                .show()
+                .data('column', column)
+                .data('icon', icon);
         }
     });
 
+    // 4) Text-filter: aplicar
+    $('#filter-btn').on('click', function() {
+        var column = $textFilterDropdown.data('column'),
+            value  = $textFilterInput.val(),
+            icon   = $textFilterDropdown.data('icon');
 
-    // Aplicar o filtro do daterange-picker
-    $daterangePicker.on('apply.daterangepicker', function (ev, picker) {
-        let column = $daterangePicker.data('column');
-        let startDate = picker.startDate.format('YYYY-MM-DD');
-        let endDate = picker.endDate.format('YYYY-MM-DD');
-
-        column = 'negocios.data_criacao';
-
-        // console.log('daterange-filte', column, startDate, endDate)
-        
-       
-
-        // Atualiza o filtro para essa coluna
-        filter_content[column] = { start: startDate, end: endDate };
-
-        // Atualiza a tabela
-        table.ajax.reload();
-
-        let $icon = $filterDropdown.data('icon');
-        $icon.addClass('filter-applied');
-
-        // $daterangePicker.hide();
-
-        $('#daterange-dropdown').hide()  
-
+        filter_content[column] = value;
+        table.ajax.reload(null, false);
+        icon.toggleClass('filter-applied', !!value);
+        $textFilterDropdown.hide();
     });
 
+    // 5) Text-filter: limpar
+    $('#clear-filter-btn').on('click', function() {
+        var column = $textFilterDropdown.data('column'),
+            icon   = $textFilterDropdown.data('icon');
 
-    $daterangePicker.on('cancel.daterangepicker', function (ev, picker) {
-        let column = $daterangePicker.data('column');
-
-        column = 'negocios.data_criacao';
-
-        let $icon = $filterDropdown.data('icon');
-        $icon.removeClass('filter-applied');
-        
-
-        // Remove o filtro dessa coluna
         delete filter_content[column];
-
-        // Atualiza a tabela
-        table.ajax.reload();
-
-        //$daterangePicker.hide();
-
-        $('#daterange-dropdown').hide()
-    
+        table.ajax.reload(null, false);
+        icon.removeClass('filter-applied');
+        $textFilterDropdown.hide();
     });
 
+    // 6) Motive-filter: selecionar motivo
+    $motiveDropdown.on('click', '.motive-item', function() {
+        var id     = $(this).data('id'),
+            column = $motiveDropdown.data('column'),
+            icon   = $motiveDropdown.data('icon');
 
+        filter_content[column] = id;
+        table.ajax.reload(null, false);
+        icon.addClass('filter-applied');
+        $motiveDropdown.hide();
+    });
 
-    // Fechar o dropdown se clicar fora dele
+    // 7) Motive-filter: limpar
+    $('#clear-motive-filter-btn').on('click', function() {
+        var column = $motiveDropdown.data('column'),
+            icon   = $motiveDropdown.data('icon');
+
+        delete filter_content[column];
+        table.ajax.reload(null, false);
+        icon.removeClass('filter-applied');
+        $motiveDropdown.hide();
+    });
+
+    // 8) Date-range: aplicar
+    $daterangePicker.on('apply.daterangepicker', function(ev, picker) {
+        var column    = $daterangePicker.data('column'),
+            startDate = picker.startDate.format('YYYY-MM-DD'),
+            endDate   = picker.endDate.format('YYYY-MM-DD'),
+            icon      = $textFilterDropdown.data('icon'); // reusa o mesmo ícone
+
+        filter_content[column] = { start: startDate, end: endDate };
+        table.ajax.reload(null, false);
+        icon.addClass('filter-applied');
+        $daterangeDropdown.hide();
+    });
+
+    // 9) Date-range: limpar
+    $daterangePicker.on('cancel.daterangepicker', function() {
+        var column = $daterangePicker.data('column'),
+            icon   = $textFilterDropdown.data('icon');
+
+        delete filter_content[column];
+        table.ajax.reload(null, false);
+        icon.removeClass('filter-applied');
+        $daterangeDropdown.hide();
+    });
+
+    // 10) Fecha todos os dropdowns ao clicar fora
     $(document).on('click', function(e) {
-        if (!$(e.target).closest('.filter-icon, .filter-dropdown').length) {
-            $filterDropdown.hide();
-           // $daterangePicker.hide();
-            
+        if (!$(e.target).closest('.filter-icon, #text-filter-dropdown, #motive-dropdown, #daterange-dropdown').length) {
+            $textFilterDropdown.hide();
+            $motiveDropdown.hide();
+            $daterangeDropdown.hide();
         }
     });
 });
+
 
 </script>
 @endsection

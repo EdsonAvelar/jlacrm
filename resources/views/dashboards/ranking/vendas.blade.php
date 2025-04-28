@@ -721,6 +721,8 @@ if ($tema == ''){
                 scaleFactor = scaleFactor - scaleFactor*0.1;
             }
 
+            console.log(document.documentElement.clientWidth, document.documentElement.clientHeight,scaleFactor)
+
 
             container.style.transform = `scale(${scaleFactor})`; // Ajusta a escala
             container.style.transformOrigin = 'top center'; // Mantém a escala a partir do canto superior esquerdo

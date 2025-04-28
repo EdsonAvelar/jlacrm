@@ -97,7 +97,7 @@ class FechamentoController extends Controller
         // Recupera as últimas 6 produções para popular o select na view
         $productions = Production::orderBy('start_date', 'desc')->take(6)->get();
 
-        return view('vendas.index', compact('info','productions', 'vendas', 'vendas_canceladas', 'vendas_rascunho'));
+        return view('vendas.index', compact('info', 'productions', 'vendas', 'vendas_canceladas', 'vendas_rascunho'));
     }
 
     public function delete_fechamento(Request $request)
@@ -419,8 +419,17 @@ class FechamentoController extends Controller
     public function venda_perdida(Request $request)
     {
         $input = $request->all();
+
         $negocio_id = $input['negocio_id'];
+
         Negocio::where('id', $negocio_id)->update(['status' => NegocioStatus::PERDIDO]);
+
+        $perda = new \App\Models\Perda();
+        $perda->negocio_id = $negocio_id;
+        $perda->motivo_perdas_id = $input['motivo_perda'];
+        $perda->save();
+
+
 
         Atividade::add_atividade(\Auth::user()->id, "Negócio PERDIDO", $negocio_id);
 
