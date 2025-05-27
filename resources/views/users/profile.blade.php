@@ -292,6 +292,9 @@
                                         <button type="submit" class="btn btn-success mt-2"><i
                                                 class="mdi mdi-content-save"></i> Atualizar</button>
                                     </div>
+
+                                    @if(app('request')->id != 1)
+
                                     <div class="col-6 text-end">
                                         <?php
                                                 $ischecked = '';
@@ -306,6 +309,9 @@
                                         data-on="Ativo" data-off="Inativo" data-onstyle="success"
                                         data-offstyle="danger">
                                     </div>
+                                    @endif
+
+
                                 </div>
                                 @endif
                                 <input name="user_id" value="{{ app('request')->id }}" hidden>
