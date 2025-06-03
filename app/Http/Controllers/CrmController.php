@@ -431,7 +431,8 @@ class CrmController extends Controller
                 return $statusBadge;
             })
             ->editColumn('data_criacao', function ($negocio) {
-                return Carbon::createFromFormat('Y-m-d', $negocio->data_criacao)->format('d/m/Y');
+                //return Carbon::createFromFormat('Y-m-d', $negocio->data_criacao)->format('d/m/Y');
+                return Carbon::parse($negocio->data_criacao)->format('d/m/Y');
 
             })
             ->rawColumns(['select', 'titulo', 'telefone', 'status'])
