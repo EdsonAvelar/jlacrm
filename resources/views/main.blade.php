@@ -380,11 +380,11 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
                                         {{-- <span class="badge bg-success">new</span> --}}
                                     </a>
                                 </li>
-                                {{-- <li>
+                                <li>
                                     <a
                                         href="{{ route('pipeline_index', ['id' => 1, 'proprietario' => $user->id, 'view' => 'list', 'status' => 'ativo']) }}">Lista
                                         (Antiga)</a>
-                                </li> --}}
+                                </li>
 
                                 <li>
                                     <a
