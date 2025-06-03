@@ -125,18 +125,17 @@ php artisan migrate --force
 php artisan db:seed
 
 # Configuração de Cache: Otimize a configuração e o roteamento.
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-
 
 php artisan key:generate
 php artisan config:clear
 php artisan migrate --force
 php artisan db:seed
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+
+php artisan optimize:clear
+php artisan config:clear
+php artisan route:clear
+php artisan view:clear
+php artisan cache:clear
 
 ## JLA CRM
 
