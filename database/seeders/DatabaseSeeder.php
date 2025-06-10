@@ -203,7 +203,7 @@ class DatabaseSeeder extends Seeder
 
 		$url = preg_replace("(^https?://)", "", url(''));
 
-		$this->save_config('broadcast_canal', $url);
+		// $this->save_config('broadcast_canal', "");
 
 
 		$this->save_config('racing_agendamento_max', 10);

@@ -789,26 +789,15 @@ facebook:
                                                     </div>
                                                 </div>
                                             </div>
-
-
-
-
-
                                         </div>
                                     </div>
-
-
 
                                     {{-- COLUNA DA ESQUERDA --}}
 
                                     <div class="row">
                                         <h5 class="text-uppercase"><i class="mdi mdi-briefcase me-1"></i>
                                             PERSONALIZAÇÃO DO PROTOCOLO DE AGENDAMENTO</h5>
-
                                         <div class="col-md-6">
-
-
-
                                             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                                                 <label for="lastname" class="form-label">Inicio</label>
                                                 </label> </span>
@@ -816,8 +805,6 @@ facebook:
                                                 id="protocolo_agendamento_inicio"
                                                 value="{{config('protocolo_agendamento_inicio')}}"
                                                 placeholder="Parabéns " />
-
-
                                             <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="">
                                                 <label for="lastname" class="form-label">Após Nome</label>
                                                 </label> </span>

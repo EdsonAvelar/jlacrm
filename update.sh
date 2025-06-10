@@ -28,10 +28,6 @@ php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-echo "==> 5. Recriando caches otimizados"
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
 
 echo "==> 6. Opcional: rodar outros comandos"
 # php artisan queue:restart

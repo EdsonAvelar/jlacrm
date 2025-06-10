@@ -127,10 +127,11 @@ php artisan db:seed
 # Configuração de Cache: Otimize a configuração e o roteamento.
 
 php artisan key:generate
+
 php artisan config:clear
 php artisan migrate --force
-php artisan db:seed
 
+php artisan db:seed
 php artisan optimize:clear
 php artisan config:clear
 php artisan route:clear
