@@ -318,7 +318,7 @@ if (strpos($url, 'pipeline') !== false && app('request')->view != 'list') {
 
 
 
-                    @if ($user->hasAnyRole(['admin', 'gerenciar_rankings']))
+                    @if ($user->hasAnyRole(['admin', 'gerenciar_rankings','gerenciar_ranking']))
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#ranking" aria-expanded="false" aria-controls="crm"
                             class="side-nav-link">
