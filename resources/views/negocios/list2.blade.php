@@ -249,6 +249,7 @@
                                     id="redistribuir_btn" data-bs-toggle="modal" data-bs-target="#redistribuirModal">
                                     Redistribuir</a>
 
+
                                 @if (Auth::user()->hasRole('admin'))
                                 <a type="button" class="btn btn-warning btn-sm ms-3 checkbox_sensitive"
                                     id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
@@ -265,6 +266,10 @@
                                     data-bs-toggle="modal" data-bs-target="#deletarModal">
                                     Deletar</a>
                                 @endif
+
+                                <a id="export_btn" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive">
+                                    <i class="fas fa-file-export"></i> Exportar
+                                </a>
                             </h4>
                         </div>
                     </div>
@@ -626,6 +631,7 @@
                     $('#deletar_btn').show();
                     $('#atribuir_btn').show();
                     $('#redistribuir_btn').show();
+                    $('#export_btn').show();
                 }
 
                 if (numberNotChecked == 0) {
@@ -876,6 +882,25 @@ $(document).ready(function() {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    // Ao clicar no botão de exportar
+    document.getElementById('export_btn').addEventListener('click', function() {
+        // pega os IDs marcados na tabela
+        let ids = Array.from(
+            document.querySelectorAll('input.select-checkbox:checked')
+        ).map(cb => cb.value);
 
+        if (ids.length === 0) {
+            alert('Selecione ao menos um negócio para exportar.');
+            return;
+        }
+
+        // monta URL com query string ids[]=1&ids[]=2...
+        let params = new URLSearchParams();
+        ids.forEach(id => params.append('ids[]', id));
+
+        window.location = "{{ route('pipeline_export') }}?" + params.toString();
+    });
+});
 </script>
 @endsection

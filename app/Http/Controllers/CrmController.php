@@ -58,14 +58,15 @@ class CrmController extends Controller
         return view('leads/add_lead');
     }
 
-    public function exportCsv(){
+    public function exportCsv(Request $request)
+    {
         $ids = $request->query('ids', []);
         if (!is_array($ids) || empty($ids)) {
             return redirect()->back()->with('error', 'Nenhum negócio selecionado para exportar.');
         }
 
         $negocios = Negocio::query()
-            ->whereIn('id', $ids)
+            ->whereIn('negocios.id', $ids)
             ->leftJoin('etapa_funils', 'negocios.etapa_funil_id', '=', 'etapa_funils.id')
             ->leftJoin('leads', 'negocios.lead_id', '=', 'leads.id')
             ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
