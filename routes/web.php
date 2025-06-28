@@ -87,6 +87,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 
+    Route::get('/negocios/export', [CrmController::class, 'exportCsv'])->name('pipeline_export');
 
     Route::get('/corrida/vendas', [BarChartRacingController::class, 'vendas'])->name('dashboard_bar_race_vendas');
     Route::get('/corrida/vendas/get', [BarChartRacingController::class, 'vendas_get']);

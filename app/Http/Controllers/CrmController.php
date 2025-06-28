@@ -58,6 +58,77 @@ class CrmController extends Controller
         return view('leads/add_lead');
     }
 
+    public function exportCsv(){
+        $ids = $request->query('ids', []);
+        if (!is_array($ids) || empty($ids)) {
+            return redirect()->back()->with('error', 'Nenhum negócio selecionado para exportar.');
+        }
+
+        $negocios = Negocio::query()
+            ->whereIn('id', $ids)
+            ->leftJoin('etapa_funils', 'negocios.etapa_funil_id', '=', 'etapa_funils.id')
+            ->leftJoin('leads', 'negocios.lead_id', '=', 'leads.id')
+            ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
+            ->leftJoin('perdas', 'negocios.id', '=', 'perdas.negocio_id')
+            ->leftJoin('motivo_perdas', 'perdas.motivo_perdas_id', '=', 'motivo_perdas.id')
+            ->select([
+                'negocios.id',
+                'negocios.titulo',
+                'leads.nome as cliente',
+                'leads.telefone as telefone',
+                'negocios.valor',
+                'etapa_funils.nome as etapa',
+                'users.name as proprietario',
+                'negocios.origem',
+                'negocios.status',
+                'motivo_perdas.motivo as motivo_perda',
+                'negocios.data_criacao',
+            ])->get();
+
+        $columns = [
+            'ID',
+            'Título',
+            'Cliente',
+            'Telefone',
+            'Valor',
+            'Etapa',
+            'Proprietário',
+            'Origem',
+            'Status',
+            'Motivo de Perda',
+            'Criado em'
+        ];
+
+        $callback = function () use ($negocios, $columns) {
+            $handle = fopen('php://output', 'w');
+            // cabeçalho
+            fputcsv($handle, $columns);
+            foreach ($negocios as $n) {
+                fputcsv($handle, [
+                    $n->id,
+                    $n->titulo,
+                    $n->cliente,
+                    $n->telefone,
+                    $n->valor,
+                    $n->etapa,
+                    $n->proprietario,
+                    $n->origem,
+                    $n->status,
+                    $n->motivo_perda,
+                    Carbon::parse($n->data_criacao)->format('d/m/Y'),
+                ]);
+            }
+            fclose($handle);
+        };
+
+        $response = response()->stream($callback, 200, [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=\"negocios.csv\"",
+        ]);
+
+        return $response;
+    }
+
     public function check_if_active()
     {
 

@@ -194,7 +194,7 @@
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list2', 'status' => 'inativo']) }}">Inativos</a>
                                             @endif
 
-                                            @if (Auth::user()->hasAnyRole(['gerenciar_equipe']))
+                                            @if (Auth::user()->hasAnyRole(['gerenciar_equipe','admin']))
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list2', 'status' => 'perdido']) }}">Perdidos</a>
@@ -249,6 +249,11 @@
                                     id="redistribuir_btn" data-bs-toggle="modal" data-bs-target="#redistribuirModal">
                                     Redistribuir</a>
 
+                                <!-- Exemplo dentro de list2.blade.php -->
+                                <a id="export_btn" class="btn btn-success btn-sm ms-3 checkbox_sensitive">
+                                    Exportar
+                                </a>
+
                                 @if (Auth::user()->hasRole('admin'))
                                 <a type="button" class="btn btn-warning btn-sm ms-3 checkbox_sensitive"
                                     id="desativar_btn" data-bs-toggle="modal" data-bs-target="#desativarModal">
@@ -258,6 +263,9 @@
                                 <a type="button" class="btn btn-success btn-sm ms-3 checkbox_sensitive" id="ativar_btn"
                                     data-bs-toggle="modal" data-bs-target="#ativarModal">
                                     Ativar</a>
+                                @endif
+
+
                                 @endif
 
                                 @if (Auth::user()->hasRole('admin'))
@@ -876,6 +884,27 @@ $(document).ready(function() {
     });
 });
 
+
+document.addEventListener('DOMContentLoaded', function() {
+// Ao clicar no botão de exportar
+document.getElementById('export_btn').addEventListener('click', function() {
+// pega os IDs marcados na tabela
+let ids = Array.from(
+document.querySelectorAll('input.select-checkbox:checked')
+).map(cb => cb.value);
+
+if (ids.length === 0) {
+alert('Selecione ao menos um negócio para exportar.');
+return;
+}
+
+// monta URL com query string ids[]=1&ids[]=2...
+let params = new URLSearchParams();
+ids.forEach(id => params.append('ids[]', id));
+
+window.location = "{{ route('pipeline_export') }}?" + params.toString();
+});
+});
 
 </script>
 @endsection
