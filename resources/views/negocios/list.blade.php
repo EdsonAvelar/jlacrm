@@ -156,14 +156,12 @@
 
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'inativo']) }}">Inativos</a>
-                                            <a class="dropdown-item" target="_self"
-                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list', 'status' => 'perdido']) }}">Perdidos</a>
-
                                             @endif
 
-                                            @if (Auth::user()->hasAnyRole(['gerenciar_equipe']))
+                                            @if (Auth::user()->hasAnyRole(['gerenciar_equipe','admin']))
                                             <div class="dropdown-divider"></div>
-
+                                            <a class="dropdown-item" target="_self"
+                                                href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => -2, 'view' => 'list', 'status' => 'perdido']) }}">Perdidos</a>
 
                                             <a class="dropdown-item" target="_self"
                                                 href="{{ route('pipeline_index', ['id' => $curr_funil_id, 'proprietario' => '-2', 'view' => 'list', 'status' => 'ativo']) }}">Ativos</a>
