@@ -33,6 +33,7 @@ rm -rf .htaccess .well-known/ default.html cgi-bin/
 git clone https://github.com/EdsonAvelar/jlacrm.git .
 cp htaccess .htaccess
 curl -sS https://getcomposer.org/installer | php
+composer update
 composer install --no-dev --optimize-autoloader
 cp .env.example .env
 vi .env
