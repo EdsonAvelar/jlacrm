@@ -95,6 +95,9 @@
 
 
                     <div class="text-start mt-3">
+                        <p class="text-muted mb-2 font-13"><strong>Identificador :</strong> <span class="ms-2">{{
+                                $user->id
+                                }}</span></p>
                         <p class="text-muted mb-2 font-13"><strong>Nome :</strong> <span class="ms-2">{{ $user->name
                                 }}</span></p>
                         <p class="text-muted mb-2 font-13"><strong>Telefone :</strong><span class="ms-2">{{
