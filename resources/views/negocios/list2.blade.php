@@ -270,6 +270,10 @@
                                 <a id="export_btn" class="btn btn-secondary btn-sm ms-3 checkbox_sensitive">
                                     <i class="fas fa-file-export"></i> Exportar
                                 </a>
+
+                                <a id="export_all_btn" class="btn btn-info btn-sm ms-3">
+                                    Exportar Todos (Filtrados)
+                                </a>
                             </h4>
                         </div>
                     </div>
@@ -902,5 +906,37 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location = "{{ route('pipeline_export') }}?" + params.toString();
     });
 });
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Botão para exportar todos os registros filtrados
+    document.getElementById('export_all_btn').addEventListener('click', function() {
+        // Pega os parâmetros atuais da URL (filtros aplicados)
+        let params = new URLSearchParams(window.location.search);
+        
+        // Remove parâmetros que não são de filtro se necessário
+        // params.delete('page'); // se houver paginação
+        
+        window.location = "{{ route('pipeline_export_all') }}?" + params.toString();
+    });
+    
+    // Seu código existente para export dos selecionados...
+    document.getElementById('export_btn').addEventListener('click', function() {
+        let ids = Array.from(
+            document.querySelectorAll('input.select-checkbox:checked')
+        ).map(cb => cb.value);
+
+        if (ids.length === 0) {
+            alert('Selecione ao menos um negócio para exportar.');
+            return;
+        }
+
+        let params = new URLSearchParams();
+        ids.forEach(id => params.append('ids[]', id));
+
+        window.location = "{{ route('pipeline_export') }}?" + params.toString();
+    });
+});
+
 </script>
 @endsection

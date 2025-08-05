@@ -31,7 +31,7 @@ use App\Models\Auditoria;
 use App\Models\Aprovacao;
 
 use Yajra\DataTables\Facades\DataTables;
-
+use Symfony\Component\HttpFoundation\StreamedResponse;
 #use App\Models\Lead;
 
 class CrmController extends Controller
@@ -56,6 +56,165 @@ class CrmController extends Controller
 
         }
         return view('leads/add_lead');
+    }
+
+
+    public function exportAllCsv(Request $request): StreamedResponse
+    {
+        // Reutiliza a mesma lógica de filtros do pipeline_list
+        $query = Negocio::query()
+            ->leftJoin('etapa_funils', 'negocios.etapa_funil_id', '=', 'etapa_funils.id')
+            ->leftJoin('leads', 'negocios.lead_id', '=', 'leads.id')
+            ->leftJoin('users', 'negocios.user_id', '=', 'users.id')
+            ->leftJoin('perdas', 'negocios.id', '=', 'perdas.negocio_id')
+            ->leftJoin('motivo_perdas', 'perdas.motivo_perdas_id', '=', 'motivo_perdas.id')
+            ->select([
+                'negocios.id',
+                'negocios.titulo',
+                'leads.nome as cliente',
+                'leads.telefone as telefone',
+                'negocios.valor',
+                'etapa_funils.nome as etapa',
+                'users.name as proprietario',
+                'negocios.origem',
+                'negocios.status',
+                'motivo_perdas.motivo as motivo_perda',
+                'negocios.data_criacao',
+            ]);
+
+        // Aplica os mesmos filtros do pipeline_list
+        // Filtro por status
+        if ($request->query('status') === 'parado') {
+            $dias_parados = config('negocio_parado') ?? 3;
+            $query->whereRaw('DATEDIFF(NOW(), negocios.updated_at) > ?', [$dias_parados])
+                ->where('negocios.status', '!=', 'VENDIDO');
+        } else {
+            if ($status = $request->query('status')) {
+                $query->where('negocios.status', strtoupper($status));
+            }
+        }
+
+        // Filtro por proprietário
+        if ($proprietario_id = $request->query('proprietario')) {
+            if ($proprietario_id === '-1') {
+                $query->whereNull('negocios.user_id');
+            } elseif ($proprietario_id === '-2') {
+                // Todos os registros (não filtra por proprietário)
+            } else {
+                $query->where('negocios.user_id', $proprietario_id);
+            }
+        }
+
+        // Aplicar filtros adicionais se houver
+        if ($filters = $request->input('filters')) {
+            foreach ($filters as $column => $value) {
+                if (!empty($value)) {
+                    if ($column === 'perdas.motivo_perdas_id') {
+                        $query->where('perdas.motivo_perdas_id', $value);
+                        continue;
+                    }
+
+                    // Verificar se é filtro de data
+                    if (is_array($value) && isset($value['start'], $value['end'])) {
+                        $start = $value['start'];
+                        $end = $value['end'];
+
+                        switch ($column) {
+                            case 'negocios.data_criacao':
+                                $query->whereBetween('negocios.data_criacao', [$start, $end]);
+                                break;
+                            default:
+                                $query->whereBetween($column, [$start, $end]);
+                                break;
+                        }
+                    } else {
+                        // Filtros de texto (like, not like, etc.)
+                        if (str_starts_with($value, '-')) {
+                            $value = substr($value, 1);
+                            switch ($column) {
+                                case 'leads.nome':
+                                    $query->where('leads.nome', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'leads.telefone':
+                                    $query->where('leads.telefone', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'users.name':
+                                    $query->where('users.name', 'not like', '%' . $value . '%');
+                                    break;
+                                case 'etapa_funils.nome':
+                                    $query->where('etapa_funils.nome', 'not like', '%' . $value . '%');
+                                    break;
+                                default:
+                                    $query->where($column, 'not like', '%' . $value . '%');
+                                    break;
+                            }
+                        } else {
+                            switch ($column) {
+                                case 'leads.nome':
+                                    $query->where('leads.nome', 'like', '%' . $value . '%');
+                                    break;
+                                case 'leads.telefone':
+                                    $query->where('leads.telefone', 'like', '%' . $value . '%');
+                                    break;
+                                case 'users.name':
+                                    $query->where('users.name', 'like', '%' . $value . '%');
+                                    break;
+                                case 'etapa_funils.nome':
+                                    $query->where('etapa_funils.nome', 'like', '%' . $value . '%');
+                                    break;
+                                default:
+                                    $query->where($column, 'like', '%' . $value . '%');
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        $negocios = $query->get();
+
+        $columns = [
+            'ID',
+            'Título',
+            'Cliente',
+            'Telefone',
+            'Valor',
+            'Etapa',
+            'Proprietário',
+            'Origem',
+            'Status',
+            'Motivo de Perda',
+            'Criado em'
+        ];
+
+        $callback = function () use ($negocios, $columns) {
+            $handle = fopen('php://output', 'w');
+            fputcsv($handle, $columns);
+            foreach ($negocios as $n) {
+                fputcsv($handle, [
+                    $n->id,
+                    $n->titulo,
+                    $n->cliente,
+                    $n->telefone,
+                    $n->valor,
+                    $n->etapa,
+                    $n->proprietario,
+                    $n->origem,
+                    $n->status,
+                    $n->motivo_perda,
+                    $n->data_criacao ? Carbon::parse($n->data_criacao)->format('d/m/Y') : '',
+                ]);
+            }
+            fclose($handle);
+        };
+
+        $response = response()->stream($callback, 200, [
+            "Content-Type" => "text/csv; charset=UTF-8",
+            "Content-Disposition" => "attachment; filename=\"todos_negocios_filtrados.csv\"",
+        ]);
+
+        return $response;
     }
 
     public function exportCsv(Request $request)

@@ -148,6 +148,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(
         ['prefix' => 'negocios'],
         function () {
+
+            Route::get('/export-all', [CrmController::class, 'exportAllCsv'])
+                ->name('pipeline_export_all')
+                ->middleware('auth');
+
             Route::post('/drag_update', [CrmController::class, 'drag_update']);
             Route::post('/add', [CrmController::class, 'add_negocio']);
             Route::post('/massive/add', [CrmController::class, 'add_negocio_massiva']);
